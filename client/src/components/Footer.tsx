@@ -1,6 +1,7 @@
 import { Facebook, Twitter, Linkedin, Instagram, Mail, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
+import { Logo } from "./Logo";
 
 const Footer = () => {
   const scrollToSection = (sectionId: string) => {
@@ -20,10 +21,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Company Info */}
           <div>
-            <h3 className="text-xl font-bold mb-4 flex items-center">
-              <span className="text-primary">Potential</span>
-              <span>.com</span>
-            </h3>
+            <div className="mb-4">
+              <Logo height={36} />
+            </div>
             <p className="mb-4">Empowering organizations through AI tools that help them in turn empower their stakeholders.</p>
             <div className="flex items-center space-x-2 mt-6">
               <ThemeToggle />
