@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
 
+// Import the logo images directly
+import logoLight from '@assets/Potential.com Logos Main-01.png';
+import logoDark from '@assets/Potential.com Logos Main-02.png';
+
 interface LogoProps {
   className?: string;
   height?: number;
@@ -37,16 +41,12 @@ export function Logo({ className = '', height = 40 }: LogoProps) {
     return () => observer.disconnect();
   }, []);
 
-  // Import the images explicitly to work with Vite
-  const logoLightPath = new URL('/assets/images/logo-light.png', import.meta.url).href;
-  const logoDarkPath = new URL('/assets/images/logo-dark.png', import.meta.url).href;
-
   return (
     <img
-      src={isDarkMode ? logoDarkPath : logoLightPath}
+      src={isDarkMode ? logoDark : logoLight}
       alt="Potential.com Logo"
       height={height}
-      className={`h-${height/4} ${className}`}
+      className={`h-auto ${className}`}
       style={{ height: `${height}px` }}
     />
   );
