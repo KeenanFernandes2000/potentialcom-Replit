@@ -87,12 +87,18 @@ const SetupSpeed = () => {
               ))}
             </div>
             
-            <Button 
-              className="rounded-full bg-primary hover:bg-primary/90 text-white font-medium"
-              size="lg"
+            <a 
+              href="https://ai.potential.com/rachel"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              Schedule a Demo <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
+              <Button 
+                className="rounded-full bg-primary hover:bg-primary/90 text-white font-medium"
+                size="lg"
+              >
+                Start your Free Trial <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </a>
           </div>
         </div>
       </div>
