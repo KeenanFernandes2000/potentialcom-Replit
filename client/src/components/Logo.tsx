@@ -37,9 +37,13 @@ export function Logo({ className = '', height = 40 }: LogoProps) {
     return () => observer.disconnect();
   }, []);
 
+  // Import the images explicitly to work with Vite
+  const logoLightPath = new URL('/assets/images/logo-light.png', import.meta.url).href;
+  const logoDarkPath = new URL('/assets/images/logo-dark.png', import.meta.url).href;
+
   return (
     <img
-      src={isDarkMode ? '/assets/images/logo-dark.png' : '/assets/images/logo-light.png'}
+      src={isDarkMode ? logoDarkPath : logoLightPath}
       alt="Potential.com Logo"
       height={height}
       className={`h-${height/4} ${className}`}
