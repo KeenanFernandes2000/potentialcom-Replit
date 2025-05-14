@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { ArrowRight, ChevronRight, Sparkles } from "lucide-react";
 
 const Hero = () => {
   const scrollToVera = () => {
@@ -13,72 +14,138 @@ const Hero = () => {
   };
 
   // Abstract SVG elements for decoration
-  const AbstractShape1 = () => (
-    <div className="absolute top-0 right-0 opacity-20">
-      <svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="150" cy="150" r="150" fill="#14B6B8" />
-      </svg>
-    </div>
+  const AbstractShapes = () => (
+    <>
+      {/* Top right blob */}
+      <div className="absolute top-0 right-0 -mt-24 -mr-24 w-96 h-96 opacity-20 dark:opacity-10 blur-3xl">
+        <div className="w-full h-full rounded-full bg-primary" />
+      </div>
+      
+      {/* Bottom left blob */}
+      <div className="absolute bottom-0 left-0 -mb-24 -ml-24 w-80 h-80 opacity-20 dark:opacity-10 blur-3xl">
+        <div className="w-full h-full rounded-full bg-secondary" />
+      </div>
+      
+      {/* Middle accent */}
+      <div className="absolute top-1/3 -right-20 w-72 h-72 opacity-30 dark:opacity-5 blur-2xl">
+        <div className="w-full h-full rounded-full bg-accent" />
+      </div>
+      
+      {/* Grid pattern */}
+      <div className="absolute inset-0 bg-grid-pattern opacity-5 dark:opacity-10" />
+    </>
   );
 
-  const AbstractShape2 = () => (
-    <div className="absolute bottom-0 left-0 opacity-20">
-      <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="100" cy="100" r="100" fill="#0B1846" />
-      </svg>
-    </div>
-  );
-
-  const AbstractShape3 = () => (
-    <div className="absolute top-1/3 left-1/3 opacity-10">
-      <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="50" y="50" width="300" height="300" transform="rotate(45 200 200)" fill="#14B6B8" fillOpacity="0.5" />
-      </svg>
-    </div>
-  );
+  // Logo grid for trusted companies
+  const LogoGrid = () => {
+    return (
+      <div className="client-logos py-8" data-aos="fade-up" data-aos-delay="100">
+        <h3 className="text-center text-muted-foreground uppercase text-sm tracking-wider mb-6">
+          Trusted by innovative companies worldwide
+        </h3>
+        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-6 items-center justify-items-center">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div 
+              key={i} 
+              className="w-24 h-12 bg-muted dark:bg-secondary rounded-md opacity-60 flex items-center justify-center text-xs text-muted-foreground"
+            >
+              Client {i+1}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+  
+  // Stats component
+  const QuickStats = () => {
+    const stats = [
+      { value: "8x", label: "Faster deployment" },
+      { value: "85%", label: "Cost reduction" },
+      { value: "24/7", label: "AI availability" }
+    ];
+    
+    return (
+      <div className="flex flex-wrap justify-center md:justify-start gap-6 mb-8">
+        {stats.map((stat, idx) => (
+          <div key={idx} className="flex flex-col items-center md:items-start">
+            <div className="text-2xl font-bold text-primary mb-1">{stat.value}</div>
+            <div className="text-sm text-muted-foreground">{stat.label}</div>
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   return (
-    <section id="hero" className="pt-32 pb-20 bg-white relative overflow-hidden">
-      <AbstractShape1 />
-      <AbstractShape2 />
-      <AbstractShape3 />
+    <section id="hero" className="pt-32 pb-20 bg-background relative overflow-hidden">
+      <AbstractShapes />
       
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col md:flex-row items-center gap-12 mb-16">
-          <div className="md:w-1/2" data-aos="fade-up">
-            <h1 className="text-4xl md:text-5xl font-bold text-[#0B1846] leading-tight mb-6">
-              Expand Your Human Team with Specialized AI Agents
+      <div className="container relative z-10">
+        <div className="flex flex-col md:flex-row items-center gap-x-12 gap-y-16 mb-16">
+          <div className="md:w-1/2 lg:pr-8" data-aos="fade-up">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 dark:bg-primary/20 text-primary text-sm font-medium mb-6">
+              <Sparkles className="w-4 h-4 mr-2" />
+              <span>Revolutionizing Business with AI</span>
+            </div>
+            
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+              <span className="gradient-text">Expand Your Human Team</span> with <br className="hidden lg:block" />Specialized AI Agents
             </h1>
-            <p className="text-xl text-gray-600 mb-8">
+            
+            <p className="text-xl text-muted-foreground mb-8">
               Rapidly deploy powerful AI team members who seamlessly integrate with your existing systems—backed by dedicated support to ensure instant ROI.
             </p>
-            <Button 
-              onClick={scrollToVera}
-              className="rounded-full bg-[#14B6B8] hover:bg-[#14B6B8]/90 text-white font-bold uppercase px-8 py-6"
-            >
-              Talk to Vera
-            </Button>
+            
+            <QuickStats />
+            
+            <div className="flex flex-wrap gap-4 items-center">
+              <Button 
+                onClick={scrollToVera}
+                className="rounded-full bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-6"
+                size="lg"
+              >
+                Talk to Vera <ChevronRight className="ml-2 h-4 w-4" />
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                className="rounded-full border-primary text-primary hover:bg-primary/10"
+                size="lg"
+              >
+                View Demo <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </div>
           </div>
           
           <div className="md:w-1/2 relative" data-aos="fade-up" data-aos-delay="200">
-            {/* Hero image - AI business collaboration */}
-            <img 
-              src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" 
-              alt="Business team collaborating with AI interfaces" 
-              className="rounded-xl shadow-lg w-full h-auto object-cover" 
-            />
+            <div className="relative mx-auto max-w-[500px]">
+              {/* Decorative elements */}
+              <div className="absolute -top-5 -left-5 w-20 h-20 bg-primary/30 rounded-full blur-xl"></div>
+              <div className="absolute -bottom-8 -right-8 w-28 h-28 bg-secondary/30 rounded-full blur-xl"></div>
+              
+              {/* Image with glass-like border */}
+              <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border border-border">
+                <img 
+                  src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" 
+                  alt="Business team collaborating with AI interfaces" 
+                  className="w-full h-auto object-cover rounded-2xl" 
+                />
+                
+                {/* Overlay gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-40"></div>
+                
+                {/* Floating badge overlay */}
+                <div className="absolute bottom-6 left-6 right-6 glass-effect rounded-xl p-4 text-sm">
+                  <div className="font-medium">AI-powered productivity</div>
+                  <div className="text-xs text-muted-foreground mt-1">Scale your team without scaling overhead</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         
-        <div className="client-logos py-8 overflow-hidden" data-aos="fade-up" data-aos-delay="300">
-          <h3 className="text-center text-gray-500 uppercase text-sm tracking-wider mb-6">Trusted by innovative companies worldwide</h3>
-          <div className="flex flex-wrap justify-center gap-8 md:gap-12">
-            {/* Client logos in grayscale - represented by placeholder divs */}
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="w-24 h-12 bg-gray-200 opacity-60 rounded"></div>
-            ))}
-          </div>
-        </div>
+        <LogoGrid />
       </div>
     </section>
   );

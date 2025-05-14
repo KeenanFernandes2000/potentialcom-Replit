@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "./ThemeToggle";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,8 +31,10 @@ const Header = () => {
   };
 
   return (
-    <header className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-sm' : 'bg-white/95'}`}>
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+    <header className={`fixed w-full z-50 transition-all duration-300 ${
+      isScrolled ? 'glass-effect border-b shadow-sm' : 'bg-background/90 backdrop-blur-sm'
+    }`}>
+      <div className="container py-4 flex justify-between items-center">
         <div className="logo">
           <a 
             href="#hero" 
@@ -39,20 +42,21 @@ const Header = () => {
               e.preventDefault();
               scrollToSection("hero");
             }}
-            className="text-[#0B1846] font-bold text-2xl"
+            className="font-bold text-2xl flex items-center gap-2"
           >
-            Potential.com
+            <span className="text-primary">Potential</span>
+            <span className="text-foreground">.com</span>
           </a>
         </div>
         
-        <nav className="hidden md:flex space-x-8">
+        <nav className="hidden md:flex items-center space-x-8">
           <a 
             href="#hero" 
             onClick={(e) => {
               e.preventDefault();
               scrollToSection("hero");
             }}
-            className="text-gray-700 hover:text-[#14B6B8] font-medium"
+            className="text-foreground/80 hover:text-primary font-medium transition-colors"
           >
             Home
           </a>
@@ -62,7 +66,7 @@ const Header = () => {
               e.preventDefault();
               scrollToSection("tools");
             }}
-            className="text-gray-700 hover:text-[#14B6B8] font-medium"
+            className="text-foreground/80 hover:text-primary font-medium transition-colors"
           >
             AI Tools
           </a>
@@ -72,7 +76,7 @@ const Header = () => {
               e.preventDefault();
               scrollToSection("solutions");
             }}
-            className="text-gray-700 hover:text-[#14B6B8] font-medium"
+            className="text-foreground/80 hover:text-primary font-medium transition-colors"
           >
             Solutions
           </a>
@@ -82,31 +86,39 @@ const Header = () => {
               e.preventDefault();
               scrollToSection("vera");
             }}
-            className="text-gray-700 hover:text-[#14B6B8] font-medium"
+            className="text-foreground/80 hover:text-primary font-medium transition-colors"
           >
             Meet Vera
           </a>
+          
+          <div className="pl-4">
+            <ThemeToggle />
+          </div>
         </nav>
         
-        <Button
-          variant="ghost"
-          size="icon"
-          className="md:hidden text-gray-700"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          <Menu />
-        </Button>
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-foreground rounded-full"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          >
+            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </Button>
+        </div>
       </div>
       
       {isMenuOpen && (
-        <div className="mobile-nav flex flex-col bg-white w-full py-4 px-4 md:hidden shadow-md">
+        <div className="mobile-nav flex flex-col glass-effect w-full py-6 px-6 md:hidden shadow-md">
           <a 
             href="#hero" 
             onClick={(e) => {
               e.preventDefault();
               scrollToSection("hero");
             }}
-            className="py-2 text-gray-700 hover:text-[#14B6B8] font-medium"
+            className="py-3 text-foreground hover:text-primary font-medium transition-colors"
           >
             Home
           </a>
@@ -116,7 +128,7 @@ const Header = () => {
               e.preventDefault();
               scrollToSection("tools");
             }}
-            className="py-2 text-gray-700 hover:text-[#14B6B8] font-medium"
+            className="py-3 text-foreground hover:text-primary font-medium transition-colors"
           >
             AI Tools
           </a>
@@ -126,7 +138,7 @@ const Header = () => {
               e.preventDefault();
               scrollToSection("solutions");
             }}
-            className="py-2 text-gray-700 hover:text-[#14B6B8] font-medium"
+            className="py-3 text-foreground hover:text-primary font-medium transition-colors"
           >
             Solutions
           </a>
@@ -136,7 +148,7 @@ const Header = () => {
               e.preventDefault();
               scrollToSection("vera");
             }}
-            className="py-2 text-gray-700 hover:text-[#14B6B8] font-medium"
+            className="py-3 text-foreground hover:text-primary font-medium transition-colors"
           >
             Meet Vera
           </a>
