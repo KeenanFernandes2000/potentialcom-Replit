@@ -11,6 +11,9 @@ import hsbcLogo from "@assets/Light Mode client logos/hsbc-logo.png";
 import intelLogo from "@assets/Light Mode client logos/intel-logo.png";
 import pepsicoLogo from "@assets/Light Mode client logos/pepsico-logo.png";
 
+// Import hero image
+import heroImage from "@assets/Hero.png";
+
 const Hero = () => {
   const scrollToVera = () => {
     const vera = document.getElementById('vera');
@@ -153,13 +156,13 @@ const Hero = () => {
               {/* Image with glass-like border */}
               <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border border-border">
                 <img 
-                  src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600" 
-                  alt="Business team collaborating with AI interfaces" 
+                  src={heroImage} 
+                  alt="Modern office with team working with AI assistants" 
                   className="w-full h-auto object-cover rounded-2xl" 
                 />
                 
-                {/* Overlay gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-40"></div>
+                {/* Overlay gradient - more subtle for the illustration */}
+                <div className="absolute inset-0 bg-gradient-to-t from-background/30 to-transparent opacity-20"></div>
                 
                 {/* Floating badge overlay */}
                 <div className="absolute bottom-6 left-6 right-6 glass-effect rounded-xl p-4 text-sm">
