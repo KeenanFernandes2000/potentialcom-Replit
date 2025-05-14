@@ -9,6 +9,7 @@ import Stats from "@/components/sections/Stats";
 import Solutions from "@/components/sections/Solutions";
 import SalesBoost from "@/components/sections/SalesBoost";
 import Architecture from "@/components/sections/Architecture";
+import Whitepaper from "@/components/sections/Whitepaper";
 import CTAFooter from "@/components/sections/CTAFooter";
 import Footer from "@/components/Footer";
 import { useEffect } from "react";
@@ -35,6 +36,7 @@ const Home = () => {
         <Solutions />
         <SalesBoost />
         <Architecture />
+        <Whitepaper />
         <CTAFooter />
       </main>
       <Footer />
