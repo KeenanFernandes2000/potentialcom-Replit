@@ -96,34 +96,32 @@ const Tools = () => {
           ))}
         </div>
         
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {tools.map((tool, index) => (
             <Card 
               key={index} 
-              className="border border-border rounded-xl overflow-hidden card-hover bg-background dark:bg-secondary/5"
+              className="border border-border/50 rounded-lg overflow-hidden card-hover bg-background dark:bg-secondary/5 flex flex-col"
               data-aos="fade-up"
               data-aos-delay={index * 50}
             >
-              <div className="h-2 bg-gradient-to-r from-primary/80 to-primary"></div>
-              <CardContent className="p-6 pt-5">
-                <div className="flex justify-between items-start mb-4">
-                  <Badge variant="outline" className="bg-muted/50 text-xs">
+              <div className="h-1 bg-gradient-to-r from-primary/80 to-primary"></div>
+              <CardContent className="p-4 flex-grow">
+                <div className="flex justify-between items-center mb-2">
+                  <Badge variant="outline" className="bg-muted/50 text-xs px-2 py-0 h-5">
                     {tool.category}
                   </Badge>
                   {tool.popular && (
-                    <Badge className="bg-primary/20 text-primary border-none text-xs gap-1">
+                    <Badge className="bg-primary/10 text-primary border-none text-xs gap-1 px-2 py-0 h-5">
                       <Star className="h-3 w-3 fill-primary" /> Popular
                     </Badge>
                   )}
                 </div>
-                <h3 className="text-xl font-semibold mb-3">{tool.title}</h3>
-                <p className="text-muted-foreground">{tool.description}</p>
-              </CardContent>
-              <CardFooter className="p-6 pt-0">
-                <button className="text-primary font-medium flex items-center group transition-colors hover:text-primary/80">
-                  Try it now <ArrowRight className="ml-1 w-4 h-4 transition-transform group-hover:translate-x-1" />
+                <h3 className="text-lg font-semibold mb-1">{tool.title}</h3>
+                <p className="text-muted-foreground text-sm">{tool.description}</p>
+                <button className="text-primary text-sm font-medium flex items-center group transition-colors hover:text-primary/80 mt-2">
+                  Try it now <ArrowRight className="ml-1 w-3 h-3 transition-transform group-hover:translate-x-1" />
                 </button>
-              </CardFooter>
+              </CardContent>
             </Card>
           ))}
         </div>
