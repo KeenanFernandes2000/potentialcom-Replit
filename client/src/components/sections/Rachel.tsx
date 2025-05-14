@@ -48,13 +48,13 @@ const Rachel = () => {
               {/* Main image with effects */}
               <div className="rounded-2xl overflow-hidden relative shadow-2xl">
                 <img 
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=1000" 
+                  src="/assets/images/rachel-avatar.png" 
                   alt="Rachel, AI Business Consultant" 
-                  className="w-full h-auto object-cover rounded-2xl" 
+                  className="w-full h-auto object-contain rounded-2xl bg-gradient-to-b from-background/10 to-primary/5" 
                 />
                 
-                {/* Image overlay gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent"></div>
+                {/* Image overlay gradient - more subtle for the avatar */}
+                <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-background/5 to-transparent"></div>
                 
                 {/* Badge overlay */}
                 <div className="absolute bottom-6 left-6 right-6 glass-effect rounded-xl p-4 backdrop-blur-sm">
