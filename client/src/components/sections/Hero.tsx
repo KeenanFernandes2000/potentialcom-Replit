@@ -1,6 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ChevronRight, Sparkles } from "lucide-react";
 
+// Import client logos directly
+import airbusLogo from "@assets/Light Mode client logos/AIRBUS-logo.png";
+import dgLogo from "@assets/Light Mode client logos/DG-logo.png";
+import nestleLogo from "@assets/Light Mode client logos/Nestle-logo.png";
+import unLogo from "@assets/Light Mode client logos/UN-logo.png";
+import cartierLogo from "@assets/Light Mode client logos/cartier-logo.png";
+import hsbcLogo from "@assets/Light Mode client logos/hsbc-logo.png";
+import intelLogo from "@assets/Light Mode client logos/intel-logo.png";
+import pepsicoLogo from "@assets/Light Mode client logos/pepsico-logo.png";
+
 const Hero = () => {
   const scrollToVera = () => {
     const vera = document.getElementById('vera');
@@ -38,16 +48,16 @@ const Hero = () => {
 
   // Logo grid for trusted companies
   const LogoGrid = () => {
-    // Client logo image paths
+    // Client logo objects with imported images
     const clientLogos = [
-      { name: 'Airbus', path: '/assets/images/clients/AIRBUS-logo.png' },
-      { name: 'DG', path: '/assets/images/clients/DG-logo.png' },
-      { name: 'Nestle', path: '/assets/images/clients/Nestle-logo.png' },
-      { name: 'United Nations', path: '/assets/images/clients/UN-logo.png' },
-      { name: 'Cartier', path: '/assets/images/clients/cartier-logo.png' },
-      { name: 'HSBC', path: '/assets/images/clients/hsbc-logo.png' },
-      { name: 'Intel', path: '/assets/images/clients/intel-logo.png' },
-      { name: 'PepsiCo', path: '/assets/images/clients/pepsico-logo.png' }
+      { name: 'Airbus', logo: airbusLogo },
+      { name: 'DG', logo: dgLogo },
+      { name: 'Nestle', logo: nestleLogo },
+      { name: 'United Nations', logo: unLogo },
+      { name: 'Cartier', logo: cartierLogo },
+      { name: 'HSBC', logo: hsbcLogo },
+      { name: 'Intel', logo: intelLogo },
+      { name: 'PepsiCo', logo: pepsicoLogo }
     ];
 
     return (
@@ -62,7 +72,7 @@ const Hero = () => {
               className="w-24 h-12 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity"
             >
               <img 
-                src={client.path} 
+                src={client.logo} 
                 alt={`${client.name} logo`} 
                 className="max-h-full max-w-full object-contain" 
               />
