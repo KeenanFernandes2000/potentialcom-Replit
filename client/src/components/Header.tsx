@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
+import { Logo } from "./Logo";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -42,10 +43,9 @@ const Header = () => {
               e.preventDefault();
               scrollToSection("hero");
             }}
-            className="font-bold text-2xl flex items-center gap-2"
+            className="flex items-center"
           >
-            <span className="text-primary">Potential</span>
-            <span className="text-foreground">.com</span>
+            <Logo height={40} />
           </a>
         </div>
         
