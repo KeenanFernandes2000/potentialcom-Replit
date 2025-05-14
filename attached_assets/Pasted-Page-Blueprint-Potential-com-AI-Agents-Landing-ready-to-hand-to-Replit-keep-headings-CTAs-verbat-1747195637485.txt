@@ -1,0 +1,125 @@
+Page Blueprint — Potential.com AI Agents Landing
+(ready to hand to Replit; keep headings/CTAs verbatim, swap images for placeholders, wire up links as noted)
+
+⸻
+
+1  Hero (#hero) 
+
+Element	Content / Notes
+H1	“Expand Your Human Team with Specialized AI Agents”
+Sub‑heading	“Rapidly deploy powerful AI team members who seamlessly integrate with your existing systems—backed by dedicated support to ensure instant ROI.”
+Primary CTA	Talk to Vera → triggers chat/scroll to Vera section (#vera)
+Decor	3 abstract SVG shapes (shape‑1.svg … shape‑3.svg); 2 hero illustrations (hero‑left.png, hero‑right.png)
+Client‑logo strip	16 grayscale logos in one responsive row (clients‑*.png)
+
+
+⸻
+
+2  “Why Businesses Choose Our AI Agents” (#benefits) 
+
+Six 2‑column feature blocks:
+	1.	Instant Productivity – ready in hours, not months
+	2.	Seamless Integration – bolt‑on to existing APIs
+	3.	Fully Supported Setup – dedicated team onboarding
+	4.	Modular & Scalable – pricing grows with use‑cases
+	5.	Pre‑built Expertise – 100+ agent templates (Leadership, Sales, Ops)
+	6.	20 Years of Empowerment – heritage credibility
+
+⸻
+
+3  “Explore Our Growing Library of Agentic AI Workflows” (#tools) 
+
+Responsive card grid (3 per row → 1 on mobile). Each card:
+
+Tool (↗ link)	One‑line Blurb
+Product Marketing Generator	“Generate AI‑powered marketing content from your website URL.”
+Business Idea Generator	“Turn your passion into a profitable idea in minutes.”
+CSR Plan Generator	“Let AI suggest impactful CSR programs.”
+Press Release Generator	“Create press releases with AI‑powered language.”
+Article Generator	“Generate articles on any topic with AI assistance.”
+Skin Expert	“Personalized skincare advice.”
+Business Plan Generator	“Build comprehensive plans with AI insights.”
+Fitness Planner	“Tailored fitness & diet programs.”
+Career Choice Tool	“Personalized career advice.”
+
+
+⸻
+
+4  “Get Started with AI Agents” (#getting‑started) 
+
+Three‑step infographic (icons 01‑03):
+	1.	Select Your Agent – choose from 100+ templates
+	2.	Customize & Integrate – connect to workflows
+	3.	Measure Immediate Impact – real‑time ROI dashboard
+
+Sub‑section “Simple Setup / Instant Results / AI Adoption Support” reiterates the value props.
+
+⸻
+
+5  “Get Started in Minutes” banner (#setup‑speed) 
+
+Two side‑by‑side images (setup‑illustration‑1.png, setup‑illustration‑2.png) + text block emphasizing hours‑not‑months deployment.
+
+⸻
+
+6  “Meet Vera: Your 24/7 AI Business Consultant” (#vera) 
+	•	Portrait of “Vera” (vera.png) + doodle accents.
+	•	Copy: “Vera … answers your questions, matches you with the perfect AI Agents, and books meetings with human experts.”
+	•	Secondary CTA button Talk to Vera (same as hero).
+
+⸻
+
+7  “Trusted by Innovators Worldwide” stats band (#stats) 
+
+Metric	Label
+1 M+	Empowered stakeholders
+1 B+	AI Agent tasks
+20	Years of Innovation
+
+
+⸻
+
+8  “Our Agentic AI Solutions” (#solutions) 
+
+Solution	Description	CTA	Image
+No‑Code AI Chatbots	“Boost sales, cut costs, improve service, 24/7 … deploy without coding.”	Learn More	chatbots.png
+AI Voice Agents	“Automate calls and reduce operational costs with human‑like voice assistants.”	Learn More	voice‑agents.png
+AI Workflows	“Customizable agent teams to execute complex tasks seamlessly.”	Learn More	workflows.png
+
+
+⸻
+
+9  “AI Agents to Boost Revenue” highlight (#sales‑boost) 
+
+Copy block + two illustrative images; stat call‑out: “Businesses using AI for sales see 50 % more leads & appointments.”
+
+⸻
+
+10  “API‑Based Agentic AI Solution Architecture” diagram (#architecture) 
+	•	Placeholder architecture graphic (architecture.svg)
+	•	Brief text: “We guide you in connecting agents to each other or to your systems via our API to supercharge productivity.”
+	•	Row of 6 partner/integration logos (brand‑*.png)
+
+⸻
+
+11  Final CTA (#cta‑footer) 
+
+Banner repeating: “Get Started with Vera – Your AI Growth Partner!” with Talk to Vera button.
+
+⸻
+
+12  General Implementation Notes
+	•	Header / Nav: minimal—logo left, hamburger right (links scroll to #hero, #tools, #solutions, #vera).
+	•	Footer: not present in source; add a lightweight copyright & contact line if desired.
+	•	Design tokens:
+	•	Font: Inter, 1.25 rem body, 2.5 rem H1 down to 1.5 rem H3.
+	•	Colors: #0B1846 navy headings, #14B6B8 teal CTAs, neutral grayscale text.
+	•	Buttons: pill radius 2rem, bold uppercase text.
+	•	Tech: Flexbox/grid layout, SwiperJS for any carousels, scroll‑triggered fade‑in animations (e.g., AOS).
+	•	Accessibility: alt text on all images, aria‑labels on buttons, high‑contrast palette passes WCAG AA.
+	•	Mobile: stack cards 1‑column, collapse nav, shrink hero images; retain CTA prominence.
+
+⸻
+
+Source URL
+https://b310df85-c28b-46e2-bf9a-ebbdeac32e2e-00-365m7b1zflfxa.pike.replit.dev/
