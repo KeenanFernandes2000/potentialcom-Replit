@@ -98,12 +98,18 @@ const GettingStarted = () => {
         </Card>
         
         <div className="mt-16 text-center">
-          <Button 
-            className="rounded-full bg-primary hover:bg-primary/90 text-white font-medium px-8 py-6"
-            size="lg"
+          <a 
+            href="https://ai.potential.com/rachel"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            Start Your AI Journey <ChevronRight className="ml-2 h-4 w-4" />
-          </Button>
+            <Button 
+              className="rounded-full bg-primary hover:bg-primary/90 text-white font-medium px-8 py-6"
+              size="lg"
+            >
+              Start Your AI Journey <ChevronRight className="ml-2 h-4 w-4" />
+            </Button>
+          </a>
         </div>
       </div>
     </section>
