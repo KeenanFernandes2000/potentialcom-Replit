@@ -29,7 +29,7 @@ const Whitepaper = () => {
       // Automatically start the download after submission
       const downloadLink = document.createElement('a');
       downloadLink.href = '/assets/pdfs/amplified-intelligence-whitepaper.pdf';
-      downloadLink.download = 'Amplified_Intelligence_Whitepaper.pdf';
+      downloadLink.download = 'Amplified Intelligence - Potential.com-Mar2025.pdf';
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);
@@ -123,7 +123,7 @@ const Whitepaper = () => {
                     <p className="text-muted-foreground mb-4">Your download will begin shortly.</p>
                     <a 
                       href="/assets/pdfs/amplified-intelligence-whitepaper.pdf"
-                      download="Amplified_Intelligence_Whitepaper.pdf"
+                      download="Amplified Intelligence - Potential.com-Mar2025.pdf"
                       className="text-primary font-medium hover:underline"
                     >
                       Click here if your download doesn't start
