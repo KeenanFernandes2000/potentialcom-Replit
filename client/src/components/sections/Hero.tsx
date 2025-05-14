@@ -1,20 +1,62 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ChevronRight, Sparkles } from "lucide-react";
+import { useState, useEffect } from "react";
 
-// Import client logos directly
-import airbusLogo from "@assets/Light Mode client logos/AIRBUS-logo.png";
-import dgLogo from "@assets/Light Mode client logos/DG-logo.png";
-import nestleLogo from "@assets/Light Mode client logos/Nestle-logo.png";
-import unLogo from "@assets/Light Mode client logos/UN-logo.png";
-import cartierLogo from "@assets/Light Mode client logos/cartier-logo.png";
-import hsbcLogo from "@assets/Light Mode client logos/hsbc-logo.png";
-import intelLogo from "@assets/Light Mode client logos/intel-logo.png";
-import pepsicoLogo from "@assets/Light Mode client logos/pepsico-logo.png";
+// Import client logos - light mode
+import airbusLogoLight from "@assets/Light Mode client logos/AIRBUS-logo.png";
+import dgLogoLight from "@assets/Light Mode client logos/DG-logo.png";
+import nestleLogoLight from "@assets/Light Mode client logos/Nestle-logo.png";
+import unLogoLight from "@assets/Light Mode client logos/UN-logo.png";
+import cartierLogoLight from "@assets/Light Mode client logos/cartier-logo.png";
+import hsbcLogoLight from "@assets/Light Mode client logos/hsbc-logo.png";
+import intelLogoLight from "@assets/Light Mode client logos/intel-logo.png";
+import pepsicoLogoLight from "@assets/Light Mode client logos/pepsico-logo.png";
+
+// Import client logos - dark mode
+import partner1Dark from "@assets/Dark Mode Client logos/partner1.webp";
+import partner2Dark from "@assets/Dark Mode Client logos/partner2.webp";
+import partner3Dark from "@assets/Dark Mode Client logos/partner3.webp";
+import partner4Dark from "@assets/Dark Mode Client logos/partner4.webp";
+import partner5Dark from "@assets/Dark Mode Client logos/partner5.webp";
+import partner6Dark from "@assets/Dark Mode Client logos/partner6.webp";
+import partner7Dark from "@assets/Dark Mode Client logos/partner7.webp";
+import partner8Dark from "@assets/Dark Mode Client logos/partner8.webp";
 
 // Import hero image
 import heroImage from "@assets/Hero.png";
 
 const Hero = () => {
+  // State to track theme
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // Detect dark mode
+  useEffect(() => {
+    const checkDarkMode = () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      setIsDarkMode(isDark);
+    };
+
+    // Initial check
+    checkDarkMode();
+
+    // Create a mutation observer to monitor class changes on html element
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (
+          mutation.type === 'attributes' &&
+          mutation.attributeName === 'class'
+        ) {
+          checkDarkMode();
+        }
+      });
+    });
+
+    // Start observing
+    observer.observe(document.documentElement, { attributes: true });
+
+    // Cleanup
+    return () => observer.disconnect();
+  }, []);
   const scrollToVera = () => {
     const vera = document.getElementById('vera');
     if (vera) {
@@ -50,17 +92,18 @@ const Hero = () => {
   );
 
   // Logo grid for trusted companies
-  const LogoGrid = () => {
-    // Client logo objects with imported images
+  const LogoGrid = ({ isDarkMode }: { isDarkMode: boolean }) => {
+
+    // Client logo objects with light and dark mode versions
     const clientLogos = [
-      { name: 'Airbus', logo: airbusLogo },
-      { name: 'DG', logo: dgLogo },
-      { name: 'Nestle', logo: nestleLogo },
-      { name: 'United Nations', logo: unLogo },
-      { name: 'Cartier', logo: cartierLogo },
-      { name: 'HSBC', logo: hsbcLogo },
-      { name: 'Intel', logo: intelLogo },
-      { name: 'PepsiCo', logo: pepsicoLogo }
+      { name: 'Partner 1', logoLight: airbusLogoLight, logoDark: partner1Dark },
+      { name: 'Partner 2', logoLight: dgLogoLight, logoDark: partner2Dark },
+      { name: 'Partner 3', logoLight: nestleLogoLight, logoDark: partner3Dark },
+      { name: 'Partner 4', logoLight: unLogoLight, logoDark: partner4Dark },
+      { name: 'Partner 5', logoLight: cartierLogoLight, logoDark: partner5Dark },
+      { name: 'Partner 6', logoLight: hsbcLogoLight, logoDark: partner6Dark },
+      { name: 'Partner 7', logoLight: intelLogoLight, logoDark: partner7Dark },
+      { name: 'Partner 8', logoLight: pepsicoLogoLight, logoDark: partner8Dark }
     ];
 
     return (
@@ -75,7 +118,7 @@ const Hero = () => {
               className="w-24 h-12 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity"
             >
               <img 
-                src={client.logo} 
+                src={isDarkMode ? client.logoDark : client.logoLight} 
                 alt={`${client.name} logo`} 
                 className="max-h-full max-w-full object-contain" 
               />
@@ -174,7 +217,7 @@ const Hero = () => {
           </div>
         </div>
         
-        <LogoGrid />
+        <LogoGrid isDarkMode={isDarkMode} />
       </div>
     </section>
   );
