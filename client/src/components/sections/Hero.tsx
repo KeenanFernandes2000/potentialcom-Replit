@@ -13,14 +13,14 @@ import intelLogoLight from "@assets/Light Mode client logos/intel-logo.png";
 import pepsicoLogoLight from "@assets/Light Mode client logos/pepsico-logo.png";
 
 // Import client logos - dark mode
-import partner1Dark from "@assets/Dark Mode Client logos/partner1.webp";
-import partner2Dark from "@assets/Dark Mode Client logos/partner2.webp";
-import partner3Dark from "@assets/Dark Mode Client logos/partner3.webp";
-import partner4Dark from "@assets/Dark Mode Client logos/partner4.webp";
-import partner5Dark from "@assets/Dark Mode Client logos/partner5.webp";
-import partner6Dark from "@assets/Dark Mode Client logos/partner6.webp";
-import partner7Dark from "@assets/Dark Mode Client logos/partner7.webp";
-import partner8Dark from "@assets/Dark Mode Client logos/partner8.webp";
+import dgLogoDark from "@assets/Dark Mode Client logos/partner1.webp"; // Government of Dubai
+import hsbcLogoDark from "@assets/Dark Mode Client logos/partner2.webp"; // HSBC
+import unLogoDark from "@assets/Dark Mode Client logos/partner3.webp"; // United Nations
+import pepsicoLogoDark from "@assets/Dark Mode Client logos/partner4.webp"; // PepsiCo
+import intelLogoDark from "@assets/Dark Mode Client logos/partner5.webp"; // Intel
+import airbusLogoDark from "@assets/Dark Mode Client logos/partner6.webp"; // Airbus
+import microsoftLogoDark from "@assets/Dark Mode Client logos/partner7.webp"; // Microsoft
+import dellLogoDark from "@assets/Dark Mode Client logos/partner8.webp"; // Dell
 
 // Import hero image
 import heroImage from "@assets/Hero.png";
@@ -57,6 +57,7 @@ const Hero = () => {
     // Cleanup
     return () => observer.disconnect();
   }, []);
+
   const scrollToVera = () => {
     const vera = document.getElementById('vera');
     if (vera) {
@@ -92,18 +93,17 @@ const Hero = () => {
   );
 
   // Logo grid for trusted companies
-  const LogoGrid = ({ isDarkMode }: { isDarkMode: boolean }) => {
-
+  const LogoGrid = () => {
     // Client logo objects with light and dark mode versions
     const clientLogos = [
-      { name: 'Partner 1', logoLight: airbusLogoLight, logoDark: partner1Dark },
-      { name: 'Partner 2', logoLight: dgLogoLight, logoDark: partner2Dark },
-      { name: 'Partner 3', logoLight: nestleLogoLight, logoDark: partner3Dark },
-      { name: 'Partner 4', logoLight: unLogoLight, logoDark: partner4Dark },
-      { name: 'Partner 5', logoLight: cartierLogoLight, logoDark: partner5Dark },
-      { name: 'Partner 6', logoLight: hsbcLogoLight, logoDark: partner6Dark },
-      { name: 'Partner 7', logoLight: intelLogoLight, logoDark: partner7Dark },
-      { name: 'Partner 8', logoLight: pepsicoLogoLight, logoDark: partner8Dark }
+      { name: 'Airbus', logoLight: airbusLogoLight, logoDark: airbusLogoDark },
+      { name: 'Government of Dubai', logoLight: dgLogoLight, logoDark: dgLogoDark },
+      { name: 'Nestle', logoLight: nestleLogoLight, logoDark: unLogoDark }, // Using UN for Nestle in dark mode
+      { name: 'United Nations', logoLight: unLogoLight, logoDark: pepsicoLogoDark }, // Using PepsiCo for UN in dark mode
+      { name: 'Cartier', logoLight: cartierLogoLight, logoDark: intelLogoDark }, // Using Intel for Cartier in dark mode
+      { name: 'HSBC', logoLight: hsbcLogoLight, logoDark: hsbcLogoDark },
+      { name: 'Intel', logoLight: intelLogoLight, logoDark: microsoftLogoDark }, // Using Microsoft for Intel in dark mode
+      { name: 'PepsiCo', logoLight: pepsicoLogoLight, logoDark: dellLogoDark } // Using Dell for PepsiCo in dark mode
     ];
 
     return (
@@ -120,7 +120,8 @@ const Hero = () => {
               <img 
                 src={isDarkMode ? client.logoDark : client.logoLight} 
                 alt={`${client.name} logo`} 
-                className="max-h-full max-w-full object-contain" 
+                className="max-h-full max-w-full object-contain"
+                style={{ filter: isDarkMode ? 'brightness(0) invert(1)' : 'none' }}
               />
             </div>
           ))}
@@ -150,34 +151,35 @@ const Hero = () => {
   };
 
   return (
-    <section id="hero" className="pt-32 pb-20 bg-background relative overflow-hidden">
-      <AbstractShapes />
+    <section id="hero" className="pt-32 pb-20 md:pt-36 md:pb-24 bg-background relative overflow-hidden">
+      <div className="absolute inset-0">
+        <AbstractShapes />
+      </div>
       
       <div className="container relative z-10">
-        <div className="flex flex-col md:flex-row items-center gap-x-12 gap-y-16 mb-16">
-          <div className="md:w-1/2 lg:pr-8" data-aos="fade-up">
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 dark:bg-primary/20 text-primary text-sm font-medium mb-6">
-              <Sparkles className="w-4 h-4 mr-2" />
-              <span>Revolutionizing Business with AI</span>
+        <div className="flex flex-col md:flex-row gap-12 lg:gap-16 items-center mb-16">
+          <div className="md:w-1/2" data-aos="fade-right">
+            <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+              <Sparkles className="h-4 w-4 mr-2" /> AI-Powered Agents
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-              <span className="gradient-text">Expand Your Human Team</span> with <br className="hidden lg:block" />Specialized AI Agents
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+              Deploy <span className="text-primary">Powerful AI Team Members</span> That Get Things Done
             </h1>
             
             <p className="text-xl text-muted-foreground mb-8">
-              Rapidly deploy powerful AI team members who seamlessly integrate with your existing systems—backed by dedicated support to ensure instant ROI.
+              Seamlessly integrate intelligent agents into your workflows and transform how your business operates in the AI age.
             </p>
             
             <QuickStats />
             
-            <div className="flex flex-wrap gap-4 items-center">
+            <div className="flex flex-wrap gap-4">
               <Button 
+                size="lg" 
+                className="rounded-full"
                 onClick={scrollToVera}
-                className="rounded-full bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-6"
-                size="lg"
               >
-                Talk to Vera <ChevronRight className="ml-2 h-4 w-4" />
+                Explore Agents <ChevronRight className="ml-1 h-4 w-4" />
               </Button>
               
               <Button 
@@ -217,7 +219,7 @@ const Hero = () => {
           </div>
         </div>
         
-        <LogoGrid isDarkMode={isDarkMode} />
+        <LogoGrid />
       </div>
     </section>
   );
