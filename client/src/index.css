@@ -18,11 +18,11 @@
   --input: 214 32% 91%;
   
   /* Brand Colors */
-  --primary: 187 80% 40%; /* Teal color - #14B6B8 */
+  --primary: 270 70% 56%; /* Purple color - #8844DD */
   --primary-foreground: 0 0% 100%;
   --secondary: 222 47% 16%; /* Navy color - #0B1846 */
   --secondary-foreground: 0 0% 100%;
-  --accent: 187 80% 94%;
+  --accent: 270 70% 94%;
   --accent-foreground: 222 47% 11%;
   
   /* Status Colors */
@@ -32,7 +32,7 @@
   --success-foreground: 0 0% 100%;
   
   /* Misc */
-  --ring: 187 80% 40%;
+  --ring: 270 70% 56%;
   --radius: 1rem;
 }
 
@@ -52,11 +52,11 @@
   --input: 217 33% 17%;
   
   /* Brand Colors */
-  --primary: 187 80% 40%; /* Teal color - #14B6B8 */
+  --primary: 270 80% 60%; /* Brighter purple for dark mode - #9955FF */
   --primary-foreground: 0 0% 100%;
   --secondary: 217 33% 17%;
   --secondary-foreground: 210 40% 98%;
-  --accent: 187 80% 20%;
+  --accent: 270 70% 30%;
   --accent-foreground: 210 40% 98%;
   
   /* Status Colors */
@@ -66,7 +66,7 @@
   --success-foreground: 0 0% 100%;
   
   /* Misc */
-  --ring: 187 80% 40%;
+  --ring: 270 80% 60%;
   --radius: 1rem;
 }
 
