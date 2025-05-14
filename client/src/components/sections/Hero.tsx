@@ -109,7 +109,7 @@ const Hero = () => {
     return (
       <div className="client-logos py-8" data-aos="fade-up" data-aos-delay="100">
         <h3 className="text-center text-muted-foreground uppercase text-sm tracking-wider mb-6">
-          Trusted by innovative companies worldwide
+          Trusted for over 20 years by leading organizations around the world
         </h3>
         <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-6 items-center justify-items-center">
           {clientLogos.map((client, i) => (
