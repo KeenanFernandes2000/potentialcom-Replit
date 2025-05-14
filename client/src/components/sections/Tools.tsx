@@ -105,8 +105,8 @@ const Tools = () => {
               data-aos-delay={index * 50}
             >
               <div className="h-1 bg-gradient-to-r from-primary/80 to-primary"></div>
-              <CardContent className="p-4 flex-grow">
-                <div className="flex justify-between items-center mb-2">
+              <CardContent className="p-3 flex-grow">
+                <div className="flex justify-between items-center mb-1">
                   <Badge variant="outline" className="bg-muted/50 text-xs px-2 py-0 h-5">
                     {tool.category}
                   </Badge>
@@ -116,11 +116,16 @@ const Tools = () => {
                     </Badge>
                   )}
                 </div>
-                <h3 className="text-lg font-semibold mb-1">{tool.title}</h3>
-                <p className="text-muted-foreground text-sm">{tool.description}</p>
-                <button className="text-primary text-sm font-medium flex items-center group transition-colors hover:text-primary/80 mt-2">
-                  Try it now <ArrowRight className="ml-1 w-3 h-3 transition-transform group-hover:translate-x-1" />
-                </button>
+                <h3 className="text-md font-semibold mb-1">{tool.title}</h3>
+                <p className="text-muted-foreground text-xs">{tool.description}</p>
+                <a 
+                  href="https://ai.potential.com/rachel"
+                  target="_blank"
+                  rel="noopener noreferrer" 
+                  className="text-primary text-xs font-medium flex items-center group transition-colors hover:text-primary/80 mt-2"
+                >
+                  Learn more <ArrowRight className="ml-1 w-3 h-3 transition-transform group-hover:translate-x-1" />
+                </a>
               </CardContent>
             </Card>
           ))}
@@ -130,11 +135,17 @@ const Tools = () => {
           <p className="text-muted-foreground mb-6">
             Need a custom AI workflow for your specific business needs?
           </p>
-          <button 
-            className="inline-flex items-center rounded-full bg-primary/10 hover:bg-primary/20 text-primary px-6 py-3 font-medium transition-colors"
+          <a 
+            href="https://ai.potential.com/rachel"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            Request Custom AI Solution <ArrowRight className="ml-1 w-4 h-4" />
-          </button>
+            <button 
+              className="inline-flex items-center rounded-full bg-primary/10 hover:bg-primary/20 text-primary px-6 py-3 font-medium transition-colors"
+            >
+              Request Custom AI Solution <ArrowRight className="ml-1 w-4 h-4" />
+            </button>
+          </a>
         </div>
       </div>
     </section>

@@ -55,32 +55,40 @@ const Benefits = () => {
           {benefits.map((benefit, index) => (
             <div 
               key={index} 
-              className="glass-effect border border-border p-8 rounded-xl card-hover"
+              className="glass-effect border border-border p-6 rounded-xl card-hover"
               data-aos="fade-up"
               data-aos-delay={index * 100}
             >
-              <div className="inline-flex items-center justify-center h-16 w-16 rounded-lg bg-primary/10 text-primary mb-6">
+              <div className="inline-flex items-center justify-center h-14 w-14 rounded-lg bg-primary/10 text-primary mb-4">
                 {benefit.icon}
               </div>
-              <h3 className="text-xl font-semibold mb-3">{benefit.title}</h3>
-              <p className="text-muted-foreground mb-6">{benefit.description}</p>
-              <Button
-                variant="link"
-                className="p-0 h-auto font-medium text-primary flex items-center group"
+              <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>
+              <p className="text-muted-foreground mb-4 text-sm">{benefit.description}</p>
+              <a 
+                href="https://ai.potential.com/rachel"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary font-medium flex items-center group hover:underline text-sm"
               >
-                Learn more <ArrowRight className="ml-1 w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Button>
+                Learn more <ArrowRight className="ml-1 w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+              </a>
             </div>
           ))}
         </div>
 
         <div className="mt-16 text-center">
-          <Button 
-            className="rounded-full bg-primary hover:bg-primary/90 text-white font-medium px-8 py-6"
-            size="lg"
+          <a 
+            href="https://ai.potential.com/rachel"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            Explore All Features
-          </Button>
+            <Button 
+              className="rounded-full bg-primary hover:bg-primary/90 text-white font-medium px-8 py-6"
+              size="lg"
+            >
+              Explore All Features
+            </Button>
+          </a>
         </div>
       </div>
     </section>
