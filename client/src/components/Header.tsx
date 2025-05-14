@@ -81,14 +81,12 @@ const Header = () => {
             Solutions
           </a>
           <a 
-            href="#vera" 
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("vera");
-            }}
+            href="https://ai.potential.com/rachel" 
+            target="_blank" 
+            rel="noopener noreferrer"
             className="text-foreground/80 hover:text-primary font-medium transition-colors"
           >
-            Meet Vera
+            Meet Rachel
           </a>
           
           <div className="pl-4">
@@ -143,14 +141,12 @@ const Header = () => {
             Solutions
           </a>
           <a 
-            href="#vera" 
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("vera");
-            }}
+            href="https://ai.potential.com/rachel" 
+            target="_blank" 
+            rel="noopener noreferrer"
             className="py-3 text-foreground hover:text-primary font-medium transition-colors"
           >
-            Meet Vera
+            Meet Rachel
           </a>
         </div>
       )}

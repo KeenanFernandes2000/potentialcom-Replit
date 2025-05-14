@@ -73,14 +73,12 @@ const Footer = () => {
               </li>
               <li>
                 <a 
-                  href="#vera" 
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection("vera");
-                  }}
+                  href="https://ai.potential.com/rachel" 
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
                 >
-                  Meet Vera
+                  Meet Rachel
                 </a>
               </li>
             </ul>

@@ -58,15 +58,8 @@ const Hero = () => {
     return () => observer.disconnect();
   }, []);
 
-  const scrollToVera = () => {
-    const vera = document.getElementById('vera');
-    if (vera) {
-      const offsetTop = vera.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({
-        top: offsetTop,
-        behavior: 'smooth'
-      });
-    }
+  const goToRachel = () => {
+    window.open('https://ai.potential.com/rachel', '_blank', 'noopener,noreferrer');
   };
 
   // Abstract SVG elements for decoration
@@ -177,7 +170,7 @@ const Hero = () => {
               <Button 
                 size="lg" 
                 className="rounded-full"
-                onClick={scrollToVera}
+                onClick={goToRachel}
               >
                 Explore Agents <ChevronRight className="ml-1 h-4 w-4" />
               </Button>

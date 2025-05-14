@@ -2,15 +2,9 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, MessageCircle, ChevronDown } from "lucide-react";
 
 const CTAFooter = () => {
-  const scrollToVera = () => {
-    const vera = document.getElementById('vera');
-    if (vera) {
-      const offsetTop = vera.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({
-        top: offsetTop,
-        behavior: 'smooth'
-      });
-    }
+  // Function to go to Rachel's page
+  const goToRachel = () => {
+    window.open('https://ai.potential.com/rachel', '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -35,7 +29,7 @@ const CTAFooter = () => {
             className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-foreground"
             data-aos="fade-up"
           >
-            Get Started with <span className="text-primary">Vera</span> – Your AI Growth Partner!
+            Get Started with <span className="text-primary">Rachel</span> – Your AI Growth Partner!
           </h2>
           
           <p 
@@ -43,18 +37,18 @@ const CTAFooter = () => {
             data-aos="fade-up"
             data-aos-delay="100"
           >
-            Ready to transform your business with AI? Let Vera guide you through the perfect solution for your needs. Our team will help you implement the right AI agents for your specific challenges.
+            Ready to transform your business with AI? Let Rachel guide you through the perfect solution for your needs. Our team will help you implement the right AI agents for your specific challenges.
           </p>
           
           <div className="flex flex-wrap justify-center gap-4">
             <Button 
-              onClick={scrollToVera}
+              onClick={goToRachel}
               className="rounded-full bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-6 shadow-lg"
               size="lg"
               data-aos="fade-up"
               data-aos-delay="200"
             >
-              Talk to Vera <ArrowRight className="ml-2 h-4 w-4" />
+              Talk to Rachel <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
             
             <Button 

@@ -4,7 +4,7 @@ import Benefits from "@/components/sections/Benefits";
 import Tools from "@/components/sections/Tools";
 import GettingStarted from "@/components/sections/GettingStarted";
 import SetupSpeed from "@/components/sections/SetupSpeed";
-import Vera from "@/components/sections/Vera";
+import Rachel from "@/components/sections/Rachel";
 import Stats from "@/components/sections/Stats";
 import Solutions from "@/components/sections/Solutions";
 import SalesBoost from "@/components/sections/SalesBoost";
@@ -30,7 +30,7 @@ const Home = () => {
         <Tools />
         <GettingStarted />
         <SetupSpeed />
-        <Vera />
+        <Rachel />
         <Stats />
         <Solutions />
         <SalesBoost />
