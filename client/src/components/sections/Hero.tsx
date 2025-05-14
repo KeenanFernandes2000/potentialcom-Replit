@@ -22,8 +22,7 @@ import airbusLogoDark from "@assets/Dark Mode Client logos/partner6.webp"; // Ai
 import microsoftLogoDark from "@assets/Dark Mode Client logos/partner7.webp"; // Microsoft
 import dellLogoDark from "@assets/Dark Mode Client logos/partner8.webp"; // Dell
 
-// Import hero image
-import heroImage from "@assets/Hero.png";
+// No longer needed as we're using a YouTube video embeded iframe
 
 const Hero = () => {
   // State to track theme
@@ -193,14 +192,15 @@ const Hero = () => {
               
               {/* Image with glass-like border */}
               <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border border-border">
-                <img 
-                  src={heroImage} 
-                  alt="Modern office with team working with AI assistants" 
-                  className="w-full h-auto object-cover rounded-2xl" 
-                />
-                
-                {/* Overlay gradient - more subtle for the illustration */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background/30 to-transparent opacity-20"></div>
+                <div className="aspect-video w-full"> 
+                  <iframe 
+                    src="https://www.youtube.com/embed/bMg9HDyMAa4?si=_pptCuyUaq2rnzWm" 
+                    title="AI Agents for Business" 
+                    className="w-full h-full object-cover rounded-2xl"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowFullScreen
+                  ></iframe>
+                </div>
                 
                 {/* Floating badge overlay */}
                 <div className="absolute bottom-6 left-6 right-6 glass-effect rounded-xl p-4 text-sm">
