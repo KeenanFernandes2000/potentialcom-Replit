@@ -25,6 +25,14 @@ const Whitepaper = () => {
     setTimeout(() => {
       setIsSubmitted(true);
       setIsLoading(false);
+      
+      // Automatically start the download after submission
+      const downloadLink = document.createElement('a');
+      downloadLink.href = '/assets/pdfs/amplified-intelligence-whitepaper.pdf';
+      downloadLink.download = 'Amplified_Intelligence_Whitepaper.pdf';
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
     }, 1000);
     
     // In a real implementation, you would post to an API endpoint
@@ -114,13 +122,9 @@ const Whitepaper = () => {
                     <h3 className="font-semibold mb-2">Thank You!</h3>
                     <p className="text-muted-foreground mb-4">Your download will begin shortly.</p>
                     <a 
-                      href="#"
+                      href="/assets/pdfs/amplified-intelligence-whitepaper.pdf"
+                      download="Amplified_Intelligence_Whitepaper.pdf"
                       className="text-primary font-medium hover:underline"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        // In a real implementation, this would be the actual download link
-                        alert("In a real implementation, this would download the PDF");
-                      }}
                     >
                       Click here if your download doesn't start
                     </a>
