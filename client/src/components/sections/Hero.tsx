@@ -191,21 +191,23 @@ const Hero = () => {
               <div className="absolute -bottom-8 -right-8 w-28 h-28 bg-secondary/30 rounded-full blur-xl"></div>
               
               {/* Image with glass-like border */}
-              <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border border-border">
-                <div className="aspect-video w-full"> 
-                  <iframe 
-                    src="https://www.youtube.com/embed/bMg9HDyMAa4?si=_pptCuyUaq2rnzWm" 
-                    title="AI Agents for Business" 
-                    className="w-full h-full object-cover rounded-2xl"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    allowFullScreen
-                  ></iframe>
-                </div>
-                
-                {/* Floating badge overlay */}
-                <div className="absolute bottom-6 left-6 right-6 glass-effect rounded-xl p-4 text-sm">
+              <div className="relative z-10">
+                {/* Floating badge above video */}
+                <div className="glass-effect rounded-xl p-4 text-sm mb-4 border border-border">
                   <div className="font-medium">AI-powered productivity</div>
                   <div className="text-xs text-muted-foreground mt-1">Scale your team without scaling overhead</div>
+                </div>
+                
+                <div className="rounded-2xl overflow-hidden shadow-2xl border border-border">
+                  <div className="aspect-video w-full"> 
+                    <iframe 
+                      src="https://www.youtube.com/embed/bMg9HDyMAa4?si=_pptCuyUaq2rnzWm" 
+                      title="AI Agents for Business" 
+                      className="w-full h-full object-cover rounded-2xl"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                      allowFullScreen
+                    ></iframe>
+                  </div>
                 </div>
               </div>
             </div>
