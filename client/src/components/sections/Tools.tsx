@@ -1,8 +1,11 @@
 import { ArrowRight, Sparkles, Star } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useState } from "react";
 
 const Tools = () => {
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  
   const tools = [
     {
       title: "Product Marketing Generator",
@@ -86,10 +89,11 @@ const Tools = () => {
           {categories.map((category, i) => (
             <Badge
               key={i}
-              variant={i === 0 ? "default" : "outline"}
+              variant={selectedCategory === category ? "default" : "outline"}
               className={`rounded-full px-4 py-2 text-sm cursor-pointer ${
-                i === 0 ? "bg-primary" : "hover:bg-primary/10"
+                selectedCategory === category ? "bg-primary" : "hover:bg-primary/10"
               }`}
+              onClick={() => setSelectedCategory(category)}
             >
               {category}
             </Badge>
@@ -97,7 +101,9 @@ const Tools = () => {
         </div>
         
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {tools.map((tool, index) => (
+          {tools
+            .filter(tool => selectedCategory === "All" || tool.category === selectedCategory)
+            .map((tool, index) => (
             <Card 
               key={index} 
               className="border border-border/50 rounded-lg overflow-hidden card-hover bg-background dark:bg-secondary/5 flex flex-col"
