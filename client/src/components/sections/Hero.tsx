@@ -38,18 +38,34 @@ const Hero = () => {
 
   // Logo grid for trusted companies
   const LogoGrid = () => {
+    // Client logo image paths
+    const clientLogos = [
+      { name: 'Airbus', path: '/assets/images/clients/AIRBUS-logo.png' },
+      { name: 'DG', path: '/assets/images/clients/DG-logo.png' },
+      { name: 'Nestle', path: '/assets/images/clients/Nestle-logo.png' },
+      { name: 'United Nations', path: '/assets/images/clients/UN-logo.png' },
+      { name: 'Cartier', path: '/assets/images/clients/cartier-logo.png' },
+      { name: 'HSBC', path: '/assets/images/clients/hsbc-logo.png' },
+      { name: 'Intel', path: '/assets/images/clients/intel-logo.png' },
+      { name: 'PepsiCo', path: '/assets/images/clients/pepsico-logo.png' }
+    ];
+
     return (
       <div className="client-logos py-8" data-aos="fade-up" data-aos-delay="100">
         <h3 className="text-center text-muted-foreground uppercase text-sm tracking-wider mb-6">
           Trusted by innovative companies worldwide
         </h3>
         <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-6 items-center justify-items-center">
-          {Array.from({ length: 8 }).map((_, i) => (
+          {clientLogos.map((client, i) => (
             <div 
               key={i} 
-              className="w-24 h-12 bg-muted dark:bg-secondary rounded-md opacity-60 flex items-center justify-center text-xs text-muted-foreground"
+              className="w-24 h-12 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity"
             >
-              Client {i+1}
+              <img 
+                src={client.path} 
+                alt={`${client.name} logo`} 
+                className="max-h-full max-w-full object-contain" 
+              />
             </div>
           ))}
         </div>
