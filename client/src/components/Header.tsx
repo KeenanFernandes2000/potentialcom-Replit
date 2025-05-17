@@ -61,14 +61,24 @@ const Header = () => {
             Home
           </a>
           <a 
-            href="#tools" 
+            href="#agents" 
             onClick={(e) => {
               e.preventDefault();
-              scrollToSection("tools");
+              scrollToSection("agents");
             }}
             className="text-foreground/80 hover:text-primary font-medium transition-colors"
           >
-            AI Tools
+            AI Agents
+          </a>
+          <a 
+            href="#platforms" 
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection("platforms");
+            }}
+            className="text-foreground/80 hover:text-primary font-medium transition-colors"
+          >
+            Platforms
           </a>
           <a 
             href="#solutions" 
@@ -81,12 +91,34 @@ const Header = () => {
             Solutions
           </a>
           <a 
-            href="https://ai.potential.com/rachel" 
-            target="_blank" 
-            rel="noopener noreferrer"
+            href="#pricing" 
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection("pricing");
+            }}
             className="text-foreground/80 hover:text-primary font-medium transition-colors"
           >
-            Meet Rachel
+            Pricing
+          </a>
+          <a 
+            href="#learn" 
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection("learn");
+            }}
+            className="text-foreground/80 hover:text-primary font-medium transition-colors"
+          >
+            Learn
+          </a>
+          <a 
+            href="#start" 
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection("start");
+            }}
+            className="text-foreground/80 hover:text-primary font-medium transition-colors"
+          >
+            Get Started
           </a>
           
           <div className="pl-4">
@@ -121,14 +153,24 @@ const Header = () => {
             Home
           </a>
           <a 
-            href="#tools" 
+            href="#agents" 
             onClick={(e) => {
               e.preventDefault();
-              scrollToSection("tools");
+              scrollToSection("agents");
             }}
             className="py-3 text-foreground hover:text-primary font-medium transition-colors"
           >
-            AI Tools
+            AI Agents
+          </a>
+          <a 
+            href="#platforms" 
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection("platforms");
+            }}
+            className="py-3 text-foreground hover:text-primary font-medium transition-colors"
+          >
+            Platforms
           </a>
           <a 
             href="#solutions" 
@@ -141,12 +183,34 @@ const Header = () => {
             Solutions
           </a>
           <a 
-            href="https://ai.potential.com/rachel" 
-            target="_blank" 
-            rel="noopener noreferrer"
+            href="#pricing" 
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection("pricing");
+            }}
             className="py-3 text-foreground hover:text-primary font-medium transition-colors"
           >
-            Meet Rachel
+            Pricing
+          </a>
+          <a 
+            href="#learn" 
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection("learn");
+            }}
+            className="py-3 text-foreground hover:text-primary font-medium transition-colors"
+          >
+            Learn
+          </a>
+          <a 
+            href="#start" 
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection("start");
+            }}
+            className="py-3 text-foreground hover:text-primary font-medium transition-colors"
+          >
+            Get Started
           </a>
         </div>
       )}
