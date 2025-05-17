@@ -1,4 +1,4 @@
-import { ArrowRight, ChevronRight, Building, Users, Government, Briefcase } from "lucide-react";
+import { ArrowRight, ChevronRight, Building, Users, Landmark, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
@@ -17,7 +17,7 @@ const Solutions = () => {
     {
       title: "Governments & Free Zones",
       description: "Empower thousands with AI-powered programs.",
-      icon: <Government className="h-6 w-6" />
+      icon: <Landmark className="h-6 w-6" />
     },
     {
       title: "Agencies",

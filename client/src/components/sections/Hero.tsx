@@ -168,18 +168,18 @@ const Hero = () => {
             <div className="flex flex-wrap gap-4">
               <Button 
                 size="lg" 
-                className="rounded-full"
-                onClick={goToRachel}
+                className="rounded-full bg-primary hover:bg-primary/90 text-white"
               >
-                Explore Agents <ChevronRight className="ml-1 h-4 w-4" />
+                Try Free AI Agent <Sparkles className="ml-2 h-4 w-4" />
               </Button>
               
               <Button 
                 variant="outline" 
                 className="rounded-full border-primary text-primary hover:bg-primary/10"
                 size="lg"
+                onClick={() => document.getElementById('start')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
               >
-                View Demo <ArrowRight className="ml-2 h-4 w-4" />
+                Book Demo <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
           </div>

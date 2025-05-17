@@ -1,25 +1,34 @@
 import Header from "@/components/Header";
 import Hero from "@/components/sections/Hero";
 import Benefits from "@/components/sections/Benefits";
-import Tools from "@/components/sections/Tools";
-import GettingStarted from "@/components/sections/GettingStarted";
-import SetupSpeed from "@/components/sections/SetupSpeed";
-import Rachel from "@/components/sections/Rachel";
-import Stats from "@/components/sections/Stats";
+import Agents from "@/components/sections/Agents";
+import Platforms from "@/components/sections/Platforms";
 import Solutions from "@/components/sections/Solutions";
-import SalesBoost from "@/components/sections/SalesBoost";
-import Architecture from "@/components/sections/Architecture";
-import Whitepaper from "@/components/sections/Whitepaper";
-import CTAFooter from "@/components/sections/CTAFooter";
+import Pricing from "@/components/sections/Pricing";
+import Learn from "@/components/sections/Learn";
+import Start from "@/components/sections/Start";
+import Rachel from "@/components/sections/Rachel";
 import Footer from "@/components/Footer";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Rocket } from "lucide-react";
 
 const Home = () => {
+  const [showMobileCTA, setShowMobileCTA] = useState(false);
+
   // Refresh AOS animations on route change
   useEffect(() => {
     if (typeof window !== 'undefined' && (window as any).AOS) {
       (window as any).AOS.refresh();
     }
+    
+    // Show mobile CTA after scrolling
+    const handleScroll = () => {
+      setShowMobileCTA(window.scrollY > 300);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
@@ -28,18 +37,27 @@ const Home = () => {
       <main>
         <Hero />
         <Benefits />
-        <Tools />
-        <GettingStarted />
-        <SetupSpeed />
-        <Rachel />
-        <Stats />
+        <Agents />
+        <Platforms />
         <Solutions />
-        <SalesBoost />
-        <Architecture />
-        <Whitepaper />
-        <CTAFooter />
+        <Pricing />
+        <Rachel />
+        <Learn />
+        <Start />
       </main>
       <Footer />
+      
+      {/* Mobile Sticky CTA */}
+      {showMobileCTA && (
+        <div className="fixed bottom-6 right-6 z-40 md:hidden">
+          <Button 
+            className="rounded-full bg-primary hover:bg-primary/90 text-white font-semibold px-4 py-6 shadow-lg"
+            size="lg"
+          >
+            <Rocket className="mr-2 h-4 w-4" /> Try Free AI Agent
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
