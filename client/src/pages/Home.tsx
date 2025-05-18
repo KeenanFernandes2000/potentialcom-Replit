@@ -4,6 +4,7 @@ import Benefits from "@/components/sections/Benefits";
 import Agents from "@/components/sections/Agents";
 import Start from "@/components/sections/Start";
 import Vera from "@/components/sections/Vera";
+import Whitepaper from "@/components/sections/Whitepaper";
 import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -35,6 +36,7 @@ const Home = () => {
         <Benefits />
         <Agents />
         <Vera />
+        <Whitepaper />
         <Start />
       </main>
       <Footer />

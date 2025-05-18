@@ -1,136 +1,117 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { FileText, Mail, ArrowRight, Check } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
+import { FileText, Download } from "lucide-react";
 
 const Whitepaper = () => {
   const [email, setEmail] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-  
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-    setError("");
     
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setError("Please enter a valid email address");
-      setIsLoading(false);
+    if (!email || !email.includes('@')) {
+      toast({
+        title: "Invalid Email",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
+      });
       return;
     }
     
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitted(true);
-      setIsLoading(false);
-      
-      // Automatically start the download after submission
-      const downloadLink = document.createElement('a');
-      downloadLink.href = '/assets/pdfs/amplified-intelligence-whitepaper.pdf';
-      downloadLink.download = 'Amplified Intelligence - Potential.com-Mar2025.pdf';
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
-    }, 1000);
+    setIsSubmitting(true);
     
-    // In a real implementation, you would post to an API endpoint
-    // The actual download would either be immediate or sent via email
-  };
-  
-  return (
-    <section id="whitepaper" className="py-24 bg-muted/30 relative overflow-hidden">
-      {/* Decorative elements */}
-      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-background to-transparent"></div>
-      <div className="absolute -right-20 bottom-20 w-40 h-40 rounded-full bg-primary/10 filter blur-3xl"></div>
+    // In a real implementation, you would send this to your backend
+    // For now we'll just simulate a successful submission
+    setTimeout(() => {
+      setIsSubmitting(false);
+      toast({
+        title: "Success!",
+        description: "Your whitepaper is ready to download.",
+      });
       
-      <div className="container">
-        <div className="max-w-4xl mx-auto glass-effect border border-border p-8 md:p-12 rounded-2xl shadow-lg">
-          <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
-            {/* Left side - Content */}
-            <div className="md:w-3/5" data-aos="fade-right">
-              <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-                <FileText className="h-4 w-4 mr-2" /> Free Resource
-              </div>
-              
-              <h2 className="text-3xl font-bold mb-4">
-                Download Our <span className="text-primary">"Amplified Intelligence"</span> Whitepaper
-              </h2>
-              
-              <p className="text-muted-foreground mb-6">
-                Learn how organizations are combining human expertise with AI to achieve breakthrough results. Our comprehensive whitepaper provides actionable strategies for implementing AI across your business.
-              </p>
-              
-              <div className="space-y-3 mb-6">
-                <div className="flex items-start gap-2">
-                  <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                  <span>Case studies from leading organizations</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                  <span>Implementation frameworks and best practices</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                  <span>ROI metrics and measurement strategies</span>
-                </div>
+      // Trigger the download
+      const link = document.createElement('a');
+      link.href = '/assets/pdfs/amplified-intelligence-whitepaper.pdf';
+      link.download = 'Amplified-Intelligence-Whitepaper.pdf';
+      link.click();
+      
+      // Clear the email field
+      setEmail("");
+    }, 1000);
+  };
+
+  return (
+    <section id="whitepaper" className="py-20 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-background/0 via-background/5 to-background/0 z-0"></div>
+      <div className="container relative z-10">
+        <div 
+          className="grid md:grid-cols-2 gap-10 items-center"
+          data-aos="fade-up"
+        >
+          {/* Left side - Document Preview */}
+          <div className="glass-effect p-8 rounded-2xl border border-border shadow-lg flex flex-col items-center">
+            <div className="bg-primary/10 rounded-full p-4 mb-6">
+              <FileText className="h-8 w-8 text-primary" />
+            </div>
+            <h3 className="text-2xl font-bold mb-2">Amplified Intelligence</h3>
+            <p className="text-lg mb-4">The Future of Enterprise AI</p>
+            <div className="w-full max-w-xs h-72 bg-background/40 rounded-lg flex items-center justify-center mb-4 border border-border">
+              <div className="text-center p-4">
+                <FileText className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
+                <p className="text-muted-foreground">Amplified Intelligence Whitepaper</p>
               </div>
             </div>
+            <p className="text-sm text-muted-foreground text-center mb-4">
+              Comprehensive research on how AI is transforming businesses and creating new opportunities.
+            </p>
+          </div>
+          
+          {/* Right side - Download Form */}
+          <div className="flex flex-col">
+            <h2 className="text-3xl font-bold mb-4">Download Our Latest Whitepaper</h2>
+            <p className="text-muted-foreground mb-8">
+              Explore how AI is revolutionizing business operations and empowering organizations to achieve more. 
+              Complete the form to get instant access to our comprehensive whitepaper.
+            </p>
             
-            {/* Right side - Form */}
-            <div className="md:w-2/5" data-aos="fade-left">
-              <div className="bg-background border border-border p-6 rounded-xl">
-                {!isSubmitted ? (
-                  <form onSubmit={handleSubmit}>
-                    <h3 className="font-semibold mb-4">Get Instant Access</h3>
-                    
-                    <div className="mb-4">
-                      <label htmlFor="email" className="block text-sm mb-1">Email Address</label>
-                      <div className="relative">
-                        <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                        <input
-                          type="email"
-                          id="email"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          placeholder="you@company.com"
-                          className="w-full pl-10 pr-4 py-2 border border-border rounded-md bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
-                          required
-                        />
-                      </div>
-                      {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
-                    </div>
-                    
-                    <Button 
-                      type="submit"
-                      className="w-full rounded-md bg-primary hover:bg-primary/90 text-white"
-                      disabled={isLoading}
-                    >
-                      {isLoading ? "Processing..." : "Download Whitepaper"} {!isLoading && <ArrowRight className="ml-2 h-4 w-4" />}
-                    </Button>
-                    
-                    <p className="text-xs text-muted-foreground mt-3 text-center">
-                      We respect your privacy and will never share your information.
-                    </p>
-                  </form>
-                ) : (
-                  <div className="text-center py-4">
-                    <div className="h-16 w-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Check className="h-8 w-8 text-primary" />
-                    </div>
-                    <h3 className="font-semibold mb-2">Thank You!</h3>
-                    <p className="text-muted-foreground mb-4">Your download will begin shortly.</p>
-                    <a 
-                      href="/assets/pdfs/amplified-intelligence-whitepaper.pdf"
-                      download="Amplified Intelligence - Potential.com-Mar2025.pdf"
-                      className="text-primary font-medium hover:underline"
-                    >
-                      Click here if your download doesn't start
-                    </a>
-                  </div>
-                )}
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium mb-2">
+                  Email Address
+                </label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="your@email.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full"
+                  required
+                />
               </div>
+              
+              <Button 
+                type="submit" 
+                className="w-full rounded-full bg-primary hover:bg-primary/90 text-white font-semibold"
+                size="lg"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <span className="flex items-center">Processing...</span>
+                ) : (
+                  <span className="flex items-center">
+                    <Download className="mr-2 h-4 w-4" /> Download Whitepaper
+                  </span>
+                )}
+              </Button>
+            </form>
+            
+            <div className="mt-8 text-sm text-muted-foreground">
+              <p>By submitting this form, you agree to receive communications from Potential.com. 
+              You can unsubscribe at any time. We respect your privacy and will never share your information.</p>
             </div>
           </div>
         </div>
