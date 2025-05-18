@@ -2,16 +2,11 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Platforms from "@/components/sections/Platforms";
 import Solutions from "@/components/sections/Solutions";
-import { useEffect, useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft } from "lucide-react";
-import { Link } from "wouter";
+import { useEffect } from "react";
 
 const Offerings = () => {
-  const [activeTab, setActiveTab] = useState("platforms");
-  
-  // Add Case Studies section to the offerings page
+  // Case Studies section
   const CaseStudies = () => {
     const caseStudies = [
       {
@@ -35,13 +30,13 @@ const Offerings = () => {
     ];
 
     return (
-      <section id="case-studies" className="py-20 relative">
+      <section id="case-studies" className="py-24 relative">
         <div className="container">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
               Success Stories
             </div>
-            <h2 className="section-title mb-6">
+            <h2 className="text-3xl font-bold mb-6">
               Real-World Case Studies
             </h2>
             <p className="text-xl text-muted-foreground">
@@ -93,35 +88,18 @@ const Offerings = () => {
     <div className="font-inter min-h-screen">
       <Header />
       <main className="pt-32">
-        <div className="container">
+        <div className="container mb-12">
           <div className="max-w-6xl mx-auto">
-            <div className="flex items-center gap-4 mb-12">
-              <Link href="/">
-                <Button variant="ghost" size="icon" className="rounded-full">
-                  <ChevronLeft className="h-5 w-5" />
-                </Button>
-              </Link>
-              <h1 className="text-3xl md:text-4xl font-bold">Our Offerings</h1>
-            </div>
-
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-3 mb-12">
-                <TabsTrigger value="platforms">Platforms</TabsTrigger>
-                <TabsTrigger value="solutions">Solutions</TabsTrigger>
-                <TabsTrigger value="case-studies">Case Studies</TabsTrigger>
-              </TabsList>
-              <TabsContent value="platforms">
-                <Platforms />
-              </TabsContent>
-              <TabsContent value="solutions">
-                <Solutions />
-              </TabsContent>
-              <TabsContent value="case-studies">
-                <CaseStudies />
-              </TabsContent>
-            </Tabs>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Our AI Products</h1>
+            <p className="text-xl text-muted-foreground max-w-3xl">
+              Explore our comprehensive range of AI solutions designed to empower your organization.
+            </p>
           </div>
         </div>
+        
+        <Platforms />
+        <Solutions />
+        <CaseStudies />
       </main>
       <Footer />
     </div>
