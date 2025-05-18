@@ -5,7 +5,7 @@ import Agents from "@/components/sections/Agents";
 import Pricing from "@/components/sections/Pricing";
 import Learn from "@/components/sections/Learn";
 import Start from "@/components/sections/Start";
-import Rachel from "@/components/sections/Rachel";
+import Vera from "@/components/sections/Vera";
 import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -37,7 +37,7 @@ const Home = () => {
         <Benefits />
         <Agents />
         <Pricing />
-        <Rachel />
+        <Vera />
         <Learn />
         <Start />
       </main>
