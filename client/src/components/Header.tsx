@@ -47,16 +47,6 @@ const Header = () => {
         
         <nav className="hidden md:flex items-center space-x-8">
           <a 
-            href="#agents" 
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("agents");
-            }}
-            className="text-foreground/80 hover:text-primary font-medium transition-colors"
-          >
-            AI Agents
-          </a>
-          <a 
             href="/offerings"
             className="text-foreground/80 hover:text-primary font-medium transition-colors"
           >
@@ -106,16 +96,6 @@ const Header = () => {
       
       {isMenuOpen && (
         <div className="mobile-nav flex flex-col glass-effect w-full py-6 px-6 md:hidden shadow-md">
-          <a 
-            href="#agents" 
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("agents");
-            }}
-            className="py-3 text-foreground hover:text-primary font-medium transition-colors"
-          >
-            AI Agents
-          </a>
           <a 
             href="/offerings"
             className="py-3 text-foreground hover:text-primary font-medium transition-colors"
