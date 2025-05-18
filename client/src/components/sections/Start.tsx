@@ -47,15 +47,16 @@ const Start = () => {
             <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mx-auto mb-6">
               <CalendarIcon className="h-7 w-7" />
             </div>
-            <h3 className="text-xl font-bold mb-3">Book a Demo</h3>
+            <h3 className="text-xl font-bold mb-3">Talk to AI Consultant</h3>
             <p className="text-muted-foreground mb-6">
-              Schedule a personalized demonstration with our solution experts.
+              Talk now with our AI consultant to explore how you can harness the power of AI.
             </p>
             <Button 
               className="rounded-full bg-primary hover:bg-primary/90 text-white font-semibold px-8 w-full"
               size="lg"
+              onClick={() => window.open('https://ai.potential.com/voice/42531902-20ad-46c7-a611-3e0ccf721aa1', '_blank', 'noopener,noreferrer')}
             >
-              Book a Demo
+              Talk to AI Consultant
             </Button>
           </div>
           
