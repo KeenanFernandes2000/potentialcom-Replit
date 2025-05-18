@@ -33,6 +33,7 @@ const Start = () => {
             <Button 
               className="rounded-full bg-primary hover:bg-primary/90 text-white font-semibold px-8 w-full"
               size="lg"
+              onClick={() => window.open('https://ai.potential.com/login?utm_source=bot&utm_medium=main', '_blank', 'noopener,noreferrer')}
             >
               Try Free AI Agent
             </Button>
