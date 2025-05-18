@@ -66,6 +66,7 @@ const Solutions = () => {
                 <Button 
                   variant="ghost" 
                   className="text-primary font-medium p-0 hover:bg-transparent flex items-center group"
+                  onClick={() => window.open('https://ai.potential.com/voice/42531902-20ad-46c7-a611-3e0ccf721aa1', '_blank', 'noopener,noreferrer')}
                 >
                   Learn More <ArrowRight className="ml-1 w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Button>
@@ -82,6 +83,7 @@ const Solutions = () => {
           <Button
             className="rounded-full bg-primary hover:bg-primary/90 text-white font-medium px-6 py-6"
             size="lg"
+            onClick={() => window.open('https://ai.potential.com/voice/42531902-20ad-46c7-a611-3e0ccf721aa1', '_blank', 'noopener,noreferrer')}
           >
             Schedule a Consultation <ChevronRight className="ml-2 h-4 w-4" />
           </Button>
