@@ -115,8 +115,9 @@ const Platforms = () => {
               <Button 
                 variant="outline" 
                 className="w-full rounded-full hover:bg-primary hover:text-white"
+                onClick={() => window.open('https://ai.potential.com/voice/42531902-20ad-46c7-a611-3e0ccf721aa1', '_blank', 'noopener,noreferrer')}
               >
-                Preview Platform
+                Learn More
               </Button>
             </div>
           ))}
