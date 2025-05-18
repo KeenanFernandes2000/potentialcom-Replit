@@ -9,6 +9,7 @@ const Agents = () => {
       description: "Train a chatbot on your content. 24/7 support agent.",
       price: "$50/mo",
       ctaText: "Try Now",
+      link: "https://ai.potential.com/chatbots"
     },
     {
       title: "Voicebot",
@@ -16,6 +17,7 @@ const Agents = () => {
       description: "Automate calls & phone support.",
       price: "$200/mo",
       ctaText: "Try Now",
+      link: "https://ai.potential.com/rachel"
     }
   ];
 
@@ -51,7 +53,7 @@ const Agents = () => {
               <Button 
                 className="rounded-full bg-primary hover:bg-primary/90 text-white font-semibold px-8"
                 size="lg"
-                onClick={() => window.open('https://ai.potential.com/chatbots', '_blank', 'noopener,noreferrer')}
+                onClick={() => window.open(agent.link, '_blank', 'noopener,noreferrer')}
               >
                 {agent.ctaText}
               </Button>
