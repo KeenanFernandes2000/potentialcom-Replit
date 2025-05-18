@@ -65,11 +65,9 @@ const Header = () => {
             Resources
           </a>
           <a 
-            href="#start" 
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("start");
-            }}
+            href="https://ai.potential.com/login?utm_source=bot&utm_medium=main"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-foreground/80 hover:text-primary font-medium transition-colors"
           >
             Get Started
@@ -118,12 +116,11 @@ const Header = () => {
             Resources
           </a>
           <a 
-            href="#start" 
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("start");
-            }}
+            href="https://ai.potential.com/login?utm_source=bot&utm_medium=main"
+            target="_blank"
+            rel="noopener noreferrer"
             className="py-3 text-foreground hover:text-primary font-medium transition-colors"
+            onClick={() => setIsMenuOpen(false)}
           >
             Get Started
           </a>
