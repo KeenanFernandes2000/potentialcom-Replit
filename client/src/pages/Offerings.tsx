@@ -11,22 +11,32 @@ const Offerings = () => {
   const CaseStudies = () => {
     const caseStudies = [
       {
-        title: "Government KPI Tracking",
-        description: "How a government agency used our AI agents to streamline performance tracking across departments.",
-        imageSrc: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
-        category: "Government"
+        title: "Tatawwar: Building Tomorrow's Minds",
+        description: "Transformative educational initiative with HSBC that connected students, teachers, and businesses to address UN Sustainable Development Goals.",
+        imageSrc: "https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+        category: "Education",
+        partner: "HSBC"
       },
       {
-        title: "Enterprise Support Automation",
-        description: "Fortune 500 company reduced support costs by 75% while improving customer satisfaction.",
-        imageSrc: "https://images.unsplash.com/photo-1531973576160-7125cd663d86?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
-        category: "Enterprise"
+        title: "The Entrepreneurial Nation",
+        description: "Revolutionary program that equipped SMEs and startups with AI-powered tools to rapidly scale operations and accelerate business growth.",
+        imageSrc: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+        category: "SME Development",
+        partner: "Ministry of Economy"
       },
       {
-        title: "SME Growth Acceleration",
-        description: "How a small business used AI agents to scale operations without additional hiring.",
-        imageSrc: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
-        category: "SME"
+        title: "Maliyat Financial Literacy",
+        description: "Groundbreaking CSR initiative with Bank Muscat that empowered youth with essential financial skills for economic independence.",
+        imageSrc: "https://images.unsplash.com/photo-1589666564459-93cdd3ab856c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+        category: "Financial Education",
+        partner: "Bank Muscat"
+      },
+      {
+        title: "Cartier Women's Initiative",
+        description: "Global entrepreneurship competition that identified and accelerated women-led ventures addressing critical global challenges.",
+        imageSrc: "https://images.unsplash.com/photo-1529739121416-921f4dae728e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+        category: "Women Empowerment",
+        partner: "Cartier"
       }
     ];
 
@@ -64,9 +74,18 @@ const Offerings = () => {
                   </div>
                 </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-bold mb-3">{study.title}</h3>
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-xl font-bold">{study.title}</h3>
+                    <div className="text-xs text-muted-foreground bg-background/50 px-2 py-1 rounded-full">
+                      with {study.partner}
+                    </div>
+                  </div>
                   <p className="text-muted-foreground mb-4">{study.description}</p>
-                  <Button variant="link" className="px-0 text-primary">
+                  <Button 
+                    variant="link" 
+                    className="px-0 text-primary"
+                    onClick={() => window.open('https://ai.potential.com/voice/42531902-20ad-46c7-a611-3e0ccf721aa1', '_blank', 'noopener,noreferrer')}
+                  >
                     Read full case study
                   </Button>
                 </div>
