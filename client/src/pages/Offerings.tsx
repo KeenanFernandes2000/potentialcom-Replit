@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Agents from "@/components/sections/Agents";
 import Platforms from "@/components/sections/Platforms";
 import Solutions from "@/components/sections/Solutions";
 import { Button } from "@/components/ui/button";
@@ -97,6 +98,7 @@ const Offerings = () => {
           </div>
         </div>
         
+        <Agents />
         <Platforms />
         <Solutions />
         <CaseStudies />
