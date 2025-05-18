@@ -106,7 +106,7 @@ const Vera = () => {
               Vera is your intelligent assistant who answers your questions, matches you with the perfect AI Agents, and books meetings with human experts when needed. She's always available to guide your business growth journey.
             </p>
             <a 
-              href="https://ai.potential.com/rachel"
+              href="https://ai.potential.com/voice/42531902-20ad-46c7-a611-3e0ccf721aa1"
               target="_blank"
               rel="noopener noreferrer"
             >
