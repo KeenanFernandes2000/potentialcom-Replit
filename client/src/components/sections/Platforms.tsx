@@ -3,7 +3,9 @@ import {
   UserPlus, 
   GraduationCap, 
   HeadphonesIcon, 
-  BarChart4
+  BarChart4,
+  Trophy,
+  ClipboardList
 } from "lucide-react";
 
 const Platforms = () => {
@@ -46,6 +48,26 @@ const Platforms = () => {
         "Custom KPI monitoring",
         "Team performance tracking",
         "AI prediction insights"
+      ]
+    },
+    {
+      title: "Hackathon Platform",
+      icon: <Trophy className="h-6 w-6" />,
+      description: "Innovation and competition management",
+      features: [
+        "Team formation tools",
+        "Submission management",
+        "AI-based judging assistance"
+      ]
+    },
+    {
+      title: "Project Manager",
+      icon: <ClipboardList className="h-6 w-6" />,
+      description: "Streamlined task and project management",
+      features: [
+        "Task assignment and tracking",
+        "Progress visualization",
+        "AI resource optimization"
       ]
     }
   ];
