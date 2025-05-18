@@ -51,6 +51,7 @@ const Agents = () => {
               <Button 
                 className="rounded-full bg-primary hover:bg-primary/90 text-white font-semibold px-8"
                 size="lg"
+                onClick={() => window.open('https://ai.potential.com/chatbots', '_blank', 'noopener,noreferrer')}
               >
                 {agent.ctaText}
               </Button>
