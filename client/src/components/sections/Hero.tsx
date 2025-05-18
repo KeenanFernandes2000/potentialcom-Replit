@@ -178,9 +178,9 @@ const Hero = () => {
                 variant="outline" 
                 className="rounded-full border-primary text-primary hover:bg-primary/10"
                 size="lg"
-                onClick={() => document.getElementById('start')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                onClick={() => window.open('https://ai.potential.com/voice/42531902-20ad-46c7-a611-3e0ccf721aa1', '_blank', 'noopener,noreferrer')}
               >
-                Book Demo <ArrowRight className="ml-2 h-4 w-4" />
+                Talk to AI Consultant <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
           </div>
