@@ -50,7 +50,7 @@ const Header = () => {
             href="/offerings"
             className="text-foreground/80 hover:text-primary font-medium transition-colors"
           >
-            Offerings
+            Solutions
           </a>
           <a 
             href="/pricing"
@@ -101,7 +101,7 @@ const Header = () => {
             className="py-3 text-foreground hover:text-primary font-medium transition-colors"
             onClick={() => setIsMenuOpen(false)}
           >
-            Offerings
+            Solutions
           </a>
           <a 
             href="/pricing"
