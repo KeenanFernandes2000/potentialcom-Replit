@@ -63,11 +63,7 @@ const Header = () => {
             Offerings
           </a>
           <a 
-            href="#pricing" 
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("pricing");
-            }}
+            href="/pricing"
             className="text-foreground/80 hover:text-primary font-medium transition-colors"
           >
             Pricing
@@ -128,12 +124,9 @@ const Header = () => {
             Offerings
           </a>
           <a 
-            href="#pricing" 
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("pricing");
-            }}
+            href="/pricing"
             className="py-3 text-foreground hover:text-primary font-medium transition-colors"
+            onClick={() => setIsMenuOpen(false)}
           >
             Pricing
           </a>
