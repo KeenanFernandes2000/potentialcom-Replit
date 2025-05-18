@@ -3,7 +3,6 @@ import Hero from "@/components/sections/Hero";
 import Benefits from "@/components/sections/Benefits";
 import Agents from "@/components/sections/Agents";
 import Pricing from "@/components/sections/Pricing";
-import Learn from "@/components/sections/Learn";
 import Start from "@/components/sections/Start";
 import Vera from "@/components/sections/Vera";
 import Footer from "@/components/Footer";
@@ -38,7 +37,6 @@ const Home = () => {
         <Agents />
         <Pricing />
         <Vera />
-        <Learn />
         <Start />
       </main>
       <Footer />
