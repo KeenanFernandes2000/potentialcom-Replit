@@ -38,11 +38,7 @@ const Header = () => {
       <div className="container py-4 flex justify-between items-center">
         <div className="logo">
           <a 
-            href="#hero" 
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("hero");
-            }}
+            href="/"
             className="flex items-center"
           >
             <Logo height={40} />
@@ -50,16 +46,6 @@ const Header = () => {
         </div>
         
         <nav className="hidden md:flex items-center space-x-8">
-          <a 
-            href="#hero" 
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("hero");
-            }}
-            className="text-foreground/80 hover:text-primary font-medium transition-colors"
-          >
-            Home
-          </a>
           <a 
             href="#agents" 
             onClick={(e) => {
@@ -128,16 +114,6 @@ const Header = () => {
       
       {isMenuOpen && (
         <div className="mobile-nav flex flex-col glass-effect w-full py-6 px-6 md:hidden shadow-md">
-          <a 
-            href="#hero" 
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("hero");
-            }}
-            className="py-3 text-foreground hover:text-primary font-medium transition-colors"
-          >
-            Home
-          </a>
           <a 
             href="#agents" 
             onClick={(e) => {
