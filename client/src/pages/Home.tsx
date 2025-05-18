@@ -2,8 +2,6 @@ import Header from "@/components/Header";
 import Hero from "@/components/sections/Hero";
 import Benefits from "@/components/sections/Benefits";
 import Agents from "@/components/sections/Agents";
-import Platforms from "@/components/sections/Platforms";
-import Solutions from "@/components/sections/Solutions";
 import Pricing from "@/components/sections/Pricing";
 import Learn from "@/components/sections/Learn";
 import Start from "@/components/sections/Start";
@@ -38,8 +36,6 @@ const Home = () => {
         <Hero />
         <Benefits />
         <Agents />
-        <Platforms />
-        <Solutions />
         <Pricing />
         <Rachel />
         <Learn />

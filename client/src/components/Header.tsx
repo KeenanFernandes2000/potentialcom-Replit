@@ -71,24 +71,10 @@ const Header = () => {
             AI Agents
           </a>
           <a 
-            href="#platforms" 
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("platforms");
-            }}
+            href="/offerings"
             className="text-foreground/80 hover:text-primary font-medium transition-colors"
           >
-            Platforms
-          </a>
-          <a 
-            href="#solutions" 
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("solutions");
-            }}
-            className="text-foreground/80 hover:text-primary font-medium transition-colors"
-          >
-            Solutions
+            Offerings
           </a>
           <a 
             href="#pricing" 
@@ -163,24 +149,11 @@ const Header = () => {
             AI Agents
           </a>
           <a 
-            href="#platforms" 
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("platforms");
-            }}
+            href="/offerings"
             className="py-3 text-foreground hover:text-primary font-medium transition-colors"
+            onClick={() => setIsMenuOpen(false)}
           >
-            Platforms
-          </a>
-          <a 
-            href="#solutions" 
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("solutions");
-            }}
-            className="py-3 text-foreground hover:text-primary font-medium transition-colors"
-          >
-            Solutions
+            Offerings
           </a>
           <a 
             href="#pricing" 
