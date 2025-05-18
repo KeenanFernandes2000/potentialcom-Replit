@@ -169,6 +169,7 @@ const Hero = () => {
               <Button 
                 size="lg" 
                 className="rounded-full bg-primary hover:bg-primary/90 text-white"
+                onClick={() => window.open('https://ai.potential.com/login?utm_source=bot&utm_medium=main', '_blank', 'noopener,noreferrer')}
               >
                 Try Free AI Agent <Sparkles className="ml-2 h-4 w-4" />
               </Button>
