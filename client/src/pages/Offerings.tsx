@@ -13,28 +13,28 @@ const Offerings = () => {
       {
         title: "Tatawwar: Building Tomorrow's Minds",
         description: "Transformative educational initiative with HSBC that connected students, teachers, and businesses to address UN Sustainable Development Goals.",
-        imageSrc: "https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+        imageSrc: "https://placehold.co/800x400/e6f7ff/0066cc?text=HSBC+Partnership",
         category: "Education",
         partner: "HSBC"
       },
       {
         title: "The Entrepreneurial Nation",
         description: "Revolutionary program that equipped SMEs and startups with AI-powered tools to rapidly scale operations and accelerate business growth.",
-        imageSrc: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+        imageSrc: "https://placehold.co/800x400/f5f5f5/333333?text=Ministry+of+Economy",
         category: "SME Development",
         partner: "Ministry of Economy"
       },
       {
         title: "Maliyat Financial Literacy",
         description: "Groundbreaking CSR initiative with Bank Muscat that empowered youth with essential financial skills for economic independence.",
-        imageSrc: "https://images.unsplash.com/photo-1589666564459-93cdd3ab856c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+        imageSrc: "https://placehold.co/800x400/f9f9f9/c41230?text=Bank+Muscat+Initiative",
         category: "Financial Education",
         partner: "Bank Muscat"
       },
       {
         title: "Cartier Women's Initiative",
         description: "Global entrepreneurship competition that identified and accelerated women-led ventures addressing critical global challenges.",
-        imageSrc: "https://images.unsplash.com/photo-1529739121416-921f4dae728e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400",
+        imageSrc: "https://placehold.co/800x400/000000/ffffff?text=Cartier+Women's+Initiative",
         category: "Women Empowerment",
         partner: "Cartier"
       }
