@@ -37,7 +37,8 @@ export interface IStorage {
 
 export class DatabaseStorage implements IStorage {
   // User authentication and profile
-  async getUserById(id: number): Promise<User | undefined> {
+  async getUserById(id: number | undefined): Promise<User | undefined> {
+    if (!id) return undefined;
     const [user] = await db.select().from(users).where(eq(users.id, id));
     return user;
   }
@@ -85,7 +86,11 @@ export class DatabaseStorage implements IStorage {
     return true;
   }
   
-  async updateUserProfile(userId: number, profileData: UpdateProfileInput): Promise<User> {
+  async updateUserProfile(userId: number | undefined, profileData: UpdateProfileInput): Promise<User> {
+    if (!userId) {
+      throw new Error('User ID is required to update profile');
+    }
+    
     const [updatedUser] = await db.update(users)
       .set({
         ...profileData,

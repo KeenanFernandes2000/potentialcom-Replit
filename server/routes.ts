@@ -207,6 +207,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const validatedData = updateProfileSchema.parse(req.body);
       
+      if (!req.session.userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+      
       const updatedUser = await storage.updateUserProfile(
         req.session.userId, 
         validatedData
@@ -247,6 +251,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get resource downloads (for authenticated users)
   app.get("/api/resources/my-downloads", isAuthenticated, async (req, res) => {
     try {
+      if (!req.session.userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+      
       const user = await storage.getUserById(req.session.userId);
       
       if (!user) {
