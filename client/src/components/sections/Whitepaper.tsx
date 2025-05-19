@@ -52,22 +52,12 @@ const Whitepaper = () => {
           data-aos="fade-up"
         >
           {/* Left side - Document Preview */}
-          <div className="glass-effect p-8 rounded-2xl border border-border shadow-lg flex flex-col items-center">
-            <div className="bg-primary/10 rounded-full p-4 mb-6">
-              <FileText className="h-8 w-8 text-primary" />
-            </div>
-            <h3 className="text-2xl font-bold mb-2">Amplified Intelligence</h3>
-            <p className="text-lg mb-4">The Future of Enterprise AI</p>
-            <div className="w-full max-w-xs rounded-lg flex items-center justify-center mb-4 overflow-hidden border border-border">
-              <img 
-                src={`${import.meta.env.BASE_URL}assets/images/whitepaper-cover.png`}
-                alt="Amplifying Human Potential with AI - Whitepaper" 
-                className="w-full h-auto"
-              />
-            </div>
-            <p className="text-sm text-muted-foreground text-center mb-4">
-              Comprehensive research on how AI is transforming businesses and creating new opportunities.
-            </p>
+          <div className="flex flex-col items-center">
+            <img 
+              src="/assets/images/amplified-intelligence-cover.png"
+              alt="Amplified Intelligence - The Future of Enterprise AI" 
+              className="w-full max-w-md rounded-lg shadow-lg"
+            />
           </div>
           
           {/* Right side - Download Form */}
