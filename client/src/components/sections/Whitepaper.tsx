@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { FileText, Download } from "lucide-react";
-import WhitepaperCover from "@/assets/amplified-intelligence-cover.png";
 
 const Whitepaper = () => {
   const [email, setEmail] = useState("");
@@ -53,12 +52,21 @@ const Whitepaper = () => {
           data-aos="fade-up"
         >
           {/* Left side - Document Preview */}
-          <div className="flex flex-col items-center">
-            <img 
-              src={WhitepaperCover}
-              alt="Amplified Intelligence - The Future of Enterprise AI" 
-              className="w-full max-w-md rounded-lg shadow-lg"
-            />
+          <div className="flex flex-col items-center lg:items-start text-center lg:text-left bg-black/90 p-8 rounded-2xl">
+            <div className="w-24 h-24 rounded-full bg-purple-950 flex items-center justify-center text-primary mb-6">
+              <FileText className="h-12 w-12 text-purple-500" />
+            </div>
+            <h3 className="text-3xl font-bold mb-2 text-white">Amplified Intelligence</h3>
+            <p className="text-xl mb-8 text-white/80">The Future of Enterprise AI</p>
+            
+            <div className="w-full px-6 py-3 bg-black/60 rounded-full border border-purple-700/30 flex items-center mb-8">
+              <span className="mr-2">📄</span>
+              <span className="text-white">Amplifying Human Potential with AI - Whitepaper</span>
+            </div>
+            
+            <p className="text-sm text-gray-400 text-center mb-4">
+              Comprehensive research on how AI is transforming businesses and creating new opportunities.
+            </p>
           </div>
           
           {/* Right side - Download Form */}
