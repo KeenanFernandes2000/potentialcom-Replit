@@ -2,11 +2,27 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { UpdateProfileInput } from "@shared/schema";
 
+// Define User type for the frontend
+export interface User {
+  id: number;
+  email: string;
+  firstName?: string | null;
+  lastName?: string | null;
+  phoneNumber?: string | null;
+  jobTitle?: string | null;
+  companyWebsite?: string | null;
+  linkedinUrl?: string | null;
+  isSubscribedToNewsletter?: boolean;
+  isVerified?: boolean;
+  createdAt?: string | Date;
+  updatedAt?: string | Date;
+}
+
 export function useAuth() {
   const queryClient = useQueryClient();
 
   // Get current user
-  const { data: user, isLoading, error } = useQuery({
+  const { data: user, isLoading, error } = useQuery<User>({
     queryKey: ['/api/auth/user'],
     retry: false,
   });
