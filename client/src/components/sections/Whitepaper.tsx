@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { FileText, Download } from "lucide-react";
+import WhitepaperCover from "@/assets/amplified-intelligence-cover.png";
 
 const Whitepaper = () => {
   const [email, setEmail] = useState("");
@@ -54,7 +55,7 @@ const Whitepaper = () => {
           {/* Left side - Document Preview */}
           <div className="flex flex-col items-center">
             <img 
-              src="/assets/images/amplified-intelligence-cover.png"
+              src={WhitepaperCover}
               alt="Amplified Intelligence - The Future of Enterprise AI" 
               className="w-full max-w-md rounded-lg shadow-lg"
             />
