@@ -88,17 +88,13 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
             <ul className="space-y-3">
-              <li className="flex items-start gap-2">
-                <MapPin className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-                <span className="opacity-80">123 AI Avenue, Innovation District, United States</span>
-              </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-5 w-5 text-primary" />
                 <span className="opacity-80">contact@potential.com</span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="h-5 w-5 text-primary" />
-                <span className="opacity-80">+1 (555) 123-4567</span>
+                <span className="opacity-80">+1 862 267 9307</span>
               </li>
             </ul>
           </div>
