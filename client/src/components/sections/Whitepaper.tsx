@@ -23,10 +23,28 @@ const Whitepaper = () => {
     
     setIsSubmitting(true);
     
-    // In a real implementation, you would send this to your backend
-    // For now we'll just simulate a successful submission
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      // Track the download with the backend
+      await fetch('/api/resources/track-download', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          resourceName: 'Amplified Intelligence Whitepaper'
+        }),
+      });
+      
+      // Subscribe to newsletter if user is not already subscribed
+      await fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+      
       toast({
         title: "Success!",
         description: "Your whitepaper is ready to download.",
@@ -40,7 +58,16 @@ const Whitepaper = () => {
       
       // Clear the email field
       setEmail("");
-    }, 1000);
+    } catch (error) {
+      console.error("Error tracking download:", error);
+      toast({
+        title: "Error",
+        description: "There was a problem processing your request. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

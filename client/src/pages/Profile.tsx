@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth, type User } from "@/hooks/useAuth";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -50,12 +50,12 @@ export default function Profile() {
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      firstName: user?.firstName || "",
-      lastName: user?.lastName || "",
-      phoneNumber: user?.phoneNumber || "",
-      jobTitle: user?.jobTitle || "",
-      companyWebsite: user?.companyWebsite || "",
-      linkedinUrl: user?.linkedinUrl || "",
+      firstName: "",
+      lastName: "",
+      phoneNumber: "",
+      jobTitle: "",
+      companyWebsite: "",
+      linkedinUrl: "",
     },
   });
 
