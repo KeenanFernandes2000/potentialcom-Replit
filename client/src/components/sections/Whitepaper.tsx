@@ -60,7 +60,7 @@ const Whitepaper = () => {
             <p className="text-lg mb-4">The Future of Enterprise AI</p>
             <div className="w-full max-w-xs rounded-lg flex items-center justify-center mb-4 overflow-hidden border border-border">
               <img 
-                src="/assets/images/whitepaper-cover.png" 
+                src={`${import.meta.env.BASE_URL}assets/images/whitepaper-cover.png`}
                 alt="Amplifying Human Potential with AI - Whitepaper" 
                 className="w-full h-auto"
               />
