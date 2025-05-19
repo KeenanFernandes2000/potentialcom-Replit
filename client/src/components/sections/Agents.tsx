@@ -6,7 +6,7 @@ const Agents = () => {
     {
       title: "Chatbot",
       icon: <MessageCircle className="h-6 w-6" />,
-      description: "Train a chatbot on your content. 24/7 support agent.",
+      description: "Train a chatbot on your content. 24/7 support agent. Launch sales and coaches agents.",
       price: "$50/mo",
       ctaText: "Try Now",
       link: "https://ai.potential.com/chatbots"
@@ -14,7 +14,7 @@ const Agents = () => {
     {
       title: "Voicebot",
       icon: <Phone className="h-6 w-6" />,
-      description: "Automate calls & phone support.",
+      description: "Automate calls & phone support. Launch sales and coaches agents.",
       price: "$200/mo",
       ctaText: "Try Now",
       link: "https://ai.potential.com/rachel"
