@@ -6,7 +6,7 @@ const Agents = () => {
     {
       title: "Chatbot",
       icon: <MessageCircle className="h-6 w-6" />,
-      description: "Train a chatbot on your content. 24/7 support agent. Launch sales and coaches agents.",
+      description: "Train a chatbot on your content in minutes. Embed agents effortlessly into your website.",
       price: "$50/mo",
       ctaText: "Try Now",
       link: "https://ai.potential.com/chatbots"
