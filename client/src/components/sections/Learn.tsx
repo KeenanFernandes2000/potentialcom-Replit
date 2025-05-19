@@ -7,25 +7,25 @@ const Learn = () => {
       title: "Blog / Use Cases",
       description: "Explore real-world applications and success stories",
       icon: <BookOpen className="h-5 w-5" />,
-      link: "#"
+      link: "https://www.potential.com/blog/"
     },
     {
       title: "Case Study: Government KPI Agent",
       description: "See how government agencies leverage our AI solutions",
       icon: <FileText className="h-5 w-5" />,
-      link: "#"
+      link: "https://www.potential.com/blog/government-kpi-agent"
     },
     {
       title: "AI Amplify",
       description: "Learn how to maximize your AI investment",
       icon: <BarChart className="h-5 w-5" />,
-      link: "#"
+      link: "https://www.potential.com/blog/ai-amplify"
     },
     {
       title: "FAQ",
       description: "Answers to common questions about our platform",
       icon: <HelpCircle className="h-5 w-5" />,
-      link: "#"
+      link: "https://www.potential.com/blog/faq"
     }
   ];
 
