@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Learn from "@/components/sections/Learn";
+import Whitepaper from "@/components/sections/Whitepaper";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 
@@ -112,6 +113,7 @@ const Resources = () => {
             Explore our educational resources and learn how AI can transform your business operations.
           </p>
         </div>
+        <Whitepaper />
         <Learn />
         <CaseStudies />
       </main>
