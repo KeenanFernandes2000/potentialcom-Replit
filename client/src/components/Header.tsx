@@ -73,6 +73,13 @@ const Header = () => {
             Get Started
           </a>
           
+          <a 
+            href="/login"
+            className="text-foreground/80 hover:text-primary font-medium transition-colors"
+          >
+            Login / Register
+          </a>
+          
           <div className="pl-4">
             <ThemeToggle />
           </div>
@@ -123,6 +130,13 @@ const Header = () => {
             onClick={() => setIsMenuOpen(false)}
           >
             Get Started
+          </a>
+          <a 
+            href="/login"
+            className="py-3 text-foreground hover:text-primary font-medium transition-colors"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Login / Register
           </a>
         </div>
       )}

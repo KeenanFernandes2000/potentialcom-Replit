@@ -84,6 +84,14 @@ const Footer = () => {
                   Meet Rachel
                 </a>
               </li>
+              <li>
+                <a 
+                  href="/login"
+                  className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
+                >
+                  Login / Register
+                </a>
+              </li>
             </ul>
           </div>
           
