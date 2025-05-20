@@ -5,7 +5,9 @@ import {
   HeadphonesIcon, 
   BarChart4,
   Trophy,
-  ClipboardList
+  ClipboardList,
+  Users,
+  ShoppingBag
 } from "lucide-react";
 
 const Platforms = () => {
@@ -68,6 +70,26 @@ const Platforms = () => {
         "Task assignment and tracking",
         "Progress visualization",
         "AI resource optimization"
+      ]
+    },
+    {
+      title: "Coaching and Mentoring",
+      icon: <Users className="h-6 w-6" />,
+      description: "Personalized development and guidance",
+      features: [
+        "Skills assessment and roadmapping",
+        "Personalized coaching sessions",
+        "AI-guided personal development"
+      ]
+    },
+    {
+      title: "Marketplace",
+      icon: <ShoppingBag className="h-6 w-6" />,
+      description: "Connect buyers and sellers in your ecosystem",
+      features: [
+        "Product and service listings",
+        "Secure transaction processing",
+        "AI-powered recommendations"
       ]
     }
   ];
