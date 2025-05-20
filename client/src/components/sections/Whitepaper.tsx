@@ -50,11 +50,14 @@ const Whitepaper = () => {
         description: "Your whitepaper is ready to download.",
       });
       
-      // Instead of triggering a download programmatically, open the PDF directly in a new tab
-      window.open('/amplified-intelligence-whitepaper.pdf', '_blank');
+      // Redirect to the PDF directly - this is more reliable
+      window.location.href = '/amplified-intelligence-whitepaper.pdf';
       
-      // Clear the email field
-      setEmail("");
+      // Clear the email field after a short delay to allow the PDF to load
+      setTimeout(() => {
+        setEmail("");
+        setIsSubmitting(false);
+      }, 1000);
     } catch (error) {
       console.error("Error tracking download:", error);
       toast({
@@ -117,20 +120,36 @@ const Whitepaper = () => {
                 />
               </div>
               
-              <Button 
-                type="submit" 
-                className="w-full rounded-full bg-primary hover:bg-primary/90 text-white font-semibold"
-                size="lg"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <span className="flex items-center">Processing...</span>
-                ) : (
+              {!isSubmitting ? (
+                <Button 
+                  type="submit" 
+                  className="w-full rounded-full bg-primary hover:bg-primary/90 text-white font-semibold"
+                  size="lg"
+                  disabled={isSubmitting}
+                >
                   <span className="flex items-center">
                     <Download className="mr-2 h-4 w-4" /> Download Whitepaper
                   </span>
-                )}
-              </Button>
+                </Button>
+              ) : (
+                <div className="flex flex-col items-center space-y-3">
+                  <Button 
+                    type="button" 
+                    className="w-full rounded-full bg-primary hover:bg-primary/90 text-white font-semibold"
+                    size="lg"
+                    disabled
+                  >
+                    <span className="flex items-center">Processing...</span>
+                  </Button>
+                  <a 
+                    href="/amplified-intelligence-whitepaper.pdf" 
+                    target="_blank" 
+                    className="text-primary hover:underline text-sm"
+                  >
+                    Click here if download doesn't start automatically
+                  </a>
+                </div>
+              )}
             </form>
             
             <div className="mt-8 text-sm text-muted-foreground">
