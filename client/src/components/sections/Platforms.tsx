@@ -7,7 +7,9 @@ import {
   Trophy,
   ClipboardList,
   Users,
-  ShoppingBag
+  ShoppingBag,
+  Heart,
+  Award
 } from "lucide-react";
 
 const Platforms = () => {
@@ -90,6 +92,26 @@ const Platforms = () => {
         "Product and service listings",
         "Secure transaction processing",
         "AI-powered recommendations"
+      ]
+    },
+    {
+      title: "Social Impact",
+      icon: <Heart className="h-6 w-6" />,
+      description: "Drive positive change in communities",
+      features: [
+        "Impact tracking and measurement",
+        "Community engagement tools",
+        "AI-powered social initiative planning"
+      ]
+    },
+    {
+      title: "Public Certification",
+      icon: <Award className="h-6 w-6" />,
+      description: "Verification and empowerment programs",
+      features: [
+        "Skill certification systems",
+        "Digital credential management",
+        "AI-guided learning paths"
       ]
     }
   ];
