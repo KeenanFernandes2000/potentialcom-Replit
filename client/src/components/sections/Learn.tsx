@@ -1,4 +1,4 @@
-import { BookOpen, FileText, BarChart, HelpCircle } from "lucide-react";
+import { BookOpen, BarChart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Learn = () => {
@@ -10,22 +10,10 @@ const Learn = () => {
       link: "https://www.potential.com/blog/"
     },
     {
-      title: "Case Study: Government KPI Agent",
-      description: "See how government agencies leverage our AI solutions",
-      icon: <FileText className="h-5 w-5" />,
-      link: "https://www.potential.com/blog/government-kpi-agent"
-    },
-    {
       title: "AI Amplify",
       description: "Learn how to maximize your AI investment",
       icon: <BarChart className="h-5 w-5" />,
       link: "https://www.potential.com/blog/ai-amplify"
-    },
-    {
-      title: "FAQ",
-      description: "Answers to common questions about our platform",
-      icon: <HelpCircle className="h-5 w-5" />,
-      link: "https://www.potential.com/blog/faq"
     }
   ];
 
