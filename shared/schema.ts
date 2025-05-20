@@ -1,4 +1,4 @@
-import { pgTable, text, serial, timestamp, varchar, boolean } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, timestamp, varchar, boolean, integer, decimal } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -38,6 +38,50 @@ export const resourceDownloads = pgTable("resource_downloads", {
   email: varchar("email", { length: 255 }).notNull(),
   resourceName: varchar("resource_name", { length: 255 }).notNull(),
   downloadedAt: timestamp("downloaded_at").defaultNow(),
+});
+
+// Coaches table
+export const coaches = pgTable("coaches", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id),
+  name: varchar("name", { length: 255 }).notNull(),
+  title: varchar("title", { length: 255 }).notNull(),
+  bio: text("bio").notNull(),
+  expertise: varchar("expertise", { length: 255 }).notNull(),
+  imageUrl: varchar("image_url", { length: 255 }),
+  hourlyRate: decimal("hourly_rate", { precision: 10, scale: 2 }),
+  pointsCost: integer("points_cost"),
+  isAvailableForFree: boolean("is_available_for_free").default(false),
+  isAvailableForPaid: boolean("is_available_for_paid").default(true),
+  isAvailableForPoints: boolean("is_available_for_points").default(false),
+  isActive: boolean("is_active").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Coaching sessions table
+export const coachingSessions = pgTable("coaching_sessions", {
+  id: serial("id").primaryKey(),
+  coachId: integer("coach_id").references(() => coaches.id).notNull(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  sessionDate: timestamp("session_date").notNull(),
+  durationMinutes: integer("duration_minutes").notNull(),
+  status: varchar("status", { length: 50 }).notNull().default("scheduled"), // scheduled, completed, cancelled
+  sessionType: varchar("session_type", { length: 50 }).notNull(), // free, paid, points
+  amountPaid: decimal("amount_paid", { precision: 10, scale: 2 }),
+  pointsUsed: integer("points_used"),
+  notes: text("notes"),
+  meetingLink: varchar("meeting_link", { length: 255 }),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// User points table
+export const userPoints = pgTable("user_points", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  points: integer("points").notNull().default(0),
+  lastUpdated: timestamp("last_updated").defaultNow(),
 });
 
 // Authentication schemas
@@ -86,13 +130,38 @@ export const resourceDownloadSchema = createInsertSchema(resourceDownloads).pick
 });
 
 // Types
+// Coach schemas
+export const coachSchema = createInsertSchema(coaches).omit({
+  id: true,
+  userId: true,
+  createdAt: true, 
+  updatedAt: true
+});
+
+export const coachingSessionSchema = createInsertSchema(coachingSessions).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true
+});
+
+export const userPointsSchema = createInsertSchema(userPoints).pick({
+  userId: true,
+  points: true
+});
+
 export type RegisterUserInput = z.infer<typeof registerUserSchema>;
 export type LoginUserInput = z.infer<typeof loginUserSchema>;
 export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
 export type PartnerApplicationInput = z.infer<typeof partnerApplicationSchema>;
 export type NewsletterSubscriberInput = z.infer<typeof newsletterSubscriberSchema>;
 export type ResourceDownloadInput = z.infer<typeof resourceDownloadSchema>;
+export type CoachInput = z.infer<typeof coachSchema>;
+export type CoachingSessionInput = z.infer<typeof coachingSessionSchema>;
+export type UserPointsInput = z.infer<typeof userPointsSchema>;
 
 export type User = typeof users.$inferSelect;
 export type NewsletterSubscriber = typeof newsletterSubscribers.$inferSelect;
 export type ResourceDownload = typeof resourceDownloads.$inferSelect;
+export type Coach = typeof coaches.$inferSelect;
+export type CoachingSession = typeof coachingSessions.$inferSelect;
+export type UserPoints = typeof userPoints.$inferSelect;
