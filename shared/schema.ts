@@ -11,8 +11,12 @@ export const users = pgTable("users", {
   lastName: varchar("last_name", { length: 100 }),
   phoneNumber: varchar("phone_number", { length: 20 }),
   jobTitle: varchar("job_title", { length: 100 }),
+  companyName: varchar("company_name", { length: 255 }),
   companyWebsite: varchar("company_website", { length: 255 }),
   linkedinUrl: varchar("linkedin_url", { length: 255 }),
+  role: varchar("role", { length: 50 }).default("public_user").notNull(),
+  companySize: varchar("company_size", { length: 50 }),
+  partnerReason: text("partner_reason"),
   isSubscribedToNewsletter: boolean("is_subscribed_newsletter").default(false),
   isVerified: boolean("is_verified").default(false),
   verificationToken: text("verification_token"),
@@ -53,9 +57,24 @@ export const updateProfileSchema = createInsertSchema(users).pick({
   lastName: true,
   phoneNumber: true,
   jobTitle: true,
+  companyName: true,
   companyWebsite: true,
   linkedinUrl: true,
 }).partial();
+
+// Partner application schema
+export const partnerApplicationSchema = z.object({
+  email: z.string().email("Please enter a valid email address"),
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  companyName: z.string().min(1, "Company name is required"),
+  jobTitle: z.string().min(1, "Job title is required"),
+  phoneNumber: z.string().min(1, "Phone number is required"),
+  companyWebsite: z.string().url("Please enter a valid website URL").optional().or(z.literal("")),
+  companySize: z.enum(["1-10", "11-50", "51-200", "201-500", "501-1000", "1000+"]),
+  partnerReason: z.string().min(10, "Please tell us more about why you want to partner with us"),
+  isSubscribedToNewsletter: z.boolean().default(false),
+});
 
 export const newsletterSubscriberSchema = createInsertSchema(newsletterSubscribers).pick({
   email: true,
@@ -70,6 +89,7 @@ export const resourceDownloadSchema = createInsertSchema(resourceDownloads).pick
 export type RegisterUserInput = z.infer<typeof registerUserSchema>;
 export type LoginUserInput = z.infer<typeof loginUserSchema>;
 export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
+export type PartnerApplicationInput = z.infer<typeof partnerApplicationSchema>;
 export type NewsletterSubscriberInput = z.infer<typeof newsletterSubscriberSchema>;
 export type ResourceDownloadInput = z.infer<typeof resourceDownloadSchema>;
 

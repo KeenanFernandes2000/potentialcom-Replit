@@ -26,6 +26,9 @@ export interface IStorage {
   generateResetToken(email: string): Promise<string | null>;
   resetPassword(email: string, token: string, newPassword: string): Promise<boolean>;
   
+  // Partner applications
+  submitPartnerApplication(partnerData: PartnerApplicationInput): Promise<User>;
+  
   // Newsletter subscribers
   addNewsletterSubscriber(subscriberData: NewsletterSubscriberInput): Promise<NewsletterSubscriber>;
   removeNewsletterSubscriber(email: string): Promise<boolean>;
