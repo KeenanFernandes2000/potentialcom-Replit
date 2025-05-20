@@ -117,6 +117,7 @@ const Resources = () => {
         <Whitepaper />
         <Learn />
         <CaseStudies />
+        <BecomePartner />
       </main>
       <Footer />
     </div>
