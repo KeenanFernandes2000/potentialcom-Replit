@@ -390,7 +390,7 @@ const Experts = () => {
                 <div className="w-full flex flex-col space-y-2">
                   <div className="text-sm text-muted-foreground mb-2">
                     <div className="flex items-center">
-                      <LucideCalendar className="mr-2" />
+                      <LuCalendar className="mr-2" />
                       <span>
                         {format(bookingData.sessionDate, "EEEE, MMMM d, yyyy")} at {format(bookingData.sessionDate, "h:mm a")}
                       </span>
