@@ -7,7 +7,8 @@ import {
   loginUserSchema, 
   updateProfileSchema,
   newsletterSubscriberSchema,
-  resourceDownloadSchema
+  resourceDownloadSchema,
+  partnerApplicationSchema
 } from "@shared/schema";
 
 // Add userId to Express.Session interface
@@ -180,6 +181,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.error("Resource download tracking error:", error);
       res.status(400).json({ 
         message: "Invalid download data", 
+        error: error instanceof Error ? error.message : String(error)
+      });
+    }
+  });
+  
+  // Partner application
+  app.post("/api/partners/apply", async (req, res) => {
+    try {
+      const validatedData = partnerApplicationSchema.parse(req.body);
+      
+      const user = await storage.submitPartnerApplication(validatedData);
+      
+      // For security, don't return sensitive user data
+      const { password, verificationToken, resetPasswordToken, ...partnerData } = user;
+      
+      res.status(201).json({
+        message: "Partner application submitted successfully",
+        partner: partnerData
+      });
+    } catch (error) {
+      console.error("Partner application error:", error);
+      res.status(400).json({ 
+        message: "Invalid partner application data", 
         error: error instanceof Error ? error.message : String(error)
       });
     }

@@ -8,7 +8,8 @@ import {
   type NewsletterSubscriber,
   type NewsletterSubscriberInput,
   type ResourceDownload,
-  type ResourceDownloadInput
+  type ResourceDownloadInput,
+  type PartnerApplicationInput
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, and } from "drizzle-orm";
@@ -227,6 +228,64 @@ export class DatabaseStorage implements IStorage {
     return await db.select()
       .from(resourceDownloads)
       .where(eq(resourceDownloads.email, email));
+  }
+  
+  // Partner applications
+  async submitPartnerApplication(partnerData: PartnerApplicationInput): Promise<User> {
+    // Check if user already exists
+    const existingUser = await this.getUserByEmail(partnerData.email);
+    
+    if (existingUser) {
+      // Update existing user with partner information and role
+      const [updatedUser] = await db
+        .update(users)
+        .set({
+          firstName: partnerData.firstName,
+          lastName: partnerData.lastName,
+          phoneNumber: partnerData.phoneNumber,
+          jobTitle: partnerData.jobTitle,
+          companyName: partnerData.companyName,
+          companyWebsite: partnerData.companyWebsite,
+          companySize: partnerData.companySize,
+          partnerReason: partnerData.partnerReason,
+          role: 'partner',
+          isSubscribedToNewsletter: partnerData.isSubscribedToNewsletter,
+          updatedAt: new Date()
+        })
+        .where(eq(users.id, existingUser.id))
+        .returning();
+      
+      return updatedUser;
+    } else {
+      // Create a temporary password for the new user
+      const temporaryPassword = crypto.randomBytes(8).toString('hex');
+      const hashedPassword = await bcrypt.hash(temporaryPassword, 10);
+      
+      // Create a new user with partner role
+      const [newUser] = await db
+        .insert(users)
+        .values({
+          email: partnerData.email,
+          password: hashedPassword,
+          firstName: partnerData.firstName,
+          lastName: partnerData.lastName,
+          phoneNumber: partnerData.phoneNumber,
+          jobTitle: partnerData.jobTitle,
+          companyName: partnerData.companyName,
+          companyWebsite: partnerData.companyWebsite,
+          companySize: partnerData.companySize,
+          partnerReason: partnerData.partnerReason,
+          role: 'partner',
+          isSubscribedToNewsletter: partnerData.isSubscribedToNewsletter,
+          // Generate a verification token
+          verificationToken: crypto.randomBytes(32).toString('hex')
+        })
+        .returning();
+      
+      // TODO: Send verification email with temporary password
+      
+      return newUser;
+    }
   }
 }
 
