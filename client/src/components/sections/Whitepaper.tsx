@@ -50,8 +50,33 @@ const Whitepaper = () => {
         description: "Your whitepaper is ready to download.",
       });
       
-      // Use our dedicated download route
-      window.location.href = '/whitepaper-download';
+      // Download file with fetch API to avoid page navigation
+      fetch('/api/whitepaper-download')
+        .then(response => response.blob())
+        .then(blob => {
+          // Create a URL for the blob
+          const url = window.URL.createObjectURL(blob);
+          
+          // Create a temporary anchor element and trigger download
+          const a = document.createElement('a');
+          a.style.display = 'none';
+          a.href = url;
+          a.download = 'Amplified-Intelligence-Whitepaper.pdf';
+          document.body.appendChild(a);
+          a.click();
+          
+          // Clean up
+          window.URL.revokeObjectURL(url);
+          document.body.removeChild(a);
+        })
+        .catch(error => {
+          console.error("Error downloading whitepaper:", error);
+          toast({
+            title: "Error",
+            description: "Failed to download whitepaper. Please try again.",
+            variant: "destructive",
+          });
+        });
       
       // Clear the email field after a short delay to allow the PDF to load
       setTimeout(() => {
@@ -142,7 +167,7 @@ const Whitepaper = () => {
                     <span className="flex items-center">Processing...</span>
                   </Button>
                   <a 
-                    href="/whitepaper-download" 
+                    href="/api/whitepaper-download" 
                     className="text-primary hover:underline text-sm"
                   >
                     Click here if download doesn't start automatically

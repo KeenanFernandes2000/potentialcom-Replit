@@ -27,9 +27,11 @@ const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Serve whitepaper PDF
-  app.get('/whitepaper-download', (req, res) => {
-    const filePath = path.resolve(process.cwd(), 'public', 'amplified-intelligence-whitepaper.pdf');
-    res.download(filePath, 'Amplified-Intelligence-Whitepaper.pdf');
+  app.get('/api/whitepaper-download', (req, res) => {
+    const filePath = path.resolve(process.cwd(), 'public/assets/pdfs', 'amplified-intelligence-whitepaper.pdf');
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename=Amplified-Intelligence-Whitepaper.pdf');
+    res.sendFile(filePath);
   });
   // Public API routes
   
