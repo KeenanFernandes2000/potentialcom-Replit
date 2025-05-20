@@ -50,16 +50,8 @@ const Whitepaper = () => {
         description: "Your whitepaper is ready to download.",
       });
       
-      // Trigger the download
-      const link = document.createElement('a');
-      link.href = '/assets/pdfs/amplified-intelligence-whitepaper.pdf';
-      link.target = '_blank'; // Open in new tab
-      link.setAttribute('download', 'Amplified-Intelligence-Whitepaper.pdf');
-      document.body.appendChild(link); // Append to body to ensure it works in all browsers
-      link.click();
-      setTimeout(() => {
-        document.body.removeChild(link); // Clean up
-      }, 100);
+      // Instead of triggering a download programmatically, open the PDF directly in a new tab
+      window.open('/amplified-intelligence-whitepaper.pdf', '_blank');
       
       // Clear the email field
       setEmail("");
