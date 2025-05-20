@@ -2,8 +2,11 @@ import { Facebook, Twitter, Linkedin, Instagram, Mail, MapPin, Phone } from "luc
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 import { Logo } from "./Logo";
+import { useToast } from "@/hooks/use-toast";
 
 const Footer = () => {
+  const { toast } = useToast();
+  
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -103,16 +106,61 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Stay Updated</h3>
             <p className="opacity-80 mb-4">Subscribe to our newsletter for the latest AI innovations.</p>
-            <div className="flex gap-2">
+            <form 
+              onSubmit={async (e) => {
+                e.preventDefault();
+                const form = e.target as HTMLFormElement;
+                const emailInput = form.elements.namedItem('email') as HTMLInputElement;
+                
+                if (!emailInput.value || !emailInput.value.includes('@')) {
+                  toast({
+                    title: "Invalid Email",
+                    description: "Please enter a valid email address.",
+                    variant: "destructive",
+                  });
+                  return;
+                }
+                
+                try {
+                  const response = await fetch('/api/newsletter/subscribe', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email: emailInput.value }),
+                  });
+                  
+                  if (response.ok) {
+                    toast({
+                      title: "Success!",
+                      description: "You've been subscribed to our newsletter.",
+                    });
+                    emailInput.value = '';
+                  } else {
+                    const data = await response.json();
+                    throw new Error(data.message || 'Subscription failed');
+                  }
+                } catch (error) {
+                  console.error("Newsletter subscription error:", error);
+                  toast({
+                    title: "Error",
+                    description: error instanceof Error ? error.message : "Failed to subscribe. Please try again.",
+                    variant: "destructive",
+                  });
+                }
+              }}
+              className="flex gap-2"
+            >
               <input 
                 type="email" 
+                name="email"
                 placeholder="Your email" 
                 className="bg-secondary-foreground/10 border border-secondary-foreground/20 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-primary"
               />
-              <Button size="sm" className="bg-primary hover:bg-primary/80">
+              <Button type="submit" size="sm" className="bg-primary hover:bg-primary/80">
                 Join
               </Button>
-            </div>
+            </form>
           </div>
         </div>
         

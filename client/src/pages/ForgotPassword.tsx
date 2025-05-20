@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { useLocation } from "wouter";
+import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/hooks/useAuth";
+import { Link } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -18,23 +17,19 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 
+// Form validation schema
 const forgotPasswordSchema = z.object({
-  email: z.string().email({ message: "Please enter a valid email address" }),
+  email: z.string().email("Please enter a valid email address"),
 });
 
 type ForgotPasswordFormValues = z.infer<typeof forgotPasswordSchema>;
 
 export default function ForgotPassword() {
-  const { forgotPassword } = useAuth();
-  const { toast } = useToast();
-  const [, navigate] = useLocation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [serverError, setServerError] = useState<string | null>(null);
+  const { toast } = useToast();
 
   const form = useForm<ForgotPasswordFormValues>({
     resolver: zodResolver(forgotPasswordSchema),
@@ -44,106 +39,111 @@ export default function ForgotPassword() {
   });
 
   const onSubmit = async (values: ForgotPasswordFormValues) => {
-    setServerError(null);
     setIsSubmitting(true);
-    
     try {
-      await forgotPassword(values.email);
+      const response = await fetch("/api/auth/forgot-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to process request");
+      }
+
+      // Success
       setIsSuccess(true);
       toast({
-        title: "Password reset email sent",
-        description: "Check your email for instructions to reset your password.",
+        title: "Success",
+        description: "Password reset instructions have been sent to your email.",
       });
     } catch (error) {
       console.error("Forgot password error:", error);
-      setServerError(error instanceof Error ? error.message : "Failed to send reset email. Please try again.");
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="font-inter min-h-screen">
+    <>
       <Header />
-      <main className="pt-32 pb-20">
-        <div className="container max-w-md mx-auto">
-          <Card className="shadow-lg">
-            <CardHeader>
-              <CardTitle className="text-2xl">Reset Password</CardTitle>
-              <CardDescription>
-                Enter your email address and we'll send you instructions to reset your password
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              {serverError && (
-                <Alert variant="destructive" className="mb-6">
-                  <AlertDescription>{serverError}</AlertDescription>
-                </Alert>
-              )}
-              
-              {isSuccess ? (
-                <div className="text-center py-4">
-                  <h3 className="text-lg font-medium mb-2">Check Your Email</h3>
-                  <p className="text-muted-foreground mb-6">
-                    We've sent password reset instructions to your email address.
-                  </p>
-                  <Button 
-                    onClick={() => navigate("/login")}
-                    className="w-full"
-                  >
-                    Back to Login
-                  </Button>
-                </div>
-              ) : (
-                <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Email</FormLabel>
-                          <FormControl>
-                            <Input placeholder="your@email.com" type="email" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    
-                    <Button 
-                      type="submit" 
-                      className="w-full" 
-                      size="lg"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Sending...
-                        </>
-                      ) : "Send Reset Instructions"}
-                    </Button>
-                  </form>
-                </Form>
-              )}
-            </CardContent>
-            <CardFooter className="flex justify-center">
-              <p className="text-sm text-muted-foreground">
-                Remembered your password?{" "}
-                <Button 
-                  variant="link" 
-                  className="p-0" 
-                  onClick={() => navigate("/login")}
-                >
-                  Log in
-                </Button>
+      <main className="flex-1 bg-gradient-to-b from-background via-background/80 to-background">
+        <div className="container max-w-md py-16">
+          <div className="mb-8">
+            <Link href="/login" className="flex items-center text-sm text-muted-foreground hover:text-primary transition-colors mb-6">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to login
+            </Link>
+            <h1 className="text-3xl font-bold mb-2">Reset Your Password</h1>
+            <p className="text-muted-foreground">
+              Enter your email address and we'll send you instructions to reset your password.
+            </p>
+          </div>
+
+          {isSuccess ? (
+            <div className="bg-secondary/40 backdrop-blur-sm rounded-lg p-6 shadow-lg border border-secondary-foreground/10">
+              <h2 className="text-xl font-semibold mb-4">Check Your Email</h2>
+              <p className="mb-6">
+                We've sent password reset instructions to your email. Please check your inbox and follow the link to reset your password.
               </p>
-            </CardFooter>
-          </Card>
+              <div className="flex flex-col space-y-4">
+                <Button asChild>
+                  <Link href="/login">Return to Login</Link>
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <div className="bg-secondary/40 backdrop-blur-sm rounded-lg p-6 shadow-lg border border-secondary-foreground/10">
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input 
+                            placeholder="your.email@example.com" 
+                            type="email" 
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <Button 
+                    type="submit" 
+                    className="w-full" 
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Processing...
+                      </>
+                    ) : (
+                      "Send Reset Instructions"
+                    )}
+                  </Button>
+                </form>
+              </Form>
+            </div>
+          )}
         </div>
       </main>
       <Footer />
-    </div>
+    </>
   );
 }
