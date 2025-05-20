@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Learn from "@/components/sections/Learn";
 import Whitepaper from "@/components/sections/Whitepaper";
 import BecomePartner from "@/components/sections/BecomePartner";
 import { Button } from "@/components/ui/button";
@@ -114,6 +115,7 @@ const Resources = () => {
           </p>
         </div>
         <Whitepaper />
+        <Learn />
         <CaseStudies />
         <BecomePartner />
       </main>
