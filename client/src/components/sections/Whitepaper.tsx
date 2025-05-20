@@ -50,8 +50,8 @@ const Whitepaper = () => {
         description: "Your whitepaper is ready to download.",
       });
       
-      // Redirect to the PDF directly - this is more reliable
-      window.location.href = '/amplified-intelligence-whitepaper.pdf';
+      // Use our dedicated download route
+      window.location.href = '/whitepaper-download';
       
       // Clear the email field after a short delay to allow the PDF to load
       setTimeout(() => {
@@ -142,8 +142,7 @@ const Whitepaper = () => {
                     <span className="flex items-center">Processing...</span>
                   </Button>
                   <a 
-                    href="/amplified-intelligence-whitepaper.pdf" 
-                    target="_blank" 
+                    href="/whitepaper-download" 
                     className="text-primary hover:underline text-sm"
                   >
                     Click here if download doesn't start automatically

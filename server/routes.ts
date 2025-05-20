@@ -1,5 +1,6 @@
 import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
+import path from "path";
 import { storage } from "./storage";
 import { 
   registerUserSchema, 
@@ -25,6 +26,11 @@ const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Serve whitepaper PDF
+  app.get('/whitepaper-download', (req, res) => {
+    const filePath = path.resolve(process.cwd(), 'public', 'amplified-intelligence-whitepaper.pdf');
+    res.download(filePath, 'Amplified-Intelligence-Whitepaper.pdf');
+  });
   // Public API routes
   
   // Registration
