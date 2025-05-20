@@ -301,6 +301,141 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: "Server error" });
     }
   });
+
+  // Coaching Experts API endpoints
+  app.get("/api/coaches", async (req, res) => {
+    try {
+      const activeOnly = req.query.activeOnly !== 'false';
+      const coaches = await storage.getAllCoaches(activeOnly);
+      res.status(200).json(coaches);
+    } catch (error) {
+      console.error('Error fetching coaches:', error);
+      res.status(500).json({ message: 'Failed to fetch coaches' });
+    }
+  });
+
+  app.get("/api/coaches/:id", async (req, res) => {
+    try {
+      const coachId = parseInt(req.params.id);
+      const coach = await storage.getCoachById(coachId);
+      
+      if (!coach) {
+        return res.status(404).json({ message: 'Coach not found' });
+      }
+      
+      res.status(200).json(coach);
+    } catch (error) {
+      console.error('Error fetching coach:', error);
+      res.status(500).json({ message: 'Failed to fetch coach' });
+    }
+  });
+
+  app.get("/api/coaches/expertise/:expertise", async (req, res) => {
+    try {
+      const expertise = req.params.expertise;
+      const activeOnly = req.query.activeOnly !== 'false';
+      const coaches = await storage.getCoachesByExpertise(expertise, activeOnly);
+      res.status(200).json(coaches);
+    } catch (error) {
+      console.error('Error fetching coaches by expertise:', error);
+      res.status(500).json({ message: 'Failed to fetch coaches' });
+    }
+  });
+
+  app.post("/api/coaches", isAuthenticated, async (req, res) => {
+    try {
+      const coachData = req.body;
+      const userId = req.session.userId;
+      
+      // Only admin users can create coaches
+      const user = await storage.getUserById(userId);
+      if (!user || user.role !== 'admin') {
+        return res.status(403).json({ message: 'Unauthorized: Only admin users can create coaches' });
+      }
+      
+      const coach = await storage.createCoach(coachData, userId);
+      res.status(201).json(coach);
+    } catch (error) {
+      console.error('Error creating coach:', error);
+      res.status(500).json({ message: 'Failed to create coach' });
+    }
+  });
+
+  app.put("/api/coaches/:id", isAuthenticated, async (req, res) => {
+    try {
+      const coachId = parseInt(req.params.id);
+      const coachData = req.body;
+      const userId = req.session.userId;
+      
+      // Only admin users can update coaches
+      const user = await storage.getUserById(userId);
+      if (!user || user.role !== 'admin') {
+        return res.status(403).json({ message: 'Unauthorized: Only admin users can update coaches' });
+      }
+      
+      const coach = await storage.updateCoach(coachId, coachData);
+      res.status(200).json(coach);
+    } catch (error) {
+      console.error('Error updating coach:', error);
+      res.status(500).json({ message: 'Failed to update coach' });
+    }
+  });
+
+  // Coaching Sessions API endpoints
+  app.post("/api/coaching-sessions", isAuthenticated, async (req, res) => {
+    try {
+      const sessionData = req.body;
+      const userId = req.session.userId;
+      
+      // Ensure the user ID in the session matches the one in the request
+      if (userId !== sessionData.userId) {
+        return res.status(403).json({ message: 'Unauthorized: You can only book sessions for yourself' });
+      }
+      
+      const session = await storage.createCoachingSession(sessionData);
+      res.status(201).json(session);
+    } catch (error: any) {
+      console.error('Error creating coaching session:', error);
+      res.status(500).json({ message: error.message || 'Failed to create coaching session' });
+    }
+  });
+
+  app.get("/api/users/:userId/coaching-sessions", isAuthenticated, async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const sessionUserId = req.session.userId;
+      
+      // Users can only view their own sessions
+      if (sessionUserId !== userId) {
+        return res.status(403).json({ message: 'Unauthorized: You can only view your own sessions' });
+      }
+      
+      const sessions = await storage.getUserCoachingSessions(userId);
+      res.status(200).json(sessions);
+    } catch (error) {
+      console.error('Error fetching user coaching sessions:', error);
+      res.status(500).json({ message: 'Failed to fetch coaching sessions' });
+    }
+  });
+
+  // User Points API endpoints
+  app.get("/api/users/:userId/points", isAuthenticated, async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const sessionUserId = req.session.userId;
+      
+      // Users can only view their own points
+      if (sessionUserId !== userId) {
+        return res.status(403).json({ message: 'Unauthorized: You can only view your own points' });
+      }
+      
+      const points = await storage.getUserPoints(userId);
+      res.status(200).json(points || { userId, points: 0 });
+    } catch (error) {
+      console.error('Error fetching user points:', error);
+      res.status(500).json({ message: 'Failed to fetch user points' });
+    }
+  });
   
   const httpServer = createServer(app);
   return httpServer;
