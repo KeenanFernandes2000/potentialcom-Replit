@@ -97,6 +97,66 @@ const Offerings = () => {
     );
   };
 
+  // Testimonials section
+  const Testimonials = () => {
+    const testimonials = [
+      {
+        quote: "The Potential platform was instrumental in our type of work, a timesaving enabler! Their great customer support and open mentality for user experience enhancement is the key success factor",
+        name: "MAHA ZOUWAYHED",
+        title: "ASSOCIATE DIRECTOR, TALAL AND MADIHA ZEIN AUB INNOVATION PARK",
+        avatar: "https://placehold.co/120x120/e9ddff/8844dd?text=MZ"
+      },
+      {
+        quote: "We made use of Potential.com's platform to empower Free Zones around the world by giving them access to our learning resources and helping them take action and innovate with their stakeholders.",
+        name: "DR. SAMIR HAMROUNI",
+        title: "CEO, WORLD FREE ZONE ORGANIZATIONS",
+        avatar: "https://placehold.co/120x120/e9ddff/8844dd?text=SH"
+      }
+    ];
+
+    return (
+      <section id="testimonials" className="py-24 bg-muted/30">
+        <div className="container">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl font-bold mb-6">
+              Testimonials
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {testimonials.map((testimonial, idx) => (
+              <div 
+                key={idx} 
+                className="glass-effect rounded-xl p-8 border border-border shadow-md"
+                data-aos="fade-up"
+                data-aos-delay={idx * 100}
+              >
+                <div className="flex flex-col h-full">
+                  <p className="text-lg font-medium mb-6 italic">
+                    "{testimonial.quote}"
+                  </p>
+                  <div className="mt-auto flex items-center">
+                    <div className="w-16 h-16 rounded-full overflow-hidden mr-4">
+                      <img 
+                        src={testimonial.avatar} 
+                        alt={testimonial.name} 
+                        className="w-full h-full object-cover" 
+                      />
+                    </div>
+                    <div>
+                      <p className="font-bold text-primary">{testimonial.name}</p>
+                      <p className="text-xs text-muted-foreground">{testimonial.title}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  };
+
   // Refresh AOS animations on route change
   useEffect(() => {
     if (typeof window !== 'undefined' && (window as any).AOS) {
@@ -121,6 +181,7 @@ const Offerings = () => {
         <Platforms />
         <Solutions />
         <CaseStudies />
+        <Testimonials />
       </main>
       <Footer />
     </div>
