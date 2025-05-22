@@ -198,7 +198,7 @@ const Footer = () => {
             <a href="https://www.facebook.com/PotentialCom" className="hover:text-primary transition-colors" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
               <Facebook size={20} />
             </a>
-            <a href="https://www.instagram.com/potential_dotcom/" className="hover:text-primary transition-colors" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.instagram.com/potential.official/" className="hover:text-primary transition-colors" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
               <Instagram size={20} />
             </a>
             <a href="https://www.youtube.com/c/PotentialCom" className="hover:text-primary transition-colors" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
