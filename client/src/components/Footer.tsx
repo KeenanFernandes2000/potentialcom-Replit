@@ -186,23 +186,17 @@ const Footer = () => {
             </div>
           </div>
           <div className="flex gap-4">
-            <a href="https://www.linkedin.com/company/potential" className="hover:text-primary transition-colors" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+            <a href="#" className="hover:text-primary transition-colors" aria-label="LinkedIn">
               <Linkedin size={20} />
             </a>
-            <a href="https://twitter.com/PotentialcomTweets" className="hover:text-primary transition-colors" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
+            <a href="#" className="hover:text-primary transition-colors" aria-label="Twitter">
               <Twitter size={20} />
             </a>
-            <a href="https://www.facebook.com/PotentialCom" className="hover:text-primary transition-colors" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+            <a href="#" className="hover:text-primary transition-colors" aria-label="Facebook">
               <Facebook size={20} />
             </a>
-            <a href="https://www.instagram.com/potential_dotcom/" className="hover:text-primary transition-colors" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+            <a href="#" className="hover:text-primary transition-colors" aria-label="Instagram">
               <Instagram size={20} />
-            </a>
-            <a href="https://www.youtube.com/c/PotentialCom" className="hover:text-primary transition-colors" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
-                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
-                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
-              </svg>
             </a>
           </div>
         </div>
