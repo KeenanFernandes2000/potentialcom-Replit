@@ -174,7 +174,7 @@ const Footer = () => {
         
         <div className="border-t border-secondary-foreground/10 pt-6 flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
-            <p className="opacity-80">© {new Date().getFullYear()} Potential.com. All rights reserved.</p>
+            <p className="opacity-80">© 2005 - {new Date().getFullYear()} Potential.com. All rights reserved.</p>
             <div className="flex gap-4 mt-2 text-sm opacity-70">
               <a href="/terms" className="hover:text-primary transition-colors">
                 Terms of Use
