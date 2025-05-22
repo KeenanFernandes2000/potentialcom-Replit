@@ -12,6 +12,8 @@ import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import Profile from "@/pages/Profile";
 import ForgotPassword from "@/pages/ForgotPassword";
+import TermsOfUse from "@/pages/TermsOfUse";
+import PrivacyPolicy from "@/pages/PrivacyPolicy";
 
 function Router() {
   return (
@@ -25,6 +27,8 @@ function Router() {
       <Route path="/register" component={Register} />
       <Route path="/profile" component={Profile} />
       <Route path="/forgot-password" component={ForgotPassword} />
+      <Route path="/terms" component={TermsOfUse} />
+      <Route path="/privacy" component={PrivacyPolicy} />
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>

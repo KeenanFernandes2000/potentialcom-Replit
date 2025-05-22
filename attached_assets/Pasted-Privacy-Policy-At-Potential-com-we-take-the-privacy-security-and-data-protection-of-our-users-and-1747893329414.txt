@@ -1,0 +1,88 @@
+Privacy Policy
+At Potential.com, we take the privacy, security, and data protection of our users and clients seriously. This Privacy Policy describes how we collect, use, store, and protect information across our suite of AI Tools, including AI Chatbots and AI Voice Agents (collectively referred to as "AI Tools"). By using our services, you agree to the practices described in this policy.
+
+1. Who We Are
+Potential.com is a technology company that provides AI-powered empowerment tools hosted on enterprise-grade infrastructure. We are committed to upholding the highest standards of privacy and security in compliance with international regulations, including the General Data Protection Regulation (GDPR).
+
+2. Hosting and Infrastructure
+All AI Tools are hosted on Amazon Web Services (AWS) servers located in Europe, benefiting from AWS's robust compliance with ISO 27001, SOC 1/2/3, and other industry-leading certifications.
+Our infrastructure is designed with enterprise-grade security in mind, including data encryption in transit and at rest.
+3. Data Collection and Use
+a. Types of Data Collected
+We do not collect or store personally identifiable information (PII) by default. However, in the course of using our AI Tools, users may voluntarily share:
+
+Names
+Email addresses
+Phone numbers
+Business inquiries or support issues
+In some cases, if our clients explicitly request to collect additional personal data through the AI Tools, we may support this upon mutual agreement and subject to appropriate safeguards, data processing terms, and full compliance with relevant privacy regulations, including GDPR.
+
+Note: All information is anonymized where possible, and only the minimum necessary non-personal data is processed for each interaction.
+
+b. Purpose of Data Use
+Data exchanged within our AI Tools is used solely for the purpose of delivering and improving the conversation flow and functionality of the specific conversation session the user is engaged in. It is not used across multiple conversations or retained for purposes beyond the current interaction. It is not used for:
+
+AI model training
+Marketing purposes (unless explicitly requested to)
+Profiling or behavioral tracking (unless explicitly requested to)
+4. Use of Third-Party Large Language Models (LLMs)
+All communication with LLMs is mediated through Potential.com's servers, which include customizable safeguards to control what data is shared.
+By default, we do not share any personal information with third-party LLM providers unless a client has explicitly requested such sharing and provided informed consent.
+Clients may configure their data-sharing preferences at the enterprise level.
+All conversations are strictly used to serve end-user interactions and are not retained or used for training by third-party providers.
+5. Data Retention and Deletion
+Data and conversation logs are retained for a maximum of 7 days on our servers, after which they are automatically deleted.
+Clients can opt-in to longer retention periods by written request and through specific data processing agreements (DPAs).
+Upon client request, we provide data access, export, and deletion in accordance with GDPR.
+6. Legal Basis for Processing
+We process personal data based on:
+
+The legitimate interest of providing and maintaining the service.
+User consent, where applicable (e.g., when inputting personal data).
+Compliance with legal obligations, if required.
+Performance of a contract, when data is necessary for delivering our services.
+7. Your Rights
+Under GDPR and other applicable laws, you have the right to:
+
+Access the personal data we hold about you
+Request rectification or deletion of your data
+Object to or restrict processing
+Withdraw consent at any time (where applicable)
+Data portability in a commonly used, machine-readable format
+File a complaint with a supervisory authority
+To exercise any of these rights, contact us at: info@potential.com
+
+Single Sign-On (SSO)
+Potential.com and its subdomains provide Single Sign-On (SSO) functionality to streamline your login experience. When you use SSO, you will be directed to a third-party authentication service such as Google, Facebook, or another SSO provider, which will authenticate your identity and provide you with access to our sites. These third-party providers may collect and process your personal information according to their own privacy policies. We ensure that our SSO providers comply with relevant privacy regulations and take appropriate measures to safeguard your information.
+
+Use of Google User Data
+Our use of Google user data is limited to the practices disclosed in this Privacy Policy and conforms with Google's Limited Use requirements. When you use Google SSO to access our platform, we collect and use Google user data such as display name, email, and first name to create your user account on our platform. We only use Google user data for the purposes explicitly stated in this policy and do not share this data with unauthorized third parties. We do not use Google user data for serving advertisements or for creating user profiles without your consent. Your data is handled securely and is only used to provide you with the services you request. If you have any questions or concerns about our use of your Google user data, please contact us directly.
+
+8. Data Security Measures
+We apply a layered approach to securing client data:
+
+End-to-end encryption (TLS 1.2+)
+Strict access controls and role-based permissions
+Real-time monitoring and automated incident detection
+Secure APIs with audit logs and rate limiting
+Frequent vulnerability assessments and security audits
+Security training and awareness programs for staff
+9. Third-Party Sharing and Cookies
+We do not sell or rent your personal data to third parties.
+We only share data with trusted subprocessors as necessary to provide our services, governed by data processing agreements that ensure GDPR compliance.
+We may use cookies and similar tracking technologies on our web interfaces, including our domains and subdomains, but NOT when our AI tools are added to clients' websites and applications to improve user experience. Users are prompted to consent to cookie usage, and cookie preferences can be managed anytime.
+Cookies and Web Beacons
+We do use cookies to store information, such as your personal preferences when you visit our sites. This could include only showing you a popup once in your visit or the ability to log in to some of our features, such as forums. We also use third-party advertisements on Potential.com and its subdomains to support our sites. Some of these advertisers may use technology such as cookies and web beacons when they advertise on our sites, which will also send these advertisers (such as Google through the Google AdSense program) information including your IP address, your ISP, the browser you used to visit our sites, and, in some cases, whether you have Flash installed. This is generally used for geotargeting purposes (showing New York real estate ads to someone in New York, for example) or showing certain ads based on specific sites visited (such as showing cooking ads to someone who frequents cooking sites).
+
+DoubleClick DART cookies
+We also may use DART cookies for ad serving through Google's DoubleClick, which places a cookie on your computer when you are browsing the web and visit a site using DoubleClick advertising (including some Google AdSense advertisements). This cookie is used to serve ads specific to you and your interests ("interest-based targeting"). The ads served will be targeted based on your previous browsing history (For example, if you have been viewing sites about visiting Las Vegas, you may see Las Vegas hotel advertisements when viewing a non-related site, such as on a site about hockey). DART uses "non personally identifiable information". It does NOT track personal information about you, such as your name, email address, physical address, telephone number, social security numbers, bank account numbers, or credit card numbers. You can choose to disable or selectively turn off our cookies or third-party cookies in your browser settings, or by managing preferences in programs such as Norton Internet Security. However, this can affect how you are able to interact with our sites as well as other websites. This could include the inability to log in to services or programs, such as logging into forums or accounts. Deleting cookies does not mean you are permanently opted out of any advertising program. Unless you have settings that disallow cookies, the next time you visit a site running the advertisements, a new cookie will be added.
+
+10. Changes to This Policy
+We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated revision date. In case of significant changes, we will notify users via email or a notice on our website.
+
+11. Contact Us
+For any questions or concerns related to this Privacy Policy or data protection practices, please contact:
+
+Potential.com
+Email: info@potential.com
+Website: https://www.potential.com
