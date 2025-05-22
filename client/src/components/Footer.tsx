@@ -189,8 +189,11 @@ const Footer = () => {
             <a href="https://www.linkedin.com/company/potential" className="hover:text-primary transition-colors" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
               <Linkedin size={20} />
             </a>
-            <a href="https://twitter.com/PotentialcomTweets" className="hover:text-primary transition-colors" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
-              <Twitter size={20} />
+            <a href="https://x.com/potentialcom?lang=en" className="hover:text-primary transition-colors" aria-label="X (formerly Twitter)" target="_blank" rel="noopener noreferrer">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 4l11.733 16h4.267l-11.733 -16z" />
+                <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
+              </svg>
             </a>
             <a href="https://www.facebook.com/PotentialCom" className="hover:text-primary transition-colors" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
               <Facebook size={20} />
