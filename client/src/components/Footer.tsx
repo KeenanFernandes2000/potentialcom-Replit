@@ -1,7 +1,7 @@
 import { Facebook, Twitter, Linkedin, Instagram, Mail, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
-import { Logo } from "./Logo";
+import { FooterLogo } from "./FooterLogo";
 import { useToast } from "@/hooks/use-toast";
 
 const Footer = () => {
@@ -25,7 +25,7 @@ const Footer = () => {
           {/* Company Info */}
           <div>
             <div className="mb-4">
-              <Logo height={36} />
+              <FooterLogo height={36} />
             </div>
             <p className="mb-4">Empowering organizations through AI tools that help them in turn empower their stakeholders.</p>
             <div className="flex items-center space-x-2 mt-6">
