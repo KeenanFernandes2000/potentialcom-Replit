@@ -3,7 +3,7 @@ interface FooterLogoProps {
   height?: number;
 }
 
-export function FooterLogo({ className = '', height = 40 }: FooterLogoProps) {
+export function FooterLogo({ className = "", height = 40 }: FooterLogoProps) {
   return (
     <img
       src="/Potential.com Logos Main-02.png"
