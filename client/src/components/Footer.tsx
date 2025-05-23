@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 import { FooterLogo } from "./FooterLogo";
 import { useToast } from "@/hooks/use-toast";
-import { XLogo } from "./XLogo";
+import { SiX } from "react-icons/si";
 
 const Footer = () => {
   const { toast } = useToast();
@@ -191,7 +191,7 @@ const Footer = () => {
               <Linkedin size={20} />
             </a>
             <a href="https://twitter.com/potentialcom?lang=en" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors" aria-label="X (Twitter)">
-              <XLogo size={20} />
+              <SiX size={20} />
             </a>
             <a href="https://www.facebook.com/PotentialCom" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors" aria-label="Facebook">
               <Facebook size={20} />
