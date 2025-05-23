@@ -125,7 +125,7 @@ const Hero = () => {
   // Stats component
   const QuickStats = () => {
     const stats = [
-      { value: "8x", label: "Faster deployment" },
+      { value: "2x", label: "Revenue Increase" },
       { value: "85%", label: "Cost reduction" },
       { value: "24/7", label: "AI availability" }
     ];
