@@ -87,6 +87,14 @@ const Footer = () => {
               </li>
               <li>
                 <a 
+                  href="/partner"
+                  className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
+                >
+                  Partners
+                </a>
+              </li>
+              <li>
+                <a 
                   href="/login"
                   className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
                 >
