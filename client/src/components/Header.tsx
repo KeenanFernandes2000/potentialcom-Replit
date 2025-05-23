@@ -47,7 +47,7 @@ const Header = () => {
         
         <nav className="hidden md:flex items-center space-x-8">
           <a 
-            href="/offerings"
+            href="/solutions"
             className="text-foreground/80 hover:text-primary font-medium transition-colors"
           >
             Solutions
@@ -95,7 +95,7 @@ const Header = () => {
       {isMenuOpen && (
         <div className="mobile-nav flex flex-col glass-effect w-full py-6 px-6 md:hidden shadow-md">
           <a 
-            href="/offerings"
+            href="/solutions"
             className="py-3 text-foreground hover:text-primary font-medium transition-colors"
             onClick={() => setIsMenuOpen(false)}
           >
