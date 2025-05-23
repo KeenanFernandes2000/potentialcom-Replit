@@ -18,6 +18,7 @@ import Blog from "@/pages/Blog";
 import BlogCategory from "@/pages/BlogCategory";
 import BlogPost from "@/pages/BlogPost";
 import Partner from "@/pages/Partner";
+import About from "@/pages/About";
 
 function Router() {
   return (
@@ -28,6 +29,7 @@ function Router() {
       <Route path="/resources" component={Resources} />
       <Route path="/pricing" component={Pricing} />
       <Route path="/partner" component={Partner} />
+      <Route path="/about" component={About} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
       <Route path="/profile" component={Profile} />

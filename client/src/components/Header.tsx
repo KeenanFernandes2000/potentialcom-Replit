@@ -65,6 +65,12 @@ const Header = () => {
             Resources
           </a>
           <a 
+            href="/about"
+            className="text-foreground/80 hover:text-primary font-medium transition-colors"
+          >
+            About Us
+          </a>
+          <a 
             href="https://ai.potential.com/login?utm_source=bot&utm_medium=main"
             target="_blank"
             rel="noopener noreferrer"
