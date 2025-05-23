@@ -65,12 +65,6 @@ const Header = () => {
             Resources
           </a>
           <a 
-            href="/partner"
-            className="text-foreground/80 hover:text-primary font-medium transition-colors"
-          >
-            Partners
-          </a>
-          <a 
             href="https://ai.potential.com/login?utm_source=bot&utm_medium=main"
             target="_blank"
             rel="noopener noreferrer"
@@ -120,13 +114,6 @@ const Header = () => {
             onClick={() => setIsMenuOpen(false)}
           >
             Resources
-          </a>
-          <a 
-            href="/partner"
-            className="py-3 text-foreground hover:text-primary font-medium transition-colors"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Partners
           </a>
           <a 
             href="https://ai.potential.com/login?utm_source=bot&utm_medium=main"

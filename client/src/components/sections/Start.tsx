@@ -78,7 +78,7 @@ const Start = () => {
               className="rounded-full bg-primary hover:bg-primary/90 text-white font-semibold px-8 w-full"
               size="lg"
               onClick={() => {
-                window.location.href = "/resources#become-partner";
+                window.location.href = "/partner";
               }}
             >
               Become a Partner
