@@ -1,8 +1,9 @@
-import { Facebook, Twitter, Linkedin, Instagram, Mail, MapPin, Phone } from "lucide-react";
+import { Facebook, Linkedin, Instagram, Mail, MapPin, Phone, Youtube } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 import { FooterLogo } from "./FooterLogo";
 import { useToast } from "@/hooks/use-toast";
+import { XLogo } from "./XLogo";
 
 const Footer = () => {
   const { toast } = useToast();
@@ -186,17 +187,20 @@ const Footer = () => {
             </div>
           </div>
           <div className="flex gap-4">
-            <a href="#" className="hover:text-primary transition-colors" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/company/potential" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors" aria-label="LinkedIn">
               <Linkedin size={20} />
             </a>
-            <a href="#" className="hover:text-primary transition-colors" aria-label="Twitter">
-              <Twitter size={20} />
+            <a href="https://twitter.com/potentialcom?lang=en" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors" aria-label="X (Twitter)">
+              <XLogo size={20} />
             </a>
-            <a href="#" className="hover:text-primary transition-colors" aria-label="Facebook">
+            <a href="https://www.facebook.com/PotentialCom" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors" aria-label="Facebook">
               <Facebook size={20} />
             </a>
-            <a href="#" className="hover:text-primary transition-colors" aria-label="Instagram">
+            <a href="https://www.instagram.com/potential.official/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors" aria-label="Instagram">
               <Instagram size={20} />
+            </a>
+            <a href="https://www.youtube.com/c/PotentialCom" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors" aria-label="YouTube">
+              <Youtube size={20} />
             </a>
           </div>
         </div>
