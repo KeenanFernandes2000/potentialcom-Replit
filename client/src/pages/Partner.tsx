@@ -13,7 +13,7 @@ interface BenefitProps {
 }
 
 const Benefit = ({ icon: Icon, title, description }: BenefitProps) => (
-  <div className="flex flex-col items-center text-center bg-secondary/40 backdrop-blur-sm rounded-lg p-8 shadow-lg border border-secondary-foreground/10 transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-xl">
+  <div className="flex flex-col items-center text-center bg-secondary/20 backdrop-blur-sm rounded-lg p-8 shadow-lg border border-secondary-foreground/10 transition-all duration-300 hover:transform hover:-translate-y-1 hover:shadow-xl">
     <div className="bg-primary/10 p-4 rounded-full mb-4">
       <Icon className="h-10 w-10 text-primary" />
     </div>
@@ -30,7 +30,7 @@ interface PartnerTypeProps {
 }
 
 const PartnerType = ({ title, description, benefits }: PartnerTypeProps) => (
-  <div className="bg-secondary/40 backdrop-blur-sm rounded-lg p-8 shadow-lg border border-secondary-foreground/10 h-full flex flex-col">
+  <div className="bg-secondary/20 backdrop-blur-sm rounded-lg p-8 shadow-lg border border-secondary-foreground/10 h-full flex flex-col">
     <h3 className="text-2xl font-bold mb-3">{title}</h3>
     <p className="mb-6 text-muted-foreground">{description}</p>
     <div className="space-y-3 mt-auto">
@@ -106,7 +106,7 @@ export default function Partner() {
                 </Button>
               </div>
               <div className="flex justify-center">
-                <div className="bg-secondary/40 backdrop-blur-sm rounded-lg p-8 shadow-lg border border-secondary-foreground/10 max-w-md">
+                <div className="bg-secondary/20 backdrop-blur-sm rounded-lg p-8 shadow-lg border border-secondary-foreground/10 max-w-md">
                   <h3 className="text-2xl font-bold mb-4">Why Partner With Us</h3>
                   <ul className="space-y-4">
                     <li className="flex items-start">
