@@ -17,6 +17,7 @@ import PrivacyPolicy from "@/pages/PrivacyPolicy";
 import Blog from "@/pages/Blog";
 import BlogCategory from "@/pages/BlogCategory";
 import BlogPost from "@/pages/BlogPost";
+import Partner from "@/pages/Partner";
 
 function Router() {
   return (
@@ -26,6 +27,7 @@ function Router() {
       <Route path="/solutions" component={Offerings} />
       <Route path="/resources" component={Resources} />
       <Route path="/pricing" component={Pricing} />
+      <Route path="/partner" component={Partner} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
       <Route path="/profile" component={Profile} />
