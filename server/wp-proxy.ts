@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 
-const WP_API_BASE_URL = "https://potential.com/wp-json/wp/v2";
+const WP_API_BASE_URL = "https://blog.potential.com/wp-json/wp/v2";
 
 /**
  * Check if text contains Arabic characters

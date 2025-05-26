@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useRoute, Link } from "wouter";
+import { useRoute, Link, useLocation } from "wouter";
 import { fetchPosts, fetchCategories } from "@/lib/blog-api";
 import { useBlogContext } from "@/lib/blog-context";
 import { BlogProvider } from "@/lib/blog-context";
@@ -13,19 +13,52 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import React from "react";
+import { detectLanguage } from "@/lib/language-utils";
 
 function BlogCategoryContent() {
-  const { language, isRTL } = useBlogContext();
+  const { language, isRTL, setLanguage } = useBlogContext();
   const [, params] = useRoute("/blog/category/:slug");
+  const [location] = useLocation();
   const slug = params?.slug || "";
+
+  // Parse URL parameters to detect language
+  const urlParams = new URLSearchParams(location.split("?")[1] || "");
+  const urlLanguage = urlParams.get("lang") as "en" | "ar" | null;
+
+  // Detect language from slug or URL parameter
+  const slugLanguage = detectLanguage(slug);
+  const effectiveLanguage = urlLanguage || slugLanguage;
+
+  // Set language based on URL parameter or slug language
+  React.useEffect(() => {
+    if (effectiveLanguage === "ar" && language !== "ar") {
+      console.log(
+        `[BLOG-CATEGORY] Setting language to Arabic based on slug/URL: ${slug}, lang param: ${urlLanguage}`
+      );
+      setLanguage("ar");
+    } else if (effectiveLanguage === "en" && language !== "en") {
+      console.log(
+        `[BLOG-CATEGORY] Setting language to English based on slug/URL: ${slug}, lang param: ${urlLanguage}`
+      );
+      setLanguage("en");
+    }
+  }, [
+    slug,
+    slugLanguage,
+    urlLanguage,
+    effectiveLanguage,
+    language,
+    setLanguage,
+  ]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 9;
 
   // Fetch categories to get the current category ID and name
   const { data: categories } = useQuery({
-    queryKey: ["categories", language],
-    queryFn: () => fetchCategories(language),
+    queryKey: ["categories", effectiveLanguage],
+    queryFn: () => fetchCategories(effectiveLanguage),
   });
 
   // Find the current category
@@ -33,9 +66,20 @@ function BlogCategoryContent() {
 
   // Fetch posts for this category
   const { data, isLoading, error } = useQuery({
-    queryKey: ["category-posts", language, slug, currentPage, postsPerPage],
+    queryKey: [
+      "category-posts",
+      effectiveLanguage,
+      slug,
+      currentPage,
+      postsPerPage,
+    ],
     queryFn: () =>
-      fetchPosts(language, currentPage, postsPerPage, currentCategory?.id),
+      fetchPosts(
+        effectiveLanguage,
+        currentPage,
+        postsPerPage,
+        currentCategory?.id
+      ),
     enabled: !!currentCategory?.id,
     staleTime: 1000 * 60 * 5, // 5 minutes
   });
@@ -49,7 +93,7 @@ function BlogCategoryContent() {
     <div className={`min-h-screen flex flex-col ${isRTL ? "rtl" : "ltr"}`}>
       <Header />
 
-      <main className="flex-grow container mx-auto px-4 py-8">
+      <main className="flex-grow container mx-auto px-4 py-8 mt-14">
         <div className="flex items-center mb-4">
           <Button variant="ghost" size="sm" asChild>
             <Link href="/blog">
@@ -81,9 +125,9 @@ function BlogCategoryContent() {
             </p>
           </div>
 
-          <div className="mt-4 md:mt-0">
+          {/* <div className="mt-4 md:mt-0">
             <LanguageSwitch />
-          </div>
+          </div> */}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">

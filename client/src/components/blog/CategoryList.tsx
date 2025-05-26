@@ -4,6 +4,7 @@ import { fetchCategories } from "@/lib/blog-api";
 import { useBlogContext } from "@/lib/blog-context";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { detectLanguage } from "@/lib/language-utils";
 
 export function CategoryList() {
   const { language } = useBlogContext();
@@ -55,13 +56,24 @@ export function CategoryList() {
         {language === "en" ? "Categories" : "التصنيفات"}
       </h3>
       <div className="flex flex-wrap gap-2">
-        {nonEmptyCategories.map((category) => (
-          <Link key={category.id} href={`/blog/category/${category.slug}`}>
-            <Badge variant="outline" className="cursor-pointer hover:bg-muted">
+        {nonEmptyCategories.map((category) => {
+          // TODO: Re-enable category links when Arabic categories issue is fixed
+          // const baseUrl = `/blog/category/${category.slug}`;
+          // const categoryUrl =
+          //   language === "ar" || detectLanguage(category.slug) === "ar"
+          //     ? `${baseUrl}?lang=ar`
+          //     : baseUrl;
+
+          return (
+            <Badge
+              key={category.id}
+              variant="outline"
+              className="cursor-default"
+            >
               {category.name} ({category.count})
             </Badge>
-          </Link>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

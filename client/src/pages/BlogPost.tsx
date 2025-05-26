@@ -14,6 +14,37 @@ import { format } from "date-fns";
 import React from "react";
 import { detectLanguage } from "@/lib/language-utils";
 
+// Function to remove the first p tag containing the featured image
+const removeFirstImageFromContent = (
+  content: string,
+  featuredImageUrl: string
+) => {
+  // Create a temporary div to parse the HTML
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = content;
+
+  // Look for the first p tag with an image matching the featured image URL
+  const paragraphs = tempDiv.querySelectorAll("p");
+  // Convert NodeList to Array to avoid iteration issues
+  const paragraphsArray = Array.from(paragraphs);
+  for (let i = 0; i < paragraphsArray.length; i++) {
+    const p = paragraphsArray[i];
+    const img = p.querySelector("img");
+    // Check if this p tag contains an image with the same source
+    if (
+      img &&
+      img.src &&
+      img.src.includes(featuredImageUrl.split("/").pop() || "")
+    ) {
+      // Remove this paragraph
+      p.remove();
+      break;
+    }
+  }
+
+  return tempDiv.innerHTML;
+};
+
 function BlogPostContent() {
   const { language, isRTL, setLanguage } = useBlogContext();
   const [, params] = useRoute("/articles/:slug");
@@ -48,11 +79,22 @@ function BlogPostContent() {
     staleTime: 1000 * 60 * 5, // 5 minutes
   });
 
+  // Process content to remove duplicate featured image
+  const processedContent = React.useMemo(() => {
+    if (!post || !post.content.rendered || !post.featured_image_url) {
+      return post?.content.rendered || "";
+    }
+    return removeFirstImageFromContent(
+      post.content.rendered,
+      post.featured_image_url
+    );
+  }, [post]);
+
   return (
     <div className={`min-h-screen flex flex-col ${isRTL ? "rtl" : "ltr"}`}>
       <Header />
 
-      <main className="flex-grow container mx-auto px-4 py-8">
+      <main className="flex-grow container mx-auto px-4 py-8 mt-14">
         <div className="flex items-center mb-4">
           <Button variant="ghost" size="sm" asChild>
             <Link href="/blog">
@@ -69,10 +111,6 @@ function BlogPostContent() {
               )}
             </Link>
           </Button>
-
-          <div className="ml-auto">
-            <LanguageSwitch />
-          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
@@ -102,11 +140,9 @@ function BlogPostContent() {
                   className="text-4xl font-bold mb-4"
                   dangerouslySetInnerHTML={{ __html: post.title.rendered }}
                 />
-
                 <div className="text-muted-foreground mb-6">
                   {format(new Date(post.date), "MMMM dd, yyyy")}
                 </div>
-
                 {post.featured_image_url && (
                   <div className="mb-8">
                     <img
@@ -119,7 +155,7 @@ function BlogPostContent() {
 
                 <div
                   className="prose prose-lg max-w-none dark:prose-invert"
-                  dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+                  dangerouslySetInnerHTML={{ __html: processedContent }}
                 />
               </>
             ) : null}
