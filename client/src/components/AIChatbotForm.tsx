@@ -98,7 +98,13 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
       formData.append("username", values.firstName);
       formData.append("email", values.email);
       formData.append("name", values.proposedAgentName);
-
+      const utmMedium = new URLSearchParams(window.location.search).get(
+        "utm_medium"
+      );
+      if (utmMedium) {
+        formData.append("medium", utmMedium);
+      }
+      formData.append("source", window.location.href);
       // Send website URL or placeholder if no website
       const websiteUrl =
         values.hasWebsite && values.website
@@ -107,7 +113,7 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
       formData.append("url", websiteUrl);
 
       const response = await fetch(
-        "http://localhost:8000/api/bot/createchatbot",
+        "http://localhost:8000/api/bot/createsimplechatbot",
         {
           method: "POST",
           body: formData,
