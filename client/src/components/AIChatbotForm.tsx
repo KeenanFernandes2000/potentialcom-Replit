@@ -152,9 +152,9 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
   };
 
   const handleTestAgent = () => {
-    if (agentData?.chatbot?.id) {
+    if (agentData?.assistantData?.id) {
       window.open(
-        `https://ai.potential.com/chatbots/${agentData.chatbot.id}`,
+        `https://ai.potential.com/chatbots/${agentData.assistantData.id}`,
         "_blank"
       );
     }
@@ -322,7 +322,7 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
                 <h3 className="font-semibold">Chatbot Created Successfully!</h3>
                 <p className="text-sm mt-1">
                   Chatbot Name:{" "}
-                  {agentData?.chatbot?.name ||
+                  {agentData?.assistantData?.name ||
                     form.getValues("proposedAgentName")}
                 </p>
               </div>
@@ -330,7 +330,7 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
 
             <Button
               onClick={handleTestAgent}
-              disabled={!agentData?.chatbot?.id}
+              disabled={!agentData?.assistantData?.id}
               className="w-full"
             >
               <ExternalLink className="mr-2 h-4 w-4" />
