@@ -6,6 +6,7 @@ import {
   MapPin,
   Phone,
   Youtube,
+  MessageCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
@@ -108,11 +109,32 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-center gap-2">
                 <Mail className="h-5 w-5 text-primary" />
-                <span className="opacity-80">contact@potential.com</span>
+                <a 
+                  href="mailto:contact@potential.com"
+                  className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
+                >
+                  contact@potential.com
+                </a>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="h-5 w-5 text-primary" />
-                <span className="opacity-80">+1 862 267 9307</span>
+                <a 
+                  href="tel:+18622679307"
+                  className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
+                >
+                  +1 862 267 9307
+                </a>
+              </li>
+              <li className="flex items-center gap-2">
+                <MessageCircle className="h-5 w-5 text-primary" />
+                <a 
+                  href="https://wa.me/97143693663"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
+                >
+                  +971 4 369 3663
+                </a>
               </li>
             </ul>
           </div>
