@@ -79,9 +79,7 @@ const Footer = () => {
                 <a
                   href="/partner"
                   className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
-                >
-                  Partners
-                </a>
+                >Partner with us</a>
               </li>
               <li>
                 <a
