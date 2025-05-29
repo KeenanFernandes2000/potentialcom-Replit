@@ -53,11 +53,7 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="#hero"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection("hero");
-                  }}
+                  href="/"
                   className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
                 >
                   Home
