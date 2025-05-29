@@ -126,7 +126,7 @@ const Footer = () => {
                 </a>
               </li>
               <li className="flex items-center gap-2">
-                <MessageCircle className="h-5 w-5 text-primary" />
+                <SiWhatsapp className="h-5 w-5 text-primary" />
                 <a 
                   href="https://wa.me/97143693663"
                   target="_blank"
