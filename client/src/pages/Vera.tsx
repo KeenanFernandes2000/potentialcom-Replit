@@ -369,7 +369,7 @@ export default function Vera() {
                 },
                 {
                   icon: Users,
-                  title: "Guide You Through",
+                  title: "Set up Your Chatbot and Voice Agents",
                   description: "I'll walk you through the steps to integrate AI seamlessly."
                 },
                 {
