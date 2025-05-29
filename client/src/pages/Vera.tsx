@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import veraBannerSvg from "@assets/Vera Banner.svg";
 import veraGif from "@assets/Vera Gif Final.gif";
+import veraAvatarCentered from "@assets/Vera Avatar Centered.png";
 import { Check, Search, Users, Calendar, MessageSquare } from "lucide-react";
 
 const formSchema = z.object({
@@ -123,7 +124,7 @@ export default function Vera() {
               <div className="flex justify-center lg:justify-end">
                 <div className="relative w-full max-w-lg">
                   <img
-                    src={veraGif}
+                    src={veraAvatarCentered}
                     alt="Vera AI Business Consultant"
                     className="w-full h-auto"
                   />
