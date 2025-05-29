@@ -111,18 +111,13 @@ const Vera = () => {
               human experts when needed. She's always available to guide your
               business growth journey.
             </p>
-            <a
-              href="https://ai.potential.com/voice/42531902-20ad-46c7-a611-3e0ccf721aa1"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Button
+              className="rounded-full bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-6 gtm-vera-talk-to-vera"
+              size="lg"
+              onClick={() => window.location.href = "/vera"}
             >
-              <Button
-                className="rounded-full bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-6 gtm-vera-talk-to-vera"
-                size="lg"
-              >
-                Talk to Vera
-              </Button>
-            </a>
+              Talk to Vera
+            </Button>
 
             {/* Chat Preview */}
             <div className="mt-12 glass-effect rounded-2xl overflow-hidden border border-border shadow-lg">
