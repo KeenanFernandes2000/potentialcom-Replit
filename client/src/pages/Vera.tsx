@@ -123,7 +123,7 @@ export default function Vera() {
               <div className="flex justify-center lg:justify-end">
                 <div className="relative w-full max-w-lg">
                   <img
-                    src={veraBannerSvg}
+                    src={veraAvatarPng}
                     alt="Vera AI Business Consultant"
                     className="w-full h-auto"
                   />
