@@ -2,6 +2,7 @@ import {
   users, 
   newsletterSubscribers, 
   resourceDownloads,
+  veraConsultations,
   type User, 
   type RegisterUserInput,
   type UpdateProfileInput,
@@ -9,7 +10,9 @@ import {
   type NewsletterSubscriberInput,
   type ResourceDownload,
   type ResourceDownloadInput,
-  type PartnerApplicationInput
+  type PartnerApplicationInput,
+  type VeraConsultation,
+  type VeraConsultationInput
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, and } from "drizzle-orm";
@@ -37,6 +40,10 @@ export interface IStorage {
   // Resource downloads
   trackResourceDownload(downloadData: ResourceDownloadInput): Promise<ResourceDownload>;
   getResourceDownloadsByEmail(email: string): Promise<ResourceDownload[]>;
+  
+  // Vera consultations
+  submitVeraConsultation(consultationData: VeraConsultationInput): Promise<VeraConsultation>;
+  getVeraConsultationsByEmail(email: string): Promise<VeraConsultation[]>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -286,6 +293,21 @@ export class DatabaseStorage implements IStorage {
       
       return newUser;
     }
+  }
+
+  // Vera consultations
+  async submitVeraConsultation(consultationData: VeraConsultationInput): Promise<VeraConsultation> {
+    const [consultation] = await db.insert(veraConsultations)
+      .values(consultationData)
+      .returning();
+    
+    return consultation;
+  }
+  
+  async getVeraConsultationsByEmail(email: string): Promise<VeraConsultation[]> {
+    return await db.select()
+      .from(veraConsultations)
+      .where(eq(veraConsultations.email, email));
   }
 }
 

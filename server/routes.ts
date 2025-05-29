@@ -9,6 +9,7 @@ import {
   newsletterSubscriberSchema,
   resourceDownloadSchema,
   partnerApplicationSchema,
+  veraConsultationSchema,
 } from "@shared/schema";
 import { proxyWordPressRequest } from "./wp-proxy";
 

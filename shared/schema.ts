@@ -40,6 +40,19 @@ export const resourceDownloads = pgTable("resource_downloads", {
   downloadedAt: timestamp("downloaded_at").defaultNow(),
 });
 
+// Vera consultation form submissions
+export const veraConsultations = pgTable("vera_consultations", {
+  id: serial("id").primaryKey(),
+  firstName: varchar("first_name", { length: 100 }).notNull(),
+  lastName: varchar("last_name", { length: 100 }).notNull(),
+  email: varchar("email", { length: 255 }).notNull(),
+  phoneNumber: varchar("phone_number", { length: 20 }).notNull(),
+  countryCode: varchar("country_code", { length: 10 }).notNull(),
+  companyName: varchar("company_name", { length: 255 }).notNull(),
+  companyWebsite: varchar("company_website", { length: 255 }),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 // Authentication schemas
 export const registerUserSchema = createInsertSchema(users).pick({
   email: true,
@@ -85,6 +98,16 @@ export const resourceDownloadSchema = createInsertSchema(resourceDownloads).pick
   resourceName: true,
 });
 
+export const veraConsultationSchema = createInsertSchema(veraConsultations).pick({
+  firstName: true,
+  lastName: true,
+  email: true,
+  phoneNumber: true,
+  countryCode: true,
+  companyName: true,
+  companyWebsite: true,
+});
+
 // Types
 export type RegisterUserInput = z.infer<typeof registerUserSchema>;
 export type LoginUserInput = z.infer<typeof loginUserSchema>;
@@ -92,7 +115,9 @@ export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
 export type PartnerApplicationInput = z.infer<typeof partnerApplicationSchema>;
 export type NewsletterSubscriberInput = z.infer<typeof newsletterSubscriberSchema>;
 export type ResourceDownloadInput = z.infer<typeof resourceDownloadSchema>;
+export type VeraConsultationInput = z.infer<typeof veraConsultationSchema>;
 
 export type User = typeof users.$inferSelect;
 export type NewsletterSubscriber = typeof newsletterSubscribers.$inferSelect;
 export type ResourceDownload = typeof resourceDownloads.$inferSelect;
+export type VeraConsultation = typeof veraConsultations.$inferSelect;
