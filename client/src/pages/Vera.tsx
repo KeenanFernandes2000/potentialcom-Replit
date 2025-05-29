@@ -10,7 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import veraBannerSvg from "@assets/Vera Banner.svg";
-import veraGif from "@assets/Vera Gif.gif";
+import veraGif from "@assets/Vera Gif Final.gif";
 import { Check, Search, Users, Calendar, MessageSquare } from "lucide-react";
 
 const formSchema = z.object({
