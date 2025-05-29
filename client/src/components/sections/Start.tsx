@@ -59,13 +59,9 @@ const Start = () => {
             <Button
               className="rounded-full bg-primary hover:bg-primary/90 text-white font-semibold px-8 w-full gtm-start-talk-to-consultant"
               size="lg"
-              onClick={() =>
-                window.open(
-                  "https://ai.potential.com/voice/42531902-20ad-46c7-a611-3e0ccf721aa1",
-                  "_blank",
-                  "noopener,noreferrer"
-                )
-              }
+              onClick={() => {
+                window.location.href = "/vera";
+              }}
             >
               Talk to AI Consultant
             </Button>
