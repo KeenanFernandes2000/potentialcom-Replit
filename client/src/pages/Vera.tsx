@@ -71,8 +71,15 @@ export default function Vera() {
       
       toast({
         title: "Welcome to Vera!",
-        description: "Your request has been submitted. Vera will be with you shortly!",
+        description: "Your request has been submitted. Opening Vera chat in a new window...",
       });
+      
+      // Open Vera chat in new window
+      window.open(
+        "https://ai.potential.com/voice/42531902-20ad-46c7-a611-3e0ccf721aa1",
+        "_blank",
+        "noopener,noreferrer"
+      );
       
       form.reset();
     } catch (error) {
