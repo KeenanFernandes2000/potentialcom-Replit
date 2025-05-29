@@ -61,21 +61,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="#tools"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection("tools");
-                  }}
-                  className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
-                >Solutions</a>
-              </li>
-              <li>
-                <a
-                  href="#solutions"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection("solutions");
-                  }}
+                  href="/solutions"
                   className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
                 >
                   Solutions
