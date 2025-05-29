@@ -69,11 +69,11 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="https://ai.potential.com/rachel"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/vera"
                   className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
-                >Talk to Vera</a>
+                >
+                  Talk to Vera
+                </a>
               </li>
               <li>
                 <a
