@@ -73,9 +73,7 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
-                >
-                  Meet Rachel
-                </a>
+                >Talk to Vera</a>
               </li>
               <li>
                 <a
