@@ -65,9 +65,7 @@ const Benefits = () => {
               <h3 className="text-xl font-semibold mb-2">{benefit.title}</h3>
               <p className="text-muted-foreground mb-4 text-sm">{benefit.description}</p>
               <a 
-                href="https://ai.potential.com/rachel"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/vera"
                 className="text-primary font-medium flex items-center group hover:underline text-sm"
               >
                 Learn more <ArrowRight className="ml-1 w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
@@ -77,18 +75,15 @@ const Benefits = () => {
         </div>
 
         <div className="mt-16 text-center">
-          <a 
-            href="https://ai.potential.com/rachel"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Button 
+            className="rounded-full bg-primary hover:bg-primary/90 text-white font-medium px-8 py-6"
+            size="lg"
+            onClick={() => {
+              window.location.href = "/vera";
+            }}
           >
-            <Button 
-              className="rounded-full bg-primary hover:bg-primary/90 text-white font-medium px-8 py-6"
-              size="lg"
-            >
-              Explore All Features
-            </Button>
-          </a>
+            Explore All Features
+          </Button>
         </div>
       </div>
     </section>
