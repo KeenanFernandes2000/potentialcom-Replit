@@ -14,6 +14,7 @@
 - `#agents` - "Launch a No-Code AI Chatbot or Voicebot in Minutes" section
 - `#benefits` - Benefits and features overview
 - `#vera` - Meet Vera: AI Business Consultant
+- `#rachel` - Meet Rachel: 24/7 AI Business Consultant
 - `#whitepaper` - Resources and whitepapers
 - `#start` - Get started options and final CTAs
 
@@ -60,6 +61,14 @@
 - **Priority:** Medium-High (0.8)
 - **Update Frequency:** Monthly
 - **Description:** Partnership opportunities, reseller programs, and collaboration options
+
+### Vera AI Consultant
+
+**URL:** `https://potential.com/vera`
+
+- **Priority:** High (0.9)
+- **Update Frequency:** Monthly
+- **Description:** Dedicated page for Vera AI Business Consultant with consultation form and detailed information
 
 ---
 
@@ -157,13 +166,20 @@
 
 ### AI Consultant
 
-- **CTA:** "Talk to Vera" → External link to AI consultant
-- **Target:** `https://ai.potential.com/voice/42531902-20ad-46c7-a611-3e0ccf721aa1`
+- **CTA:** "Talk to Vera" → Links to Vera page
+- **Target:** `https://potential.com/vera`
+
+### AI Business Consultant
+
+- **CTA:** "Talk to Rachel" → External link to Rachel AI consultant
+- **Target:** `https://ai.potential.com/rachel`
 
 ### External Platforms
 
 - **Chatbot Platform:** `https://ai.potential.com/chatbots`
 - **Voice Agent Platform:** `https://ai.potential.com/voice`
+- **Rachel AI Consultant:** `https://ai.potential.com/rachel`
+- **Vera AI Consultant:** `https://ai.potential.com/voice/42531902-20ad-46c7-a611-3e0ccf721aa1`
 - **Login Portal:** `https://ai.potential.com/login`
 
 ---
@@ -176,6 +192,7 @@
 - About (/about)
 - Solutions (/solutions)
 - Pricing (/pricing)
+- Vera (/vera)
 - AI Agents section (/#agents)
 
 ### Medium Priority Pages (0.5-0.7)
@@ -184,6 +201,7 @@
 - Partner (/partner)
 - Blog (/blog)
 - Vera section (/#vera)
+- Rachel section (/#rachel)
 
 ### Low Priority Pages (0.3-0.4)
 
@@ -195,7 +213,7 @@
 
 - **Daily:** Blog content
 - **Weekly:** Homepage, solutions, resources
-- **Monthly:** About, pricing, partner pages
+- **Monthly:** About, pricing, partner pages, Vera page
 - **Yearly:** Legal, authentication pages
 
 ---
@@ -215,6 +233,7 @@ Footer Navigation:
 │   ├── Home
 │   ├── AI Tools
 │   ├── Solutions
+│   ├── Meet Vera
 │   ├── Meet Rachel
 │   ├── Partners
 │   └── Login/Register
@@ -242,3 +261,25 @@ Footer Navigation:
 - Structured data and meta tags on all pages
 - Clean URL structure with semantic paths
 - Internal linking strategy between related pages
+
+---
+
+## 🤖 AI Consultant Integration
+
+### Vera (Internal Page)
+
+- **URL:** `/vera`
+- **Description:** Dedicated consultation page with form submission
+- **Features:** Contact form, detailed AI consultant information, direct access to Vera chat
+
+### Rachel (External Integration)
+
+- **URL:** External link to `https://ai.potential.com/rachel`
+- **Description:** 24/7 AI business consultant accessible from various website sections
+- **Integration:** Embedded chat previews and direct links throughout the site
+
+### WhatsApp & Phone Integration
+
+- **WhatsApp:** `https://wa.me/97143693663`
+- **Phone:** `tel:+18622679307`
+- **Available:** 24/7 support through multiple channels

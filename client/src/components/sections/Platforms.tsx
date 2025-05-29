@@ -1,15 +1,15 @@
 import { Button } from "@/components/ui/button";
-import { 
-  UserPlus, 
-  GraduationCap, 
-  HeadphonesIcon, 
+import {
+  UserPlus,
+  GraduationCap,
+  HeadphonesIcon,
   BarChart4,
   Trophy,
   ClipboardList,
   Users,
   ShoppingBag,
   Heart,
-  Award
+  Award,
 } from "lucide-react";
 
 const Platforms = () => {
@@ -21,8 +21,8 @@ const Platforms = () => {
       features: [
         "Customer data organization",
         "Lead tracking",
-        "AI-powered insights"
-      ]
+        "AI-powered insights",
+      ],
     },
     {
       title: "LMS Lite",
@@ -31,18 +31,14 @@ const Platforms = () => {
       features: [
         "Course creation tools",
         "Student progress tracking",
-        "AI tutoring integration"
-      ]
+        "AI tutoring integration",
+      ],
     },
     {
       title: "Support Desk",
       icon: <HeadphonesIcon className="h-6 w-6" />,
       description: "Customer support solution",
-      features: [
-        "Ticket management",
-        "Knowledge base",
-        "AI auto-responses"
-      ]
+      features: ["Ticket management", "Knowledge base", "AI auto-responses"],
     },
     {
       title: "KPI Tracker",
@@ -51,8 +47,8 @@ const Platforms = () => {
       features: [
         "Custom KPI monitoring",
         "Team performance tracking",
-        "AI prediction insights"
-      ]
+        "AI prediction insights",
+      ],
     },
     {
       title: "Hackathon Platform",
@@ -61,8 +57,8 @@ const Platforms = () => {
       features: [
         "Team formation tools",
         "Submission management",
-        "AI-based judging assistance"
-      ]
+        "AI-based judging assistance",
+      ],
     },
     {
       title: "Project Manager",
@@ -71,8 +67,8 @@ const Platforms = () => {
       features: [
         "Task assignment and tracking",
         "Progress visualization",
-        "AI resource optimization"
-      ]
+        "AI resource optimization",
+      ],
     },
     {
       title: "Coaching and Mentoring",
@@ -81,8 +77,8 @@ const Platforms = () => {
       features: [
         "Skills assessment and roadmapping",
         "Personalized coaching sessions",
-        "AI-guided personal development"
-      ]
+        "AI-guided personal development",
+      ],
     },
     {
       title: "Marketplace",
@@ -91,8 +87,8 @@ const Platforms = () => {
       features: [
         "Product and service listings",
         "Secure transaction processing",
-        "AI-powered recommendations"
-      ]
+        "AI-powered recommendations",
+      ],
     },
     {
       title: "Social Impact",
@@ -101,8 +97,8 @@ const Platforms = () => {
       features: [
         "Impact tracking and measurement",
         "Community engagement tools",
-        "AI-powered social initiative planning"
-      ]
+        "AI-powered social initiative planning",
+      ],
     },
     {
       title: "Public Certification",
@@ -111,9 +107,9 @@ const Platforms = () => {
       features: [
         "Skill certification systems",
         "Digital credential management",
-        "AI-guided learning paths"
-      ]
-    }
+        "AI-guided learning paths",
+      ],
+    },
   ];
 
   return (
@@ -123,18 +119,18 @@ const Platforms = () => {
           <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
             Micro Platforms
           </div>
-          <h2 className="section-title mb-6">
-            AI-Linked Micro Platforms
-          </h2>
+          <h2 className="section-title mb-6">AI-Linked Micro Platforms</h2>
           <p className="text-xl text-muted-foreground">
-            Lightweight systems that integrate with our AI agents to deliver specific business functionality without the complexity of enterprise software.
+            Lightweight systems that integrate with our AI agents to deliver
+            specific business functionality without the complexity of enterprise
+            software.
           </p>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {platforms.map((platform, idx) => (
-            <div 
-              key={idx} 
+            <div
+              key={idx}
               className="glass-effect rounded-2xl p-6 border border-border transition-all duration-300 hover:shadow-xl hover:translate-y-[-5px]"
               data-aos="fade-up"
               data-aos-delay={idx * 100}
@@ -143,8 +139,10 @@ const Platforms = () => {
                 {platform.icon}
               </div>
               <h3 className="text-xl font-bold mb-2">{platform.title}</h3>
-              <p className="text-sm text-muted-foreground mb-4">{platform.description}</p>
-              
+              <p className="text-sm text-muted-foreground mb-4">
+                {platform.description}
+              </p>
+
               <ul className="space-y-2 mb-6">
                 {platform.features.map((feature, i) => (
                   <li key={i} className="flex items-start text-sm">
@@ -155,11 +153,17 @@ const Platforms = () => {
                   </li>
                 ))}
               </ul>
-              
-              <Button 
-                variant="outline" 
-                className="w-full rounded-full hover:bg-primary hover:text-white"
-                onClick={() => window.open('https://ai.potential.com/voice/42531902-20ad-46c7-a611-3e0ccf721aa1', '_blank', 'noopener,noreferrer')}
+
+              <Button
+                variant="outline"
+                className="w-full rounded-full hover:bg-primary hover:text-white gtm-platforms-learn-more"
+                onClick={() =>
+                  window.open(
+                    "https://ai.potential.com/voice/42531902-20ad-46c7-a611-3e0ccf721aa1",
+                    "_blank",
+                    "noopener,noreferrer"
+                  )
+                }
               >
                 Learn More
               </Button>

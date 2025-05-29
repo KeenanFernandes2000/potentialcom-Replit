@@ -6,8 +6,21 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import veraBannerSvg from "@assets/Vera Banner.svg";
@@ -22,7 +35,11 @@ const formSchema = z.object({
   phoneNumber: z.string().min(1, "Phone number is required"),
   countryCode: z.string().min(1, "Please select a country code"),
   companyName: z.string().min(1, "Company name is required"),
-  companyWebsite: z.string().url("Please enter a valid website URL").optional().or(z.literal("")),
+  companyWebsite: z
+    .string()
+    .url("Please enter a valid website URL")
+    .optional()
+    .or(z.literal("")),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -68,19 +85,20 @@ export default function Vera() {
         },
         body: JSON.stringify(values),
       });
-      
+
       toast({
         title: "Welcome to Vera!",
-        description: "Your request has been submitted. Opening Vera chat in a new window...",
+        description:
+          "Your request has been submitted. Opening Vera chat in a new window...",
       });
-      
+
       // Open Vera chat in new window
       window.open(
         "https://ai.potential.com/voice/42531902-20ad-46c7-a611-3e0ccf721aa1",
         "_blank",
         "noopener,noreferrer"
       );
-      
+
       form.reset();
     } catch (error) {
       console.error("Form submission error:", error);
@@ -97,7 +115,8 @@ export default function Vera() {
   const scrollToForm = () => {
     const formElement = document.getElementById("vera-form");
     if (formElement) {
-      const offsetTop = formElement.getBoundingClientRect().top + window.scrollY - 80;
+      const offsetTop =
+        formElement.getBoundingClientRect().top + window.scrollY - 80;
       window.scrollTo({
         top: offsetTop,
         behavior: "smooth",
@@ -119,17 +138,20 @@ export default function Vera() {
                   <h1 className="text-4xl lg:text-6xl font-bold text-foreground leading-tight">
                     Hello, I'm Vera,
                     <br />
-                    <span className="text-primary">Your AI Business Consultant</span>
+                    <span className="text-primary">
+                      Your AI Business Consultant
+                    </span>
                   </h1>
                   <p className="text-xl text-muted-foreground leading-relaxed max-w-lg">
-                    Chat or talk to me, and I'll help you explore AI solutions for your business—completely free!
+                    Chat or talk to me, and I'll help you explore AI solutions
+                    for your business—completely free!
                   </p>
                 </div>
-                
-                <Button 
+
+                <Button
                   onClick={scrollToForm}
-                  size="lg" 
-                  className="bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-6 text-lg"
+                  size="lg"
+                  className="bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-6 text-lg gtm-vera-get-started"
                 >
                   Get Started with Vera
                 </Button>
@@ -147,7 +169,7 @@ export default function Vera() {
               </div>
             </div>
           </div>
-          
+
           {/* Background Elements */}
           <div className="absolute inset-0 -z-10">
             <div className="absolute top-20 left-20 w-64 h-64 opacity-20 dark:opacity-5 blur-3xl">
@@ -174,7 +196,10 @@ export default function Vera() {
 
               <div className="bg-card rounded-xl shadow-lg p-8 border">
                 <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-6"
+                  >
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <FormField
                         control={form.control}
@@ -183,7 +208,10 @@ export default function Vera() {
                           <FormItem>
                             <FormLabel>First Name</FormLabel>
                             <FormControl>
-                              <Input placeholder="Enter your first name" {...field} />
+                              <Input
+                                placeholder="Enter your first name"
+                                {...field}
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -197,7 +225,10 @@ export default function Vera() {
                           <FormItem>
                             <FormLabel>Last Name</FormLabel>
                             <FormControl>
-                              <Input placeholder="Enter your last name" {...field} />
+                              <Input
+                                placeholder="Enter your last name"
+                                {...field}
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -212,7 +243,11 @@ export default function Vera() {
                         <FormItem>
                           <FormLabel>Email Address</FormLabel>
                           <FormControl>
-                            <Input type="email" placeholder="Enter your email address" {...field} />
+                            <Input
+                              type="email"
+                              placeholder="Enter your email address"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -226,7 +261,10 @@ export default function Vera() {
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Country Code</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
                               <FormControl>
                                 <SelectTrigger>
                                   <SelectValue placeholder="Select" />
@@ -234,7 +272,10 @@ export default function Vera() {
                               </FormControl>
                               <SelectContent>
                                 {countryCodes.map((country) => (
-                                  <SelectItem key={country.code} value={country.code}>
+                                  <SelectItem
+                                    key={country.code}
+                                    value={country.code}
+                                  >
                                     {country.code} ({country.country})
                                   </SelectItem>
                                 ))}
@@ -253,7 +294,10 @@ export default function Vera() {
                             <FormItem>
                               <FormLabel>Phone Number</FormLabel>
                               <FormControl>
-                                <Input placeholder="Enter your phone number" {...field} />
+                                <Input
+                                  placeholder="Enter your phone number"
+                                  {...field}
+                                />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
@@ -269,7 +313,10 @@ export default function Vera() {
                         <FormItem>
                           <FormLabel>Company Name</FormLabel>
                           <FormControl>
-                            <Input placeholder="Enter your company name" {...field} />
+                            <Input
+                              placeholder="Enter your company name"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -283,16 +330,19 @@ export default function Vera() {
                         <FormItem>
                           <FormLabel>Company Website</FormLabel>
                           <FormControl>
-                            <Input placeholder="https://yourcompany.com" {...field} />
+                            <Input
+                              placeholder="https://yourcompany.com"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
 
-                    <Button 
-                      type="submit" 
-                      className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-6 text-lg"
+                    <Button
+                      type="submit"
+                      className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-6 text-lg gtm-vera-form-submit"
                       disabled={isSubmitting}
                     >
                       {isSubmitting ? "Connecting to Vera..." : "Talk to Vera"}
@@ -318,34 +368,38 @@ export default function Vera() {
                 {
                   icon: Search,
                   title: "Find the Right AI Solutions",
-                  description: "I'll help you identify the best AI tools tailored to your needs."
+                  description:
+                    "I'll help you identify the best AI tools tailored to your needs.",
                 },
                 {
                   icon: Users,
                   title: "Set up Your Chatbot and Voice Agents",
-                  description: "I'll automatically set up your chatbot or voice agents while we speak."
+                  description:
+                    "I'll automatically set up your chatbot or voice agents while we speak.",
                 },
                 {
                   icon: Calendar,
                   title: "Schedule a Meeting",
-                  description: "Need expert advice? I can set up a call with a human consultant."
+                  description:
+                    "Need expert advice? I can set up a call with a human consultant.",
                 },
                 {
                   icon: MessageSquare,
                   title: "Available 24/7",
                   description: (
                     <span>
-                      Chat or talk to me anytime—wherever you are! I'm also available on{" "}
-                      <a 
-                        href="https://wa.me/97143693663" 
-                        target="_blank" 
+                      Chat or talk to me anytime—wherever you are! I'm also
+                      available on{" "}
+                      <a
+                        href="https://wa.me/97143693663"
+                        target="_blank"
                         rel="noopener noreferrer"
                         className="text-purple-600 hover:text-purple-700 underline font-medium"
                       >
                         WhatsApp
-                      </a>
-                      {" "}and{" "}
-                      <a 
+                      </a>{" "}
+                      and{" "}
+                      <a
                         href="tel:+18622679307"
                         className="text-purple-600 hover:text-purple-700 underline font-medium"
                       >
@@ -353,10 +407,13 @@ export default function Vera() {
                       </a>
                       .
                     </span>
-                  )
-                }
+                  ),
+                },
               ].map((feature, index) => (
-                <div key={index} className="text-center space-y-4 p-6 bg-card rounded-xl border hover:shadow-lg transition-shadow">
+                <div
+                  key={index}
+                  className="text-center space-y-4 p-6 bg-card rounded-xl border hover:shadow-lg transition-shadow"
+                >
                   <div className="mx-auto w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center">
                     <feature.icon className="w-8 h-8 text-purple-600" />
                   </div>
@@ -382,7 +439,7 @@ export default function Vera() {
                   {/* Background decorative circles */}
                   <div className="absolute -top-8 -left-8 w-32 h-32 bg-purple-200 rounded-full opacity-60"></div>
                   <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-purple-300 rounded-full opacity-40"></div>
-                  
+
                   {/* Vera's image */}
                   <div className="relative w-80 h-80 bg-gradient-to-br from-purple-100 to-purple-50 rounded-lg overflow-hidden flex items-center justify-center ml-[25px] mr-[25px]">
                     <img
@@ -398,18 +455,21 @@ export default function Vera() {
               <div className="space-y-8">
                 <div className="space-y-6">
                   <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
-                    Meet Vera: <span className="text-primary">Your AI Guide</span>
+                    Meet Vera:{" "}
+                    <span className="text-primary">Your AI Guide</span>
                   </h2>
                   <p className="text-lg text-muted-foreground leading-relaxed">
-                    I'm Vera, your AI-powered consultant, here to guide you through the world of AI adoption. With my expertise, I can help you:
+                    I'm Vera, your AI-powered consultant, here to guide you
+                    through the world of AI adoption. With my expertise, I can
+                    help you:
                   </p>
                 </div>
 
                 <div className="space-y-4">
                   {[
                     "Automate your customer support with AI solutions",
-                    "Boost your sales with intelligent chatbots", 
-                    "Optimize your business processes with AI"
+                    "Boost your sales with intelligent chatbots",
+                    "Optimize your business processes with AI",
                   ].map((benefit, index) => (
                     <div key={index} className="flex items-center space-x-3">
                       <div className="flex-shrink-0 w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center">
@@ -424,9 +484,9 @@ export default function Vera() {
                   <p className="text-lg font-semibold text-foreground mb-4">
                     Best of all? My consultation is completely free!
                   </p>
-                  <Button 
+                  <Button
                     onClick={scrollToForm}
-                    className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-8 py-3"
+                    className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-8 py-3 gtm-vera-start-consultation"
                   >
                     Start Your Free Consultation →
                   </Button>
