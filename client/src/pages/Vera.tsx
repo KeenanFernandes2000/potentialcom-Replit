@@ -317,7 +317,26 @@ export default function Vera() {
                 {
                   icon: MessageSquare,
                   title: "Available 24/7",
-                  description: "Chat or talk to me anytime—wherever you are! I'm also available on WhatsApp and Phone"
+                  description: (
+                    <span>
+                      Chat or talk to me anytime—wherever you are! I'm also available on{" "}
+                      <a 
+                        href="https://wa.me/97143693663" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-purple-600 hover:text-purple-700 underline font-medium"
+                      >
+                        WhatsApp
+                      </a>
+                      {" "}and{" "}
+                      <a 
+                        href="tel:+18622679307"
+                        className="text-purple-600 hover:text-purple-700 underline font-medium"
+                      >
+                        Phone
+                      </a>
+                    </span>
+                  )
                 }
               ].map((feature, index) => (
                 <div key={index} className="text-center space-y-4 p-6 bg-card rounded-xl border hover:shadow-lg transition-shadow">
@@ -327,9 +346,9 @@ export default function Vera() {
                   <h3 className="text-lg font-semibold text-foreground">
                     {feature.title}
                   </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
+                  <div className="text-muted-foreground text-sm leading-relaxed">
                     {feature.description}
-                  </p>
+                  </div>
                 </div>
               ))}
             </div>
