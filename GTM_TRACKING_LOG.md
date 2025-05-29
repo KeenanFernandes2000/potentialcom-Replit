@@ -180,9 +180,10 @@ This document lists all the tracking classes implemented across the Potential.co
 
 ### Header Navigation (All Pages)
 
-| Class Name                | Element | Action | Description             |
-| ------------------------- | ------- | ------ | ----------------------- |
-| `gtm-header-theme-toggle` | Button  | Click  | Toggle light/dark theme |
+| Class Name                | Element | Action | Description                                                  |
+| ------------------------- | ------- | ------ | ------------------------------------------------------------ |
+| `gtm-header-theme-toggle` | Button  | Click  | Toggle light/dark theme                                      |
+| `gtm-header-get-started`  | Link    | Click  | "Get Started" mobile menu link - navigates to agents section |
 
 ### Footer (All Pages)
 
@@ -300,6 +301,7 @@ Use the tracking classes to create audience segments:
 ### Global Component Testing
 
 - [ ] Header theme toggle
+- [ ] Header "Get Started" mobile menu link
 - [ ] Footer newsletter subscription
 
 ---
@@ -318,31 +320,4 @@ Use the tracking classes to create audience segments:
 - **Agent Creation Rate:** `gtm-chatbot-form-submit` + `gtm-voicebot-form-submit`
 - **Consultation Requests:** `gtm-vera-form-submit`
 - **Rachel Engagement:** `gtm-rachel-talk-to-rachel`
-- **Partner Interest:** `gtm-partner-form-submit`
-- **CTA Performance:** All `gtm-hero-*` and `gtm-start-*` classes
-
-### Secondary Metrics
-
-- **Feature Exploration:** `gtm-benefits-explore-features`
-- **Case Study Interest:** `gtm-offerings-case-study`
-- **Platform Interest:** `gtm-platforms-learn-more`
-- **Solution Interest:** `gtm-solutions-*`
-
----
-
-## 🏷️ Naming Convention Summary
-
-**Format:** `gtm-[section/page]-[component]-[action]`
-
-**Examples:**
-
-- `gtm-hero-try-free-agent` (section-action)
-- `gtm-pricing-plan-starter` (page-component-detail)
-- `gtm-chatbot-form-submit` (component-element-action)
-
-This consistent naming makes it easy to:
-
-- Group related events in GTM
-- Create audience segments
-- Build custom reports in GA4
-- Maintain and update tracking
+- **Partner Interest:** `

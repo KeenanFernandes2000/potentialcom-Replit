@@ -75,7 +75,9 @@ const Header = () => {
           <a
             href="/vera"
             className="text-foreground/80 hover:text-primary font-medium transition-colors"
-          >Talk to Vera</a>
+          >
+            Talk to Vera
+          </a>
 
           <div className="pl-4">
             <ThemeToggle />
@@ -131,7 +133,7 @@ const Header = () => {
                 scrollToSection("agents");
               }
             }}
-            className="py-3 text-foreground hover:text-primary font-medium transition-colors"
+            className="py-3 text-foreground hover:text-primary font-medium transition-colors gtm-header-get-started"
           >
             Get Started
           </a>
