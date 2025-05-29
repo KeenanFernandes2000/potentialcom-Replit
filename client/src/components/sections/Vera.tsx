@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { MessageCircle, Bot, Send } from "lucide-react";
-import veraAvatar from "@assets/vera-avatar.png";
+import veraAvatarCentered from "@assets/Vera Avatar Centered.png";
 
 const Vera = () => {
   const chatMessages = [
@@ -51,7 +51,7 @@ const Vera = () => {
               {/* Main image with effects */}
               <div className="rounded-2xl overflow-hidden relative shadow-2xl">
                 <img
-                  src={veraAvatar}
+                  src={veraAvatarCentered}
                   alt="Vera, AI Business Consultant"
                   className="w-full h-auto object-contain rounded-2xl bg-gradient-to-b from-background/10 to-primary/5"
                 />
