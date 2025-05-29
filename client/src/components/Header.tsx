@@ -81,9 +81,7 @@ const Header = () => {
               }
             }}
             className="text-foreground/80 hover:text-primary font-medium transition-colors"
-          >
-            Get Started
-          </a>
+          >Talk to Vera</a>
 
           <div className="pl-4">
             <ThemeToggle />
@@ -107,7 +105,6 @@ const Header = () => {
           </Button>
         </div>
       </div>
-
       {isMenuOpen && (
         <div className="mobile-nav flex flex-col glass-effect w-full py-6 px-6 md:hidden shadow-md">
           <a
