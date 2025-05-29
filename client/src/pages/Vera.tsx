@@ -370,7 +370,7 @@ export default function Vera() {
                 {
                   icon: Users,
                   title: "Set up Your Chatbot and Voice Agents",
-                  description: "I'll walk you through the steps to integrate AI seamlessly."
+                  description: "I'll automatically set up your chatbot or voice agents while we speak."
                 },
                 {
                   icon: Calendar,
