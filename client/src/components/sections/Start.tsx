@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { RocketIcon, CalendarIcon, Users } from "lucide-react";
+import { scrollToSection } from "@/lib/animations";
 
 const Start = () => {
   return (
@@ -35,13 +36,7 @@ const Start = () => {
             <Button
               className="rounded-full bg-primary hover:bg-primary/90 text-white font-semibold px-8 w-full gtm-start-try-free-agent"
               size="lg"
-              onClick={() =>
-                window.open(
-                  "https://ai.potential.com/login?utm_source=bot&utm_medium=main",
-                  "_blank",
-                  "noopener,noreferrer"
-                )
-              }
+              onClick={() => scrollToSection("agents")}
             >
               Try Free AI Agent
             </Button>
