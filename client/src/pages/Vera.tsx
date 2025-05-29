@@ -371,7 +371,7 @@ export default function Vera() {
                   {/* Vera's image */}
                   <div className="relative w-80 h-80 bg-gradient-to-br from-purple-100 to-purple-50 rounded-lg overflow-hidden flex items-center justify-center ml-[25px] mr-[25px]">
                     <img
-                      src={veraGif}
+                      src={veraAvatarCentered}
                       alt="Vera AI Business Consultant"
                       className="w-64 h-64 object-contain"
                     />
