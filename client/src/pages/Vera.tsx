@@ -91,12 +91,11 @@ export default function Vera() {
   return (
     <div className="font-inter min-h-screen">
       <Header />
-      
       <main>
         {/* Hero Section */}
         <section className="relative overflow-hidden bg-gradient-to-br from-background via-background to-muted/20 py-20 lg:py-32">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ml-[25px] mr-[25px]">
               {/* Left Content */}
               <div className="space-y-8">
                 <div className="space-y-6">
@@ -400,7 +399,6 @@ export default function Vera() {
           </div>
         </section>
       </main>
-      
       <Footer />
     </div>
   );
