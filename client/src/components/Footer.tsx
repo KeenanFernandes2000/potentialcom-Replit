@@ -53,11 +53,7 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="#hero"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection("hero");
-                  }}
+                  href="/"
                   className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
                 >
                   Home
@@ -65,23 +61,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="#tools"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection("tools");
-                  }}
-                  className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
-                >
-                  AI Tools
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#solutions"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection("solutions");
-                  }}
+                  href="/solutions"
                   className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
                 >
                   Solutions
@@ -89,12 +69,10 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="https://ai.potential.com/rachel"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/vera"
                   className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
                 >
-                  Meet Rachel
+                  Talk to Vera
                 </a>
               </li>
               <li>
@@ -102,7 +80,15 @@ const Footer = () => {
                   href="/partner"
                   className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
                 >
-                  Partners
+                  Partner with us
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/blog"
+                  className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
+                >
+                  Blog
                 </a>
               </li>
               <li>
