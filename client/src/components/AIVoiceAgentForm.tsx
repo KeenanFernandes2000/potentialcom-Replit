@@ -236,7 +236,7 @@ export function AIVoiceAgentForm({
                           variant="ghost"
                           size="sm"
                           onClick={handleRemoveWebsite}
-                          className="h-auto p-1 text-xs text-muted-foreground hover:text-destructive gtm-voicebot-form-remove-website"
+                          className="h-auto p-1 text-xs text-muted-foreground gtm-voicebot-form-remove-website"
                         >
                           <X className="h-3 w-3 mr-1" />I don't have a website
                         </Button>
@@ -296,19 +296,11 @@ export function AIVoiceAgentForm({
                 </div>
               )}
 
-              <div className="flex gap-3 pt-4">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => setIsOpen(false)}
-                  className="flex-1 gtm-voicebot-form-cancel"
-                >
-                  Cancel
-                </Button>
+              <div className="pt-4">
                 <Button
                   type="submit"
                   disabled={isLoading}
-                  className="flex-1 gtm-voicebot-form-submit"
+                  className="w-full gtm-voicebot-form-submit"
                 >
                   {isLoading ? (
                     <>

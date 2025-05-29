@@ -152,9 +152,9 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
   };
 
   const handleTestAgent = () => {
-    if (agentData?.assistantData?.id) {
+    if (agentData?.assistantData?._id) {
       window.open(
-        `https://ai.potential.com/chatbots/${agentData.assistantData.id}`,
+        `https://ai.potential.com/chat/${agentData.assistantData._id}`,
         "_blank"
       );
     }
@@ -233,7 +233,7 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
                           variant="ghost"
                           size="sm"
                           onClick={handleRemoveWebsite}
-                          className="h-auto p-1 text-xs text-muted-foreground hover:text-destructive gtm-chatbot-form-remove-website"
+                          className="h-auto p-1 text-xs text-muted-foreground gtm-chatbot-form-remove-website"
                         >
                           <X className="h-3 w-3 mr-1" />I don't have a website
                         </Button>
@@ -293,19 +293,11 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
                 </div>
               )}
 
-              <div className="flex gap-3 pt-4">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => setIsOpen(false)}
-                  className="flex-1 gtm-chatbot-form-cancel"
-                >
-                  Cancel
-                </Button>
+              <div className="pt-4">
                 <Button
                   type="submit"
                   disabled={isLoading}
-                  className="flex-1 gtm-chatbot-form-submit"
+                  className="w-full gtm-chatbot-form-submit"
                 >
                   {isLoading ? (
                     <>
@@ -334,7 +326,7 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
 
             <Button
               onClick={handleTestAgent}
-              disabled={!agentData?.assistantData?.id}
+              disabled={!agentData?.assistantData?._id}
               className="w-full gtm-chatbot-form-test-agent"
             >
               <ExternalLink className="mr-2 h-4 w-4" />
