@@ -298,13 +298,13 @@ export default function Vera() {
                   <div className="absolute -top-8 -left-8 w-32 h-32 bg-purple-200 rounded-full opacity-60"></div>
                   <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-purple-300 rounded-full opacity-40"></div>
                   
-                  {/* Placeholder for Vera's image - you can replace with actual image */}
-                  <div className="relative w-80 h-80 bg-gradient-to-br from-purple-100 to-purple-50 rounded-lg overflow-hidden">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-64 h-64 bg-gradient-to-br from-purple-200 to-purple-100 rounded-full flex items-center justify-center">
-                        <Users className="w-24 h-24 text-purple-600" />
-                      </div>
-                    </div>
+                  {/* Vera's image */}
+                  <div className="relative w-80 h-80 bg-gradient-to-br from-purple-100 to-purple-50 rounded-lg overflow-hidden flex items-center justify-center">
+                    <img
+                      src={veraBannerSvg}
+                      alt="Vera AI Business Consultant"
+                      className="w-64 h-64 object-contain"
+                    />
                   </div>
                 </div>
               </div>
@@ -380,7 +380,7 @@ export default function Vera() {
                 {
                   icon: MessageSquare,
                   title: "Available 24/7",
-                  description: "Chat or talk to me anytime—wherever you are!"
+                  description: "Chat or talk to me anytime—wherever you are! I'm also available on WhatsApp and Phone"
                 }
               ].map((feature, index) => (
                 <div key={index} className="text-center space-y-4 p-6 bg-card rounded-xl border hover:shadow-lg transition-shadow">
