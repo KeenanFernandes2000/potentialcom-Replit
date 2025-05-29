@@ -73,13 +73,7 @@ const Header = () => {
             About Us
           </a>
           <a
-            href="/#agents"
-            onClick={(e) => {
-              if (window.location.pathname === "/") {
-                e.preventDefault();
-                scrollToSection("agents");
-              }
-            }}
+            href="/vera"
             className="text-foreground/80 hover:text-primary font-medium transition-colors"
           >Talk to Vera</a>
 
