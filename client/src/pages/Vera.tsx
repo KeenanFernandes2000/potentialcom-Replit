@@ -288,6 +288,54 @@ export default function Vera() {
           </div>
         </section>
 
+        {/* How Can I Help You Section */}
+        <section className="py-20 bg-muted/5">
+          <div className="container mx-auto px-4">
+            <div className="text-center space-y-4 mb-16">
+              <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
+                How Can I Help You?
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {[
+                {
+                  icon: Search,
+                  title: "Find the Right AI Solutions",
+                  description: "I'll help you identify the best AI tools tailored to your needs."
+                },
+                {
+                  icon: Users,
+                  title: "Set up Your Chatbot and Voice Agents",
+                  description: "I'll automatically set up your chatbot or voice agents while we speak."
+                },
+                {
+                  icon: Calendar,
+                  title: "Schedule a Meeting",
+                  description: "Need expert advice? I can set up a call with a human consultant."
+                },
+                {
+                  icon: MessageSquare,
+                  title: "Available 24/7",
+                  description: "Chat or talk to me anytime—wherever you are! I'm also available on WhatsApp and Phone"
+                }
+              ].map((feature, index) => (
+                <div key={index} className="text-center space-y-4 p-6 bg-card rounded-xl border hover:shadow-lg transition-shadow">
+                  <div className="mx-auto w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center">
+                    <feature.icon className="w-8 h-8 text-purple-600" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground">
+                    {feature.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {feature.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Meet Vera Section */}
         <section className="py-20 bg-background ml-[25px] mr-[25px]">
           <div className="container mx-auto px-4">
@@ -348,54 +396,6 @@ export default function Vera() {
                   </Button>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
-
-        {/* How Can I Help You Section */}
-        <section className="py-20 bg-muted/5">
-          <div className="container mx-auto px-4">
-            <div className="text-center space-y-4 mb-16">
-              <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
-                How Can I Help You?
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {[
-                {
-                  icon: Search,
-                  title: "Find the Right AI Solutions",
-                  description: "I'll help you identify the best AI tools tailored to your needs."
-                },
-                {
-                  icon: Users,
-                  title: "Set up Your Chatbot and Voice Agents",
-                  description: "I'll automatically set up your chatbot or voice agents while we speak."
-                },
-                {
-                  icon: Calendar,
-                  title: "Schedule a Meeting",
-                  description: "Need expert advice? I can set up a call with a human consultant."
-                },
-                {
-                  icon: MessageSquare,
-                  title: "Available 24/7",
-                  description: "Chat or talk to me anytime—wherever you are! I'm also available on WhatsApp and Phone"
-                }
-              ].map((feature, index) => (
-                <div key={index} className="text-center space-y-4 p-6 bg-card rounded-xl border hover:shadow-lg transition-shadow">
-                  <div className="mx-auto w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center">
-                    <feature.icon className="w-8 h-8 text-purple-600" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-foreground">
-                    {feature.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {feature.description}
-                  </p>
-                </div>
-              ))}
             </div>
           </div>
         </section>
