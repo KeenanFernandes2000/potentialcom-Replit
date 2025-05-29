@@ -1,5 +1,16 @@
 import React from "react";
-import { Handshake, Award, BarChart, Users, Globe, HeartHandshake, BadgeCheck, GraduationCap, Check, LucideIcon } from "lucide-react";
+import {
+  Handshake,
+  Award,
+  BarChart,
+  Users,
+  Globe,
+  HeartHandshake,
+  BadgeCheck,
+  GraduationCap,
+  Check,
+  LucideIcon,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -60,17 +71,24 @@ export default function Partner() {
               <div className="inline-block p-3 bg-primary/10 rounded-full mb-4">
                 <Handshake className="h-10 w-10 text-primary" />
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">Partner with Potential.com</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                Partner with Potential.com
+              </h1>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Join our growing ecosystem of innovative partners who are transforming organizations through AI-powered solutions
+                Join our growing ecosystem of innovative partners who are
+                transforming organizations through AI-powered solutions
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               <div>
-                <h2 className="text-3xl font-bold mb-4">Expand Your Capabilities with Our Partner Program</h2>
+                <h2 className="text-3xl font-bold mb-4">
+                  Expand Your Capabilities with Our Partner Program
+                </h2>
                 <p className="text-lg mb-6">
-                  Our partner program is designed to help organizations leverage Potential.com's AI agent ecosystem to create
-                  new opportunities, enhance customer value, and accelerate business growth.
+                  Our partner program is designed to help organizations leverage
+                  Potential.com's AI agent ecosystem to create new
+                  opportunities, enhance customer value, and accelerate business
+                  growth.
                 </p>
                 <div className="space-y-4">
                   <div className="flex items-start">
@@ -79,7 +97,10 @@ export default function Partner() {
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Recognition</h3>
-                      <p className="text-muted-foreground">Join our partner directory and earn badges for your expertise</p>
+                      <p className="text-muted-foreground">
+                        Join our partner directory and earn badges for your
+                        expertise
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start">
@@ -88,7 +109,9 @@ export default function Partner() {
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Growth</h3>
-                      <p className="text-muted-foreground">Access new markets and expand your service offerings</p>
+                      <p className="text-muted-foreground">
+                        Access new markets and expand your service offerings
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start">
@@ -97,17 +120,30 @@ export default function Partner() {
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">Community</h3>
-                      <p className="text-muted-foreground">Collaborate with other innovative partners in our ecosystem</p>
+                      <p className="text-muted-foreground">
+                        Collaborate with other innovative partners in our
+                        ecosystem
+                      </p>
                     </div>
                   </div>
                 </div>
-                <Button size="lg" className="mt-8" onClick={() => document.getElementById('become-partner')?.scrollIntoView({ behavior: 'smooth' })}>
+                <Button
+                  size="lg"
+                  className="mt-8 gtm-partner-become-partner"
+                  onClick={() =>
+                    document
+                      .getElementById("become-partner")
+                      ?.scrollIntoView({ behavior: "smooth" })
+                  }
+                >
                   Become a Partner
                 </Button>
               </div>
               <div className="flex justify-center">
                 <div className="bg-secondary/20 backdrop-blur-sm rounded-lg p-8 shadow-lg border border-secondary-foreground/10 max-w-md">
-                  <h3 className="text-2xl font-bold mb-4">Why Partner With Us</h3>
+                  <h3 className="text-2xl font-bold mb-4">
+                    Why Partner With Us
+                  </h3>
                   <ul className="space-y-4">
                     <li className="flex items-start">
                       <Check className="h-5 w-5 text-green-500 mr-3 mt-1" />
@@ -140,38 +176,41 @@ export default function Partner() {
         <section className="py-20 px-4 bg-secondary/20">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold mb-4">How We Empower Our Partners</h2>
+              <h2 className="text-3xl font-bold mb-4">
+                How We Empower Our Partners
+              </h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Our comprehensive partner program provides everything you need to succeed
+                Our comprehensive partner program provides everything you need
+                to succeed
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <Benefit 
+              <Benefit
                 icon={HeartHandshake}
                 title="Co-Selling Support"
                 description="Collaborate with our sales team to identify opportunities and close deals together"
               />
-              <Benefit 
+              <Benefit
                 icon={BadgeCheck}
                 title="Certifications"
                 description="Earn official certifications that demonstrate your expertise with our platform"
               />
-              <Benefit 
+              <Benefit
                 icon={GraduationCap}
                 title="Training Resources"
                 description="Access comprehensive training programs to build technical proficiency"
               />
-              <Benefit 
+              <Benefit
                 icon={Globe}
                 title="Market Expansion"
                 description="Reach new markets and industries through our established global presence"
               />
-              <Benefit 
+              <Benefit
                 icon={Users}
                 title="Partner Community"
                 description="Join a vibrant community of partners to share best practices and insights"
               />
-              <Benefit 
+              <Benefit
                 icon={BarChart}
                 title="Growth Opportunities"
                 description="Unlock new revenue streams and business opportunities through AI innovation"
@@ -186,44 +225,45 @@ export default function Partner() {
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold mb-4">Partner Types</h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                We offer different partnership models to suit your organization's goals and capabilities
+                We offer different partnership models to suit your
+                organization's goals and capabilities
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <PartnerType 
+              <PartnerType
                 title="Solutions Partners"
                 description="For consulting firms and system integrators that want to implement our AI solutions for their clients."
                 benefits={[
                   "Implementation expertise development",
                   "Project-based revenue opportunities",
                   "Client satisfaction improvements",
-                  "Value-added service offerings"
+                  "Value-added service offerings",
                 ]}
               />
-              <PartnerType 
+              <PartnerType
                 title="Technology Partners"
                 description="For software providers looking to integrate with our platform and create enhanced joint solutions."
                 benefits={[
                   "API and integration support",
                   "Joint solution development",
                   "Co-marketing opportunities",
-                  "Technical collaboration"
+                  "Technical collaboration",
                 ]}
               />
-              <PartnerType 
+              <PartnerType
                 title="Referral Partners"
                 description="For organizations that want to refer clients to us while focusing on their core business."
                 benefits={[
                   "Referral commissions",
                   "Minimal resource investment",
                   "Complementary solution offering",
-                  "Enhanced client relationships"
+                  "Enhanced client relationships",
                 ]}
               />
             </div>
           </div>
         </section>
-        
+
         {/* Partner Application Form */}
         <BecomePartner />
       </main>

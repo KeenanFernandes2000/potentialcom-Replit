@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
-import { 
+import {
   Form,
   FormControl,
   FormField,
@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-import { 
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -33,11 +33,17 @@ const partnerFormSchema = z.object({
   companyName: z.string().min(1, "Company name is required"),
   jobTitle: z.string().min(1, "Job title is required"),
   phoneNumber: z.string().min(1, "Phone number is required"),
-  companyWebsite: z.string().url("Please enter a valid website URL").optional().or(z.literal("")),
+  companyWebsite: z
+    .string()
+    .url("Please enter a valid website URL")
+    .optional()
+    .or(z.literal("")),
   companySize: z.string({
     required_error: "Please select your company size",
   }),
-  partnerReason: z.string().min(10, "Please tell us more about why you want to partner with us"),
+  partnerReason: z
+    .string()
+    .min(10, "Please tell us more about why you want to partner with us"),
   isSubscribedToNewsletter: z.boolean().default(false),
 });
 
@@ -91,13 +97,17 @@ export default function BecomePartner() {
       setIsSuccess(true);
       toast({
         title: "Application Submitted",
-        description: "Thank you! Your partner application has been submitted successfully.",
+        description:
+          "Thank you! Your partner application has been submitted successfully.",
       });
     } catch (error) {
       console.error("Partner application error:", error);
       toast({
         title: "Error",
-        description: error instanceof Error ? error.message : "Failed to submit application. Please try again.",
+        description:
+          error instanceof Error
+            ? error.message
+            : "Failed to submit application. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -116,29 +126,50 @@ export default function BecomePartner() {
             </div>
             <h2 className="text-4xl font-bold mb-4">Become a Partner</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Join our ecosystem of technology partners and help organizations empower their stakeholders
-              with cutting-edge AI solutions.
+              Join our ecosystem of technology partners and help organizations
+              empower their stakeholders with cutting-edge AI solutions.
             </p>
           </div>
-          
+
           {isSuccess ? (
             <div className="bg-secondary/40 backdrop-blur-sm rounded-lg p-8 shadow-lg border border-secondary-foreground/10 max-w-2xl mx-auto text-center">
               <div className="inline-block p-3 bg-green-500/20 rounded-full mb-4">
-                <svg className="h-8 w-8 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                <svg
+                  className="h-8 w-8 text-green-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold mb-2">Application Submitted!</h3>
+              <h3 className="text-2xl font-bold mb-2">
+                Application Submitted!
+              </h3>
               <p className="mb-6">
-                Thank you for your interest in partnering with Potential.com. Our team will review your application
-                and contact you shortly to discuss next steps.
+                Thank you for your interest in partnering with Potential.com.
+                Our team will review your application and contact you shortly to
+                discuss next steps.
               </p>
-              <Button onClick={() => setIsSuccess(false)}>Submit Another Application</Button>
+              <Button
+                onClick={() => setIsSuccess(false)}
+                className="gtm-partner-form-submit-another"
+              >
+                Submit Another Application
+              </Button>
             </div>
           ) : (
             <div className="bg-secondary/40 backdrop-blur-sm rounded-lg p-8 shadow-lg border border-secondary-foreground/10">
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-6"
+                >
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <FormField
                       control={form.control}
@@ -153,7 +184,7 @@ export default function BecomePartner() {
                         </FormItem>
                       )}
                     />
-                    
+
                     <FormField
                       control={form.control}
                       name="lastName"
@@ -168,7 +199,7 @@ export default function BecomePartner() {
                       )}
                     />
                   </div>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <FormField
                       control={form.control}
@@ -177,13 +208,17 @@ export default function BecomePartner() {
                         <FormItem>
                           <FormLabel>Email</FormLabel>
                           <FormControl>
-                            <Input placeholder="your.email@company.com" type="email" {...field} />
+                            <Input
+                              placeholder="your.email@company.com"
+                              type="email"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
-                    
+
                     <FormField
                       control={form.control}
                       name="phoneNumber"
@@ -198,7 +233,7 @@ export default function BecomePartner() {
                       )}
                     />
                   </div>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <FormField
                       control={form.control}
@@ -213,7 +248,7 @@ export default function BecomePartner() {
                         </FormItem>
                       )}
                     />
-                    
+
                     <FormField
                       control={form.control}
                       name="jobTitle"
@@ -228,7 +263,7 @@ export default function BecomePartner() {
                       )}
                     />
                   </div>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <FormField
                       control={form.control}
@@ -237,21 +272,24 @@ export default function BecomePartner() {
                         <FormItem>
                           <FormLabel>Company Website</FormLabel>
                           <FormControl>
-                            <Input placeholder="https://www.company.com" {...field} />
+                            <Input
+                              placeholder="https://www.company.com"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
-                    
+
                     <FormField
                       control={form.control}
                       name="companySize"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Company Size</FormLabel>
-                          <Select 
-                            onValueChange={field.onChange} 
+                          <Select
+                            onValueChange={field.onChange}
                             defaultValue={field.value}
                           >
                             <FormControl>
@@ -261,7 +299,10 @@ export default function BecomePartner() {
                             </FormControl>
                             <SelectContent>
                               {companySizeOptions.map((option) => (
-                                <SelectItem key={option.value} value={option.value}>
+                                <SelectItem
+                                  key={option.value}
+                                  value={option.value}
+                                >
                                   {option.label}
                                 </SelectItem>
                               ))}
@@ -272,25 +313,27 @@ export default function BecomePartner() {
                       )}
                     />
                   </div>
-                  
+
                   <FormField
                     control={form.control}
                     name="partnerReason"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Why do you want to partner with us?</FormLabel>
+                        <FormLabel>
+                          Why do you want to partner with us?
+                        </FormLabel>
                         <FormControl>
-                          <Textarea 
-                            placeholder="Tell us about your interest in partnering with Potential.com and what you hope to achieve..." 
+                          <Textarea
+                            placeholder="Tell us about your interest in partnering with Potential.com and what you hope to achieve..."
                             className="min-h-[120px]"
-                            {...field} 
+                            {...field}
                           />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="isSubscribedToNewsletter"
@@ -305,16 +348,17 @@ export default function BecomePartner() {
                         <div className="space-y-1 leading-none">
                           <FormLabel>Subscribe to newsletter</FormLabel>
                           <FormDescription>
-                            Receive updates about our partner program, new features, and events.
+                            Receive updates about our partner program, new
+                            features, and events.
                           </FormDescription>
                         </div>
                       </FormItem>
                     )}
                   />
-                  
+
                   <Button
                     type="submit"
-                    className="w-full"
+                    className="w-full gtm-partner-form-submit"
                     size="lg"
                     disabled={isSubmitting}
                   >

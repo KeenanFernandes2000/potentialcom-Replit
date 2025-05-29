@@ -233,7 +233,7 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
                           variant="ghost"
                           size="sm"
                           onClick={handleRemoveWebsite}
-                          className="h-auto p-1 text-xs text-muted-foreground hover:text-destructive"
+                          className="h-auto p-1 text-xs text-muted-foreground hover:text-destructive gtm-chatbot-form-remove-website"
                         >
                           <X className="h-3 w-3 mr-1" />I don't have a website
                         </Button>
@@ -257,7 +257,7 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
                       variant="ghost"
                       size="sm"
                       onClick={handleAddWebsite}
-                      className="h-auto p-1 text-xs text-primary hover:text-primary"
+                      className="h-auto p-1 text-xs text-primary hover:text-primary gtm-chatbot-form-add-website"
                     >
                       + Add website
                     </Button>
@@ -298,11 +298,15 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
                   type="button"
                   variant="outline"
                   onClick={() => setIsOpen(false)}
-                  className="flex-1"
+                  className="flex-1 gtm-chatbot-form-cancel"
                 >
                   Cancel
                 </Button>
-                <Button type="submit" disabled={isLoading} className="flex-1">
+                <Button
+                  type="submit"
+                  disabled={isLoading}
+                  className="flex-1 gtm-chatbot-form-submit"
+                >
                   {isLoading ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -331,7 +335,7 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
             <Button
               onClick={handleTestAgent}
               disabled={!agentData?.assistantData?.id}
-              className="w-full"
+              className="w-full gtm-chatbot-form-test-agent"
             >
               <ExternalLink className="mr-2 h-4 w-4" />
               Test Your Chatbot Now

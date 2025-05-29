@@ -8,8 +8,10 @@ export function ThemeToggle() {
   // Initialize theme based on system preference or saved preference
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    
+    const prefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+
     if (savedTheme) {
       setTheme(savedTheme);
     } else if (prefersDark) {
@@ -20,13 +22,13 @@ export function ThemeToggle() {
   // Apply theme change
   useEffect(() => {
     const root = window.document.documentElement;
-    
+
     if (theme === "dark") {
       root.classList.add("dark");
     } else {
       root.classList.remove("dark");
     }
-    
+
     localStorage.setItem("theme", theme);
   }, [theme]);
 
@@ -35,12 +37,11 @@ export function ThemeToggle() {
   };
 
   return (
-    <Button 
-      variant="ghost" 
-      size="icon" 
-      onClick={toggleTheme}
-      className="rounded-full"
-      aria-label="Toggle theme"
+    <Button
+      variant="ghost"
+      size="sm"
+      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+      className="w-8 h-8 rounded-full bg-secondary-foreground/10 hover:bg-secondary-foreground/20 flex items-center justify-center text-secondary-foreground hover:text-foreground transition-colors gtm-header-theme-toggle"
     >
       {theme === "light" ? (
         <Moon className="h-[1.2rem] w-[1.2rem] transition-all" />

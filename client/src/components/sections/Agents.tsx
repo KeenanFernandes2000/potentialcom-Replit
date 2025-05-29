@@ -64,7 +64,7 @@ const Agents = () => {
                 <AIVoiceAgentForm
                   trigger={
                     <Button
-                      className="rounded-full bg-primary hover:bg-primary/90 text-white font-semibold px-8"
+                      className="rounded-full bg-primary hover:bg-primary/90 text-white font-semibold px-8 gtm-agents-voicebot-try"
                       size="lg"
                     >
                       {agent.ctaText}
@@ -75,7 +75,7 @@ const Agents = () => {
                 <AIChatbotForm
                   trigger={
                     <Button
-                      className="rounded-full bg-primary hover:bg-primary/90 text-white font-semibold px-8"
+                      className="rounded-full bg-primary hover:bg-primary/90 text-white font-semibold px-8 gtm-agents-chatbot-try"
                       size="lg"
                     >
                       {agent.ctaText}
