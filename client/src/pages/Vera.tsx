@@ -10,7 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import veraBannerSvg from "@assets/Vera Banner.svg";
-import veraAvatarPng from "@assets/vera-avatar.png";
+import veraGif from "@assets/Vera Gif.gif";
 import { Check, Search, Users, Calendar, MessageSquare } from "lucide-react";
 
 const formSchema = z.object({
@@ -123,7 +123,7 @@ export default function Vera() {
               <div className="flex justify-center lg:justify-end">
                 <div className="relative w-full max-w-lg">
                   <img
-                    src={veraAvatarPng}
+                    src={veraGif}
                     alt="Vera AI Business Consultant"
                     className="w-full h-auto"
                   />
@@ -370,7 +370,7 @@ export default function Vera() {
                   {/* Vera's image */}
                   <div className="relative w-80 h-80 bg-gradient-to-br from-purple-100 to-purple-50 rounded-lg overflow-hidden flex items-center justify-center ml-[25px] mr-[25px]">
                     <img
-                      src={veraAvatarPng}
+                      src={veraGif}
                       alt="Vera AI Business Consultant"
                       className="w-64 h-64 object-contain"
                     />
