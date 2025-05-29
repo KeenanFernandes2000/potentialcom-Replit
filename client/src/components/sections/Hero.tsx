@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ChevronRight, Sparkles } from "lucide-react";
 import { useState, useEffect } from "react";
+import { scrollToSection } from "@/lib/animations";
 
 // Import client logos - light mode
 import airbusLogoLight from "@assets/Light Mode client logos/AIRBUS-logo.png";
@@ -195,13 +196,7 @@ const Hero = () => {
               <Button
                 size="lg"
                 className="rounded-full bg-primary hover:bg-primary/90 text-white gtm-hero-try-free-agent"
-                onClick={() =>
-                  window.open(
-                    "https://ai.potential.com/login?utm_source=bot&utm_medium=main",
-                    "_blank",
-                    "noopener,noreferrer"
-                  )
-                }
+                onClick={() => scrollToSection("agents")}
               >
                 Try Free AI Agent <Sparkles className="ml-2 h-4 w-4" />
               </Button>
