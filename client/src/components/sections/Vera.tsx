@@ -26,7 +26,7 @@ const Vera = () => {
   // Chat features as highlights
   const chatFeatures = [
     "24/7 Availability",
-    "Custom Recommendations",
+    "Set Up Your Agents",
     "Human Handoff",
     "API Integration",
   ];
