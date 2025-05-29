@@ -116,7 +116,7 @@ export function AIVoiceAgentForm({
       formData.append("url", websiteUrl);
 
       const response = await fetch(
-        "http://localhost:8000/api/vapi/simpleassistant",
+        "https://ai.potential.com/api/vapi/simpleassistant",
         {
           method: "POST",
           body: formData,
