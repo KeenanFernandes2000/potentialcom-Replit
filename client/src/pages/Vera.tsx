@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
 import veraBannerSvg from "@assets/Vera Banner.svg";
 import veraGif from "@assets/Vera Gif Final.gif";
 import veraAvatarCentered from "@assets/Vera Avatar Centered.png";
@@ -59,8 +60,14 @@ export default function Vera() {
   const onSubmit = async (values: FormData) => {
     setIsSubmitting(true);
     try {
-      // Here you would integrate with your chat system or backend
-      console.log("Form submitted:", values);
+      // Submit to database
+      await apiRequest("/api/vera/consultation", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
       
       toast({
         title: "Welcome to Vera!",
@@ -69,6 +76,7 @@ export default function Vera() {
       
       form.reset();
     } catch (error) {
+      console.error("Form submission error:", error);
       toast({
         title: "Something went wrong",
         description: "Please try again or contact support.",

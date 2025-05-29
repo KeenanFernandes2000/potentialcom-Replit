@@ -358,6 +358,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Vera consultation form submission
+  app.post("/api/vera/consultation", async (req, res) => {
+    try {
+      const validatedData = veraConsultationSchema.parse(req.body);
+
+      const consultation = await storage.submitVeraConsultation(validatedData);
+
+      res.status(201).json({
+        message: "Consultation request submitted successfully",
+        consultation,
+      });
+    } catch (error) {
+      console.error("Vera consultation submission error:", error);
+      res.status(400).json({
+        message: "Invalid consultation data",
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
+  });
+
   // Protected API routes (require authentication)
 
   // Get current user
