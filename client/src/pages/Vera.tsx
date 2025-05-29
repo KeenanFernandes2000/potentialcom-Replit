@@ -10,6 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import veraBannerSvg from "@assets/Vera Banner.svg";
+import { Check, Search, Users, Calendar, MessageSquare } from "lucide-react";
 
 const formSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -283,6 +284,118 @@ export default function Vera() {
                   </form>
                 </Form>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Meet Vera Section */}
+        <section className="py-20 bg-background">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              {/* Left Image */}
+              <div className="relative flex justify-center lg:justify-start">
+                <div className="relative">
+                  {/* Background decorative circles */}
+                  <div className="absolute -top-8 -left-8 w-32 h-32 bg-purple-200 rounded-full opacity-60"></div>
+                  <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-purple-300 rounded-full opacity-40"></div>
+                  
+                  {/* Placeholder for Vera's image - you can replace with actual image */}
+                  <div className="relative w-80 h-80 bg-gradient-to-br from-purple-100 to-purple-50 rounded-lg overflow-hidden">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-64 h-64 bg-gradient-to-br from-purple-200 to-purple-100 rounded-full flex items-center justify-center">
+                        <Users className="w-24 h-24 text-purple-600" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Content */}
+              <div className="space-y-8">
+                <div className="space-y-6">
+                  <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
+                    Meet Vera: <span className="text-primary">Your AI Guide</span>
+                  </h2>
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    I'm Vera, your AI-powered consultant, here to guide you through the world of AI adoption. With my expertise, I can help you:
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  {[
+                    "Automate your customer support with AI solutions",
+                    "Boost your sales with intelligent chatbots", 
+                    "Optimize your business processes with AI"
+                  ].map((benefit, index) => (
+                    <div key={index} className="flex items-center space-x-3">
+                      <div className="flex-shrink-0 w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center">
+                        <Check className="w-4 h-4 text-purple-600" />
+                      </div>
+                      <span className="text-muted-foreground">{benefit}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="pt-4">
+                  <p className="text-lg font-semibold text-foreground mb-4">
+                    Best of all? My consultation is completely free!
+                  </p>
+                  <Button 
+                    onClick={scrollToForm}
+                    className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-8 py-3"
+                  >
+                    Start Your Free Consultation →
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* How Can I Help You Section */}
+        <section className="py-20 bg-muted/5">
+          <div className="container mx-auto px-4">
+            <div className="text-center space-y-4 mb-16">
+              <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
+                How Can I Help You?
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {[
+                {
+                  icon: Search,
+                  title: "Find the Right AI Solutions",
+                  description: "I'll help you identify the best AI tools tailored to your needs."
+                },
+                {
+                  icon: Users,
+                  title: "Guide You Through",
+                  description: "I'll walk you through the steps to integrate AI seamlessly."
+                },
+                {
+                  icon: Calendar,
+                  title: "Schedule a Meeting",
+                  description: "Need expert advice? I can set up a call with a human consultant."
+                },
+                {
+                  icon: MessageSquare,
+                  title: "Available 24/7",
+                  description: "Chat or talk to me anytime—wherever you are!"
+                }
+              ].map((feature, index) => (
+                <div key={index} className="text-center space-y-4 p-6 bg-card rounded-xl border hover:shadow-lg transition-shadow">
+                  <div className="mx-auto w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center">
+                    <feature.icon className="w-8 h-8 text-purple-600" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground">
+                    {feature.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {feature.description}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
