@@ -67,9 +67,7 @@ const Footer = () => {
                     scrollToSection("tools");
                   }}
                   className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
-                >
-                  AI Tools
-                </a>
+                >Solutions</a>
               </li>
               <li>
                 <a
