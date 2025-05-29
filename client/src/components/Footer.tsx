@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 import { FooterLogo } from "./FooterLogo";
 import { useToast } from "@/hooks/use-toast";
-import { SiX } from "react-icons/si";
+import { SiX, SiWhatsapp } from "react-icons/si";
 
 const Footer = () => {
   const { toast } = useToast();
@@ -276,6 +276,15 @@ const Footer = () => {
               aria-label="YouTube"
             >
               <Youtube size={20} />
+            </a>
+            <a
+              href="https://wa.me/97143693663"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-primary transition-colors"
+              aria-label="WhatsApp"
+            >
+              <SiWhatsapp size={20} />
             </a>
           </div>
         </div>
