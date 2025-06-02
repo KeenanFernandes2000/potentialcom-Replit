@@ -3,25 +3,32 @@ import { ArrowRight, ChevronRight, Sparkles } from "lucide-react";
 import { useState, useEffect } from "react";
 import { scrollToSection } from "@/lib/animations";
 
-// Import client logos - light mode
-import airbusLogoLight from "@assets/Light Mode client logos/AIRBUS-logo.png";
-import dgLogoLight from "@assets/Light Mode client logos/DG-logo.png";
-import nestleLogoLight from "@assets/Light Mode client logos/Nestle-logo.png";
-import unLogoLight from "@assets/Light Mode client logos/UN-logo.png";
-import cartierLogoLight from "@assets/Light Mode client logos/cartier-logo.png";
-import hsbcLogoLight from "@assets/Light Mode client logos/hsbc-logo.png";
-import intelLogoLight from "@assets/Light Mode client logos/intel-logo.png";
-import pepsicoLogoLight from "@assets/Light Mode client logos/pepsico-logo.png";
-
-// Import client logos - dark mode
-import dgLogoDark from "@assets/Dark Mode Client logos/partner1.webp"; // Government of Dubai
-import hsbcLogoDark from "@assets/Dark Mode Client logos/partner2.webp"; // HSBC
-import unLogoDark from "@assets/Dark Mode Client logos/partner3.webp"; // United Nations
-import pepsicoLogoDark from "@assets/Dark Mode Client logos/partner4.webp"; // PepsiCo
-import intelLogoDark from "@assets/Dark Mode Client logos/partner5.webp"; // Intel
-import airbusLogoDark from "@assets/Dark Mode Client logos/partner6.webp"; // Airbus
-import microsoftLogoDark from "@assets/Dark Mode Client logos/partner7.webp"; // Microsoft
-import dellLogoDark from "@assets/Dark Mode Client logos/partner8.webp"; // Dell
+// Import all customer logos
+import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
+import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
+import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
+import cartierLogo from "@assets/Customer Logos/Cartier logo.png";
+import ciscoLogo from "@assets/Customer Logos/Cisco Logo.png";
+import dctLogo from "@assets/Customer Logos/DCT logo.png";
+import dldLogo from "@assets/Customer Logos/DLD Logo.png";
+import dellLogo from "@assets/Customer Logos/Dell logo.png";
+import edbLogo from "@assets/Customer Logos/EDB logo.png";
+import fordLogo from "@assets/Customer Logos/Ford logo.png";
+import googleLogo from "@assets/Customer Logos/Google logo.png";
+import govAbuDhabiLogo from "@assets/Customer Logos/Government of Abu Dhabi logo.png";
+import govDubaiLogo from "@assets/Customer Logos/Government of Dubai logo.png";
+import hsbcLogo from "@assets/Customer Logos/HSBC logo.png";
+import inditexLogo from "@assets/Customer Logos/Inditex logo.png";
+import khalifaFundLogo from "@assets/Customer Logos/Khalifa Fund logo.png";
+import mbcLogo from "@assets/Customer Logos/MBC logo.png";
+import microsoftLogo from "@assets/Customer Logos/Microsoft logo.png";
+import nestleLogo from "@assets/Customer Logos/Nestle Logo.png";
+import pepsicoLogo from "@assets/Customer Logos/Pepsico logo.png";
+import unWomenLogo from "@assets/Customer Logos/UN Women logo.png";
+import unLogo from "@assets/Customer Logos/UN logo.png";
+import visaLogo from "@assets/Customer Logos/Visa logo.png";
+import wfzoLogo from "@assets/Customer Logos/WFZO logo.png";
+import intelLogo from "@assets/Customer Logos/intel logo.png";
 
 // No longer needed as we're using a YouTube video embeded iframe
 
@@ -89,26 +96,35 @@ const Hero = () => {
     </>
   );
 
-  // Logo grid for trusted companies
+  // Logo grid for trusted companies with scrolling animation
   const LogoGrid = () => {
-    // Client logo objects with light and dark mode versions
+    // All 25 customer logos
     const clientLogos = [
-      { name: "Airbus", logoLight: airbusLogoLight, logoDark: airbusLogoDark },
-      {
-        name: "Government of Dubai",
-        logoLight: dgLogoLight,
-        logoDark: dgLogoDark,
-      },
-      { name: "Nestle", logoLight: nestleLogoLight, logoDark: unLogoDark }, // Using UN for Nestle in dark mode
-      {
-        name: "United Nations",
-        logoLight: unLogoLight,
-        logoDark: pepsicoLogoDark,
-      }, // Using PepsiCo for UN in dark mode
-      { name: "Cartier", logoLight: cartierLogoLight, logoDark: intelLogoDark }, // Using Intel for Cartier in dark mode
-      { name: "HSBC", logoLight: hsbcLogoLight, logoDark: hsbcLogoDark },
-      { name: "Intel", logoLight: intelLogoLight, logoDark: microsoftLogoDark }, // Using Microsoft for Intel in dark mode
-      { name: "PepsiCo", logoLight: pepsicoLogoLight, logoDark: dellLogoDark }, // Using Dell for PepsiCo in dark mode
+      { name: "ADGM", logo: adgmLogo },
+      { name: "Airbus", logo: airbusLogo },
+      { name: "Bank Muscat", logo: bankMuscatLogo },
+      { name: "Cartier", logo: cartierLogo },
+      { name: "Cisco", logo: ciscoLogo },
+      { name: "DCT", logo: dctLogo },
+      { name: "DLD", logo: dldLogo },
+      { name: "Dell", logo: dellLogo },
+      { name: "EDB", logo: edbLogo },
+      { name: "Ford", logo: fordLogo },
+      { name: "Google", logo: googleLogo },
+      { name: "Government of Abu Dhabi", logo: govAbuDhabiLogo },
+      { name: "Government of Dubai", logo: govDubaiLogo },
+      { name: "HSBC", logo: hsbcLogo },
+      { name: "Inditex", logo: inditexLogo },
+      { name: "Khalifa Fund", logo: khalifaFundLogo },
+      { name: "MBC", logo: mbcLogo },
+      { name: "Microsoft", logo: microsoftLogo },
+      { name: "Nestle", logo: nestleLogo },
+      { name: "PepsiCo", logo: pepsicoLogo },
+      { name: "UN Women", logo: unWomenLogo },
+      { name: "United Nations", logo: unLogo },
+      { name: "Visa", logo: visaLogo },
+      { name: "WFZO", logo: wfzoLogo },
+      { name: "Intel", logo: intelLogo },
     ];
 
     return (
@@ -120,22 +136,48 @@ const Hero = () => {
         <h3 className="text-center text-muted-foreground uppercase text-sm tracking-wider mb-6">
           Trusted for over 20 years by leading organizations around the world
         </h3>
-        <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-6 items-center justify-items-center">
-          {clientLogos.map((client, i) => (
-            <div
-              key={i}
-              className="w-24 h-12 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity"
-            >
-              <img
-                src={isDarkMode ? client.logoDark : client.logoLight}
-                alt={`${client.name} logo`}
-                className="max-h-full max-w-full object-contain"
-                style={{
-                  filter: isDarkMode ? "brightness(0) invert(1)" : "none",
-                }}
-              />
-            </div>
-          ))}
+        
+        {/* Scrolling container */}
+        <div className="relative overflow-hidden">
+          <div 
+            className="flex animate-scroll hover:pause-animation"
+            style={{
+              width: `${clientLogos.length * 2 * 120}px`, // Double width for seamless loop
+            }}
+          >
+            {/* First set of logos */}
+            {clientLogos.map((client, i) => (
+              <div
+                key={`first-${i}`}
+                className="flex-shrink-0 w-32 h-16 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity mx-4"
+              >
+                <img
+                  src={client.logo}
+                  alt={`${client.name} logo`}
+                  className="max-h-12 max-w-full object-contain"
+                  style={{
+                    filter: isDarkMode ? "brightness(0) invert(1)" : "none",
+                  }}
+                />
+              </div>
+            ))}
+            {/* Duplicate set for seamless scrolling */}
+            {clientLogos.map((client, i) => (
+              <div
+                key={`second-${i}`}
+                className="flex-shrink-0 w-32 h-16 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity mx-4"
+              >
+                <img
+                  src={client.logo}
+                  alt={`${client.name} logo`}
+                  className="max-h-12 max-w-full object-contain"
+                  style={{
+                    filter: isDarkMode ? "brightness(0) invert(1)" : "none",
+                  }}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     );

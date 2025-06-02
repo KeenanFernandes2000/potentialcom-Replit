@@ -10,6 +10,7 @@ import { SEO } from "@/components/SEO";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Rocket } from "lucide-react";
+import { scrollToSection } from "@/lib/animations";
 
 const Home = () => {
   const [showMobileCTA, setShowMobileCTA] = useState(false);
@@ -72,6 +73,7 @@ const Home = () => {
           <Button
             className="rounded-full bg-primary hover:bg-primary/90 text-white font-semibold px-4 py-6 shadow-lg gtm-mobile-sticky-try-agent"
             size="lg"
+            onClick={() => scrollToSection("agents")}
           >
             <Rocket className="mr-2 h-4 w-4" /> Try Free AI Agent
           </Button>
