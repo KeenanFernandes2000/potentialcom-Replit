@@ -126,3 +126,27 @@
       linear-gradient(to bottom, hsla(var(--muted-foreground) / 0.1) 1px, transparent 1px);
   }
 }
+
+@layer utilities {
+  /* Logo scrolling animation */
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  
+  .animate-scroll {
+    animation: scroll 30s linear infinite;
+  }
+  
+  .pause-animation {
+    animation-play-state: paused;
+  }
+  
+  .hover\:pause-animation:hover {
+    animation-play-state: paused;
+  }
+}
