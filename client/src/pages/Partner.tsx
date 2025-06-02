@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BecomePartner from "@/components/sections/BecomePartner";
+import { AutoSEO } from "@/components/SEO";
 
 // Partner benefit component
 interface BenefitProps {
@@ -60,7 +61,8 @@ const PartnerType = ({ title, description, benefits }: PartnerTypeProps) => (
 
 export default function Partner() {
   return (
-    <>
+    <div className="min-h-screen">
+      <AutoSEO />
       <Header />
       <main className="min-h-screen">
         {/* Hero Section */}
@@ -268,6 +270,6 @@ export default function Partner() {
         <BecomePartner />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

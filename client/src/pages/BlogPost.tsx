@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { BlogSEO } from "@/components/SEO";
 import { format } from "date-fns";
 import React from "react";
 import { detectLanguage } from "@/lib/language-utils";
@@ -43,6 +44,13 @@ const removeFirstImageFromContent = (
   }
 
   return tempDiv.innerHTML;
+};
+
+// Helper function to extract plain text from HTML for description
+const extractTextFromHTML = (html: string): string => {
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = html;
+  return tempDiv.textContent || tempDiv.innerText || "";
 };
 
 function BlogPostContent() {
@@ -90,8 +98,47 @@ function BlogPostContent() {
     );
   }, [post]);
 
+  // Generate SEO description from post excerpt or content
+  const seoDescription = React.useMemo(() => {
+    if (!post) return "";
+
+    if (post.excerpt.rendered) {
+      const excerpt = extractTextFromHTML(post.excerpt.rendered);
+      return excerpt.length > 160 ? excerpt.substring(0, 157) + "..." : excerpt;
+    }
+
+    if (post.content.rendered) {
+      const content = extractTextFromHTML(post.content.rendered);
+      return content.length > 160 ? content.substring(0, 157) + "..." : content;
+    }
+
+    return "";
+  }, [post]);
+
+  // Extract categories as tags if available
+  const postTags = React.useMemo(() => {
+    if (!post?._embedded?.["wp:term"]?.[0]) return [];
+
+    // Extract category names from embedded terms
+    return post._embedded["wp:term"][0].map(
+      (term: any) => term.name || term.slug || String(term)
+    );
+  }, [post]);
+
   return (
     <div className={`min-h-screen flex flex-col ${isRTL ? "rtl" : "ltr"}`}>
+      {post && (
+        <BlogSEO
+          title={`${extractTextFromHTML(post.title.rendered)} - Potential.com`}
+          description={seoDescription}
+          image={post.featured_image_url}
+          publishedTime={post.date}
+          author="Potential.com"
+          tags={postTags}
+          slug={slug}
+        />
+      )}
+
       <Header />
 
       <main className="flex-grow container mx-auto px-4 py-8 mt-14">

@@ -8,6 +8,7 @@ import { Pagination } from "@/components/blog/Pagination";
 import { LanguageSwitch } from "@/components/blog/LanguageSwitch";
 import { CategoryList } from "@/components/blog/CategoryList";
 import { Skeleton } from "@/components/ui/skeleton";
+import { SEO } from "@/components/SEO";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -29,6 +30,7 @@ function BlogContent() {
 
   return (
     <div className={`min-h-screen flex flex-col ${isRTL ? "rtl" : "ltr"}`}>
+      <SEO />
       <Header />
 
       <main className="flex-grow container mx-auto px-4 py-8 mt-14">

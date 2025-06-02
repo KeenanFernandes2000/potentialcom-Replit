@@ -6,6 +6,7 @@ import Start from "@/components/sections/Start";
 import Vera from "@/components/sections/Vera";
 import Whitepaper from "@/components/sections/Whitepaper";
 import Footer from "@/components/Footer";
+import { SEO } from "@/components/SEO";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Rocket } from "lucide-react";
@@ -53,6 +54,7 @@ const Home = () => {
 
   return (
     <div className="font-inter min-h-screen">
+      <SEO />
       <Header />
       <main>
         <Hero />

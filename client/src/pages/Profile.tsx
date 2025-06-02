@@ -7,6 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth, type User } from "@/hooks/useAuth";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { AutoSEO } from "@/components/SEO";
 
 import {
   Form,
@@ -28,14 +29,29 @@ const profileSchema = z.object({
   lastName: z.string().optional(),
   phoneNumber: z.string().optional(),
   jobTitle: z.string().optional(),
-  companyWebsite: z.string().url({ message: "Please enter a valid URL" }).optional().or(z.literal('')),
-  linkedinUrl: z.string().url({ message: "Please enter a valid URL" }).optional().or(z.literal('')),
+  companyWebsite: z
+    .string()
+    .url({ message: "Please enter a valid URL" })
+    .optional()
+    .or(z.literal("")),
+  linkedinUrl: z
+    .string()
+    .url({ message: "Please enter a valid URL" })
+    .optional()
+    .or(z.literal("")),
 });
 
 type ProfileFormValues = z.infer<typeof profileSchema>;
 
 export default function Profile() {
-  const { user, isLoading, isAuthenticated, updateProfile, updateProfileStatus, logout } = useAuth();
+  const {
+    user,
+    isLoading,
+    isAuthenticated,
+    updateProfile,
+    updateProfileStatus,
+    logout,
+  } = useAuth();
   const { toast } = useToast();
   const [, navigate] = useLocation();
   const [serverError, setServerError] = useState<string | null>(null);
@@ -83,7 +99,11 @@ export default function Profile() {
       });
     } catch (error) {
       console.error("Profile update error:", error);
-      setServerError(error instanceof Error ? error.message : "Failed to update profile. Please try again.");
+      setServerError(
+        error instanceof Error
+          ? error.message
+          : "Failed to update profile. Please try again."
+      );
     }
   };
 
@@ -118,14 +138,15 @@ export default function Profile() {
   }
 
   return (
-    <div className="font-inter min-h-screen">
+    <div className="min-h-screen flex flex-col">
+      <AutoSEO />
       <Header />
-      <main className="pt-32 pb-20">
+      <main className="flex-grow container mx-auto px-4 py-8 mt-14">
         <div className="container">
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-3xl font-bold">My Profile</h1>
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               onClick={handleLogout}
               className="flex items-center"
             >
@@ -143,17 +164,25 @@ export default function Profile() {
                 <CardContent>
                   <div className="space-y-4">
                     <div>
-                      <h3 className="text-sm font-medium text-muted-foreground">Email</h3>
+                      <h3 className="text-sm font-medium text-muted-foreground">
+                        Email
+                      </h3>
                       <p className="font-medium">{user?.email}</p>
                     </div>
                     <div>
-                      <h3 className="text-sm font-medium text-muted-foreground">Account Type</h3>
+                      <h3 className="text-sm font-medium text-muted-foreground">
+                        Account Type
+                      </h3>
                       <p className="font-medium">Standard</p>
                     </div>
                     <div>
-                      <h3 className="text-sm font-medium text-muted-foreground">Member Since</h3>
+                      <h3 className="text-sm font-medium text-muted-foreground">
+                        Member Since
+                      </h3>
                       <p className="font-medium">
-                        {user?.createdAt ? new Date(user.createdAt).toLocaleDateString() : "N/A"}
+                        {user?.createdAt
+                          ? new Date(user.createdAt).toLocaleDateString()
+                          : "N/A"}
                       </p>
                     </div>
                   </div>
@@ -167,7 +196,7 @@ export default function Profile() {
                   <TabsTrigger value="profile">Profile Information</TabsTrigger>
                   <TabsTrigger value="downloads">My Downloads</TabsTrigger>
                 </TabsList>
-                
+
                 <TabsContent value="profile">
                   <Card>
                     <CardHeader className="pb-3">
@@ -179,9 +208,12 @@ export default function Profile() {
                           <AlertDescription>{serverError}</AlertDescription>
                         </Alert>
                       )}
-                      
+
                       <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                        <form
+                          onSubmit={form.handleSubmit(onSubmit)}
+                          className="space-y-6"
+                        >
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <FormField
                               control={form.control}
@@ -196,7 +228,7 @@ export default function Profile() {
                                 </FormItem>
                               )}
                             />
-                            
+
                             <FormField
                               control={form.control}
                               name="lastName"
@@ -211,7 +243,7 @@ export default function Profile() {
                               )}
                             />
                           </div>
-                          
+
                           <FormField
                             control={form.control}
                             name="phoneNumber"
@@ -219,13 +251,16 @@ export default function Profile() {
                               <FormItem>
                                 <FormLabel>Phone Number</FormLabel>
                                 <FormControl>
-                                  <Input placeholder="+1 234 567 890" {...field} />
+                                  <Input
+                                    placeholder="+1 234 567 890"
+                                    {...field}
+                                  />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
                             )}
                           />
-                          
+
                           <FormField
                             control={form.control}
                             name="jobTitle"
@@ -233,13 +268,16 @@ export default function Profile() {
                               <FormItem>
                                 <FormLabel>Job Title</FormLabel>
                                 <FormControl>
-                                  <Input placeholder="Product Manager" {...field} />
+                                  <Input
+                                    placeholder="Product Manager"
+                                    {...field}
+                                  />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
                             )}
                           />
-                          
+
                           <FormField
                             control={form.control}
                             name="companyWebsite"
@@ -247,13 +285,16 @@ export default function Profile() {
                               <FormItem>
                                 <FormLabel>Company Website</FormLabel>
                                 <FormControl>
-                                  <Input placeholder="https://example.com" {...field} />
+                                  <Input
+                                    placeholder="https://example.com"
+                                    {...field}
+                                  />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
                             )}
                           />
-                          
+
                           <FormField
                             control={form.control}
                             name="linkedinUrl"
@@ -261,16 +302,19 @@ export default function Profile() {
                               <FormItem>
                                 <FormLabel>LinkedIn URL</FormLabel>
                                 <FormControl>
-                                  <Input placeholder="https://linkedin.com/in/johndoe" {...field} />
+                                  <Input
+                                    placeholder="https://linkedin.com/in/johndoe"
+                                    {...field}
+                                  />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
                             )}
                           />
-                          
-                          <Button 
-                            type="submit" 
-                            className="w-full md:w-auto" 
+
+                          <Button
+                            type="submit"
+                            className="w-full md:w-auto"
                             disabled={updateProfileStatus.isLoading}
                           >
                             {updateProfileStatus.isLoading ? (
@@ -278,14 +322,16 @@ export default function Profile() {
                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                                 Updating...
                               </>
-                            ) : "Save Changes"}
+                            ) : (
+                              "Save Changes"
+                            )}
                           </Button>
                         </form>
                       </Form>
                     </CardContent>
                   </Card>
                 </TabsContent>
-                
+
                 <TabsContent value="downloads">
                   <Card>
                     <CardHeader className="pb-3">
@@ -296,7 +342,9 @@ export default function Profile() {
                         Resources you've downloaded will appear here.
                       </p>
                       <div className="text-center py-10">
-                        <p className="text-muted-foreground">No downloads yet.</p>
+                        <p className="text-muted-foreground">
+                          No downloads yet.
+                        </p>
                       </div>
                     </CardContent>
                   </Card>

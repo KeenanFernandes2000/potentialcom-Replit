@@ -1,0 +1,98 @@
+{
+  "defaultSEO": {
+    "title": "Potential.com - AI Agents for Business Growth",
+    "description": "Deploy powerful AI team members that seamlessly integrate with your existing systems. Get started with AI agents backed by dedicated support.",
+    "keywords": "AI agents, business automation, artificial intelligence, business growth, AI team members, automation tools",
+    "author": "Potential.com",
+    "image": "/og-image.jpg",
+    "url": "https://potential.com"
+  },
+  "pages": {
+    "/": {
+      "title": "Potential.com - AI Agents for Business Growth",
+      "description": "Deploy powerful AI team members that seamlessly integrate with your existing systems. Get started with AI agents backed by dedicated support.",
+      "keywords": "AI agents, business automation, artificial intelligence, business growth, AI team members, automation tools, intelligent automation"
+    },
+    "/offerings": {
+      "title": "AI Solutions & Offerings - Potential.com",
+      "description": "Discover our comprehensive AI agent solutions designed to transform your business operations and boost productivity.",
+      "keywords": "AI solutions, AI offerings, business AI, AI services, automation solutions, AI consulting, enterprise AI"
+    },
+    "/solutions": {
+      "title": "AI Solutions & Services - Potential.com",
+      "description": "Explore cutting-edge AI solutions tailored for your business needs. Transform operations with intelligent automation and AI-powered workflows.",
+      "keywords": "AI solutions, business solutions, AI services, intelligent automation, enterprise AI, AI implementation"
+    },
+    "/resources": {
+      "title": "Resources & Documentation - AI Agents - Potential.com",
+      "description": "Access comprehensive resources, guides, and documentation to help you get the most out of our AI agents and automation tools.",
+      "keywords": "AI resources, documentation, guides, tutorials, AI implementation, automation guides, AI best practices"
+    },
+    "/pricing": {
+      "title": "AI Agent Pricing Plans - Transparent & Affordable - Potential.com",
+      "description": "Choose the perfect AI agent plan for your business needs. Transparent pricing with no hidden fees. Start your AI transformation today.",
+      "keywords": "AI pricing, AI agent costs, business AI plans, automation pricing, AI subscription, enterprise AI pricing"
+    },
+    "/partner": {
+      "title": "Partner Program - Join Our AI Network - Potential.com",
+      "description": "Join our partner program and help businesses transform with AI. Exclusive benefits, support, and opportunities for growth partners.",
+      "keywords": "AI partner program, business partnerships, AI reseller, channel partners, partnership opportunities, AI affiliate"
+    },
+    "/about": {
+      "title": "About Potential.com - AI Innovation Leaders",
+      "description": "Learn about our mission to empower businesses with AI agents and our commitment to innovation, excellence, and transformative technology.",
+      "keywords": "about potential, AI company, business automation company, AI team, AI innovation, artificial intelligence leaders"
+    },
+    "/vera": {
+      "title": "Vera AI Business Consultant - Your Intelligent Advisor - Potential.com",
+      "description": "Meet Vera, your AI business consultant. Get expert guidance, insights, and strategic advice to optimize your business operations and growth.",
+      "keywords": "Vera AI, AI consultant, business consulting, AI advisor, business optimization, intelligent consulting, AI guidance"
+    },
+    "/login": {
+      "title": "Login to Your AI Dashboard - Potential.com",
+      "description": "Access your Potential.com account to manage your AI agents, monitor performance, and control your business automation tools.",
+      "keywords": "login, account access, user portal, AI dashboard, secure login, AI platform access"
+    },
+    "/register": {
+      "title": "Create Your AI Account - Join Potential.com Today",
+      "description": "Join Potential.com today and start your journey with AI agents for business growth, automation, and intelligent operations.",
+      "keywords": "register, create account, sign up, join potential, AI platform, AI onboarding, start AI journey"
+    },
+    "/profile": {
+      "title": "Profile Management - AI Account Settings - Potential.com",
+      "description": "Manage your account settings, preferences, AI agent configurations, and personalize your automation experience.",
+      "keywords": "user profile, account settings, AI configuration, user dashboard, profile management, AI preferences"
+    },
+    "/forgot-password": {
+      "title": "Reset Your Password - Secure Account Recovery - Potential.com",
+      "description": "Reset your Potential.com account password securely and regain access to your AI tools and business automation platform.",
+      "keywords": "password reset, forgot password, account recovery, secure login, password recovery, account security"
+    },
+    "/terms": {
+      "title": "Terms of Use - Service Agreement - Potential.com",
+      "description": "Read our comprehensive terms of use and service agreement for using Potential.com AI agents, automation services, and platform features.",
+      "keywords": "terms of use, service agreement, legal terms, AI service terms, terms and conditions, user agreement"
+    },
+    "/privacy": {
+      "title": "Privacy Policy - Data Protection - Potential.com",
+      "description": "Learn how we protect your data and privacy when using our AI agents, business automation tools, and ensure complete data security.",
+      "keywords": "privacy policy, data protection, privacy rights, AI data security, data privacy, GDPR compliance, secure AI"
+    },
+    "/blog": {
+      "title": "AI Blog - Latest Insights & Industry News - Potential.com",
+      "description": "Stay updated with the latest AI trends, business automation insights, expert tips, and industry news from Potential.com's AI experts.",
+      "keywords": "AI blog, business automation blog, AI insights, AI news, automation trends, AI industry news, artificial intelligence articles"
+    },
+    "/blog/category/:slug": {
+      "title": "Blog Category - AI Articles & Insights - Potential.com",
+      "description": "Explore curated articles in this category about AI agents, business automation, technology insights, and industry best practices.",
+      "keywords": "AI articles, blog category, automation insights, AI technology, business tips, AI categories, automation articles"
+    },
+    "/404": {
+      "title": "Page Not Found - Potential.com",
+      "description": "The page you're looking for doesn't exist. Return to our homepage to explore AI agents and business automation solutions.",
+      "keywords": "404 error, page not found, AI platform, business automation",
+      "noIndex": true
+    }
+  }
+}

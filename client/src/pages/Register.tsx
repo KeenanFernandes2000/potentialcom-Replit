@@ -7,6 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { AutoSEO } from "@/components/SEO";
 
 import {
   Form,
@@ -19,19 +20,30 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
 
-const registerSchema = z.object({
-  email: z.string().email({ message: "Please enter a valid email address" }),
-  password: z.string().min(6, { message: "Password must be at least 6 characters" }),
-  confirmPassword: z.string(),
-  isSubscribedToNewsletter: z.boolean().default(true),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords do not match",
-  path: ["confirmPassword"],
-});
+const registerSchema = z
+  .object({
+    email: z.string().email({ message: "Please enter a valid email address" }),
+    password: z
+      .string()
+      .min(6, { message: "Password must be at least 6 characters" }),
+    confirmPassword: z.string(),
+    isSubscribedToNewsletter: z.boolean().default(true),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
 type RegisterFormValues = z.infer<typeof registerSchema>;
 
@@ -65,14 +77,19 @@ export default function Register() {
       navigate("/login");
     } catch (error) {
       console.error("Registration error:", error);
-      setServerError(error instanceof Error ? error.message : "Registration failed. Please try again.");
+      setServerError(
+        error instanceof Error
+          ? error.message
+          : "Registration failed. Please try again."
+      );
     }
   };
 
   return (
-    <div className="font-inter min-h-screen">
+    <div className="min-h-screen flex flex-col">
+      <AutoSEO />
       <Header />
-      <main className="pt-32 pb-20">
+      <main className="flex-grow flex items-center justify-center px-4 py-8 mt-14">
         <div className="container max-w-lg mx-auto">
           <Card className="shadow-lg">
             <CardHeader>
@@ -87,9 +104,12 @@ export default function Register() {
                   <AlertDescription>{serverError}</AlertDescription>
                 </Alert>
               )}
-              
+
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-6"
+                >
                   <FormField
                     control={form.control}
                     name="email"
@@ -97,13 +117,17 @@ export default function Register() {
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input placeholder="your@email.com" type="email" {...field} />
+                          <Input
+                            placeholder="your@email.com"
+                            type="email"
+                            {...field}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="password"
@@ -112,10 +136,10 @@ export default function Register() {
                         <FormLabel>Password</FormLabel>
                         <FormControl>
                           <div className="relative">
-                            <Input 
-                              placeholder="••••••••" 
-                              type={showPassword ? "text" : "password"} 
-                              {...field} 
+                            <Input
+                              placeholder="••••••••"
+                              type={showPassword ? "text" : "password"}
+                              {...field}
                             />
                             <Button
                               type="button"
@@ -124,7 +148,11 @@ export default function Register() {
                               className="absolute right-2 top-1/2 transform -translate-y-1/2"
                               onClick={() => setShowPassword(!showPassword)}
                             >
-                              {showPassword ? <EyeOffIcon size={16} /> : <EyeIcon size={16} />}
+                              {showPassword ? (
+                                <EyeOffIcon size={16} />
+                              ) : (
+                                <EyeIcon size={16} />
+                              )}
                             </Button>
                           </div>
                         </FormControl>
@@ -132,7 +160,7 @@ export default function Register() {
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="confirmPassword"
@@ -141,19 +169,25 @@ export default function Register() {
                         <FormLabel>Confirm Password</FormLabel>
                         <FormControl>
                           <div className="relative">
-                            <Input 
-                              placeholder="••••••••" 
-                              type={showConfirmPassword ? "text" : "password"} 
-                              {...field} 
+                            <Input
+                              placeholder="••••••••"
+                              type={showConfirmPassword ? "text" : "password"}
+                              {...field}
                             />
                             <Button
                               type="button"
                               variant="ghost"
                               size="sm"
                               className="absolute right-2 top-1/2 transform -translate-y-1/2"
-                              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                              onClick={() =>
+                                setShowConfirmPassword(!showConfirmPassword)
+                              }
                             >
-                              {showConfirmPassword ? <EyeOffIcon size={16} /> : <EyeIcon size={16} />}
+                              {showConfirmPassword ? (
+                                <EyeOffIcon size={16} />
+                              ) : (
+                                <EyeIcon size={16} />
+                              )}
                             </Button>
                           </div>
                         </FormControl>
@@ -161,7 +195,7 @@ export default function Register() {
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="isSubscribedToNewsletter"
@@ -175,16 +209,17 @@ export default function Register() {
                         </FormControl>
                         <div className="space-y-1 leading-none">
                           <FormLabel>
-                            Subscribe to our newsletter and receive updates on new resources and AI tools
+                            Subscribe to our newsletter and receive updates on
+                            new resources and AI tools
                           </FormLabel>
                         </div>
                       </FormItem>
                     )}
                   />
-                  
-                  <Button 
-                    type="submit" 
-                    className="w-full" 
+
+                  <Button
+                    type="submit"
+                    className="w-full"
                     size="lg"
                     disabled={registerStatus.isLoading}
                   >
@@ -193,7 +228,9 @@ export default function Register() {
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                         Creating account...
                       </>
-                    ) : "Create Account"}
+                    ) : (
+                      "Create Account"
+                    )}
                   </Button>
                 </form>
               </Form>
@@ -201,9 +238,9 @@ export default function Register() {
             <CardFooter className="flex justify-center">
               <p className="text-sm text-muted-foreground">
                 Already have an account?{" "}
-                <Button 
-                  variant="link" 
-                  className="p-0" 
+                <Button
+                  variant="link"
+                  className="p-0"
                   onClick={() => navigate("/login")}
                 >
                   Log in

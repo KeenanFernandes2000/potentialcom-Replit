@@ -7,6 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { AutoSEO } from "@/components/SEO";
 
 import {
   Form,
@@ -18,7 +19,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
 
@@ -55,7 +63,11 @@ export default function Login() {
       navigate("/profile");
     } catch (error) {
       console.error("Login error:", error);
-      setServerError(error instanceof Error ? error.message : "Invalid email or password. Please try again.");
+      setServerError(
+        error instanceof Error
+          ? error.message
+          : "Invalid email or password. Please try again."
+      );
     }
   };
 
@@ -64,9 +76,10 @@ export default function Login() {
   };
 
   return (
-    <div className="font-inter min-h-screen">
+    <div className="min-h-screen flex flex-col">
+      <AutoSEO />
       <Header />
-      <main className="pt-32 pb-20">
+      <main className="flex-grow flex items-center justify-center px-4 py-8 mt-14">
         <div className="container max-w-md mx-auto">
           <Card className="shadow-lg">
             <CardHeader>
@@ -81,9 +94,12 @@ export default function Login() {
                   <AlertDescription>{serverError}</AlertDescription>
                 </Alert>
               )}
-              
+
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-6"
+                >
                   <FormField
                     control={form.control}
                     name="email"
@@ -91,13 +107,17 @@ export default function Login() {
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input placeholder="your@email.com" type="email" {...field} />
+                          <Input
+                            placeholder="your@email.com"
+                            type="email"
+                            {...field}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
-                  
+
                   <FormField
                     control={form.control}
                     name="password"
@@ -105,8 +125,8 @@ export default function Login() {
                       <FormItem>
                         <div className="flex justify-between items-center">
                           <FormLabel>Password</FormLabel>
-                          <Button 
-                            variant="link" 
+                          <Button
+                            variant="link"
                             className="p-0 h-auto font-normal text-xs"
                             type="button"
                             onClick={handleForgotPassword}
@@ -116,10 +136,10 @@ export default function Login() {
                         </div>
                         <FormControl>
                           <div className="relative">
-                            <Input 
-                              placeholder="••••••••" 
-                              type={showPassword ? "text" : "password"} 
-                              {...field} 
+                            <Input
+                              placeholder="••••••••"
+                              type={showPassword ? "text" : "password"}
+                              {...field}
                             />
                             <Button
                               type="button"
@@ -128,7 +148,11 @@ export default function Login() {
                               className="absolute right-2 top-1/2 transform -translate-y-1/2"
                               onClick={() => setShowPassword(!showPassword)}
                             >
-                              {showPassword ? <EyeOffIcon size={16} /> : <EyeIcon size={16} />}
+                              {showPassword ? (
+                                <EyeOffIcon size={16} />
+                              ) : (
+                                <EyeIcon size={16} />
+                              )}
                             </Button>
                           </div>
                         </FormControl>
@@ -136,10 +160,10 @@ export default function Login() {
                       </FormItem>
                     )}
                   />
-                  
-                  <Button 
-                    type="submit" 
-                    className="w-full" 
+
+                  <Button
+                    type="submit"
+                    className="w-full"
                     size="lg"
                     disabled={loginStatus.isLoading}
                   >
@@ -148,7 +172,9 @@ export default function Login() {
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                         Logging in...
                       </>
-                    ) : "Log In"}
+                    ) : (
+                      "Log In"
+                    )}
                   </Button>
                 </form>
               </Form>
@@ -156,9 +182,9 @@ export default function Login() {
             <CardFooter className="flex justify-center">
               <p className="text-sm text-muted-foreground">
                 Don't have an account?{" "}
-                <Button 
-                  variant="link" 
-                  className="p-0" 
+                <Button
+                  variant="link"
+                  className="p-0"
                   onClick={() => navigate("/register")}
                 >
                   Create one

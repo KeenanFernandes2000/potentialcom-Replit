@@ -5,6 +5,7 @@ import Platforms from "@/components/sections/Platforms";
 import Solutions from "@/components/sections/Solutions";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
+import { AutoSEO } from "@/components/SEO";
 
 const Offerings = () => {
   // Case Studies section
@@ -184,6 +185,7 @@ const Offerings = () => {
 
   return (
     <div className="font-inter min-h-screen">
+      <AutoSEO />
       <Header />
       <main className="pt-32">
         <div className="container mb-12">

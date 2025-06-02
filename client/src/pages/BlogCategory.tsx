@@ -15,6 +15,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import React from "react";
 import { detectLanguage } from "@/lib/language-utils";
+import { AutoSEO } from "@/components/SEO";
 
 function BlogCategoryContent() {
   const { language, isRTL, setLanguage } = useBlogContext();
@@ -91,6 +92,7 @@ function BlogCategoryContent() {
 
   return (
     <div className={`min-h-screen flex flex-col ${isRTL ? "rtl" : "ltr"}`}>
+      <AutoSEO />
       <Header />
 
       <main className="flex-grow container mx-auto px-4 py-8 mt-14">

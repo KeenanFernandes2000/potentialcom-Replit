@@ -113,7 +113,7 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
       formData.append("url", websiteUrl);
 
       const response = await fetch(
-        "https://ai.potential.com/api/bot/createsimplechatbot",
+        "http://localhost:8000/api/bot/createsimplechatbot",
         {
           method: "POST",
           body: formData,

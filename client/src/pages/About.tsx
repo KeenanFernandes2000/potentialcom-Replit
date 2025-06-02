@@ -13,10 +13,12 @@ import {
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { AutoSEO } from "@/components/SEO";
 
 export default function About() {
   return (
     <>
+      <AutoSEO />
       <Header />
       <main className="min-h-screen">
         {/* Hero Section */}

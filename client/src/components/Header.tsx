@@ -125,17 +125,18 @@ const Header = () => {
             Resources
           </a>
           <a
-            href="/#agents"
-            onClick={(e) => {
-              setIsMenuOpen(false);
-              if (window.location.pathname === "/") {
-                e.preventDefault();
-                scrollToSection("agents");
-              }
-            }}
-            className="py-3 text-foreground hover:text-primary font-medium transition-colors gtm-header-get-started"
+            href="/about"
+            className="py-3 text-foreground hover:text-primary font-medium transition-colors"
+            onClick={() => setIsMenuOpen(false)}
           >
-            Get Started
+            About Us
+          </a>
+          <a
+            href="/vera"
+            className="py-3 text-foreground hover:text-primary font-medium transition-colors"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Talk to Vera
           </a>
         </div>
       )}

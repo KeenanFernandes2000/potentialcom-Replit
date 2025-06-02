@@ -27,6 +27,7 @@ import veraBannerSvg from "@assets/Vera Banner.svg";
 import veraGif from "@assets/Vera Gif Final.gif";
 import veraAvatarCentered from "@assets/Vera Avatar Centered.png";
 import { Check, Search, Users, Calendar, MessageSquare } from "lucide-react";
+import { AutoSEO } from "@/components/SEO";
 
 const formSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -126,6 +127,7 @@ export default function Vera() {
 
   return (
     <div className="font-inter min-h-screen">
+      <AutoSEO />
       <Header />
       <main>
         {/* Hero Section */}
