@@ -50,7 +50,7 @@ const Pricing = () => {
         "SLA guarantees",
       ],
       isPopular: false,
-      ctaText: "Contact Sales",
+      ctaText: "Talk to Vera",
     },
   ];
 
@@ -110,6 +110,8 @@ const Pricing = () => {
                     setTimeout(() => {
                       scrollToSection("agents");
                     }, 100);
+                  } else if (plan.name === "Enterprise") {
+                    window.location.href = "/vera";
                   }
                 }}
               >
