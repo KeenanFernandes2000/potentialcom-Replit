@@ -9,32 +9,411 @@ const __dirname = path.dirname(__filename);
 const WORDPRESS_API_URL = "https://blog.potential.com/wp-json/wp/v2";
 const SITE_URL = "https://potential.com";
 
-// Static pages configuration
-const STATIC_PAGES = [
-  { url: "/", priority: "1.0", changefreq: "weekly" },
-  { url: "/about", priority: "0.9", changefreq: "monthly" },
-  { url: "/solutions", priority: "0.9", changefreq: "weekly" },
-  { url: "/offerings", priority: "0.8", changefreq: "weekly" },
-  { url: "/pricing", priority: "0.9", changefreq: "monthly" },
-  { url: "/resources", priority: "0.8", changefreq: "weekly" },
-  { url: "/partner", priority: "0.8", changefreq: "monthly" },
-  { url: "/vera", priority: "0.9", changefreq: "monthly" },
-  { url: "/login", priority: "0.5", changefreq: "yearly" },
-  { url: "/register", priority: "0.5", changefreq: "yearly" },
-  { url: "/forgot-password", priority: "0.3", changefreq: "yearly" },
-  { url: "/profile", priority: "0.3", changefreq: "yearly" },
-  { url: "/terms", priority: "0.4", changefreq: "yearly" },
-  { url: "/privacy", priority: "0.4", changefreq: "yearly" },
-  { url: "/blog", priority: "0.7", changefreq: "daily" },
-];
+// Route priority and change frequency defaults based on route patterns
+const ROUTE_DEFAULTS = {
+  "/": { priority: "1.0", changefreq: "weekly" },
+  auth: { priority: "0.3", changefreq: "yearly" }, // login, register, etc.
+  legal: { priority: "0.4", changefreq: "yearly" }, // terms, privacy, etc.
+  blog: { priority: "0.7", changefreq: "daily" },
+  high: { priority: "0.9", changefreq: "monthly" }, // about, pricing, etc.
+  medium: { priority: "0.8", changefreq: "weekly" }, // offerings, resources, etc.
+  default: { priority: "0.5", changefreq: "monthly" },
+};
 
-// Homepage sections with anchors
-const HOMEPAGE_SECTIONS = [
-  { url: "/#agents", priority: "0.8", changefreq: "weekly" },
-  { url: "/#vera", priority: "0.7", changefreq: "monthly" },
-  { url: "/#rachel", priority: "0.7", changefreq: "monthly" },
-  { url: "/#start", priority: "0.7", changefreq: "monthly" },
-];
+interface StaticRoute {
+  url: string;
+  priority: string;
+  changefreq: string;
+}
+
+/**
+ * Determine route priority and change frequency based on route path
+ */
+function getRouteConfig(routePath: string): {
+  priority: string;
+  changefreq: string;
+} {
+  // Homepage
+  if (routePath === "/") {
+    return ROUTE_DEFAULTS["/"];
+  }
+
+  // Authentication pages
+  if (
+    ["login", "register", "forgot-password", "profile"].some((auth) =>
+      routePath.includes(auth)
+    )
+  ) {
+    return ROUTE_DEFAULTS.auth;
+  }
+
+  // Legal pages
+  if (
+    ["terms", "privacy", "policy"].some((legal) => routePath.includes(legal))
+  ) {
+    return ROUTE_DEFAULTS.legal;
+  }
+
+  // Blog pages
+  if (routePath.includes("blog")) {
+    return ROUTE_DEFAULTS.blog;
+  }
+
+  // High priority pages
+  if (["about", "pricing"].some((high) => routePath.includes(high))) {
+    return ROUTE_DEFAULTS.high;
+  }
+
+  // Medium priority pages
+  if (
+    ["offerings", "solutions", "resources", "partner", "vera"].some((medium) =>
+      routePath.includes(medium)
+    )
+  ) {
+    return ROUTE_DEFAULTS.medium;
+  }
+
+  // Default
+  return ROUTE_DEFAULTS.default;
+}
+
+/**
+ * Extract homepage sections with anchors from Home.tsx and section components
+ */
+async function extractHomepageSections(): Promise<StaticRoute[]> {
+  const sectionsDir = path.resolve(
+    __dirname,
+    "../client/src/components/sections"
+  );
+  const homeTsxPath = path.resolve(__dirname, "../client/src/pages/Home.tsx");
+
+  const sections: StaticRoute[] = [];
+  const foundIds = new Set<string>();
+
+  // First, scan the sections directory for components with id attributes
+  if (fs.existsSync(sectionsDir)) {
+    try {
+      const sectionFiles = fs
+        .readdirSync(sectionsDir)
+        .filter((file) => /\.(tsx?|jsx?)$/.test(file));
+
+      for (const file of sectionFiles) {
+        const filePath = path.join(sectionsDir, file);
+        const content = fs.readFileSync(filePath, "utf8");
+
+        // Look for id attributes in section components
+        const idRegex = /id=["']([^"']+)["']/g;
+        let match;
+
+        while ((match = idRegex.exec(content)) !== null) {
+          const id = match[1];
+          // Skip common IDs that aren't likely to be navigation anchors
+          if (
+            !["root", "app", "main", "header", "footer", "nav"].includes(
+              id.toLowerCase()
+            )
+          ) {
+            foundIds.add(id);
+          }
+        }
+      }
+
+      console.log(`📁 Scanned ${sectionFiles.length} section components`);
+    } catch (error) {
+      console.warn("⚠️  Error scanning sections directory:", error);
+    }
+  }
+
+  // Also scan Home.tsx for any additional id attributes
+  if (fs.existsSync(homeTsxPath)) {
+    try {
+      const homeContent = fs.readFileSync(homeTsxPath, "utf8");
+
+      // Look for id attributes in Home.tsx
+      const idRegex = /id=["']([^"']+)["']/g;
+      let match;
+
+      while ((match = idRegex.exec(homeContent)) !== null) {
+        const id = match[1];
+        if (
+          !["root", "app", "main", "header", "footer", "nav"].includes(
+            id.toLowerCase()
+          )
+        ) {
+          foundIds.add(id);
+        }
+      }
+
+      // Also look for scrollToSection calls which indicate valid anchor sections
+      const scrollRegex = /scrollToSection\(["']([^"']+)["']\)/g;
+      while ((match = scrollRegex.exec(homeContent)) !== null) {
+        foundIds.add(match[1]);
+      }
+    } catch (error) {
+      console.warn("⚠️  Error scanning Home.tsx:", error);
+    }
+  }
+
+  // Convert IDs to anchor routes
+  foundIds.forEach((id) => {
+    sections.push({
+      url: `/#${id}`,
+      priority: "0.7",
+      changefreq: "monthly",
+    });
+  });
+
+  console.log(
+    `🏠 Found ${sections.length} homepage sections:`,
+    sections.map((s) => s.url).join(", ")
+  );
+
+  return sections;
+}
+
+/**
+ * Scan pages directory to discover all available page components
+ */
+function scanPagesDirectory(): string[] {
+  const pagesDir = path.resolve(__dirname, "../client/src/pages");
+
+  if (!fs.existsSync(pagesDir)) {
+    console.warn("⚠️  Pages directory not found");
+    return [];
+  }
+
+  try {
+    const pageFiles = fs
+      .readdirSync(pagesDir)
+      .filter((file) => /\.(tsx?|jsx?)$/.test(file))
+      .map((file) => file.replace(/\.(tsx?|jsx?)$/, ""));
+
+    console.log(
+      `📁 Found ${pageFiles.length} page components:`,
+      pageFiles.join(", ")
+    );
+    return pageFiles;
+  } catch (error) {
+    console.error("❌ Error scanning pages directory:", error);
+    return [];
+  }
+}
+
+/**
+ * Validate that discovered routes have corresponding page components
+ */
+function validateRoutes(routes: StaticRoute[]): StaticRoute[] {
+  const pagesDir = path.resolve(__dirname, "../client/src/pages");
+
+  if (!fs.existsSync(pagesDir)) {
+    console.warn("⚠️  Pages directory not found, skipping validation");
+    return routes;
+  }
+
+  try {
+    // Read the App.tsx to get component mappings
+    const appTsxPath = path.resolve(__dirname, "../client/src/App.tsx");
+    const appContent = fs.readFileSync(appTsxPath, "utf8");
+
+    // Extract import mappings (e.g., import Home from "@/pages/Home")
+    const importRegex = /import\s+(\w+)\s+from\s+["']@\/pages\/(\w+)["']/g;
+    const componentToFile = new Map<string, string>();
+    let match;
+
+    while ((match = importRegex.exec(appContent)) !== null) {
+      componentToFile.set(match[1], match[2]);
+    }
+
+    // Extract route to component mappings
+    const routeToComponent = new Map<string, string>();
+    const routeComponentRegex =
+      /<Route\s+path="([^"]*)"\s+component=\{(\w+)\}/g;
+
+    while ((match = routeComponentRegex.exec(appContent)) !== null) {
+      routeToComponent.set(match[1], match[2]);
+    }
+
+    const validatedRoutes: StaticRoute[] = [];
+    const pageFiles = fs.readdirSync(pagesDir);
+
+    for (const route of routes) {
+      const componentName = routeToComponent.get(route.url);
+      if (componentName) {
+        const fileName = componentToFile.get(componentName);
+        if (fileName) {
+          // Check if the page file exists
+          const possibleFiles = [
+            `${fileName}.tsx`,
+            `${fileName}.ts`,
+            `${fileName}.jsx`,
+            `${fileName}.js`,
+          ];
+
+          const fileExists = possibleFiles.some((file) =>
+            pageFiles.includes(file)
+          );
+
+          if (fileExists) {
+            validatedRoutes.push(route);
+          } else {
+            console.warn(
+              `⚠️  Route ${route.url} -> component ${componentName} -> file ${fileName} not found`
+            );
+          }
+        } else {
+          console.warn(
+            `⚠️  Route ${route.url} -> component ${componentName} not found in imports`
+          );
+        }
+      } else {
+        // If we can't find the component mapping, include the route anyway
+        // This handles cases where the regex might miss some patterns
+        validatedRoutes.push(route);
+      }
+    }
+
+    console.log(
+      `✅ Validated ${validatedRoutes.length}/${routes.length} routes`
+    );
+    return validatedRoutes;
+  } catch (error) {
+    console.warn("⚠️  Error during route validation:", error);
+    return routes; // Return original routes if validation fails
+  }
+}
+
+/**
+ * Dynamically extract static routes from the App.tsx router configuration
+ */
+async function extractStaticRoutes(): Promise<StaticRoute[]> {
+  const appTsxPath = path.resolve(__dirname, "../client/src/App.tsx");
+
+  if (!fs.existsSync(appTsxPath)) {
+    console.warn(
+      "⚠️  App.tsx not found, attempting to generate routes from pages directory"
+    );
+    return generateRoutesFromPages();
+  }
+
+  try {
+    const appContent = fs.readFileSync(appTsxPath, "utf8");
+    const routes: StaticRoute[] = [];
+
+    // More comprehensive regex patterns to match different Route syntax variations
+    const routePatterns = [
+      // <Route path="/path" component={Component} />
+      /<Route\s+path="([^":]*)"\s+component=\{[^}]+\}\s*\/>/g,
+      // <Route path="/path" component={Component}></Route>
+      /<Route\s+path="([^":]*)"\s+component=\{[^}]+\}[^>]*>[^<]*<\/Route>/g,
+      // <Route component={Component} path="/path" />
+      /<Route\s+component=\{[^}]+\}\s+path="([^":]*)"\s*\/>/g,
+    ];
+
+    const foundPaths = new Set<string>();
+
+    for (const pattern of routePatterns) {
+      let match;
+      while ((match = pattern.exec(appContent)) !== null) {
+        const routePath = match[1];
+
+        // Skip empty paths, dynamic routes (containing :), wildcard routes, and fallback routes
+        if (
+          !routePath ||
+          routePath.includes(":") ||
+          routePath.includes("*") ||
+          routePath === ""
+        ) {
+          continue;
+        }
+
+        foundPaths.add(routePath);
+      }
+    }
+
+    // Convert paths to route objects with configuration
+    foundPaths.forEach((routePath) => {
+      const config = getRouteConfig(routePath);
+      routes.push({
+        url: routePath,
+        priority: config.priority,
+        changefreq: config.changefreq,
+      });
+    });
+
+    console.log(
+      `📄 Discovered ${routes.length} static routes from App.tsx:`,
+      routes.map((r) => r.url).join(", ")
+    );
+
+    // If no routes found, generate from pages directory
+    if (routes.length === 0) {
+      console.warn(
+        "⚠️  No routes found in App.tsx, generating from pages directory"
+      );
+      return generateRoutesFromPages();
+    }
+
+    // Validate routes against actual page files
+    const validatedRoutes = validateRoutes(routes);
+
+    return validatedRoutes;
+  } catch (error) {
+    console.error("❌ Error parsing App.tsx:", error);
+    console.warn("⚠️  Generating routes from pages directory");
+    return generateRoutesFromPages();
+  }
+}
+
+/**
+ * Generate routes based on the pages directory structure (fallback method)
+ */
+function generateRoutesFromPages(): StaticRoute[] {
+  const pageComponents = scanPagesDirectory();
+  const routes: StaticRoute[] = [];
+
+  for (const component of pageComponents) {
+    let routePath: string;
+
+    // Convert component names to route paths
+    switch (component.toLowerCase()) {
+      case "home":
+        routePath = "/";
+        break;
+      case "not-found":
+      case "notfound":
+        continue; // Skip 404 pages
+      case "termsofuse":
+        routePath = "/terms";
+        break;
+      case "privacypolicy":
+        routePath = "/privacy";
+        break;
+      case "forgotpassword":
+        routePath = "/forgot-password";
+        break;
+      case "blogpost":
+        continue; // Skip dynamic blog post pages
+      case "blogcategory":
+        continue; // Skip dynamic blog category pages
+      default:
+        routePath = `/${component.toLowerCase()}`;
+    }
+
+    const config = getRouteConfig(routePath);
+    routes.push({
+      url: routePath,
+      priority: config.priority,
+      changefreq: config.changefreq,
+    });
+  }
+
+  console.log(
+    `📁 Generated ${routes.length} routes from pages directory:`,
+    routes.map((r) => r.url).join(", ")
+  );
+
+  return routes;
+}
 
 interface WordPressPost {
   id: number;
@@ -203,11 +582,13 @@ async function generateSitemap(): Promise<void> {
 
     // Add static pages
     console.log("📄 Adding static pages...");
-    allPages.push(...STATIC_PAGES);
+    const staticRoutes = await extractStaticRoutes();
+    allPages.push(...staticRoutes);
 
     // Add homepage sections
     console.log("🏠 Adding homepage sections...");
-    allPages.push(...HOMEPAGE_SECTIONS);
+    const homepageSections = await extractHomepageSections();
+    allPages.push(...homepageSections);
 
     // Fetch and add blog posts
     console.log("📝 Fetching blog posts...");
@@ -256,7 +637,7 @@ async function generateSitemap(): Promise<void> {
     console.log(`📍 Location: ${sitemapPath}`);
     console.log(`📊 Total URLs: ${allPages.length}`);
     console.log(
-      `   - Static pages: ${STATIC_PAGES.length + HOMEPAGE_SECTIONS.length}`
+      `   - Static pages: ${staticRoutes.length + homepageSections.length}`
     );
     console.log(`   - Blog posts: ${posts.length}`);
     console.log(`   - Blog categories: ${categories.length}`);

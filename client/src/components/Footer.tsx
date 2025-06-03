@@ -109,7 +109,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-center gap-2">
                 <Mail className="h-5 w-5 text-primary" />
-                <a 
+                <a
                   href="mailto:contact@potential.com"
                   className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
                 >
@@ -118,7 +118,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="h-5 w-5 text-primary" />
-                <a 
+                <a
                   href="tel:+18622679307"
                   className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
                 >
@@ -127,7 +127,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-2">
                 <SiWhatsapp className="h-5 w-5 text-primary" />
-                <a 
+                <a
                   href="https://wa.me/97143693663"
                   target="_blank"
                   rel="noopener noreferrer"
