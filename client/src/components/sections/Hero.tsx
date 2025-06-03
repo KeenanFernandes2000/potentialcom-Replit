@@ -9,7 +9,7 @@ import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
 import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
 import cartierLogo from "@assets/Customer Logos/Cartier logo.png";
 import ciscoLogo from "@assets/Customer Logos/Cisco Logo.png";
-import dctLogo from "@assets/Customer Logos/DCT logo.png";
+import dctLogo from "@assets/Customer Logos/DCT Logo.png";
 import dldLogo from "@assets/Customer Logos/DLD Logo.png";
 import dellLogo from "@assets/Customer Logos/Dell logo.png";
 import edbLogo from "@assets/Customer Logos/EDB logo.png";
@@ -98,7 +98,7 @@ const Hero = () => {
 
   // Logo grid for trusted companies with scrolling animation
   const LogoGrid = () => {
-    // All 25 customer logos
+    // All 25 customer logos in updated order
     const clientLogos = [
       { name: "ADGM", logo: adgmLogo },
       { name: "Airbus", logo: airbusLogo },
@@ -115,6 +115,7 @@ const Hero = () => {
       { name: "Government of Dubai", logo: govDubaiLogo },
       { name: "HSBC", logo: hsbcLogo },
       { name: "Inditex", logo: inditexLogo },
+      { name: "Intel", logo: intelLogo },
       { name: "Khalifa Fund", logo: khalifaFundLogo },
       { name: "MBC", logo: mbcLogo },
       { name: "Microsoft", logo: microsoftLogo },
@@ -124,7 +125,6 @@ const Hero = () => {
       { name: "United Nations", logo: unLogo },
       { name: "Visa", logo: visaLogo },
       { name: "WFZO", logo: wfzoLogo },
-      { name: "Intel", logo: intelLogo },
     ];
 
     return (
