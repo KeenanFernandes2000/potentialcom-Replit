@@ -1,5 +1,6 @@
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { scrollToSection } from "@/lib/animations";
 
 const Pricing = () => {
   const pricingPlans = [
@@ -25,7 +26,7 @@ const Pricing = () => {
         "Priority Support",
       ],
       isPopular: true,
-      ctaText: "Choose Growth",
+      ctaText: "Start Free Trial",
     },
     {
       name: "Micro Platform",
@@ -103,6 +104,14 @@ const Pricing = () => {
                     ? "bg-primary hover:bg-primary/90 text-white"
                     : "bg-primary/10 hover:bg-primary/20 text-primary"
                 }`}
+                onClick={() => {
+                  if (plan.name === "Growth") {
+                    window.location.href = "/offerings";
+                    setTimeout(() => {
+                      scrollToSection("agents");
+                    }, 100);
+                  }
+                }}
               >
                 {plan.ctaText}
               </Button>
