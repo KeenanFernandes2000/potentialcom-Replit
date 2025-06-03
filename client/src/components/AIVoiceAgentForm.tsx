@@ -44,7 +44,7 @@ const formSchema = z
     {
       message: "Website URL is required when you have a website",
       path: ["website"],
-    }
+    },
   );
 
 type FormData = z.infer<typeof formSchema>;
@@ -102,7 +102,7 @@ export function AIVoiceAgentForm({
       formData.append("email", values.email);
       formData.append("name", values.proposedAgentName);
       const utmMedium = new URLSearchParams(window.location.search).get(
-        "utm_medium"
+        "utm_medium",
       );
       if (utmMedium) {
         formData.append("medium", utmMedium);
@@ -116,11 +116,11 @@ export function AIVoiceAgentForm({
       formData.append("url", websiteUrl);
 
       const response = await fetch(
-        "http://localhost:8000/api/vapi/simpleassistant",
+        "https://ai.potential.com/api/vapi/simpleassistant",
         {
           method: "POST",
           body: formData,
-        }
+        },
       );
 
       if (!response.ok) {
@@ -133,7 +133,7 @@ export function AIVoiceAgentForm({
     } catch (error) {
       console.error("Error creating AI voice agent:", error);
       setError(
-        "Sorry, we couldn't create your agent right now. Please try again later."
+        "Sorry, we couldn't create your agent right now. Please try again later.",
       );
     } finally {
       setIsLoading(false);
@@ -158,7 +158,7 @@ export function AIVoiceAgentForm({
     if (agentData?.assistant?.id) {
       window.open(
         `https://ai.potential.com/voice/${agentData.assistant.id}`,
-        "_blank"
+        "_blank",
       );
     }
   };
