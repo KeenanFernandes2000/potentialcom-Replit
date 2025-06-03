@@ -158,21 +158,37 @@ This document lists all the tracking classes implemented across the Potential.co
 
 | Class Name                        | Element | Action | Description                          |
 | --------------------------------- | ------- | ------ | ------------------------------------ |
+| `gtm-chatbot-form`                | Form    | Submit | Chatbot creation form element        |
 | `gtm-chatbot-form-remove-website` | Button  | Click  | Remove website field from form       |
 | `gtm-chatbot-form-add-website`    | Button  | Click  | Add website field to form            |
 | `gtm-chatbot-form-cancel`         | Button  | Click  | Cancel chatbot creation              |
 | `gtm-chatbot-form-submit`         | Button  | Click  | Submit chatbot creation form         |
 | `gtm-chatbot-form-test-agent`     | Button  | Click  | Test created chatbot (success state) |
 
+#### DataLayer Events - Chatbot Form
+
+| Event Name                 | Trigger      | Data Parameters                                                         |
+| -------------------------- | ------------ | ----------------------------------------------------------------------- |
+| `chatbot_creation_success` | Form Success | `form_type`, `agent_name`, `has_website`, `user_email`, `agent_id`      |
+| `chatbot_creation_failure` | Form Error   | `form_type`, `agent_name`, `has_website`, `user_email`, `error_message` |
+
 ### Voicebot Creation Form
 
 | Class Name                         | Element | Action | Description                           |
 | ---------------------------------- | ------- | ------ | ------------------------------------- |
+| `gtm-voicebot-form`                | Form    | Submit | Voicebot creation form element        |
 | `gtm-voicebot-form-remove-website` | Button  | Click  | Remove website field from form        |
 | `gtm-voicebot-form-add-website`    | Button  | Click  | Add website field to form             |
 | `gtm-voicebot-form-cancel`         | Button  | Click  | Cancel voicebot creation              |
 | `gtm-voicebot-form-submit`         | Button  | Click  | Submit voicebot creation form         |
 | `gtm-voicebot-form-test-agent`     | Button  | Click  | Test created voicebot (success state) |
+
+#### DataLayer Events - Voicebot Form
+
+| Event Name                  | Trigger      | Data Parameters                                                         |
+| --------------------------- | ------------ | ----------------------------------------------------------------------- |
+| `voicebot_creation_success` | Form Success | `form_type`, `agent_name`, `has_website`, `user_email`, `agent_id`      |
+| `voicebot_creation_failure` | Form Error   | `form_type`, `agent_name`, `has_website`, `user_email`, `error_message` |
 
 ---
 
@@ -214,7 +230,37 @@ Create a GA4 Event Tag:
   - `page_path`: `{{Page Path}}`
   - `button_text`: `{{Click Text}}`
 
-### 3. Specific Tracking Examples
+### 3. DataLayer Event Tracking
+
+#### AI Agent Form Success/Failure Events
+
+Create Custom Event Triggers for:
+
+**Chatbot Events:**
+
+- **Trigger Type:** Custom Event
+- **Event Name:** `chatbot_creation_success` OR `chatbot_creation_failure`
+- **GA4 Event Parameters:**
+  - `form_type`: `{{DLV - form_type}}`
+  - `agent_name`: `{{DLV - agent_name}}`
+  - `has_website`: `{{DLV - has_website}}`
+  - `user_email`: `{{DLV - user_email}}`
+  - `agent_id`: `{{DLV - agent_id}}` (success only)
+  - `error_message`: `{{DLV - error_message}}` (failure only)
+
+**Voicebot Events:**
+
+- **Trigger Type:** Custom Event
+- **Event Name:** `voicebot_creation_success` OR `voicebot_creation_failure`
+- **GA4 Event Parameters:**
+  - `form_type`: `{{DLV - form_type}}`
+  - `agent_name`: `{{DLV - agent_name}}`
+  - `has_website`: `{{DLV - has_website}}`
+  - `user_email`: `{{DLV - user_email}}`
+  - `agent_id`: `{{DLV - agent_id}}` (success only)
+  - `error_message`: `{{DLV - error_message}}` (failure only)
+
+### 4. Specific Tracking Examples
 
 #### Track AI Agent Form Submissions
 
@@ -223,6 +269,12 @@ Create a GA4 Event Tag:
 - **Parameters:**
   - `form_type`: Extract from class (chatbot/voicebot)
   - `action`: `agent_creation`
+
+#### Track AI Agent Form Success/Failure
+
+- **Success Events:** `chatbot_creation_success`, `voicebot_creation_success`
+- **Failure Events:** `chatbot_creation_failure`, `voicebot_creation_failure`
+- **Key Metrics:** Conversion rates, error tracking, user engagement
 
 #### Track CTA Performance
 
@@ -253,15 +305,29 @@ Create a GA4 Event Tag:
 - **Parameters:**
   - `interaction_type`: Extract from class (talk-to-rachel)
 
-### 4. Advanced Segmentation
+### 5. Advanced Segmentation
 
 Use the tracking classes to create audience segments:
 
 - **High Intent Users:** Users who clicked agent creation buttons
+- **Successful Agent Creators:** Users who completed agent creation successfully
+- **Failed Agent Creators:** Users who encountered errors during agent creation
+- **Website vs Non-Website Users:** Segment based on `has_website` parameter
 - **Pricing Page Visitors:** Users who interacted with pricing plans
 - **Partner Prospects:** Users who clicked partner-related CTAs
 - **Vera Consultations:** Users who submitted Vera consultation forms
 - **Rachel Users:** Users who clicked to talk to Rachel
+
+### DataLayer Event Metrics
+
+- **Form Completion Funnel:**
+  - Form opens → Form submissions → Successful creations
+- **Error Tracking:**
+  - Error types and frequency
+  - User retry behavior after errors
+- **User Segmentation:**
+  - Business users (with websites) vs. Personal users (without websites)
+  - Agent naming patterns and preferences
 
 ---
 
@@ -294,9 +360,20 @@ Use the tracking classes to create audience segments:
 ### Form Testing
 
 - [ ] Chatbot form interactions
+- [ ] Chatbot form success/failure events
 - [ ] Voicebot form interactions
+- [ ] Voicebot form success/failure events
 - [ ] Partner application form
 - [ ] Vera consultation form
+
+### DataLayer Event Testing
+
+- [ ] `chatbot_creation_success` event fires on successful chatbot creation
+- [ ] `chatbot_creation_failure` event fires on chatbot creation error
+- [ ] `voicebot_creation_success` event fires on successful voicebot creation
+- [ ] `voicebot_creation_failure` event fires on voicebot creation error
+- [ ] All event parameters are populated correctly
+- [ ] Events contain proper user data (email, agent name, website status)
 
 ### Global Component Testing
 
@@ -318,6 +395,28 @@ Use the tracking classes to create audience segments:
 ### Primary Metrics to Track
 
 - **Agent Creation Rate:** `gtm-chatbot-form-submit` + `gtm-voicebot-form-submit`
+- **Agent Creation Success Rate:** Success events / Total submission attempts
+- **Agent Creation Failure Rate:** Failure events / Total submission attempts
+- **Form Abandonment Rate:** Form opens vs. Form submissions
 - **Consultation Requests:** `gtm-vera-form-submit`
 - **Rachel Engagement:** `gtm-rachel-talk-to-rachel`
-- **Partner Interest:** `
+- **Partner Interest:** `gtm-partner-form-submit`
+
+### Enhanced Agent Creation Metrics
+
+- **Chatbot vs. Voicebot Preference:** Compare creation rates
+- **Website vs. Non-Website Users:** Success rates by website ownership
+- **Error Analysis:** Most common error messages and failure reasons
+- **User Engagement:** Time to complete forms, field completion rates
+- **Post-Creation Actions:** Test button clicks after successful creation
+
+### DataLayer Event Metrics
+
+- **Form Completion Funnel:**
+  - Form opens → Form submissions → Successful creations
+- **Error Tracking:**
+  - Error types and frequency
+  - User retry behavior after errors
+- **User Segmentation:**
+  - Business users (with websites) vs. Personal users (without websites)
+  - Agent naming patterns and preferences

@@ -26,6 +26,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
+// GTM DataLayer type declaration
+declare global {
+  interface Window {
+    dataLayer: any[];
+  }
+}
+
 const formSchema = z
   .object({
     firstName: z.string().min(1, "First name is required"),
@@ -127,11 +134,36 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
       const data = await response.json();
       setAgentData(data);
       setIsSuccess(true);
+
+      // GTM tracking for successful chatbot creation
+      if (typeof window !== "undefined" && window.dataLayer) {
+        window.dataLayer.push({
+          event: "chatbot_creation_success",
+          form_type: "chatbot",
+          agent_name: values.proposedAgentName,
+          has_website: values.hasWebsite,
+          user_email: values.email,
+          agent_id: data?.assistantData?._id,
+        });
+      }
     } catch (error) {
       console.error("Error creating AI chatbot:", error);
       setError(
         "Sorry, we couldn't create your chatbot right now. Please try again later."
       );
+
+      // GTM tracking for chatbot creation failure
+      if (typeof window !== "undefined" && window.dataLayer) {
+        window.dataLayer.push({
+          event: "chatbot_creation_failure",
+          form_type: "chatbot",
+          agent_name: values.proposedAgentName,
+          has_website: values.hasWebsite,
+          user_email: values.email,
+          error_message:
+            error instanceof Error ? error.message : "Unknown error",
+        });
+      }
     } finally {
       setIsLoading(false);
     }
@@ -187,7 +219,10 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
 
         {!isSuccess ? (
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-4 gtm-chatbot-form"
+            >
               <FormField
                 control={form.control}
                 name="firstName"
