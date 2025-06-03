@@ -116,7 +116,7 @@ export function AIVoiceAgentForm({
       formData.append("url", websiteUrl);
 
       const response = await fetch(
-        `${process.env.BASE_URL}/api/vapi/simpleassistant`,
+        `${import.meta.env.VITE_BASE_URL}/api/vapi/simpleassistant`,
         {
           method: "POST",
           body: formData,
@@ -157,7 +157,7 @@ export function AIVoiceAgentForm({
   const handleTestAgent = () => {
     if (agentData?.assistant?.id) {
       window.open(
-        `${process.env.BASE_URL}/voice/${agentData.assistant.id}`,
+        `${import.meta.env.VITE_BASE_URL}/voice/${agentData.assistant.id}`,
         "_blank"
       );
     }

@@ -87,7 +87,7 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
   const handleAddWebsite = () => {
     form.setValue("hasWebsite", true);
   };
-
+  console.log(`${import.meta.env.VITE_BASE_URL}/api/bot/createsimplechatbot`);
   const onSubmit = async (values: FormData) => {
     setIsLoading(true);
     setError(null);
@@ -113,7 +113,7 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
       formData.append("url", websiteUrl);
 
       const response = await fetch(
-        `${process.env.BASE_URL}/api/bot/createsimplechatbot`,
+        `${import.meta.env.VITE_BASE_URL}/api/bot/createsimplechatbot`,
         {
           method: "POST",
           body: formData,
@@ -154,7 +154,7 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
   const handleTestAgent = () => {
     if (agentData?.assistantData?._id) {
       window.open(
-        `${process.env.BASE_URL}/chat/${agentData.assistantData._id}`,
+        `${import.meta.env.VITE_BASE_URL}/chat/${agentData.assistantData._id}`,
         "_blank"
       );
     }
