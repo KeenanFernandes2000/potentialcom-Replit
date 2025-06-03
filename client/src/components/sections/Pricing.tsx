@@ -129,6 +129,7 @@ const Pricing = () => {
           <Button
             variant="link"
             className="text-primary font-medium mt-2 gtm-pricing-contact-sales"
+            onClick={() => window.location.href = "/vera"}
           >
             Contact our sales team
           </Button>
