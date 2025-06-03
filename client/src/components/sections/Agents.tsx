@@ -20,7 +20,7 @@ const Agents = () => {
       icon: <Phone className="h-6 w-6" />,
       description:
         "Automate calls & phone support. Launch sales and coaches agents.",
-      price: "$200/mo",
+      price: "$199/mo",
       ctaText: "Try Now",
       link: "https://ai.potential.com/rachel",
       isVoicebot: true,

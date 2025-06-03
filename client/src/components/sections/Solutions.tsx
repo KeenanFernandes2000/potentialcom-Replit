@@ -70,13 +70,7 @@ const Solutions = () => {
                 <Button
                   variant="ghost"
                   className="text-primary font-medium p-0 hover:bg-transparent flex items-center group gtm-solutions-learn-more"
-                  onClick={() =>
-                    window.open(
-                      "https://ai.potential.com/voice/42531902-20ad-46c7-a611-3e0ccf721aa1",
-                      "_blank",
-                      "noopener,noreferrer"
-                    )
-                  }
+                  onClick={() => window.location.href = "/vera"}
                 >
                   Learn More{" "}
                   <ArrowRight className="ml-1 w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -94,13 +88,7 @@ const Solutions = () => {
           <Button
             className="rounded-full bg-primary hover:bg-primary/90 text-white font-medium px-6 py-6 gtm-solutions-schedule-consultation"
             size="lg"
-            onClick={() =>
-              window.open(
-                "https://ai.potential.com/voice/42531902-20ad-46c7-a611-3e0ccf721aa1",
-                "_blank",
-                "noopener,noreferrer"
-              )
-            }
+            onClick={() => window.location.href = "/vera"}
           >
             Schedule a Consultation <ChevronRight className="ml-2 h-4 w-4" />
           </Button>

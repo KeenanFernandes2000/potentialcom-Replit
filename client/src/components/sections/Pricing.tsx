@@ -1,31 +1,32 @@
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { scrollToSection } from "@/lib/animations";
 
 const Pricing = () => {
   const pricingPlans = [
     {
       name: "Starter",
-      price: "$0-$50/mo",
+      price: "$50/mo",
       features: [
-        "1 chatbot",
+        "1 AI Chatbot",
         "10k tokens",
         "Basic analytics",
         "Standard support",
       ],
       isPopular: false,
-      ctaText: "Get Started",
+      ctaText: "Start Free Trial",
     },
     {
       name: "Growth",
       price: "$199/mo",
       features: [
-        "Multiple agents",
-        "Advanced analytics",
-        "Voicebot integration",
-        "Priority support",
+        "1 AI Voice Agent",
+        "Multiple Agents",
+        "Advanced Analytics",
+        "Priority Support",
       ],
       isPopular: true,
-      ctaText: "Choose Growth",
+      ctaText: "Start Free Trial",
     },
     {
       name: "Micro Platform",
@@ -37,7 +38,7 @@ const Pricing = () => {
         "Dedicated success manager",
       ],
       isPopular: false,
-      ctaText: "Get Started",
+      ctaText: "Talk to Vera",
     },
     {
       name: "Enterprise",
@@ -49,7 +50,7 @@ const Pricing = () => {
         "SLA guarantees",
       ],
       isPopular: false,
-      ctaText: "Contact Sales",
+      ctaText: "Talk to Vera",
     },
   ];
 
@@ -103,6 +104,16 @@ const Pricing = () => {
                     ? "bg-primary hover:bg-primary/90 text-white"
                     : "bg-primary/10 hover:bg-primary/20 text-primary"
                 }`}
+                onClick={() => {
+                  if (plan.name === "Growth" || plan.name === "Starter") {
+                    window.location.href = "/solutions";
+                    setTimeout(() => {
+                      scrollToSection("agents");
+                    }, 100);
+                  } else if (plan.name === "Enterprise" || plan.name === "Micro Platform") {
+                    window.location.href = "/vera";
+                  }
+                }}
               >
                 {plan.ctaText}
               </Button>
@@ -118,6 +129,7 @@ const Pricing = () => {
           <Button
             variant="link"
             className="text-primary font-medium mt-2 gtm-pricing-contact-sales"
+            onClick={() => window.location.href = "/vera"}
           >
             Contact our sales team
           </Button>

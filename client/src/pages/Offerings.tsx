@@ -93,13 +93,7 @@ const Offerings = () => {
                   <Button
                     variant="link"
                     className="px-0 text-primary gtm-offerings-case-study"
-                    onClick={() =>
-                      window.open(
-                        "https://ai.potential.com/voice/42531902-20ad-46c7-a611-3e0ccf721aa1",
-                        "_blank",
-                        "noopener,noreferrer"
-                      )
-                    }
+                    onClick={() => window.location.href = "/vera"}
                   >
                     Read full case study
                   </Button>
