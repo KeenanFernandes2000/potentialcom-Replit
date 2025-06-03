@@ -87,7 +87,7 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
   const handleAddWebsite = () => {
     form.setValue("hasWebsite", true);
   };
-  console.log(`${import.meta.env.VITE_BASE_URL}/api/bot/createsimplechatbot`);
+
   const onSubmit = async (values: FormData) => {
     setIsLoading(true);
     setError(null);
