@@ -69,7 +69,7 @@ const Home = () => {
 
       {/* Mobile Sticky CTA */}
       {showMobileCTA && (
-        <div className="fixed bottom-6 right-6 z-40 md:hidden">
+        <div className="fixed bottom-6 right-6 z-40 md:hidden hidden">
           <Button
             className="rounded-full bg-primary hover:bg-primary/90 text-white font-semibold px-4 py-6 shadow-lg gtm-mobile-sticky-try-agent"
             size="lg"
