@@ -5,7 +5,7 @@ const Pricing = () => {
   const pricingPlans = [
     {
       name: "Starter",
-      price: "$0-$50/mo",
+      price: "$50/mo",
       features: [
         "1 chatbot",
         "10k tokens",
