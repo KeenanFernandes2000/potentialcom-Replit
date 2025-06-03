@@ -47,7 +47,10 @@ export function FooterLogo({ className = "", height = 40 }: FooterLogoProps) {
       alt="Potential.com Logo"
       height={height}
       className={`h-auto ${className}`}
-      style={{ height: `${height}px` }}
+      style={{ 
+        height: `${height}px`,
+        filter: "brightness(0) invert(1)"
+      }}
     />
   );
 }
