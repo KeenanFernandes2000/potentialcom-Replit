@@ -13,7 +13,7 @@ const Pricing = () => {
         "Standard support",
       ],
       isPopular: false,
-      ctaText: "Get Started",
+      ctaText: "Start Free Trial",
     },
     {
       name: "Growth",
