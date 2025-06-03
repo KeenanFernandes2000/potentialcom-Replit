@@ -38,7 +38,7 @@ const Pricing = () => {
         "Dedicated success manager",
       ],
       isPopular: false,
-      ctaText: "Start Free Trial",
+      ctaText: "Talk to Vera",
     },
     {
       name: "Enterprise",
@@ -110,7 +110,7 @@ const Pricing = () => {
                     setTimeout(() => {
                       scrollToSection("agents");
                     }, 100);
-                  } else if (plan.name === "Enterprise") {
+                  } else if (plan.name === "Enterprise" || plan.name === "Micro Platform") {
                     window.location.href = "/vera";
                   }
                 }}
