@@ -37,7 +37,7 @@ const Pricing = () => {
         "Dedicated success manager",
       ],
       isPopular: false,
-      ctaText: "Get Started",
+      ctaText: "Start Free Trial",
     },
     {
       name: "Enterprise",
