@@ -154,7 +154,7 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
   const handleTestAgent = () => {
     if (agentData?.assistantData?._id) {
       window.open(
-        `https://ai.potential.com/chat/${agentData.assistantData._id}`,
+        `${process.env.BASE_URL}/chat/${agentData.assistantData._id}`,
         "_blank"
       );
     }

@@ -157,7 +157,7 @@ export function AIVoiceAgentForm({
   const handleTestAgent = () => {
     if (agentData?.assistant?.id) {
       window.open(
-        `https://ai.potential.com/voice/${agentData.assistant.id}`,
+        `${process.env.BASE_URL}/voice/${agentData.assistant.id}`,
         "_blank"
       );
     }

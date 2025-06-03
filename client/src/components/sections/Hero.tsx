@@ -136,10 +136,10 @@ const Hero = () => {
         <h3 className="text-center text-muted-foreground uppercase text-sm tracking-wider mb-6">
           Trusted for over 20 years by leading organizations around the world
         </h3>
-        
+
         {/* Scrolling container */}
         <div className="relative overflow-hidden">
-          <div 
+          <div
             className="flex animate-scroll hover:pause-animation"
             style={{
               width: `${clientLogos.length * 2 * 120}px`, // Double width for seamless loop
@@ -247,7 +247,7 @@ const Hero = () => {
                 variant="outline"
                 className="rounded-full border-primary text-primary hover:bg-primary/10 gtm-hero-talk-to-consultant"
                 size="lg"
-                onClick={() => window.location.href = "/vera"}
+                onClick={() => (window.location.href = "/vera")}
               >
                 Talk to AI Consultant <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
