@@ -106,7 +106,7 @@ const Pricing = () => {
                 }`}
                 onClick={() => {
                   if (plan.name === "Growth") {
-                    window.location.href = "/offerings";
+                    window.location.href = "/solutions";
                     setTimeout(() => {
                       scrollToSection("agents");
                     }, 100);
