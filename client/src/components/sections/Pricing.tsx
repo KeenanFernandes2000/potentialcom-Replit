@@ -105,7 +105,7 @@ const Pricing = () => {
                     : "bg-primary/10 hover:bg-primary/20 text-primary"
                 }`}
                 onClick={() => {
-                  if (plan.name === "Growth") {
+                  if (plan.name === "Growth" || plan.name === "Starter") {
                     window.location.href = "/solutions";
                     setTimeout(() => {
                       scrollToSection("agents");
