@@ -98,7 +98,6 @@ const Voice = () => {
         keywords="AI voice agents, voice AI, automated calls, customer support, sales calls, voice assistants, AI phone agents"
       />
       <Header />
-      
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-primary/5">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -152,7 +151,6 @@ const Voice = () => {
         <div className="absolute top-1/4 left-1/4 w-32 sm:w-48 lg:w-64 h-32 sm:h-48 lg:h-64 bg-primary/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-1/4 right-1/4 w-24 sm:w-36 lg:w-48 h-24 sm:h-36 lg:h-48 bg-primary/5 rounded-full blur-3xl"></div>
       </section>
-
       {/* Trusted Organizations Section */}
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
@@ -210,7 +208,6 @@ const Voice = () => {
           </div>
         </div>
       </section>
-
       {/* AI Voice Agents Use Cases Section */}
       <section className="py-16 lg:py-24 bg-muted/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -304,9 +301,7 @@ const Voice = () => {
                   Outbound Call Automation
                 </h3>
               </div>
-              <p className="text-muted-foreground mb-8 text-lg">
-                Reach more customers in less time with AI Voice Agents that handle outbound calls at scale—boost productivity and drive better results across every campaign.
-              </p>
+              <p className="text-muted-foreground mb-8 text-lg">Reach more customers in less time with AI Voice Agents that handle outbound calls at scale—boost productivity and drive better results.</p>
               
               <div className="space-y-6">
                 {[
@@ -376,7 +371,6 @@ const Voice = () => {
           </div>
         </div>
       </section>
-
       <Footer />
     </>
   );
