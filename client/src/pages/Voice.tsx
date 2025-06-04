@@ -444,9 +444,7 @@ const Voice = () => {
               <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
                 {/* Left Content */}
                 <div className="flex-1 text-center lg:text-left">
-                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4">
-                    AI Voice technology is now advanced enough to handle calls just like real people.
-                  </h2>
+                  <h2 className="sm:text-3xl lg:text-4xl font-bold text-white mb-4 text-[30px]">Let AI handle calls just like real agents</h2>
                   <p className="text-purple-100 text-lg lg:text-xl mb-6 lg:mb-0 max-w-2xl">
                     Fill up the form to get your custom-trained AI Voice Agent in seconds. Get 10 minutes of free usage time to test it out!
                   </p>
@@ -828,7 +826,6 @@ const Voice = () => {
           </div>
         </div>
       </section>
-
       {/* Setup Process Section */}
       <section className="py-16 lg:py-20 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
