@@ -362,8 +362,7 @@ const Voice = () => {
                           <useCase.icon className="w-6 h-6" />
                         </div>
                         <div className="flex-1">
-                          <h4 className="font-semibold text-foreground mb-1">{useCase.title}</h4>
-                          <p className="text-sm text-muted-foreground line-clamp-2">{useCase.description}</p>
+                          <h4 className="font-semibold text-foreground">{useCase.title}</h4>
                         </div>
                         <ArrowRight className={`w-5 h-5 transition-all duration-300 ${
                           selectedUseCase === index ? "text-primary transform translate-x-1" : "text-muted-foreground"
@@ -413,16 +412,24 @@ const Voice = () => {
                             ))}
                           </div>
                         </div>
-
-                        {/* CTA */}
-                        <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 rounded-xl transition-all duration-300 transform hover:scale-105">
-                          Try For Free
-                        </Button>
                       </div>
                     );
                   })()}
                 </div>
               </div>
+            </div>
+
+            {/* Universal CTA Button */}
+            <div className="text-center mt-12" data-aos="fade-up" data-aos-delay="300">
+              <Button 
+                size="lg" 
+                className="text-lg px-12 py-6 h-auto bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+              >
+                Try For Free
+              </Button>
+              <p className="text-sm text-muted-foreground mt-4">
+                Set up your AI Voice Agent in under 60 seconds
+              </p>
             </div>
 
             {/* Bottom Stats */}
