@@ -417,18 +417,7 @@ const Voice = () => {
                   })()}
                 </div>
                 
-                {/* CTA Button directly under the card */}
-                <div className="text-center mt-8" data-aos="fade-up" data-aos-delay="300">
-                  <Button 
-                    size="lg" 
-                    className="text-lg px-12 py-6 h-auto bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-                  >
-                    Try For Free
-                  </Button>
-                  <p className="text-sm text-muted-foreground mt-4">
-                    Set up your AI Voice Agent in under 60 seconds
-                  </p>
-                </div>
+
               </div>
             </div>
 
