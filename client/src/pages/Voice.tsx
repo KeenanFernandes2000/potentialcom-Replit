@@ -4,6 +4,21 @@ import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 import { useTheme } from "next-themes";
+import { 
+  Phone, 
+  Calendar, 
+  Headphones, 
+  HelpCircle, 
+  Package, 
+  Info, 
+  Settings,
+  PhoneCall,
+  Target,
+  Users,
+  CheckCircle,
+  MessageSquare,
+  TrendingUp
+} from "lucide-react";
 
 // Import all customer logos
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
@@ -192,6 +207,172 @@ const Voice = () => {
                 ))}
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* AI Voice Agents Use Cases Section */}
+      <section className="py-16 lg:py-24 bg-muted/30">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Section Header */}
+          <div className="text-center mb-16" data-aos="fade-up">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+              AI voice agents for all your needs
+            </h2>
+            <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
+              Create no-code AI phone call agents: never miss a call again and convert more leads
+            </p>
+          </div>
+
+          {/* Inbound and Outbound Sections */}
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+            
+            {/* Inbound Call Automation */}
+            <div data-aos="fade-right" data-aos-delay="100">
+              <div className="flex items-center mb-8">
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mr-4">
+                  <Phone className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="text-2xl lg:text-3xl font-bold text-foreground">
+                  Inbound Call Automation
+                </h3>
+              </div>
+              <p className="text-muted-foreground mb-8 text-lg">
+                Handle incoming calls with smart, AI-driven responses—enhance customer satisfaction while boosting your team's efficiency.
+              </p>
+              
+              <div className="space-y-6">
+                {[
+                  {
+                    icon: Calendar,
+                    title: "Appointment Bookings",
+                    description: "Let your AI Voice Agent schedule, confirm, and update appointments—no manual work needed, just seamless automation that saves time."
+                  },
+                  {
+                    icon: Headphones,
+                    title: "Customer Support",
+                    description: "Deliver real-time support with direct access to your systems—AI Voice Agents fetch accurate, up-to-date info with zero hassle."
+                  },
+                  {
+                    icon: HelpCircle,
+                    title: "Answer FAQs",
+                    description: "Cut down on repetitive calls by instantly resolving common customer queries—your AI Voice Agent has the answers 24/7."
+                  },
+                  {
+                    icon: Package,
+                    title: "Order Tracking",
+                    description: "Empower customers to get real-time updates on their orders and services—eliminating the need for live agents to handle routine checks."
+                  },
+                  {
+                    icon: Info,
+                    title: "Product Assistance",
+                    description: "Guide customers with detailed product information and help them make informed decisions—your AI Voice Agent becomes a product expert."
+                  },
+                  {
+                    icon: Settings,
+                    title: "Custom Agents",
+                    description: "Build and personalize AI Voice Agents in minutes to match any business scenario—no technical skills required, just powerful results."
+                  }
+                ].map((feature, index) => (
+                  <div 
+                    key={index} 
+                    className="bg-background rounded-xl p-6 shadow-sm border border-border/50 hover:shadow-md transition-all duration-300"
+                    data-aos="fade-up" 
+                    data-aos-delay={150 + index * 50}
+                  >
+                    <div className="flex items-start space-x-4">
+                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                        <feature.icon className="w-5 h-5 text-primary" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-foreground mb-2">{feature.title}</h4>
+                        <p className="text-muted-foreground text-sm leading-relaxed">{feature.description}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Outbound Call Automation */}
+            <div data-aos="fade-left" data-aos-delay="200">
+              <div className="flex items-center mb-8">
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mr-4">
+                  <PhoneCall className="w-6 h-6 text-primary" />
+                </div>
+                <h3 className="text-2xl lg:text-3xl font-bold text-foreground">
+                  Outbound Call Automation
+                </h3>
+              </div>
+              <p className="text-muted-foreground mb-8 text-lg">
+                Reach more customers in less time with AI Voice Agents that handle outbound calls at scale—boost productivity and drive better results across every campaign.
+              </p>
+              
+              <div className="space-y-6">
+                {[
+                  {
+                    icon: Target,
+                    title: "Sales Outreach",
+                    description: "Proactively engage leads and introduce your products or services—convert cold calls into closed deals with smart, human-like conversations."
+                  },
+                  {
+                    icon: Users,
+                    title: "Lead Prequalification",
+                    description: "Let AI Voice Agents filter and qualify leads before handing them to your sales team—focus only on high-potential prospects and speed up conversions."
+                  },
+                  {
+                    icon: CheckCircle,
+                    title: "Appointment Confirmations",
+                    description: "Send reminders, confirm bookings, and adjust appointments through automated calls—ensuring a smooth, professional experience every time."
+                  },
+                  {
+                    icon: MessageSquare,
+                    title: "Customer Surveys",
+                    description: "Automatically reach out to customers for feedback—gain real insights to enhance your service and measure satisfaction in real time."
+                  },
+                  {
+                    icon: TrendingUp,
+                    title: "Upselling",
+                    description: "Stay in touch with existing customers to renew subscriptions or offer complementary products—maximize lifetime value with zero manual effort."
+                  },
+                  {
+                    icon: Settings,
+                    title: "Custom Agents",
+                    description: "Build and personalize AI Voice Agents in minutes to match any business scenario—no technical skills required, just powerful results."
+                  }
+                ].map((feature, index) => (
+                  <div 
+                    key={index} 
+                    className="bg-background rounded-xl p-6 shadow-sm border border-border/50 hover:shadow-md transition-all duration-300"
+                    data-aos="fade-up" 
+                    data-aos-delay={250 + index * 50}
+                  >
+                    <div className="flex items-start space-x-4">
+                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
+                        <feature.icon className="w-5 h-5 text-primary" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-foreground mb-2">{feature.title}</h4>
+                        <p className="text-muted-foreground text-sm leading-relaxed">{feature.description}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom CTA */}
+          <div className="text-center mt-16" data-aos="fade-up" data-aos-delay="400">
+            <Button 
+              size="lg" 
+              className="text-lg px-8 py-6 h-auto bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+            >
+              Try For Free
+            </Button>
+            <p className="text-sm text-muted-foreground mt-4">
+              Set up your AI Voice Agent in under 60 seconds
+            </p>
           </div>
         </div>
       </section>
