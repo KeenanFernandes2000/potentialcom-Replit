@@ -308,7 +308,7 @@ const Voice = () => {
           <div className="max-w-6xl mx-auto">
             {/* Tab Navigation */}
             <div className="flex justify-center mb-12" data-aos="fade-up" data-aos-delay="100">
-              <div className="bg-background rounded-2xl p-2 shadow-lg border border-border/50">
+              <div className="bg-background rounded-2xl p-2 shadow-lg border border-border/50 flex items-center justify-center">
                 <button
                   onClick={() => {
                     setActiveTab("inbound");
