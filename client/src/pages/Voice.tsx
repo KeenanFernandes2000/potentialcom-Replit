@@ -434,10 +434,10 @@ const Voice = () => {
             <div className="bg-gradient-to-r from-purple-600 via-purple-500 to-purple-700 rounded-3xl p-8 lg:p-12 shadow-2xl">
               {/* Background Pattern */}
               <div className="absolute inset-0 opacity-10">
-                <div className="absolute top-10 left-10 w-20 h-20 bg-white rounded-full blur-xl"></div>
-                <div className="absolute top-32 right-20 w-16 h-16 bg-white rounded-full blur-lg"></div>
-                <div className="absolute bottom-20 left-1/4 w-24 h-24 bg-white rounded-full blur-xl"></div>
-                <div className="absolute bottom-10 right-10 w-12 h-12 bg-white rounded-full blur-md"></div>
+                <div className="absolute top-6 left-6 w-12 h-12 bg-white rounded-full blur-xl"></div>
+                <div className="absolute top-16 right-12 w-10 h-10 bg-white rounded-full blur-lg"></div>
+                <div className="absolute bottom-12 left-1/4 w-14 h-14 bg-white rounded-full blur-xl"></div>
+                <div className="absolute bottom-6 right-6 w-8 h-8 bg-white rounded-full blur-md"></div>
               </div>
               
               {/* Content */}
