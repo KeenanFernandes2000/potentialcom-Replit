@@ -425,7 +425,6 @@ const Voice = () => {
           </div>
         </div>
       </section>
-
       {/* CTA Banner Section */}
       <section className="py-16 lg:py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -466,7 +465,6 @@ const Voice = () => {
           </div>
         </div>
       </section>
-
       {/* Statistics Section */}
       <section className="py-16 lg:py-20 bg-gradient-to-b from-background to-muted/20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -562,7 +560,6 @@ const Voice = () => {
           </div>
         </div>
       </section>
-
       {/* AI Voice Agents Features Section */}
       <section className="py-16 lg:py-20 bg-muted/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -640,7 +637,7 @@ const Voice = () => {
                   <div className="bg-gray-900 rounded-3xl p-2 shadow-2xl transform rotate-3">
                     <div className="bg-gradient-to-br from-purple-600 to-purple-800 rounded-2xl p-6 text-white">
                       <div className="flex items-center justify-between mb-6">
-                        <div className="text-sm font-medium">Potential.com Customer</div>
+                        <div className="text-sm font-medium">Your AI Voice Agent</div>
                         <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
                           <div className="w-2 h-2 bg-white rounded-full"></div>
                         </div>
