@@ -142,6 +142,33 @@
     animation: scroll 30s linear infinite;
   }
   
+  /* Country flags scrolling animations */
+  @keyframes scroll-right {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
+  .animate-scroll-right {
+    animation: scroll-right 15s linear infinite;
+  }
+  
+  .animate-scroll-left {
+    animation: scroll-left 15s linear infinite;
+  }
+  
   .pause-animation {
     animation-play-state: paused;
   }
