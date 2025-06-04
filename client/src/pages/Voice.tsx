@@ -51,6 +51,7 @@ import wfzoLogo from "@assets/Customer Logos/WFZO logo.png";
 
 // Import hero image
 import voiceAgentHero from "@assets/voiceAgentHero.png";
+import voiceAgentSetupProcess from "@assets/voiceAgentSetupProcess.png";
 
 const Voice = () => {
   const { theme } = useTheme();
@@ -824,6 +825,46 @@ const Voice = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Setup Process Section */}
+      <section className="py-16 lg:py-20 bg-background">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Section Header */}
+          <div className="text-center mb-16" data-aos="fade-up">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+              Get Your AI Voice Agents Live in Seconds
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              As easy as it looks like! Launch your AI-powered voice automation—fast, seamless and free
+            </p>
+          </div>
+
+          {/* Setup Process Image */}
+          <div className="flex justify-center" data-aos="fade-up" data-aos-delay="200">
+            <div className="relative max-w-5xl w-full">
+              <img
+                src={voiceAgentSetupProcess}
+                alt="AI Voice Agent Setup Process - Step by step guide showing how to get your voice agents live in seconds"
+                className="w-full h-auto rounded-2xl shadow-2xl border border-border/20"
+                loading="lazy"
+              />
+              
+              {/* Optional overlay for better visual appeal */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-background/10 via-transparent to-transparent pointer-events-none"></div>
+            </div>
+          </div>
+
+          {/* Optional CTA Button */}
+          <div className="text-center mt-12" data-aos="fade-up" data-aos-delay="400">
+            <button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-3 mx-auto">
+              <span>Start Your Free Setup</span>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </button>
           </div>
         </div>
       </section>
