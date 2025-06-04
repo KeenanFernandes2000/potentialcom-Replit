@@ -479,6 +479,102 @@ const Voice = () => {
           </div>
         </div>
       </section>
+
+      {/* Statistics Section */}
+      <section className="py-16 lg:py-20 bg-gradient-to-b from-background to-muted/20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Section Header */}
+          <div className="text-center mb-16" data-aos="fade-up">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+              The Future is Calling—Will Your AI Voice Agents Answer?
+            </h2>
+          </div>
+
+          {/* Stats Grid */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-6xl mx-auto mb-16">
+            {[
+              {
+                icon: "💰",
+                value: "60%",
+                label: "Decrease in operational costs",
+                color: "text-green-600",
+                bgColor: "bg-green-100 dark:bg-green-900/20"
+              },
+              {
+                icon: "📈",
+                value: "21%",
+                label: "Increase in sales conversions",
+                color: "text-blue-600",
+                bgColor: "bg-blue-100 dark:bg-blue-900/20"
+              },
+              {
+                icon: "🔗",
+                value: "40+",
+                label: "Apps integrated",
+                color: "text-purple-600",
+                bgColor: "bg-purple-100 dark:bg-purple-900/20"
+              },
+              {
+                icon: "🌐",
+                value: "100+",
+                label: "Languages supported",
+                color: "text-orange-600",
+                bgColor: "bg-orange-100 dark:bg-orange-900/20"
+              }
+            ].map((stat, index) => (
+              <div key={index} className="text-center p-6 bg-background rounded-2xl border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105" data-aos="fade-up" data-aos-delay={index * 100}>
+                <div className={`w-16 h-16 mx-auto mb-4 rounded-2xl ${stat.bgColor} flex items-center justify-center`}>
+                  <span className="text-2xl">{stat.icon}</span>
+                </div>
+                <div className={`text-4xl font-bold ${stat.color} mb-2`}>{stat.value}</div>
+                <div className="text-sm text-muted-foreground font-medium">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Additional Performance Stats */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-6xl mx-auto">
+            {[
+              {
+                icon: "⚡",
+                value: "99.9%",
+                label: "Uptime",
+                color: "text-emerald-600",
+                bgColor: "bg-emerald-100 dark:bg-emerald-900/20"
+              },
+              {
+                icon: "⏱️",
+                value: "60s",
+                label: "Setup Time",
+                color: "text-indigo-600",
+                bgColor: "bg-indigo-100 dark:bg-indigo-900/20"
+              },
+              {
+                icon: "♾️",
+                value: "∞",
+                label: "Scalability",
+                color: "text-violet-600",
+                bgColor: "bg-violet-100 dark:bg-violet-900/20"
+              },
+              {
+                icon: "🕐",
+                value: "24/7",
+                label: "Available",
+                color: "text-cyan-600",
+                bgColor: "bg-cyan-100 dark:bg-cyan-900/20"
+              }
+            ].map((stat, index) => (
+              <div key={index} className="text-center p-6 bg-background rounded-2xl border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105" data-aos="fade-up" data-aos-delay={400 + index * 100}>
+                <div className={`w-16 h-16 mx-auto mb-4 rounded-2xl ${stat.bgColor} flex items-center justify-center`}>
+                  <span className="text-2xl">{stat.icon}</span>
+                </div>
+                <div className={`text-4xl font-bold ${stat.color} mb-2`}>{stat.value}</div>
+                <div className="text-sm text-muted-foreground font-medium">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <Footer />
     </>
   );
