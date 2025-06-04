@@ -317,7 +317,7 @@ const Voice = () => {
                   className={`px-8 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-3 ${
                     activeTab === "inbound"
                       ? "bg-primary text-primary-foreground shadow-md transform scale-105"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                      : "text-foreground bg-muted/30 hover:text-foreground hover:bg-muted/50"
                   }`}
                 >
                   <Phone className="w-5 h-5" />
@@ -331,7 +331,7 @@ const Voice = () => {
                   className={`px-8 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-3 ${
                     activeTab === "outbound"
                       ? "bg-primary text-primary-foreground shadow-md transform scale-105"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                      : "text-foreground bg-muted/30 hover:text-foreground hover:bg-muted/50"
                   }`}
                 >
                   <PhoneCall className="w-5 h-5" />
