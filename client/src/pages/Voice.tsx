@@ -344,12 +344,12 @@ const Voice = () => {
             <div className="grid lg:grid-cols-2 gap-12 items-start">
               {/* Left: Use Case List */}
               <div data-aos="fade-right" data-aos-delay="200">
-                <div className="space-y-4">
+                <div className="space-y-2">
                   {(activeTab === "inbound" ? inboundUseCases : outboundUseCases).map((useCase, index) => (
                     <div
                       key={index}
                       onClick={() => setSelectedUseCase(index)}
-                      className={`p-6 rounded-xl cursor-pointer transition-all duration-300 transform hover:scale-[1.02] ${
+                      className={`p-4 rounded-xl cursor-pointer transition-all duration-300 transform hover:scale-[1.02] ${
                         selectedUseCase === index
                           ? "bg-primary/10 border-2 border-primary shadow-lg"
                           : "bg-background border border-border/50 hover:shadow-md hover:border-primary/30"
@@ -375,12 +375,12 @@ const Voice = () => {
 
               {/* Right: Selected Use Case Details */}
               <div data-aos="fade-left" data-aos-delay="300">
-                <div className="bg-background rounded-2xl p-8 shadow-xl border border-border/50 sticky top-8">
+                <div className="bg-background rounded-2xl p-6 shadow-xl border border-border/50 sticky top-8">
                   {(() => {
                     const currentUseCase = (activeTab === "inbound" ? inboundUseCases : outboundUseCases)[selectedUseCase];
                     const Icon = currentUseCase.icon;
                     return (
-                      <div className="space-y-6">
+                      <div className="space-y-4">
                         {/* Icon and Title */}
                         <div className="flex items-center space-x-4">
                           <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center">
