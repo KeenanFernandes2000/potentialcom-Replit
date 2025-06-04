@@ -562,6 +562,163 @@ const Voice = () => {
           </div>
         </div>
       </section>
+
+      {/* AI Voice Agents Features Section */}
+      <section className="py-16 lg:py-20 bg-muted/30">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Section Header */}
+          <div className="text-center mb-16" data-aos="fade-up">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+              AI Voice Agents Designed for Your Success
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              Enhance your call operations with Potential.com AI Voice Agents
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Left Content - Features Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
+              {/* Feature 1: 24/7 Call Handling */}
+              <div className="bg-background rounded-2xl p-6 shadow-lg border border-border/50" data-aos="fade-up" data-aos-delay="100">
+                <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-xl flex items-center justify-center mb-4">
+                  <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-foreground mb-2">24/7 Call Handling & Support</h3>
+                <p className="text-sm text-muted-foreground">
+                  AI Voice Agents manage calls anytime, reducing wait times and improving response efficiency.
+                </p>
+              </div>
+
+              {/* Feature 2: System Integration */}
+              <div className="bg-background rounded-2xl p-6 shadow-lg border border-border/50" data-aos="fade-up" data-aos-delay="200">
+                <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/20 rounded-xl flex items-center justify-center mb-4">
+                  <svg className="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-foreground mb-2">Seamless System Integration</h3>
+                <p className="text-sm text-muted-foreground">
+                  Connect effortlessly with CRMs, IVRs, helpdesks, and other tools for smooth workflows.
+                </p>
+              </div>
+
+              {/* Feature 3: Multilingual */}
+              <div className="bg-background rounded-2xl p-6 shadow-lg border border-border/50" data-aos="fade-up" data-aos-delay="300">
+                <div className="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-xl flex items-center justify-center mb-4">
+                  <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-foreground mb-2">Customizable, Multilingual & AI-Trained</h3>
+                <p className="text-sm text-muted-foreground">
+                  Easily train AI Voice Agents for your business needs and support customers in multiple languages.
+                </p>
+              </div>
+
+              {/* Feature 4: Cost-Effective */}
+              <div className="bg-background rounded-2xl p-6 shadow-lg border border-border/50" data-aos="fade-up" data-aos-delay="400">
+                <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900/20 rounded-xl flex items-center justify-center mb-4">
+                  <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-semibold text-foreground mb-2">Cost-Effective & Scalable</h3>
+                <p className="text-sm text-muted-foreground">
+                  Reduce costs, handle high call volumes, and scale effortlessly with AI-driven automation.
+                </p>
+              </div>
+            </div>
+
+            {/* Right Content - Device Mockups */}
+            <div className="flex justify-center lg:justify-end" data-aos="fade-left" data-aos-delay="500">
+              <div className="relative max-w-lg w-full">
+                {/* Phone Mockup */}
+                <div className="relative z-10">
+                  <div className="bg-gray-900 rounded-3xl p-2 shadow-2xl transform rotate-3">
+                    <div className="bg-gradient-to-br from-purple-600 to-purple-800 rounded-2xl p-6 text-white">
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="text-sm font-medium">Potential.com Customer</div>
+                        <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                          <div className="w-2 h-2 bg-white rounded-full"></div>
+                        </div>
+                      </div>
+                      <div className="text-center mb-8">
+                        <div className="w-16 h-16 bg-white/20 rounded-full mx-auto mb-4 flex items-center justify-center">
+                          <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                          </svg>
+                        </div>
+                        <div className="text-2xl font-bold mb-2">00:02:34</div>
+                        <div className="text-sm opacity-80">AI Voice Agent Active</div>
+                      </div>
+                      <div className="flex justify-center space-x-6">
+                        <button className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0016.5 3c-1.76 0-3.22.79-4.5 2.09C10.72 3.79 9.26 3 7.5 3A5.5 5.5 0 002 8.5c0 2.29 1.51 4.04 3 5.5L12 21l7-7z"/>
+                          </svg>
+                        </button>
+                        <button className="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center">
+                          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                          </svg>
+                        </button>
+                        <button className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Desktop/Dashboard Mockup */}
+                <div className="absolute -top-8 -right-8 z-0 transform -rotate-6">
+                  <div className="bg-gray-900 rounded-xl p-3 shadow-xl w-64">
+                    <div className="bg-gray-800 rounded-lg p-4">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="text-white text-xs font-medium">AI Voice Agent</div>
+                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                      </div>
+                      <div className="space-y-3">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-8 h-8 bg-blue-500 rounded-full"></div>
+                          <div className="flex-1">
+                            <div className="w-20 h-2 bg-gray-600 rounded mb-1"></div>
+                            <div className="w-16 h-1.5 bg-gray-700 rounded"></div>
+                          </div>
+                          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                          <div className="w-8 h-8 bg-purple-500 rounded-full"></div>
+                          <div className="flex-1">
+                            <div className="w-24 h-2 bg-gray-600 rounded mb-1"></div>
+                            <div className="w-20 h-1.5 bg-gray-700 rounded"></div>
+                          </div>
+                          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Laptop Mockup */}
+                <div className="absolute -bottom-4 -left-4 z-0 transform rotate-2">
+                  <div className="bg-gray-800 rounded-lg p-2 shadow-lg w-32">
+                    <div className="bg-gray-900 rounded h-20 flex items-center justify-center">
+                      <div className="w-16 h-10 bg-gray-700 rounded"></div>
+                    </div>
+                    <div className="h-2 bg-gray-700 rounded-b-lg mt-1"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <Footer />
     </>
   );
