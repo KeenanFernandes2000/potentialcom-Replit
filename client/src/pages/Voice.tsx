@@ -743,7 +743,11 @@ const Voice = () => {
                           { flag: "🇪🇸", name: "Spain" },
                           { flag: "🇮🇹", name: "Italy" },
                           { flag: "🇺🇸", name: "USA" },
-                          { flag: "🇬🇧", name: "UK" }
+                          { flag: "🇬🇧", name: "UK" },
+                          { flag: "🇫🇷", name: "France" },
+                          { flag: "🇩🇪", name: "Germany" },
+                          { flag: "🇪🇸", name: "Spain" },
+                          { flag: "🇮🇹", name: "Italy" }
                         ].map((country, index) => (
                           <div key={index} className="flex-shrink-0 text-center">
                             <div className="text-4xl mb-2">{country.flag}</div>
@@ -762,7 +766,11 @@ const Voice = () => {
                           { flag: "🇧🇷", name: "Brazil" },
                           { flag: "🇷🇺", name: "Russia" },
                           { flag: "🇯🇵", name: "Japan" },
-                          { flag: "🇰🇷", name: "Korea" }
+                          { flag: "🇰🇷", name: "Korea" },
+                          { flag: "🇨🇳", name: "China" },
+                          { flag: "🇮🇳", name: "India" },
+                          { flag: "🇧🇷", name: "Brazil" },
+                          { flag: "🇷🇺", name: "Russia" }
                         ].map((country, index) => (
                           <div key={index} className="flex-shrink-0 text-center">
                             <div className="text-4xl mb-2">{country.flag}</div>
@@ -781,7 +789,11 @@ const Voice = () => {
                           { flag: "🇫🇮", name: "Finland" },
                           { flag: "🇵🇱", name: "Poland" },
                           { flag: "🇳🇱", name: "Netherlands" },
-                          { flag: "🇸🇪", name: "Sweden" }
+                          { flag: "🇸🇪", name: "Sweden" },
+                          { flag: "🇳🇴", name: "Norway" },
+                          { flag: "🇩🇰", name: "Denmark" },
+                          { flag: "🇫🇮", name: "Finland" },
+                          { flag: "🇵🇱", name: "Poland" }
                         ].map((country, index) => (
                           <div key={index} className="flex-shrink-0 text-center">
                             <div className="text-4xl mb-2">{country.flag}</div>
@@ -800,7 +812,11 @@ const Voice = () => {
                           { flag: "🇿🇦", name: "S. Africa" },
                           { flag: "🇪🇬", name: "Egypt" },
                           { flag: "🇦🇺", name: "Australia" },
-                          { flag: "🇨🇦", name: "Canada" }
+                          { flag: "🇨🇦", name: "Canada" },
+                          { flag: "🇲🇽", name: "Mexico" },
+                          { flag: "🇦🇷", name: "Argentina" },
+                          { flag: "🇿🇦", name: "S. Africa" },
+                          { flag: "🇪🇬", name: "Egypt" }
                         ].map((country, index) => (
                           <div key={index} className="flex-shrink-0 text-center">
                             <div className="text-4xl mb-2">{country.flag}</div>
