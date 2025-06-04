@@ -421,20 +421,7 @@ const Voice = () => {
               </div>
             </div>
 
-            {/* Bottom Stats */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-16" data-aos="fade-up" data-aos-delay="400">
-              {[
-                { number: "99.9%", label: "Uptime" },
-                { number: "24/7", label: "Available" },
-                { number: "60s", label: "Setup Time" },
-                { number: "∞", label: "Scalability" }
-              ].map((stat, index) => (
-                <div key={index} className="text-center p-6 bg-background rounded-xl border border-border/50">
-                  <div className="text-3xl font-bold text-primary mb-2">{stat.number}</div>
-                  <div className="text-sm text-muted-foreground">{stat.label}</div>
-                </div>
-              ))}
-            </div>
+
           </div>
         </div>
       </section>
