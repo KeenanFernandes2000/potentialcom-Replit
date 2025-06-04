@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { 
   Phone, 
@@ -17,7 +17,9 @@ import {
   Users,
   CheckCircle,
   MessageSquare,
-  TrendingUp
+  TrendingUp,
+  ArrowRight,
+  Zap
 } from "lucide-react";
 
 // Import all customer logos
@@ -53,6 +55,8 @@ import voiceAgentHero from "@assets/voiceAgentHero.png";
 const Voice = () => {
   const { theme } = useTheme();
   const isDarkMode = theme === "dark";
+  const [activeTab, setActiveTab] = useState("inbound");
+  const [selectedUseCase, setSelectedUseCase] = useState(0);
 
   // Refresh AOS animations on route change
   useEffect(() => {
@@ -60,6 +64,85 @@ const Voice = () => {
       (window as any).AOS.refresh();
     }
   }, []);
+
+  // Use cases data
+  const inboundUseCases = [
+    {
+      icon: Calendar,
+      title: "Appointment Bookings",
+      description: "Let your AI Voice Agent schedule, confirm, and update appointments—no manual work needed, just seamless automation that saves time.",
+      benefits: ["24/7 booking availability", "Automatic calendar sync", "SMS confirmations"]
+    },
+    {
+      icon: Headphones,
+      title: "Customer Support",
+      description: "Deliver real-time support with direct access to your systems—AI Voice Agents fetch accurate, up-to-date info with zero hassle.",
+      benefits: ["Instant issue resolution", "Knowledge base integration", "Escalation to humans"]
+    },
+    {
+      icon: HelpCircle,
+      title: "Answer FAQs",
+      description: "Cut down on repetitive calls by instantly resolving common customer queries—your AI Voice Agent has the answers 24/7.",
+      benefits: ["Instant responses", "Multi-language support", "Learning from interactions"]
+    },
+    {
+      icon: Package,
+      title: "Order Tracking",
+      description: "Empower customers to get real-time updates on their orders and services—eliminating the need for live agents to handle routine checks.",
+      benefits: ["Real-time updates", "Delivery notifications", "Issue alerts"]
+    },
+    {
+      icon: Info,
+      title: "Product Assistance",
+      description: "Guide customers with detailed product information and help them make informed decisions—your AI Voice Agent becomes a product expert.",
+      benefits: ["Product comparisons", "Specification details", "Recommendation engine"]
+    },
+    {
+      icon: Settings,
+      title: "Custom Agents",
+      description: "Build and personalize AI Voice Agents in minutes to match any business scenario—no technical skills required, just powerful results.",
+      benefits: ["No-code setup", "Custom workflows", "Brand voice matching"]
+    }
+  ];
+
+  const outboundUseCases = [
+    {
+      icon: Target,
+      title: "Sales Outreach",
+      description: "Proactively engage leads and introduce your products or services—convert cold calls into closed deals with smart, human-like conversations.",
+      benefits: ["Higher conversion rates", "Personalized pitches", "Follow-up automation"]
+    },
+    {
+      icon: Users,
+      title: "Lead Prequalification",
+      description: "Let AI Voice Agents filter and qualify leads before handing them to your sales team—focus only on high-potential prospects and speed up conversions.",
+      benefits: ["Quality lead scoring", "Time savings", "Automated routing"]
+    },
+    {
+      icon: CheckCircle,
+      title: "Appointment Confirmations",
+      description: "Send reminders, confirm bookings, and adjust appointments through automated calls—ensuring a smooth, professional experience every time.",
+      benefits: ["Reduced no-shows", "Automatic rescheduling", "Professional image"]
+    },
+    {
+      icon: MessageSquare,
+      title: "Customer Surveys",
+      description: "Automatically reach out to customers for feedback—gain real insights to enhance your service and measure satisfaction in real time.",
+      benefits: ["Higher response rates", "Real-time analytics", "Actionable insights"]
+    },
+    {
+      icon: TrendingUp,
+      title: "Upselling",
+      description: "Stay in touch with existing customers to renew subscriptions or offer complementary products—maximize lifetime value with zero manual effort.",
+      benefits: ["Revenue growth", "Customer retention", "Personalized offers"]
+    },
+    {
+      icon: Settings,
+      title: "Custom Agents",
+      description: "Build and personalize AI Voice Agents in minutes to match any business scenario—no technical skills required, just powerful results.",
+      benefits: ["Flexible workflows", "Brand alignment", "Scalable solutions"]
+    }
+  ];
 
   // All 25 customer logos in updated order
   const clientLogos = [
@@ -221,153 +304,141 @@ const Voice = () => {
             </p>
           </div>
 
-          {/* Inbound and Outbound Sections */}
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
-            
-            {/* Inbound Call Automation */}
-            <div data-aos="fade-right" data-aos-delay="100">
-              <div className="flex items-center mb-8">
-                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mr-4">
-                  <Phone className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="text-2xl lg:text-3xl font-bold text-foreground">
-                  Inbound Call Automation
-                </h3>
-              </div>
-              <p className="text-muted-foreground mb-8 text-lg">
-                Handle incoming calls with smart, AI-driven responses—enhance customer satisfaction while boosting your team's efficiency.
-              </p>
-              
-              <div className="space-y-6">
-                {[
-                  {
-                    icon: Calendar,
-                    title: "Appointment Bookings",
-                    description: "Let your AI Voice Agent schedule, confirm, and update appointments—no manual work needed, just seamless automation that saves time."
-                  },
-                  {
-                    icon: Headphones,
-                    title: "Customer Support",
-                    description: "Deliver real-time support with direct access to your systems—AI Voice Agents fetch accurate, up-to-date info with zero hassle."
-                  },
-                  {
-                    icon: HelpCircle,
-                    title: "Answer FAQs",
-                    description: "Cut down on repetitive calls by instantly resolving common customer queries—your AI Voice Agent has the answers 24/7."
-                  },
-                  {
-                    icon: Package,
-                    title: "Order Tracking",
-                    description: "Empower customers to get real-time updates on their orders and services—eliminating the need for live agents to handle routine checks."
-                  },
-                  {
-                    icon: Info,
-                    title: "Product Assistance",
-                    description: "Guide customers with detailed product information and help them make informed decisions—your AI Voice Agent becomes a product expert."
-                  },
-                  {
-                    icon: Settings,
-                    title: "Custom Agents",
-                    description: "Build and personalize AI Voice Agents in minutes to match any business scenario—no technical skills required, just powerful results."
-                  }
-                ].map((feature, index) => (
-                  <div 
-                    key={index} 
-                    className="bg-background rounded-xl p-6 shadow-sm border border-border/50 hover:shadow-md transition-all duration-300"
-                    data-aos="fade-up" 
-                    data-aos-delay={150 + index * 50}
-                  >
-                    <div className="flex items-start space-x-4">
-                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                        <feature.icon className="w-5 h-5 text-primary" />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-foreground mb-2">{feature.title}</h4>
-                        <p className="text-muted-foreground text-sm leading-relaxed">{feature.description}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+          {/* Interactive Tab Section */}
+          <div className="max-w-6xl mx-auto">
+            {/* Tab Navigation */}
+            <div className="flex justify-center mb-12" data-aos="fade-up" data-aos-delay="100">
+              <div className="bg-background rounded-2xl p-2 shadow-lg border border-border/50">
+                <button
+                  onClick={() => {
+                    setActiveTab("inbound");
+                    setSelectedUseCase(0);
+                  }}
+                  className={`px-8 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-3 ${
+                    activeTab === "inbound"
+                      ? "bg-primary text-primary-foreground shadow-md transform scale-105"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                  }`}
+                >
+                  <Phone className="w-5 h-5" />
+                  <span>Inbound Calls</span>
+                </button>
+                <button
+                  onClick={() => {
+                    setActiveTab("outbound");
+                    setSelectedUseCase(0);
+                  }}
+                  className={`px-8 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-3 ${
+                    activeTab === "outbound"
+                      ? "bg-primary text-primary-foreground shadow-md transform scale-105"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                  }`}
+                >
+                  <PhoneCall className="w-5 h-5" />
+                  <span>Outbound Calls</span>
+                </button>
               </div>
             </div>
 
-            {/* Outbound Call Automation */}
-            <div data-aos="fade-left" data-aos-delay="200">
-              <div className="flex items-center mb-8">
-                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mr-4">
-                  <PhoneCall className="w-6 h-6 text-primary" />
-                </div>
-                <h3 className="text-2xl lg:text-3xl font-bold text-foreground">
-                  Outbound Call Automation
-                </h3>
-              </div>
-              <p className="text-muted-foreground mb-8 text-lg">Reach more customers in less time with AI Voice Agents that handle outbound calls at scale—boost productivity and drive better results.</p>
-              
-              <div className="space-y-6">
-                {[
-                  {
-                    icon: Target,
-                    title: "Sales Outreach",
-                    description: "Proactively engage leads and introduce your products or services—convert cold calls into closed deals with smart, human-like conversations."
-                  },
-                  {
-                    icon: Users,
-                    title: "Lead Prequalification",
-                    description: "Let AI Voice Agents filter and qualify leads before handing them to your sales team—focus only on high-potential prospects and speed up conversions."
-                  },
-                  {
-                    icon: CheckCircle,
-                    title: "Appointment Confirmations",
-                    description: "Send reminders, confirm bookings, and adjust appointments through automated calls—ensuring a smooth, professional experience every time."
-                  },
-                  {
-                    icon: MessageSquare,
-                    title: "Customer Surveys",
-                    description: "Automatically reach out to customers for feedback—gain real insights to enhance your service and measure satisfaction in real time."
-                  },
-                  {
-                    icon: TrendingUp,
-                    title: "Upselling",
-                    description: "Stay in touch with existing customers to renew subscriptions or offer complementary products—maximize lifetime value with zero manual effort."
-                  },
-                  {
-                    icon: Settings,
-                    title: "Custom Agents",
-                    description: "Build and personalize AI Voice Agents in minutes to match any business scenario—no technical skills required, just powerful results."
-                  }
-                ].map((feature, index) => (
-                  <div 
-                    key={index} 
-                    className="bg-background rounded-xl p-6 shadow-sm border border-border/50 hover:shadow-md transition-all duration-300"
-                    data-aos="fade-up" 
-                    data-aos-delay={250 + index * 50}
-                  >
-                    <div className="flex items-start space-x-4">
-                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 mt-1">
-                        <feature.icon className="w-5 h-5 text-primary" />
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-foreground mb-2">{feature.title}</h4>
-                        <p className="text-muted-foreground text-sm leading-relaxed">{feature.description}</p>
+            {/* Dynamic Content Area */}
+            <div className="grid lg:grid-cols-2 gap-12 items-start">
+              {/* Left: Use Case List */}
+              <div data-aos="fade-right" data-aos-delay="200">
+                <div className="space-y-4">
+                  {(activeTab === "inbound" ? inboundUseCases : outboundUseCases).map((useCase, index) => (
+                    <div
+                      key={index}
+                      onClick={() => setSelectedUseCase(index)}
+                      className={`p-6 rounded-xl cursor-pointer transition-all duration-300 transform hover:scale-[1.02] ${
+                        selectedUseCase === index
+                          ? "bg-primary/10 border-2 border-primary shadow-lg"
+                          : "bg-background border border-border/50 hover:shadow-md hover:border-primary/30"
+                      }`}
+                    >
+                      <div className="flex items-center space-x-4">
+                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300 ${
+                          selectedUseCase === index ? "bg-primary text-primary-foreground" : "bg-primary/10 text-primary"
+                        }`}>
+                          <useCase.icon className="w-6 h-6" />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-semibold text-foreground mb-1">{useCase.title}</h4>
+                          <p className="text-sm text-muted-foreground line-clamp-2">{useCase.description}</p>
+                        </div>
+                        <ArrowRight className={`w-5 h-5 transition-all duration-300 ${
+                          selectedUseCase === index ? "text-primary transform translate-x-1" : "text-muted-foreground"
+                        }`} />
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
+              </div>
+
+              {/* Right: Selected Use Case Details */}
+              <div data-aos="fade-left" data-aos-delay="300">
+                <div className="bg-background rounded-2xl p-8 shadow-xl border border-border/50 sticky top-8">
+                  {(() => {
+                    const currentUseCase = (activeTab === "inbound" ? inboundUseCases : outboundUseCases)[selectedUseCase];
+                    const Icon = currentUseCase.icon;
+                    return (
+                      <div className="space-y-6">
+                        {/* Icon and Title */}
+                        <div className="flex items-center space-x-4">
+                          <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center">
+                            <Icon className="w-8 h-8 text-primary" />
+                          </div>
+                          <div>
+                            <h3 className="text-2xl font-bold text-foreground">{currentUseCase.title}</h3>
+                            <div className="flex items-center space-x-2 mt-1">
+                              <Zap className="w-4 h-4 text-yellow-500" />
+                              <span className="text-sm text-muted-foreground">AI-Powered</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Description */}
+                        <p className="text-muted-foreground leading-relaxed">
+                          {currentUseCase.description}
+                        </p>
+
+                        {/* Benefits */}
+                        <div>
+                          <h4 className="font-semibold text-foreground mb-3">Key Benefits:</h4>
+                          <div className="space-y-2">
+                            {currentUseCase.benefits.map((benefit, index) => (
+                              <div key={index} className="flex items-center space-x-3">
+                                <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+                                <span className="text-sm text-muted-foreground">{benefit}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* CTA */}
+                        <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 rounded-xl transition-all duration-300 transform hover:scale-105">
+                          Try For Free
+                        </Button>
+                      </div>
+                    );
+                  })()}
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Bottom CTA */}
-          <div className="text-center mt-16" data-aos="fade-up" data-aos-delay="400">
-            <Button 
-              size="lg" 
-              className="text-lg px-8 py-6 h-auto bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-            >
-              Try For Free
-            </Button>
-            <p className="text-sm text-muted-foreground mt-4">
-              Set up your AI Voice Agent in under 60 seconds
-            </p>
+            {/* Bottom Stats */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-16" data-aos="fade-up" data-aos-delay="400">
+              {[
+                { number: "99.9%", label: "Uptime" },
+                { number: "24/7", label: "Available" },
+                { number: "60s", label: "Setup Time" },
+                { number: "∞", label: "Scalability" }
+              ].map((stat, index) => (
+                <div key={index} className="text-center p-6 bg-background rounded-xl border border-border/50">
+                  <div className="text-3xl font-bold text-primary mb-2">{stat.number}</div>
+                  <div className="text-sm text-muted-foreground">{stat.label}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
