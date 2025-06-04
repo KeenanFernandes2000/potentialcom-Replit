@@ -230,12 +230,17 @@ const Voice = () => {
           </div>
         </div>
 
-        {/* Trusted Organizations Section - Part of Hero */}
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mt-16">
+        {/* Background decorative elements - responsive sizes */}
+        <div className="absolute top-1/4 left-1/4 w-32 sm:w-48 lg:w-64 h-32 sm:h-48 lg:h-64 bg-primary/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-24 sm:w-36 lg:w-48 h-24 sm:h-36 lg:h-48 bg-primary/5 rounded-full blur-3xl"></div>
+      </section>
+      {/* Trusted Organizations Section */}
+      <section className="py-16 bg-background">
+        <div className="container mx-auto px-4">
           <div
             className="client-logos py-8"
             data-aos="fade-up"
-            data-aos-delay="400"
+            data-aos-delay="100"
           >
             <h3 className="text-center text-muted-foreground uppercase text-sm tracking-wider mb-6">
               Trusted for over 20 years by leading organizations around the world
@@ -285,12 +290,7 @@ const Voice = () => {
             </div>
           </div>
         </div>
-
-        {/* Background decorative elements - responsive sizes */}
-        <div className="absolute top-1/4 left-1/4 w-32 sm:w-48 lg:w-64 h-32 sm:h-48 lg:h-64 bg-primary/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-24 sm:w-36 lg:w-48 h-24 sm:h-36 lg:h-48 bg-primary/5 rounded-full blur-3xl"></div>
       </section>
-
       {/* AI Voice Agents Use Cases Section */}
       <section className="py-16 lg:py-24 bg-muted/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
