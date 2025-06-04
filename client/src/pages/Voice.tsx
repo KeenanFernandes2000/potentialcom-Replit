@@ -438,6 +438,47 @@ const Voice = () => {
           </div>
         </div>
       </section>
+
+      {/* CTA Banner Section */}
+      <section className="py-16 lg:py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative overflow-hidden" data-aos="fade-up">
+            {/* Gradient Background */}
+            <div className="bg-gradient-to-r from-purple-600 via-purple-500 to-purple-700 rounded-3xl p-8 lg:p-12 shadow-2xl">
+              {/* Background Pattern */}
+              <div className="absolute inset-0 opacity-10">
+                <div className="absolute top-10 left-10 w-20 h-20 bg-white rounded-full blur-xl"></div>
+                <div className="absolute top-32 right-20 w-16 h-16 bg-white rounded-full blur-lg"></div>
+                <div className="absolute bottom-20 left-1/4 w-24 h-24 bg-white rounded-full blur-xl"></div>
+                <div className="absolute bottom-10 right-10 w-12 h-12 bg-white rounded-full blur-md"></div>
+              </div>
+              
+              {/* Content */}
+              <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
+                {/* Left Content */}
+                <div className="flex-1 text-center lg:text-left">
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4">
+                    AI Voice technology is now advanced enough to handle calls just like real people.
+                  </h2>
+                  <p className="text-purple-100 text-lg lg:text-xl mb-6 lg:mb-0 max-w-2xl">
+                    Fill up the form to get your custom-trained AI Voice Agent in seconds. Get 10 minutes of free usage time to test it out!
+                  </p>
+                </div>
+                
+                {/* Right CTA Button */}
+                <div className="flex-shrink-0">
+                  <button className="bg-white hover:bg-gray-50 text-purple-600 font-bold text-lg px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-3">
+                    <span>Try For Free</span>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       <Footer />
     </>
   );
