@@ -89,7 +89,7 @@ const Voice = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center py-16 lg:py-20">
             {/* Left Content */}
-            <div className="text-center lg:text-left order-2 lg:order-1" data-aos="fade-right">
+            <div className="text-center lg:text-left order-1 lg:order-1" data-aos="fade-right">
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 lg:mb-6 leading-tight">
                 AI Voice Agents
               </h1>
@@ -118,7 +118,7 @@ const Voice = () => {
             </div>
 
             {/* Right Image */}
-            <div className="flex justify-center lg:justify-end order-1 lg:order-2" data-aos="fade-left" data-aos-delay="200">
+            <div className="flex justify-center lg:justify-end order-2 lg:order-2" data-aos="fade-left" data-aos-delay="200">
               <div className="relative max-w-sm sm:max-w-md lg:max-w-lg w-full px-4 sm:px-0">
                 <img
                   src={voiceAgentHero}
