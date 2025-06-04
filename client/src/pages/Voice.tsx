@@ -854,15 +854,7 @@ const Voice = () => {
             </div>
           </div>
 
-          {/* Optional CTA Button */}
-          <div className="text-center mt-12" data-aos="fade-up" data-aos-delay="400">
-            <button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-lg px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-3 mx-auto">
-              <span>Start Your Free Setup</span>
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </button>
-          </div>
+
         </div>
       </section>
 
