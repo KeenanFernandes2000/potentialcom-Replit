@@ -711,9 +711,7 @@ const Chatbot = () => {
                   </svg>
                 </div>
                 <h3 className="text-lg font-semibold text-foreground mb-2">Multi-Platform Integration</h3>
-                <p className="text-sm text-muted-foreground">
-                  Deploy on websites, WhatsApp, Facebook, Slack, and more—reaching customers where they prefer.
-                </p>
+                <p className="text-sm text-muted-foreground">Deploy on websites, WhatsApp, or any platform without the need for coding—reaching customers where they prefer.</p>
               </div>
 
               {/* Feature 3: Smart Learning */}
