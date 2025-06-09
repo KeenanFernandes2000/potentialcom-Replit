@@ -194,9 +194,7 @@ const Chatbot = () => {
               <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold text-primary mb-4 lg:mb-6">
                 Transform Customer Conversations Instantly
               </h2>
-              <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 lg:mb-8 max-w-2xl mx-auto lg:mx-0 px-4 sm:px-0">
-                Revolutionize customer engagement with AI Chatbots that provide instant support, capture leads, and automate conversations. Boost satisfaction while reducing costs.
-              </p>
+              <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 lg:mb-8 max-w-2xl mx-auto lg:mx-0 px-4 sm:px-0">A simple, powerful AI Chatbot that embeds seamlessly on your website to engage your customers 24/7 in real-time with precision and ease.</p>
               
               <div className="space-y-4 px-4 sm:px-0">
                 <Button 
@@ -300,7 +298,6 @@ const Chatbot = () => {
         <div className="absolute top-1/4 left-1/4 w-32 sm:w-48 lg:w-64 h-32 sm:h-48 lg:h-64 bg-primary/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-1/4 right-1/4 w-24 sm:w-36 lg:w-48 h-24 sm:h-36 lg:h-48 bg-primary/5 rounded-full blur-3xl"></div>
       </section>
-      
       {/* Trusted Organizations Section */}
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
@@ -358,7 +355,6 @@ const Chatbot = () => {
           </div>
         </div>
       </section>
-      
       {/* AI Chatbots Use Cases Section */}
       <section className="py-16 lg:py-24 bg-muted/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -489,7 +485,6 @@ const Chatbot = () => {
           </div>
         </div>
       </section>
-      
       {/* CTA Banner Section */}
       <section className="py-16 lg:py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -528,7 +523,6 @@ const Chatbot = () => {
           </div>
         </div>
       </section>
-      
       {/* Statistics Section */}
       <section className="py-16 lg:py-20 bg-gradient-to-b from-background to-muted/20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -624,7 +618,6 @@ const Chatbot = () => {
           </div>
         </div>
       </section>
-      
       {/* AI Chatbots Features Section */}
       <section className="py-16 lg:py-20 bg-muted/30">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -830,7 +823,6 @@ const Chatbot = () => {
           </div>
         </div>
       </section>
-      
       {/* Setup Process Section */}
       <section className="py-16 lg:py-20 bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -860,7 +852,6 @@ const Chatbot = () => {
           </div>
         </div>
       </section>
-
       {/* Final CTA Banner Section */}
       <section className="py-16 lg:py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
