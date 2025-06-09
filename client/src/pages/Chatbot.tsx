@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { AIChatbotForm } from "@/components/AIChatbotForm";
+import { AIVoiceAgentForm } from "@/components/AIVoiceAgentForm";
 import { useEffect, useState } from "react";
 import { 
   MessageCircle, 
