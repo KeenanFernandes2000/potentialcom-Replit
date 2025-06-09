@@ -700,9 +700,7 @@ const Chatbot = () => {
                   </svg>
                 </div>
                 <h3 className="text-lg font-semibold text-foreground mb-2">Fully Customizable</h3>
-                <p className="text-sm text-muted-foreground">
-                  AI Chatbots engage customers instantly, anytime—delivering consistent support without human intervention.
-                </p>
+                <p className="text-sm text-muted-foreground">Train the AI Chatbot with your company's specific information and offerings using your website, documents, FAQs, and more.</p>
               </div>
 
               {/* Feature 2: Multi-Platform */}
