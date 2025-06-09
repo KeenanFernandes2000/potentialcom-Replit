@@ -722,7 +722,7 @@ const Chatbot = () => {
                   </svg>
                 </div>
                 <h3 className="text-lg font-semibold text-foreground mb-2">Security First</h3>
-                <p className="text-sm text-muted-foreground">Break language barriers and engage customers globally by interacting in their preferred language.</p>
+                <p className="text-sm text-muted-foreground">Our AI Chatbot includes premium security measures to keep your data safe. Your data will not be used to train any model.</p>
               </div>
 
               {/* Feature 4: Cost-Effective */}
