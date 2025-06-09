@@ -873,6 +873,47 @@ const Chatbot = () => {
               </div>
             </div>
           </div>
+
+          {/* WhatsApp Integration Subsection */}
+          <div className="mt-20 pt-16 border-t border-border/20">
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              {/* Left Content - YouTube Video */}
+              <div className="flex justify-center lg:justify-start" data-aos="fade-right">
+                <div className="relative w-full max-w-lg">
+                  <div className="aspect-video rounded-2xl overflow-hidden shadow-2xl border border-border/20">
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      src="https://www.youtube.com/embed/AvoJaRmXcPM"
+                      title="WhatsApp Integration Made Easy"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowFullScreen
+                      className="w-full h-full"
+                    ></iframe>
+                  </div>
+                  
+                  {/* Floating Elements */}
+                  <div className="absolute -top-4 -right-4 z-0">
+                    <div className="bg-green-500/20 rounded-full w-16 h-16 blur-xl"></div>
+                  </div>
+                  <div className="absolute -bottom-4 -left-4 z-0">
+                    <div className="bg-green-500/10 rounded-full w-20 h-20 blur-xl"></div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Content */}
+              <div className="text-center lg:text-left" data-aos="fade-left">
+                <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">
+                  WhatsApp Integration Made Easy
+                </h3>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Connect your WhatsApp Business number and start engaging with customers instantly and effortlessly.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
       {/* Setup Process Section */}
