@@ -686,9 +686,7 @@ const Chatbot = () => {
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
               AI Chatbots Designed for Your Success
             </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              Enhance your customer conversations with Potential.com AI Chatbots
-            </p>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">Engage more effectively and save costs with our Artificial Intelligence No-code Chatbot</p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
