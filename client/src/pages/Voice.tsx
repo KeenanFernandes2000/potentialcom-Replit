@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
+import { AIVoiceAgentForm } from "@/components/AIVoiceAgentForm";
 import { useEffect, useState } from "react";
 import { 
   Phone, 
@@ -226,12 +227,16 @@ const Voice = () => {
               </p>
               
               <div className="space-y-4 px-4 sm:px-0">
-                <Button 
-                  size="lg" 
-                  className="w-full sm:w-auto text-sm sm:text-base lg:text-lg px-6 sm:px-8 py-4 sm:py-6 h-auto bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-                >
-                  Create Your AI Voice Agent Now - It's Free
-                </Button>
+                <AIVoiceAgentForm
+                  trigger={
+                    <Button 
+                      size="lg" 
+                      className="w-full sm:w-auto text-sm sm:text-base lg:text-lg px-6 sm:px-8 py-4 sm:py-6 h-auto bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                    >
+                      Create Your AI Voice Agent Now - It's Free
+                    </Button>
+                  }
+                />
                 
                 <div className="flex items-center justify-center lg:justify-start space-x-2 text-sm text-muted-foreground">
                   <div className="flex items-center space-x-1">
@@ -479,12 +484,16 @@ const Voice = () => {
                 
                 {/* Right CTA Button */}
                 <div className="flex-shrink-0">
-                  <button className="bg-white hover:bg-gray-50 text-purple-600 font-bold text-lg px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-3">
-                    <span>Try For Free</span>
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </button>
+                  <AIVoiceAgentForm
+                    trigger={
+                      <button className="bg-white hover:bg-gray-50 text-purple-600 font-bold text-lg px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-3">
+                        <span>Try For Free</span>
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </button>
+                    }
+                  />
                 </div>
               </div>
             </div>
@@ -927,12 +936,16 @@ const Voice = () => {
                 
                 {/* Right CTA Button */}
                 <div className="flex-shrink-0">
-                  <button className="bg-white hover:bg-gray-50 text-purple-600 font-bold text-lg px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-3">
-                    <span>Try For Free</span>
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </button>
+                  <AIVoiceAgentForm
+                    trigger={
+                      <button className="bg-white hover:bg-gray-50 text-purple-600 font-bold text-lg px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-3">
+                        <span>Try For Free</span>
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </button>
+                    }
+                  />
                 </div>
               </div>
             </div>
