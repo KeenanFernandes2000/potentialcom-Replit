@@ -56,8 +56,8 @@ import unLogo from "@assets/Customer Logos/UN logo.png";
 import visaLogo from "@assets/Customer Logos/Visa logo.png";
 import wfzoLogo from "@assets/Customer Logos/WFZO logo.png";
 
-// Import hero image (using voice agent setup as placeholder for now)
-import voiceAgentSetupProcess from "@assets/voiceAgentSetupProcess.png";
+// Import chatbot setup process image
+import chatbotSetupProcess from "@assets/Chatbot-setup.png";
 
 const Chatbot = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -960,7 +960,7 @@ const Chatbot = () => {
           <div className="flex justify-center" data-aos="fade-up" data-aos-delay="200">
             <div className="relative max-w-5xl w-full">
               <img
-                src={voiceAgentSetupProcess}
+                src={chatbotSetupProcess}
                 alt="AI Chatbot Setup Process - Step by step guide showing how to get your chatbots live in seconds"
                 className="w-full h-auto rounded-2xl shadow-2xl border border-border/20"
                 loading="lazy"
