@@ -63,26 +63,28 @@ const Header = () => {
             </button>
             
             {isSolutionsDropdownOpen && (
-              <div className="absolute top-full left-0 mt-2 w-48 bg-background/95 backdrop-blur-sm border border-border rounded-lg shadow-lg z-50">
-                <div className="py-2">
-                  <a
-                    href="/voice"
-                    className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
-                  >
-                    AI Voice Agent
-                  </a>
-                  <a
-                    href="/chatbot"
-                    className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
-                  >
-                    AI Chatbot
-                  </a>
-                  <a
-                    href="/solutions"
-                    className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
-                  >
-                    All Solutions
-                  </a>
+              <div className="absolute top-full left-0 pt-2 w-48 z-50">
+                <div className="bg-background/95 backdrop-blur-sm border border-border rounded-lg shadow-lg">
+                  <div className="py-2">
+                    <a
+                      href="/voice"
+                      className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
+                    >
+                      AI Voice Agent
+                    </a>
+                    <a
+                      href="/chatbot"
+                      className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
+                    >
+                      AI Chatbot
+                    </a>
+                    <a
+                      href="/solutions"
+                      className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
+                    >
+                      All Solutions
+                    </a>
+                  </div>
                 </div>
               </div>
             )}
