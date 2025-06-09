@@ -19,7 +19,13 @@ import {
   TrendingUp,
   ArrowRight,
   Zap,
-  Bot
+  Bot,
+  GraduationCap,
+  BookOpen,
+  Award,
+  UserCheck,
+  Briefcase,
+  School
 } from "lucide-react";
 
 // Import all customer logos
@@ -145,6 +151,46 @@ const Chatbot = () => {
     }
   ];
 
+  // Use cases data for Coaching & Training
+  const coachingUseCases = [
+    {
+      icon: GraduationCap,
+      title: "Employee Onboarding",
+      description: "Guide new hires through comprehensive onboarding journeys with interactive chatbots that answer questions and ensure complete training completion.",
+      benefits: ["Standardized onboarding", "Self-paced learning", "Progress tracking"]
+    },
+    {
+      icon: BookOpen,
+      title: "Product Training",
+      description: "Train employees on new products, features, and services with AI chatbots that provide instant access to training materials and assessments.",
+      benefits: ["Real-time learning", "Interactive quizzes", "Performance analytics"]
+    },
+    {
+      icon: Award,
+      title: "Skills Development",
+      description: "Deliver personalized skill development programs through conversational learning experiences that adapt to individual learning styles and pace.",
+      benefits: ["Personalized paths", "Continuous assessment", "Skill certification"]
+    },
+    {
+      icon: UserCheck,
+      title: "Performance Coaching",
+      description: "Provide ongoing performance coaching and feedback through AI mentors that help employees improve productivity and achieve goals.",
+      benefits: ["Continuous feedback", "Goal tracking", "Performance insights"]
+    },
+    {
+      icon: Briefcase,
+      title: "Business Coaching",
+      description: "Support entrepreneurs and business leaders with AI coaching assistants that provide strategic guidance, best practices, and actionable insights.",
+      benefits: ["Strategic guidance", "Best practice sharing", "Decision support"]
+    },
+    {
+      icon: School,
+      title: "Compliance Training",
+      description: "Ensure regulatory compliance with interactive training chatbots that deliver mandatory training and track completion across your organization.",
+      benefits: ["Compliance tracking", "Automated reporting", "Regular updates"]
+    }
+  ];
+
   // All 25 customer logos
   const clientLogos = [
     { name: "ADGM", logo: adgmLogo },
@@ -224,8 +270,8 @@ const Chatbot = () => {
                       <MessageCircle className="w-5 h-5" />
                     </div>
                     <div>
-                      <div className="font-semibold">AI Assistant</div>
-                      <div className="text-xs opacity-80">Online • Ready to help</div>
+                      <div className="font-semibold">Nike's AI Bot</div>
+                      <div className="text-xs opacity-80">Ready to help 24/7</div>
                     </div>
                   </div>
                   
@@ -505,7 +551,7 @@ const Chatbot = () => {
                 <div className="flex-1 text-center lg:text-left">
                   <h2 className="sm:text-3xl lg:text-4xl font-bold text-white mb-4 text-[30px]">Let AI handle conversations just like real agents</h2>
                   <p className="text-purple-100 text-lg lg:text-xl mb-6 lg:mb-0 max-w-2xl">
-                    Fill up the form to get your custom-trained AI Chatbot in seconds. Get unlimited conversations for free to test it out!
+                    Fill up the form to get your custom-trained AI Chatbot in seconds. 7-day free trial | No credit card required
                   </p>
                 </div>
                 
