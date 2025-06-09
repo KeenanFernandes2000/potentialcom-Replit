@@ -53,6 +53,8 @@ import wfzoLogo from "@assets/Customer Logos/WFZO logo.png";
 import voiceAgentHero from "@assets/voiceAgentHero.png";
 import voiceAgentSetupProcess from "@assets/voiceAgentSetupProcess.png";
 
+import Voicebot_setup from "@assets/Voicebot-setup.png";
+
 const Voice = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [activeTab, setActiveTab] = useState("inbound");
@@ -895,7 +897,7 @@ const Voice = () => {
           <div className="flex justify-center" data-aos="fade-up" data-aos-delay="200">
             <div className="relative max-w-5xl w-full">
               <img
-                src={voiceAgentSetupProcess}
+                src={Voicebot_setup}
                 alt="AI Voice Agent Setup Process - Step by step guide showing how to get your voice agents live in seconds"
                 className="w-full h-auto rounded-2xl shadow-2xl border border-border/20"
                 loading="lazy"
@@ -909,7 +911,6 @@ const Voice = () => {
 
         </div>
       </section>
-
       {/* Final CTA Banner Section */}
       <section className="py-16 lg:py-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
