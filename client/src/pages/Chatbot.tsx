@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
+import { AIChatbotForm } from "@/components/AIChatbotForm";
 import { useEffect, useState } from "react";
 import { 
   MessageCircle, 
@@ -270,12 +271,16 @@ const Chatbot = () => {
               <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 lg:mb-8 max-w-2xl mx-auto lg:mx-0 px-4 sm:px-0">A simple, powerful AI Chatbot that embeds seamlessly on your website to engage your customers 24/7 in real-time with precision and ease.</p>
               
               <div className="space-y-4 px-4 sm:px-0">
-                <Button 
-                  size="lg" 
-                  className="w-full sm:w-auto text-sm sm:text-base lg:text-lg px-6 sm:px-8 py-4 sm:py-6 h-auto bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-                >
-                  Create Your AI Chatbot Now - It's Free
-                </Button>
+                <AIChatbotForm
+                  trigger={
+                    <Button 
+                      size="lg" 
+                      className="w-full sm:w-auto text-sm sm:text-base lg:text-lg px-6 sm:px-8 py-4 sm:py-6 h-auto bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                    >
+                      Create Your AI Chatbot Now - It's Free
+                    </Button>
+                  }
+                />
                 
                 <div className="flex items-center justify-center lg:justify-start space-x-2 text-sm text-muted-foreground">
                   <div className="flex items-center space-x-1">
