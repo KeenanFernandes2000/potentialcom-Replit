@@ -498,7 +498,7 @@ const Chatbot = () => {
                       }`}
                     >
                       <GraduationCap className="w-4 h-4" />
-                      <span>Coaching</span>
+                      <span>Coaching & Training</span>
                     </button>
                   </div>
                 </div>
