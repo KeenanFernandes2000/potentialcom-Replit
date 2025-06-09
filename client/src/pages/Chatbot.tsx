@@ -452,49 +452,100 @@ const Chatbot = () => {
           <div className="max-w-6xl mx-auto">
             {/* Tab Navigation */}
             <div className="flex justify-center mb-12 px-4 sm:px-0" data-aos="fade-up" data-aos-delay="100">
-              <div className="bg-background rounded-2xl p-2 shadow-lg border border-border/50 flex items-center justify-center w-full max-w-2xl overflow-x-auto">
-                <button
-                  onClick={() => {
-                    setActiveTab("customer-service");
-                    setSelectedUseCase(0);
-                  }}
-                  className={`px-3 sm:px-6 py-3 sm:py-4 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm flex-shrink-0 ${
-                    activeTab === "customer-service"
-                      ? "bg-primary text-primary-foreground shadow-md transform scale-105"
-                      : "text-foreground bg-muted/30 hover:text-foreground hover:bg-muted/50"
-                  }`}
-                >
-                  <Headphones className="w-4 h-4" />
-                  <span>Customer Service</span>
-                </button>
-                <button
-                  onClick={() => {
-                    setActiveTab("sales-marketing");
-                    setSelectedUseCase(0);
-                  }}
-                  className={`px-3 sm:px-6 py-3 sm:py-4 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm flex-shrink-0 ${
-                    activeTab === "sales-marketing"
-                      ? "bg-primary text-primary-foreground shadow-md transform scale-105"
-                      : "text-foreground bg-muted/30 hover:text-foreground hover:bg-muted/50"
-                  }`}
-                >
-                  <TrendingUp className="w-4 h-4" />
-                  <span>Sales & Marketing</span>
-                </button>
-                <button
-                  onClick={() => {
-                    setActiveTab("coaching");
-                    setSelectedUseCase(0);
-                  }}
-                  className={`px-3 sm:px-6 py-3 sm:py-4 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm flex-shrink-0 ${
-                    activeTab === "coaching"
-                      ? "bg-primary text-primary-foreground shadow-md transform scale-105"
-                      : "text-foreground bg-muted/30 hover:text-foreground hover:bg-muted/50"
-                  }`}
-                >
-                  <GraduationCap className="w-4 h-4" />
-                  <span>Coaching</span>
-                </button>
+              <div className="bg-background rounded-2xl p-3 shadow-lg border border-border/50 w-full max-w-2xl">
+                {/* Mobile Layout - 2x1 Grid */}
+                <div className="block sm:hidden">
+                  <div className="grid grid-cols-2 gap-3 mb-3">
+                    <button
+                      onClick={() => {
+                        setActiveTab("customer-service");
+                        setSelectedUseCase(0);
+                      }}
+                      className={`px-4 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center space-x-2 text-sm ${
+                        activeTab === "customer-service"
+                          ? "bg-primary text-primary-foreground shadow-md"
+                          : "text-foreground bg-muted/30 hover:text-foreground hover:bg-muted/50"
+                      }`}
+                    >
+                      <Headphones className="w-4 h-4" />
+                      <span>Customer Service</span>
+                    </button>
+                    <button
+                      onClick={() => {
+                        setActiveTab("sales-marketing");
+                        setSelectedUseCase(0);
+                      }}
+                      className={`px-4 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center space-x-2 text-sm ${
+                        activeTab === "sales-marketing"
+                          ? "bg-primary text-primary-foreground shadow-md"
+                          : "text-foreground bg-muted/30 hover:text-foreground hover:bg-muted/50"
+                      }`}
+                    >
+                      <TrendingUp className="w-4 h-4" />
+                      <span>Sales & Marketing</span>
+                    </button>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setActiveTab("coaching");
+                      setSelectedUseCase(0);
+                    }}
+                    className={`w-full px-4 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center space-x-2 text-sm ${
+                      activeTab === "coaching"
+                        ? "bg-primary text-primary-foreground shadow-md"
+                        : "text-foreground bg-muted/30 hover:text-foreground hover:bg-muted/50"
+                    }`}
+                  >
+                    <GraduationCap className="w-4 h-4" />
+                    <span>Coaching</span>
+                  </button>
+                </div>
+
+                {/* Desktop Layout - Single Row */}
+                <div className="hidden sm:flex items-center justify-center">
+                  <button
+                    onClick={() => {
+                      setActiveTab("customer-service");
+                      setSelectedUseCase(0);
+                    }}
+                    className={`px-6 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-2 text-sm ${
+                      activeTab === "customer-service"
+                        ? "bg-primary text-primary-foreground shadow-md transform scale-105"
+                        : "text-foreground bg-muted/30 hover:text-foreground hover:bg-muted/50"
+                    }`}
+                  >
+                    <Headphones className="w-4 h-4" />
+                    <span>Customer Service</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      setActiveTab("sales-marketing");
+                      setSelectedUseCase(0);
+                    }}
+                    className={`px-6 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-2 text-sm ${
+                      activeTab === "sales-marketing"
+                        ? "bg-primary text-primary-foreground shadow-md transform scale-105"
+                        : "text-foreground bg-muted/30 hover:text-foreground hover:bg-muted/50"
+                    }`}
+                  >
+                    <TrendingUp className="w-4 h-4" />
+                    <span>Sales & Marketing</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      setActiveTab("coaching");
+                      setSelectedUseCase(0);
+                    }}
+                    className={`px-6 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-2 text-sm ${
+                      activeTab === "coaching"
+                        ? "bg-primary text-primary-foreground shadow-md transform scale-105"
+                        : "text-foreground bg-muted/30 hover:text-foreground hover:bg-muted/50"
+                    }`}
+                  >
+                    <GraduationCap className="w-4 h-4" />
+                    <span>Coaching</span>
+                  </button>
+                </div>
               </div>
             </div>
 
