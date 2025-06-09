@@ -208,7 +208,7 @@ const Voice = () => {
                 
                 <div className="flex items-center justify-center lg:justify-start space-x-2 text-sm text-muted-foreground">
                   <div className="flex items-center space-x-1">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
                     <span className="font-medium">Live in 60 seconds</span>
                   </div>
                 </div>
