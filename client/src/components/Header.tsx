@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 import { Logo } from "./Logo";
@@ -7,6 +7,7 @@ import { Logo } from "./Logo";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isSolutionsDropdownOpen, setIsSolutionsDropdownOpen] = useState(false);
 
   // Handle scroll to update header styling
   useEffect(() => {
@@ -48,12 +49,44 @@ const Header = () => {
         </div>
 
         <nav className="hidden md:flex items-center space-x-8">
-          <a
-            href="/solutions"
-            className="text-foreground/80 hover:text-primary font-medium transition-colors"
+          <div 
+            className="relative"
+            onMouseEnter={() => setIsSolutionsDropdownOpen(true)}
+            onMouseLeave={() => setIsSolutionsDropdownOpen(false)}
           >
-            Solutions
-          </a>
+            <button
+              className="text-foreground/80 hover:text-primary font-medium transition-colors flex items-center gap-1"
+              onClick={() => setIsSolutionsDropdownOpen(!isSolutionsDropdownOpen)}
+            >
+              Solutions
+              <ChevronDown className={`h-4 w-4 transition-transform ${isSolutionsDropdownOpen ? 'rotate-180' : ''}`} />
+            </button>
+            
+            {isSolutionsDropdownOpen && (
+              <div className="absolute top-full left-0 mt-2 w-48 bg-background/95 backdrop-blur-sm border border-border rounded-lg shadow-lg z-50">
+                <div className="py-2">
+                  <a
+                    href="/voice"
+                    className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
+                  >
+                    AI Voice Agent
+                  </a>
+                  <a
+                    href="/chatbot"
+                    className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
+                  >
+                    AI Chatbot
+                  </a>
+                  <a
+                    href="/solutions"
+                    className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
+                  >
+                    All Solutions
+                  </a>
+                </div>
+              </div>
+            )}
+          </div>
           <a
             href="/pricing"
             className="text-foreground/80 hover:text-primary font-medium transition-colors"
@@ -103,13 +136,32 @@ const Header = () => {
       </div>
       {isMenuOpen && (
         <div className="mobile-nav flex flex-col glass-effect w-full py-6 px-6 md:hidden shadow-md">
-          <a
-            href="/solutions"
-            className="py-3 text-foreground hover:text-primary font-medium transition-colors"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Solutions
-          </a>
+          <div className="mb-2">
+            <div className="py-3 text-foreground font-medium">Solutions</div>
+            <div className="ml-4 space-y-2">
+              <a
+                href="/voice"
+                className="block py-2 text-foreground/80 hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                AI Voice Agent
+              </a>
+              <a
+                href="/chatbot"
+                className="block py-2 text-foreground/80 hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                AI Chatbot
+              </a>
+              <a
+                href="/solutions"
+                className="block py-2 text-foreground/80 hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                All Solutions
+              </a>
+            </div>
+          </div>
           <a
             href="/pricing"
             className="py-3 text-foreground hover:text-primary font-medium transition-colors"
