@@ -22,6 +22,7 @@ import Partner from "@/pages/Partner";
 import About from "@/pages/About";
 import Vera from "@/pages/Vera";
 import Voice from "@/pages/Voice";
+import Chatbot from "@/pages/Chatbot";
 
 function Router() {
   return (
@@ -34,6 +35,7 @@ function Router() {
       <Route path="/about" component={About} />
       <Route path="/vera" component={Vera} />
       <Route path="/voice" component={Voice} />
+      <Route path="/chatbot" component={Chatbot} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
       <Route path="/profile" component={Profile} />
