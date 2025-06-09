@@ -29,6 +29,18 @@ const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Serve BIMI logo SVG at lowercase path
+  app.get("/assets/brand/bimi-logo.svg", (req, res) => {
+    const filePath = path.resolve(
+      process.cwd(),
+      "public/assets/Brand",
+      "bimi-logo.svg"
+    );
+    res.setHeader("Content-Type", "image/svg+xml");
+    res.setHeader("Cache-Control", "public, max-age=31536000"); // Cache for 1 year
+    res.sendFile(filePath);
+  });
+
   // Serve whitepaper PDF
   app.get("/api/whitepaper-download", (req, res) => {
     const filePath = path.resolve(
