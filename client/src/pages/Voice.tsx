@@ -773,7 +773,8 @@ const Voice = () => {
                   <div className="overflow-hidden rounded-2xl bg-gradient-to-br from-background to-muted/50 p-8 shadow-xl border border-border/50">
                     <div className="space-y-6">
                       {/* Row 1 - Moving Right */}
-                      <div className="flex animate-scroll-right space-x-4">
+                      <div className="overflow-hidden">
+                        <div className="flex animate-scroll-right space-x-4">
                         {[
                           { flag: "🇺🇸", name: "USA" },
                           { flag: "🇬🇧", name: "UK" },
@@ -793,10 +794,12 @@ const Voice = () => {
                             <div className="text-xs text-muted-foreground font-medium">{country.name}</div>
                           </div>
                         ))}
+                        </div>
                       </div>
 
                       {/* Row 2 - Moving Left */}
-                      <div className="flex animate-scroll-left space-x-4">
+                      <div className="overflow-hidden">
+                        <div className="flex animate-scroll-left space-x-4">
                         {[
                           { flag: "🇯🇵", name: "Japan" },
                           { flag: "🇰🇷", name: "Korea" },
@@ -816,10 +819,12 @@ const Voice = () => {
                             <div className="text-xs text-muted-foreground font-medium">{country.name}</div>
                           </div>
                         ))}
+                        </div>
                       </div>
 
                       {/* Row 3 - Moving Right */}
-                      <div className="flex animate-scroll-right space-x-4">
+                      <div className="overflow-hidden">
+                        <div className="flex animate-scroll-right space-x-4">
                         {[
                           { flag: "🇳🇱", name: "Netherlands" },
                           { flag: "🇸🇪", name: "Sweden" },
@@ -839,10 +844,12 @@ const Voice = () => {
                             <div className="text-xs text-muted-foreground font-medium">{country.name}</div>
                           </div>
                         ))}
+                        </div>
                       </div>
 
                       {/* Row 4 - Moving Left */}
-                      <div className="flex animate-scroll-left space-x-4">
+                      <div className="overflow-hidden">
+                        <div className="flex animate-scroll-left space-x-4">
                         {[
                           { flag: "🇦🇺", name: "Australia" },
                           { flag: "🇨🇦", name: "Canada" },
@@ -862,6 +869,7 @@ const Voice = () => {
                             <div className="text-xs text-muted-foreground font-medium">{country.name}</div>
                           </div>
                         ))}
+                        </div>
                       </div>
                     </div>
 
