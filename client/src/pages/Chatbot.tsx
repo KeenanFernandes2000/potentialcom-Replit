@@ -424,13 +424,13 @@ const Chatbot = () => {
                     setActiveTab("customer-service");
                     setSelectedUseCase(0);
                   }}
-                  className={`px-8 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-3 ${
+                  className={`px-6 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-2 ${
                     activeTab === "customer-service"
                       ? "bg-primary text-primary-foreground shadow-md transform scale-105"
                       : "text-foreground bg-muted/30 hover:text-foreground hover:bg-muted/50"
                   }`}
                 >
-                  <Headphones className="w-5 h-5" />
+                  <Headphones className="w-4 h-4" />
                   <span>Customer Service</span>
                 </button>
                 <button
@@ -438,14 +438,28 @@ const Chatbot = () => {
                     setActiveTab("sales-marketing");
                     setSelectedUseCase(0);
                   }}
-                  className={`px-8 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-3 ${
+                  className={`px-6 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-2 ${
                     activeTab === "sales-marketing"
                       ? "bg-primary text-primary-foreground shadow-md transform scale-105"
                       : "text-foreground bg-muted/30 hover:text-foreground hover:bg-muted/50"
                   }`}
                 >
-                  <TrendingUp className="w-5 h-5" />
+                  <TrendingUp className="w-4 h-4" />
                   <span>Sales & Marketing</span>
+                </button>
+                <button
+                  onClick={() => {
+                    setActiveTab("coaching");
+                    setSelectedUseCase(0);
+                  }}
+                  className={`px-6 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-2 ${
+                    activeTab === "coaching"
+                      ? "bg-primary text-primary-foreground shadow-md transform scale-105"
+                      : "text-foreground bg-muted/30 hover:text-foreground hover:bg-muted/50"
+                  }`}
+                >
+                  <GraduationCap className="w-4 h-4" />
+                  <span>Coaching</span>
                 </button>
               </div>
             </div>
@@ -455,7 +469,7 @@ const Chatbot = () => {
               {/* Left: Use Case List */}
               <div data-aos="fade-right" data-aos-delay="200">
                 <div className="space-y-2">
-                  {(activeTab === "customer-service" ? customerServiceUseCases : salesMarketingUseCases).map((useCase, index) => (
+                  {(activeTab === "customer-service" ? customerServiceUseCases : activeTab === "sales-marketing" ? salesMarketingUseCases : coachingUseCases).map((useCase, index) => (
                     <div
                       key={index}
                       onClick={() => setSelectedUseCase(index)}
@@ -487,7 +501,7 @@ const Chatbot = () => {
               <div data-aos="fade-left" data-aos-delay="300">
                 <div className="bg-background rounded-2xl p-6 shadow-xl border border-border/50 sticky top-8">
                   {(() => {
-                    const currentUseCase = (activeTab === "customer-service" ? customerServiceUseCases : salesMarketingUseCases)[selectedUseCase];
+                    const currentUseCase = (activeTab === "customer-service" ? customerServiceUseCases : activeTab === "sales-marketing" ? salesMarketingUseCases : coachingUseCases)[selectedUseCase];
                     const Icon = currentUseCase.icon;
                     return (
                       <div className="space-y-4">
