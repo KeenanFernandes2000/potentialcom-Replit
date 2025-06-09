@@ -485,20 +485,23 @@ const Chatbot = () => {
                       <span>Sales & Marketing</span>
                     </button>
                   </div>
-                  <button
-                    onClick={() => {
-                      setActiveTab("coaching");
-                      setSelectedUseCase(0);
-                    }}
-                    className={`w-full px-4 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center space-x-2 text-sm ${
-                      activeTab === "coaching"
-                        ? "bg-primary text-primary-foreground shadow-md"
-                        : "text-foreground bg-muted/30 hover:text-foreground hover:bg-muted/50"
-                    }`}
-                  >
-                    <GraduationCap className="w-4 h-4" />
-                    <span>Coaching</span>
-                  </button>
+                  <div className="grid grid-cols-2 gap-3">
+                    <button
+                      onClick={() => {
+                        setActiveTab("coaching");
+                        setSelectedUseCase(0);
+                      }}
+                      className={`px-4 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center space-x-2 text-sm ${
+                        activeTab === "coaching"
+                          ? "bg-primary text-primary-foreground shadow-md"
+                          : "text-foreground bg-muted/30 hover:text-foreground hover:bg-muted/50"
+                      }`}
+                    >
+                      <GraduationCap className="w-4 h-4" />
+                      <span>Coaching</span>
+                    </button>
+                    <div></div>
+                  </div>
                 </div>
 
                 {/* Desktop Layout - Single Row */}
