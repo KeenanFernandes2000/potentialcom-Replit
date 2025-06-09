@@ -563,7 +563,7 @@ const Chatbot = () => {
               <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
                 {/* Left Content */}
                 <div className="flex-1 text-center lg:text-left">
-                  <h2 className="sm:text-3xl lg:text-4xl font-bold text-white mb-4 text-[30px]">Let AI handle conversations just like real agents</h2>
+                  <h2 className="sm:text-3xl lg:text-4xl font-bold text-white mb-4 text-[30px]">Grow Your Sales & Revenue with AI!</h2>
                   <p className="text-purple-100 text-lg lg:text-xl mb-6 lg:mb-0 max-w-2xl">
                     Fill up the form to get your custom-trained AI Chatbot in seconds. 7-day free trial | No credit card required
                   </p>
