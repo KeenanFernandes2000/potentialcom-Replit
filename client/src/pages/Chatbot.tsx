@@ -722,9 +722,7 @@ const Chatbot = () => {
                   </svg>
                 </div>
                 <h3 className="text-lg font-semibold text-foreground mb-2">Multilingual Support</h3>
-                <p className="text-sm text-muted-foreground">
-                  Continuously learns from interactions and can be trained on your specific content and processes.
-                </p>
+                <p className="text-sm text-muted-foreground">Break language barriers and engage customers globally by interacting in their preferred language.</p>
               </div>
 
               {/* Feature 4: Cost-Effective */}
