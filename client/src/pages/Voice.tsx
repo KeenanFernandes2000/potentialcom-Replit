@@ -343,14 +343,14 @@ const Voice = () => {
           {/* Interactive Tab Section */}
           <div className="max-w-6xl mx-auto">
             {/* Tab Navigation */}
-            <div className="flex justify-center mb-12" data-aos="fade-up" data-aos-delay="100">
-              <div className="bg-background rounded-2xl p-2 shadow-lg border border-border/50 flex items-center justify-center">
+            <div className="flex justify-center mb-12 px-4 sm:px-0" data-aos="fade-up" data-aos-delay="100">
+              <div className="bg-background rounded-2xl p-2 shadow-lg border border-border/50 flex items-center justify-center w-full max-w-lg overflow-x-auto">
                 <button
                   onClick={() => {
                     setActiveTab("inbound");
                     setSelectedUseCase(0);
                   }}
-                  className={`px-8 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-3 ${
+                  className={`px-4 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-2 sm:space-x-3 text-sm sm:text-base flex-shrink-0 ${
                     activeTab === "inbound"
                       ? "bg-primary text-primary-foreground shadow-md transform scale-105"
                       : "text-foreground bg-muted/30 hover:text-foreground hover:bg-muted/50"
@@ -364,7 +364,7 @@ const Voice = () => {
                     setActiveTab("outbound");
                     setSelectedUseCase(0);
                   }}
-                  className={`px-8 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-3 ${
+                  className={`px-4 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold transition-all duration-300 flex items-center space-x-2 sm:space-x-3 text-sm sm:text-base flex-shrink-0 ${
                     activeTab === "outbound"
                       ? "bg-primary text-primary-foreground shadow-md transform scale-105"
                       : "text-foreground bg-muted/30 hover:text-foreground hover:bg-muted/50"
