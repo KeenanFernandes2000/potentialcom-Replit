@@ -684,7 +684,7 @@ const Chatbot = () => {
               },
               {
                 icon: "⏱️",
-                value: "30s",
+                value: "60s",
                 label: "Setup Time",
                 color: "text-indigo-600",
                 bgColor: "bg-indigo-100 dark:bg-indigo-900/20"
