@@ -3,7 +3,6 @@ import Footer from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
 import { 
   MessageCircle, 
   Calendar, 
@@ -59,10 +58,38 @@ import wfzoLogo from "@assets/Customer Logos/WFZO logo.png";
 import voiceAgentSetupProcess from "@assets/voiceAgentSetupProcess.png";
 
 const Chatbot = () => {
-  const { theme } = useTheme();
-  const isDarkMode = theme === "dark";
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const [activeTab, setActiveTab] = useState("customer-service");
   const [selectedUseCase, setSelectedUseCase] = useState(0);
+
+  // Detect dark mode using the same method as Hero component
+  useEffect(() => {
+    const checkDarkMode = () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      setIsDarkMode(isDark);
+    };
+
+    // Initial check
+    checkDarkMode();
+
+    // Create a mutation observer to monitor class changes on html element
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (
+          mutation.type === 'attributes' &&
+          mutation.attributeName === 'class'
+        ) {
+          checkDarkMode();
+        }
+      });
+    });
+
+    // Start observing
+    observer.observe(document.documentElement, { attributes: true });
+
+    // Cleanup
+    return () => observer.disconnect();
+  }, []);
 
   // Refresh AOS animations on route change
   useEffect(() => {
