@@ -485,13 +485,13 @@ const Chatbot = () => {
                       <span>Sales & Marketing</span>
                     </button>
                   </div>
-                  <div className="grid grid-cols-2 gap-3">
+                  <div className="flex justify-center">
                     <button
                       onClick={() => {
                         setActiveTab("coaching");
                         setSelectedUseCase(0);
                       }}
-                      className={`px-4 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center space-x-2 text-sm ${
+                      className={`px-4 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center space-x-2 text-sm w-[calc(50%-6px)] ${
                         activeTab === "coaching"
                           ? "bg-primary text-primary-foreground shadow-md"
                           : "text-foreground bg-muted/30 hover:text-foreground hover:bg-muted/50"
@@ -500,7 +500,6 @@ const Chatbot = () => {
                       <GraduationCap className="w-4 h-4" />
                       <span>Coaching</span>
                     </button>
-                    <div></div>
                   </div>
                 </div>
 
