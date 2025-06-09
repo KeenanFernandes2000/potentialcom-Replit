@@ -282,11 +282,12 @@ const Voice = () => {
             </h3>
 
             {/* Scrolling container */}
-            <div className="relative overflow-hidden">
+            <div className="relative overflow-hidden w-full">
               <div
                 className="flex animate-scroll hover:pause-animation"
                 style={{
-                  width: `${clientLogos.length * 2 * 120}px`, // Double width for seamless loop
+                  width: `calc(${clientLogos.length * 2 * 120}px)`,
+                  minWidth: '100%'
                 }}
               >
                 {/* First set of logos */}
