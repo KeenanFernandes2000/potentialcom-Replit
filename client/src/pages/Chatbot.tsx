@@ -603,12 +603,16 @@ const Chatbot = () => {
                 
                 {/* Right CTA Button */}
                 <div className="flex-shrink-0">
-                  <button className="bg-white hover:bg-gray-50 text-purple-600 font-bold text-lg px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-3">
-                    <span>Try For Free</span>
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </button>
+                  <AIChatbotForm
+                    trigger={
+                      <button className="bg-white hover:bg-gray-50 text-purple-600 font-bold text-lg px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-3">
+                        <span>Try For Free</span>
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </button>
+                    }
+                  />
                 </div>
               </div>
             </div>
@@ -1003,12 +1007,16 @@ const Chatbot = () => {
                 
                 {/* Right CTA Button */}
                 <div className="flex-shrink-0">
-                  <button className="bg-white hover:bg-gray-50 text-purple-600 font-bold text-lg px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-3">
-                    <span>Try For Free</span>
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </button>
+                  <AIChatbotForm
+                    trigger={
+                      <button className="bg-white hover:bg-gray-50 text-purple-600 font-bold text-lg px-8 py-4 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center space-x-3">
+                        <span>Try For Free</span>
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </button>
+                    }
+                  />
                 </div>
               </div>
             </div>
