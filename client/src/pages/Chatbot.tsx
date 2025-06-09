@@ -699,7 +699,7 @@ const Chatbot = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-foreground mb-2">24/7 Instant Responses</h3>
+                <h3 className="text-lg font-semibold text-foreground mb-2">Fully Customizable</h3>
                 <p className="text-sm text-muted-foreground">
                   AI Chatbots engage customers instantly, anytime—delivering consistent support without human intervention.
                 </p>
