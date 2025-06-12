@@ -14,6 +14,7 @@ const Agents = () => {
       ctaText: "Try Now",
       link: "https://ai.potential.com/chatbots",
       isVoicebot: false,
+      trialText: "7 days Free Trial",
     },
     {
       title: "Voicebot",
@@ -24,6 +25,7 @@ const Agents = () => {
       ctaText: "Try Now",
       link: "https://ai.potential.com/rachel",
       isVoicebot: true,
+      trialText: "10 Minutes free Usage Time",
     },
   ];
 
@@ -62,7 +64,7 @@ const Agents = () => {
                 </div>
                 <div className="text-right">
                   <div className="text-sm font-semibold text-green-600 dark:text-green-400">
-                    7 Days Free Trial
+                    {agent.trialText}
                   </div>
                   <div className="text-xs text-green-500 dark:text-green-300">
                     No credit card required
