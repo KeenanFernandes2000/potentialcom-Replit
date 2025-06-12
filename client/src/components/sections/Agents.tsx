@@ -25,7 +25,7 @@ const Agents = () => {
       ctaText: "Try Now",
       link: "https://ai.potential.com/rachel",
       isVoicebot: true,
-      trialText: "10 Minutes free Usage Time",
+      trialText: "10 Minutes Free Usage Time",
     },
   ];
 
