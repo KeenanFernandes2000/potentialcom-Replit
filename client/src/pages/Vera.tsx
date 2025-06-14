@@ -28,6 +28,7 @@ import veraGif from "@assets/Vera Gif Final.gif";
 import veraAvatarCentered from "@assets/Vera Avatar Centered.png";
 import { Check, Search, Users, Calendar, MessageSquare } from "lucide-react";
 import { AutoSEO } from "@/components/SEO";
+import { VeraCallModal } from "@/components/VeraCallModal";
 
 const formSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -60,7 +61,9 @@ const countryCodes = [
 
 export default function Vera() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showCallModal, setShowCallModal] = useState(false);
   const { toast } = useToast();
+  const [callModalKey, setCallModalKey] = useState(0);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -73,6 +76,16 @@ export default function Vera() {
       companyName: "",
       companyWebsite: "",
     },
+  });
+
+  const [callUser, setCallUser] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+    companyName: "",
+    website: "",
+    companyWebsite: "",
   });
 
   const onSubmit = async (values: FormData) => {
@@ -89,17 +102,21 @@ export default function Vera() {
 
       toast({
         title: "Welcome to Vera!",
-        description:
-          "Your request has been submitted. Opening Vera chat in a new window...",
+        description: "Your request has been submitted. Starting your call with Vera...",
       });
 
-      // Open Vera chat in new window
-      window.open(
-        "https://ai.potential.com/voice/42531902-20ad-46c7-a611-3e0ccf721aa1",
-        "_blank",
-        "noopener,noreferrer"
-      );
+      // Capture user info BEFORE resetting the form
+      setCallUser({
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        phoneNumber: values.phoneNumber,
+        companyName: values.companyName,
+        website: values.companyWebsite || "",
+        companyWebsite: values.companyWebsite || "",
+      });
 
+      setShowCallModal(true);
       form.reset();
     } catch (error) {
       console.error("Form submission error:", error);
@@ -499,6 +516,13 @@ export default function Vera() {
         </section>
       </main>
       <Footer />
+      <VeraCallModal 
+        key={callModalKey}
+        isOpen={showCallModal} 
+        onClose={() => setShowCallModal(false)} 
+        user={callUser}
+        onRemount={() => setCallModalKey(k => k + 1)}
+      />
     </div>
   );
 }
