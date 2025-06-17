@@ -359,6 +359,14 @@ export function AIVoiceAgentForm({
                   {agentData?.assistant?.name ||
                     form.getValues("proposedAgentName")}
                 </p>
+                {agentData?.failedToScrape && (
+                  <p className="text-xs mt-2 text-yellow-700 dark:text-yellow-300 bg-yellow-50 dark:bg-yellow-900/20 p-2 rounded border border-yellow-200 dark:border-yellow-800">
+                    We couldn't scrape your website, so we're using default
+                    information. You'll receive an email with login details to
+                    access your dashboard and train your voice agent with your
+                    specific content.
+                  </p>
+                )}
               </div>
             </div>
 
