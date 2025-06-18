@@ -291,7 +291,12 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
       stopWaitingMessages();
       await new Promise(resolve => setTimeout(resolve, 1000));
       setBotId(data?.assistantData?._id || "Unknown");
-      vapiRef.current?.say("Great news! Your chatbot is now ready. You can click on the provided link to test it. I've also sent you an email with a link to your personal dashboard where you can customize and enhance your agent.", false);
+      if(data.failedToScrape){
+        vapiRef.current?.say("Great news! Your chatbot is now ready. You can click on the provided link to test it. I've also sent you an email with a link to your personal dashboard where you can customize and enhance your agent. However, I was unable to scrape your website. You can login to your dashboard and add your website manually.", false);
+      }
+        else{
+          vapiRef.current?.say("Great news! Your chatbot is now ready. You can click on the provided link to test it. I've also sent you an email with a link to your personal dashboard where you can customize and enhance your agent.", false);
+        }
     } catch (error) {
       stopWaitingMessages();
       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -342,7 +347,12 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
       stopWaitingMessages();
       await new Promise(resolve => setTimeout(resolve, 1000));
       setVoiceAgentId(data?.assistant?.id || "Unknown");
-      vapiRef.current?.say("Great news! Your voice agent is now ready. You can click on the provided link to test it. I've also sent you an email with a link to your personal dashboard where you can customize and enhance your agent.", false);
+      if(data.failedToScrape){
+        vapiRef.current?.say("Great news! Your voice agent is now ready. You can click on the provided link to test it. I've also sent you an email with a link to your personal dashboard where you can customize and enhance your agent. However, I was unable to scrape your website. You can login to your dashboard and add your website manually.", false);
+      }
+      else{
+        vapiRef.current?.say("Great news! Your voice agent is now ready. You can click on the provided link to test it. I've also sent you an email with a link to your personal dashboard where you can customize and enhance your agent.", false);
+      }
     } catch (error) {
       stopWaitingMessages();
       await new Promise(resolve => setTimeout(resolve, 1000));
