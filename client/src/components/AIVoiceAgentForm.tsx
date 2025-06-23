@@ -121,6 +121,7 @@ export function AIVoiceAgentForm({
           ? values.website
           : "https://placeholder-no-website.com";
       formData.append("url", websiteUrl);
+      formData.append("image", "potential-default-voice.png");
 
       const response = await fetch(
         `${import.meta.env.VITE_BASE_URL}/api/vapi/simpleassistant`,
