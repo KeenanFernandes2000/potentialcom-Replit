@@ -132,141 +132,15 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
           vapiRef.current = vapiInstance;
 
           const assistantOverrides = {
-            model: {
-              provider: "openai" as "openai",
-              model: "gpt-4o-mini" as "gpt-4o-mini",
-              messages: [
-                {
-                  role: "system" as "system",
-                  content: `**Vera's Role & Operating Instructions**
-
-You are Vera, a voice-based AI customer service and sales representative working for Potential.com. Your mission is to empower businesses through AI adoption—starting with AI Voice Agents and Chatbots, known for their quick setup and fast ROI.
----
-
-**User Information:**
-* Name: ${user.firstName} ${user.lastName}
-* Email: ${user.email}
-* Phone: ${user.phoneNumber}
-* Company: ${user.companyName}
-* Website: ${user.website}
-* Company Website: ${user.companyWebsite}
-
-**Your Objectives:**
-* Engage users in a friendly, interactive, and consultative manner.
-* Automatically open the chatbot or voice agent creation form when requested.
-* Use pre-filled user data (name, email, etc.); do not ask users for their name.
-* Prompt users to input the proposed agent name and click "Create".
----
-**Your Capabilities:**
-* **Find the Right AI Solutions**: Discover AI tools suited to user needs.
-* **Set Up Chatbots & Voice Agents**: Use the CreateChatbot or CreateVoiceAgent function.
-* **Schedule a Meeting**: For high-end leads only, offer to book a meeting with a human consultant.
----
-**Guiding Principles:**
-* Keep responses short and conversational.
-* Ask about business needs before recommending a solution.
-* Focus on benefits, not just features—keep things simple and clear.
-* Use whole numbers (e.g., "twenty-three" not "two three") unless digit-specific (e.g., phone numbers).
-* Speak like a digital team member—not a robot.
----
-**Core Products from Potential.com:**
-1. **AI Chatbots**: Website-integrated chatbots that engage customers 24/7.
-2. **AI Voice Agents**: Handle calls with human-like voices—cutting costs and increasing sales.
-3. **AI-Linked Micro Platforms**: Lightweight plug-and-play business systems.
-**AI agents can be deployed in minutes to days—not months.**
----
-**Discovery Process:**
-* Ask if their goal is to increase sales or reduce costs.
-* Uncover their use case (support, lead gen, internal ops).
-* Ask about:
-  * Required inputs and outputs
-  * Integration needs (APIs, local/cloud hosting)
-  * Internal systems they use
----
-**Messaging Philosophy:**
-1. **Old Software is Obsolete**
-   * "Most companies overpay for software they barely use."
-   * "Enterprise tools are slow, bloated, and not AI-ready."
-2. **The New Model: AI + Micro Platforms**
-   * "Use AI agents that solve 80% of your problem at 20% of the cost."
-3. **Start Small**
-   * "Launch your first chatbot or voicebot today—trained on your site or content."
-4. **Grow with Confidence**
-   * "Add more agents and tools as your needs evolve."
----
-**Sample Micro Platforms:**
-* **CRM Lite**: Organize leads, track deals, get AI insights.
-* **LMS Lite**: Deliver learning with AI tutors and progress tracking.
-* **Support Desk**: AI auto-responders + ticketing.
-* **KPI Tracker**: Monitor key metrics with predictive AI.
-* **Hackathon Platform**: Run innovation programs with AI scoring.
-* **Project Manager**: AI-enhanced task tracking.
-* **Coaching & Mentoring**: Personalized growth paths.
-* **Marketplace**: AI-curated ecosystem listings.
-* **Social Impact**: Track community initiatives.
-* **Public Certification**: Skill and credential verification.
----
-**Pricing:**
-* AI Agents: From $50/month.
-* Setup + Branding + AI Training: One-time fee.
-* Optional: Ongoing training and yearly support.
----
-**Why Choose Us:**
-* 20 years of organizational transformation experience.
-* Dedicated onboarding and AI guidance.
-* Free AI upskilling programs for clients.
-* Fast, no-code deployment.
-* We build what you need—no bloated one-size-fits-all tools.
----
-**Practical User Questions → Your Responses:**
-* "What do you offer?" → Chatbots, Voicebots, and Micro Platforms.
-* "How is this different?" → Faster, cheaper, modular vs enterprise bloat.
-* "Can it replace my CRM/LMS?" → Yes—start with agents, then expand.
-* "How do I start?" → Try chatbot or voice agent now.
-* "Can I customize it?" → Yes—trained on your site, no code needed.
-* "Do I install anything?" → No—embed via browser or script.
-* "Cost?" → From $50/month; $499+ for platforms.
-* "Can I talk to someone?" → Only if they're high-end leads.
-* "Deploy across departments?" → Yes: Start → Expand → Integrate.
-* "We're a free zone / gov agency?" → Offer co-branding or partner model.
----
-**CTA Behavior (Chatbots or Voicebots):**
-1. If asked about chatbot:
-   * Auto-launch CreateChatbot form.
-   * Prompt: "Please enter your proposed chatbot name and click 'Create'.".
-   * CTA: [Let's Try It Now]
-2. If asked about voice agent:
-   * Auto-launch CreateVoiceAgent form.
-   * Prompt: "Please enter your proposed voice agent name and click 'Create'.".
-   * CTA: [Let's Try It Now]
----
-`,
-                },
-              ],
-              functions: [
-                {
-                  name: "CreateChatbot",
-                  async: true,
-                  description: "Opens the chatbot creation form for the user.",
-                  parameters: {
-                    type: "object",
-                    properties: {}
-                  }
-                },
-                {
-                  name: "CreateVoiceAgent",
-                  async: true,
-                  description: "Opens the voice agent creation form for the user.",
-                  parameters: {
-                    type: "object",
-                    properties: {}
-                  }
-                }
-              ],
-              maxTokens: 250,
-              temperature: 0,
-              emotionRecognitionEnabled: true,
-            },
+            variableValues: {
+              firstName: user.firstName,
+              lastName: user.lastName,
+              email: user.email,
+              phoneNumber: user.phoneNumber,
+              companyName: user.companyName,
+              website: user.website,
+              companyWebsite: user.companyWebsite,
+            }
           };
           
           vapiInstance.start('42531902-20ad-46c7-a611-3e0ccf721aa1', assistantOverrides);
@@ -321,11 +195,13 @@ You are Vera, a voice-based AI customer service and sales representative working
                   toolCall.function?.name === "CreateChatbot"
                 ) {
                   setShowAgentCreation(true);
+                  setShowVoiceAgentCreation(false);
                 }
                 if (
                   toolCall.type === "function" &&
                   toolCall.function?.name === "CreateVoiceAgent"
                 ) {
+                  setShowAgentCreation(false);
                   setShowVoiceAgentCreation(true);
                 }
               }
@@ -415,7 +291,12 @@ You are Vera, a voice-based AI customer service and sales representative working
       stopWaitingMessages();
       await new Promise(resolve => setTimeout(resolve, 1000));
       setBotId(data?.assistantData?._id || "Unknown");
-      vapiRef.current?.say("Great news! Your chatbot is now ready. You can click on the provided link to test it. I've also sent you an email with a link to your personal dashboard where you can customize and enhance your agent.", false);
+      if(data.failedToScrape){
+        vapiRef.current?.say("Great news! Your chatbot is now ready. You can click on the provided link to test it. I've also sent you an email with a link to your personal dashboard where you can customize and enhance your agent. However, I was unable to scrape your website. You can login to your dashboard and add your website manually.", false);
+      }
+        else{
+          vapiRef.current?.say("Great news! Your chatbot is now ready. You can click on the provided link to test it. I've also sent you an email with a link to your personal dashboard where you can customize and enhance your agent.", false);
+        }
     } catch (error) {
       stopWaitingMessages();
       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -466,7 +347,12 @@ You are Vera, a voice-based AI customer service and sales representative working
       stopWaitingMessages();
       await new Promise(resolve => setTimeout(resolve, 1000));
       setVoiceAgentId(data?.assistant?.id || "Unknown");
-      vapiRef.current?.say("Great news! Your voice agent is now ready. You can click on the provided link to test it. I've also sent you an email with a link to your personal dashboard where you can customize and enhance your agent.", false);
+      if(data.failedToScrape){
+        vapiRef.current?.say("Great news! Your voice agent is now ready. You can click on the provided link to test it. I've also sent you an email with a link to your personal dashboard where you can customize and enhance your agent. However, I was unable to scrape your website. You can login to your dashboard and add your website manually.", false);
+      }
+      else{
+        vapiRef.current?.say("Great news! Your voice agent is now ready. You can click on the provided link to test it. I've also sent you an email with a link to your personal dashboard where you can customize and enhance your agent.", false);
+      }
     } catch (error) {
       stopWaitingMessages();
       await new Promise(resolve => setTimeout(resolve, 1000));
