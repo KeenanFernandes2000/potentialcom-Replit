@@ -52,6 +52,16 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
   const [isWaiting, setIsWaiting] = useState(false);
   const [micPermissionError, setMicPermissionError] = useState<string | null>(null);
   const [showBookingForm, setShowBookingForm] = useState(false);
+  const [bookingInfo, setBookingInfo] = useState<{
+    meetingTime?: string;
+    meetingDate?: string;
+    meetingUrl?: string;
+    confirmed?: boolean;
+    duration?: number;
+    contactName?: string;
+    contactEmail?: string;
+    organizerName?: string;
+  } | null>(null);
 
   const waitingMessages = [
     "I'm setting up your AI agent with all the necessary configurations...",
@@ -102,9 +112,91 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
         script.src = 'https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js';
         script.async = true;
         document.head.appendChild(script);
+
+        // Listen for HubSpot meeting events
+        script.onload = () => {
+          // Set up event listener for meeting bookings
+          window.addEventListener('message', handleHubSpotMessage, false);
+        };
+      } else {
+        // Script already loaded, just set up listener
+        window.addEventListener('message', handleHubSpotMessage, false);
       }
     }
+
+    return () => {
+      window.removeEventListener('message', handleHubSpotMessage, false);
+    };
   }, [showBookingForm]);
+
+  // Handle messages from HubSpot iframe
+  const handleHubSpotMessage = (event: MessageEvent) => {
+    // Verify origin for security
+    if (event.origin !== 'https://meetings-eu1.hubspot.com') {
+      return;
+    }
+
+    try {
+      const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+      console.log(data);
+      
+      // Check for meeting booking events
+      if (data.meetingBookSucceeded && data.meetingsPayload) {
+        const eventData = data.meetingsPayload.bookingResponse?.event;
+        const postResponse = data.meetingsPayload.bookingResponse?.postResponse;
+        
+        if (eventData) {
+          const meetingDateTime = eventData.dateTime; // Unix timestamp in milliseconds
+          const dateString = eventData.dateString; // "2025-06-27" format
+          const duration = eventData.duration; // Duration in milliseconds
+          const contact = postResponse?.contact;
+          const organizer = postResponse?.organizer;
+          
+          setBookingInfo({
+            meetingTime: meetingDateTime ? new Date(meetingDateTime).toISOString() : undefined,
+            meetingDate: dateString,
+            meetingUrl: postResponse?.meetingLink || undefined,
+            confirmed: true,
+            duration: duration,
+            contactName: contact ? `${contact.firstName} ${contact.lastName}` : undefined,
+            contactEmail: contact?.email,
+            organizerName: organizer?.name || `${organizer?.firstName} ${organizer?.lastName}`
+          });
+
+          // Notify Vera about the booking
+          setTimeout(() => {
+            if (vapiRef.current && meetingDateTime) {
+              const formattedDate = new Date(meetingDateTime).toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit'
+              });
+              
+              const durationMinutes = duration ? Math.round(duration / 60000) : 30; // Convert to minutes
+              const contactName = contact ? `${contact.firstName} ${contact.lastName}` : 'the user';
+              
+              vapiRef.current.say(`Perfect! I can see that ${contactName} has successfully booked a ${durationMinutes}-minute meeting for ${formattedDate} with ${organizer?.firstName || 'our team'}. A confirmation email will be sent to ${contact?.email || 'the provided email address'} shortly with all the details. Is there anything else I can help you with in the meantime?`, false);
+            } else if (vapiRef.current) {
+              vapiRef.current.say("Great! I can see you've successfully booked a meeting with our team. You should receive a confirmation email shortly with all the details. Is there anything else I can help you with?", false);
+            }
+          }, 1000);
+        }
+      }
+      
+      // Handle other HubSpot events
+      if (data.type === 'MEETING_CANCELLED') {
+        setBookingInfo(null);
+        if (vapiRef.current) {
+          vapiRef.current.say("I noticed the meeting was cancelled. No worries! Feel free to book another time when it's convenient for you, or let me know if there's anything else I can help with.", false);
+        }
+      }
+    } catch (error) {
+      console.log('Error parsing HubSpot message:', error);
+    }
+  };
 
   // Auto-scroll to bottom when new messages are added
   useEffect(() => {
@@ -188,7 +280,6 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
           });
 
           vapiInstance.on('message', (message) => {
-            console.log(message);
             if (message.type === 'transcript') {
               if (message.transcriptType === 'partial') {
                 setCurrentPartial({
@@ -292,6 +383,7 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
       setVoiceAgentId(null);
       setAgentName("");
       setVoiceAgentName("");
+      setBookingInfo(null);
       if (transcriptContainerRef.current) {
         transcriptContainerRef.current.scrollTop = 0;
       }
@@ -558,23 +650,69 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
                     Let's discuss your AI needs with one of our human experts.
                   </p>
                   <div className="w-full">
-                    <div 
-                      className="meetings-iframe-container rounded-lg overflow-hidden" 
-                      data-src="https://meetings-eu1.hubspot.com/rawzaba?embed=true"
-                      style={{ 
-                        minHeight: '400px',
-                        height: '60vh',
-                        maxHeight: '600px',
-                        width: '100%'
-                      }}
-                    ></div>
+                    {bookingInfo?.confirmed ? (
+                      <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-6 text-center">
+                        <div className="bg-green-100 dark:bg-green-900/30 rounded-full p-3 mx-auto w-12 h-12 flex items-center justify-center mb-4">
+                          <svg className="h-6 w-6 text-green-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                          </svg>
+                        </div>
+                        <h3 className="text-lg font-semibold text-green-800 dark:text-green-200 mb-2">
+                          Meeting Booked Successfully!
+                        </h3>
+                        <p className="text-sm text-green-700 dark:text-green-300 mb-4">
+                          {bookingInfo.contactEmail ? `Confirmation email will be sent to ${bookingInfo.contactEmail}` : "You'll receive a confirmation email with all the meeting details shortly."}
+                        </p>
+                        {bookingInfo.meetingTime && (
+                          <div className="text-xs text-green-600 dark:text-green-400 mb-4 space-y-1">
+                            <p>
+                              <strong>Meeting Time:</strong> {new Date(bookingInfo.meetingTime).toLocaleDateString('en-US', {
+                                weekday: 'long',
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                                hour: 'numeric',
+                                minute: '2-digit',
+                                timeZoneName: 'short'
+                              })}
+                            </p>
+                            {bookingInfo.duration && (
+                              <p>
+                                <strong>Duration:</strong> {Math.round(bookingInfo.duration / 60000)} minutes
+                              </p>
+                            )}
+                            {bookingInfo.organizerName && (
+                              <p>
+                                <strong>Meeting with:</strong> {bookingInfo.organizerName}
+                              </p>
+                            )}
+                            {bookingInfo.contactName && (
+                              <p>
+                                <strong>Attendee:</strong> {bookingInfo.contactName}
+                              </p>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <div 
+                        className="meetings-iframe-container rounded-lg overflow-hidden" 
+                        data-src="https://meetings-eu1.hubspot.com/rawzaba?embed=true"
+                        style={{ 
+                          minHeight: '400px',
+                          height: '60vh',
+                          maxHeight: '600px',
+                          width: '100%'
+                        }}
+                      ></div>
+                    )}
                     <Button 
                       onClick={() => setShowBookingForm(false)} 
                       className="w-full mt-4"
                       variant="outline"
                       size="sm"
                     >
-                      Close Booking Form
+                      {bookingInfo?.confirmed ? 'Close' : 'Close Booking Form'}
                     </Button>
                   </div>
                 </>}
