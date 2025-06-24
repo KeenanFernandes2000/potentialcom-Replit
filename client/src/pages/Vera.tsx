@@ -39,7 +39,17 @@ const formSchema = z.object({
   companyName: z.string().min(1, "Company name is required"),
   companyWebsite: z
     .string()
-    .url("Please enter a valid website URL")
+    .refine((val) => {
+      if (!val || val.trim() === "" || val.trim() === "https://") {
+        return false;
+      }
+      try {
+        new URL(val);
+        return true;
+      } catch {
+        return false;
+      }
+    }, "Please enter a valid website URL")
     .optional()
     .or(z.literal("")),
 });
@@ -74,7 +84,7 @@ export default function Vera() {
       phoneNumber: "",
       countryCode: "",
       companyName: "",
-      companyWebsite: "",
+      companyWebsite: "https://",
     },
   });
 
@@ -87,6 +97,18 @@ export default function Vera() {
     website: "",
     companyWebsite: "",
   });
+
+  const handleWebsiteChange = (value: string) => {
+    if (
+      value &&
+      !value.startsWith("http://") &&
+      !value.startsWith("https://")
+    ) {
+      form.setValue("companyWebsite", `https://${value}`);
+    } else {
+      form.setValue("companyWebsite", value);
+    }
+  };
 
   const onSubmit = async (values: FormData) => {
     setIsSubmitting(true);
@@ -102,7 +124,8 @@ export default function Vera() {
 
       toast({
         title: "Welcome to Vera!",
-        description: "Your request has been submitted. Starting your call with Vera...",
+        description:
+          "Your request has been submitted. Starting your call with Vera...",
       });
 
       // Capture user info BEFORE resetting the form
@@ -352,6 +375,9 @@ export default function Vera() {
                             <Input
                               placeholder="https://yourcompany.com"
                               {...field}
+                              onChange={(e) => {
+                                handleWebsiteChange(e.target.value);
+                              }}
                             />
                           </FormControl>
                           <FormMessage />
@@ -516,12 +542,12 @@ export default function Vera() {
         </section>
       </main>
       <Footer />
-      <VeraCallModal 
+      <VeraCallModal
         key={callModalKey}
-        isOpen={showCallModal} 
-        onClose={() => setShowCallModal(false)} 
+        isOpen={showCallModal}
+        onClose={() => setShowCallModal(false)}
         user={callUser}
-        onRemount={() => setCallModalKey(k => k + 1)}
+        onRemount={() => setCallModalKey((k) => k + 1)}
       />
     </div>
   );

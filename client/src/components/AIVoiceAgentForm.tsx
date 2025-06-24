@@ -43,13 +43,18 @@ const formSchema = z
   })
   .refine(
     (data) => {
-      if (data.hasWebsite && (!data.website || data.website.trim() === "")) {
+      if (
+        data.hasWebsite &&
+        (!data.website ||
+          data.website.trim() === "" ||
+          data.website.trim() === "https://")
+      ) {
         return false;
       }
       return true;
     },
     {
-      message: "Website URL is required when you have a website",
+      message: "Please enter a valid website URL",
       path: ["website"],
     }
   );
@@ -82,7 +87,7 @@ export function AIVoiceAgentForm({
       firstName: "",
       email: "",
       hasWebsite: true,
-      website: "",
+      website: "https://",
       proposedAgentName: "",
     },
   });
@@ -96,6 +101,19 @@ export function AIVoiceAgentForm({
 
   const handleAddWebsite = () => {
     form.setValue("hasWebsite", true);
+    form.setValue("website", "https://");
+  };
+
+  const handleWebsiteChange = (value: string) => {
+    if (
+      value &&
+      !value.startsWith("http://") &&
+      !value.startsWith("https://")
+    ) {
+      form.setValue("website", `https://${value}`);
+    } else {
+      form.setValue("website", value);
+    }
   };
 
   const onSubmit = async (values: FormData) => {
@@ -178,7 +196,7 @@ export function AIVoiceAgentForm({
       firstName: "",
       email: "",
       hasWebsite: true,
-      website: "",
+      website: "https://",
       proposedAgentName: "",
     });
     setAgentData(null);
@@ -281,6 +299,9 @@ export function AIVoiceAgentForm({
                         <Input
                           placeholder="https://your-website.com"
                           {...field}
+                          onChange={(e) => {
+                            handleWebsiteChange(e.target.value);
+                          }}
                         />
                       </FormControl>
                       <FormMessage />
