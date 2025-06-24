@@ -51,6 +51,7 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
   const [waitingMessageIndex, setWaitingMessageIndex] = useState(0);
   const [isWaiting, setIsWaiting] = useState(false);
   const [micPermissionError, setMicPermissionError] = useState<string | null>(null);
+  const [showBookingForm, setShowBookingForm] = useState(false);
 
   const waitingMessages = [
     "I'm setting up your AI agent with all the necessary configurations...",
@@ -88,6 +89,22 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
       stopWaitingMessages();
     };
   }, []);
+
+  // Load HubSpot meetings script when booking form is shown
+  useEffect(() => {
+    if (showBookingForm) {
+      // Check if script is already loaded
+      const existingScript = document.getElementById('hubspot-meetings-script');
+      if (!existingScript) {
+        const script = document.createElement('script');
+        script.id = 'hubspot-meetings-script';
+        script.type = 'text/javascript';
+        script.src = 'https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js';
+        script.async = true;
+        document.head.appendChild(script);
+      }
+    }
+  }, [showBookingForm]);
 
   // Auto-scroll to bottom when new messages are added
   useEffect(() => {
@@ -196,6 +213,7 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
                 ) {
                   setShowAgentCreation(true);
                   setShowVoiceAgentCreation(false);
+                  setShowBookingForm(false);
                 }
                 if (
                   toolCall.type === "function" &&
@@ -203,6 +221,15 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
                 ) {
                   setShowAgentCreation(false);
                   setShowVoiceAgentCreation(true);
+                  setShowBookingForm(false);
+                }
+                if (
+                  toolCall.type === "function" &&
+                  toolCall.function?.name === "showBookingForm"
+                ) {
+                  setShowAgentCreation(false);
+                  setShowVoiceAgentCreation(false);
+                  setShowBookingForm(true);
                 }
               }
             }
@@ -258,6 +285,13 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
       setTranscripts([]);
       setCurrentPartial(null);
       setCallStatus('idle');
+      setShowAgentCreation(false);
+      setShowVoiceAgentCreation(false);
+      setShowBookingForm(false);
+      setBotId(null);
+      setVoiceAgentId(null);
+      setAgentName("");
+      setVoiceAgentName("");
       if (transcriptContainerRef.current) {
         transcriptContainerRef.current.scrollTop = 0;
       }
@@ -374,7 +408,7 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
       modal={true}
     >
       <DialogContent 
-        className="sm:max-w-3xl"
+        className={`${(showAgentCreation || showVoiceAgentCreation || showBookingForm) ? 'sm:max-w-6xl' : 'sm:max-w-3xl'} max-h-[90vh] overflow-y-auto`}
         onInteractOutside={e => e.preventDefault()}
       >
         {micPermissionError && (
@@ -405,11 +439,11 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
             </div>
           </div>
         )}
-        <div className="flex flex-row gap-6">
-          {/* Left: Agent Creation or Voice Agent Creation */}
-          {(showAgentCreation || showVoiceAgentCreation) && (
-            <div className="flex-1 border-r pr-6 flex flex-col justify-center items-center">
-              <div className="w-full max-w-xs mx-auto bg-background/80 rounded-2xl shadow-lg p-8 flex flex-col items-center">
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* Left: Agent Creation, Voice Agent Creation, or Booking Form */}
+          {(showAgentCreation || showVoiceAgentCreation || showBookingForm) && (
+            <div className="flex-1 lg:border-r lg:pr-6 border-b lg:border-b-0 pb-6 lg:pb-0 flex flex-col justify-center items-center">
+              <div className={`w-full ${showBookingForm ? 'max-w-full' : 'max-w-xs'} mx-auto bg-background/80 rounded-2xl shadow-lg p-4 lg:p-8 flex flex-col items-center`}>
                 {showAgentCreation && <>
                   <h2 className="text-2xl font-bold text-primary mb-2 text-center">Create Your AI Chatbot</h2>
                   <p className="text-sm text-muted-foreground mb-6 text-center">
@@ -518,11 +552,37 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
                     </form>
                   )}
                 </>}
+                {showBookingForm && <>
+                  <h2 className="text-xl lg:text-2xl font-bold text-primary mb-2 text-center">Schedule a Consultation</h2>
+                  <p className="text-sm text-muted-foreground mb-4 lg:mb-6 text-center">
+                    Let's discuss your AI needs with one of our human experts.
+                  </p>
+                  <div className="w-full">
+                    <div 
+                      className="meetings-iframe-container rounded-lg overflow-hidden" 
+                      data-src="https://meetings-eu1.hubspot.com/rawzaba?embed=true"
+                      style={{ 
+                        minHeight: '400px',
+                        height: '60vh',
+                        maxHeight: '600px',
+                        width: '100%'
+                      }}
+                    ></div>
+                    <Button 
+                      onClick={() => setShowBookingForm(false)} 
+                      className="w-full mt-4"
+                      variant="outline"
+                      size="sm"
+                    >
+                      Close Booking Form
+                    </Button>
+                  </div>
+                </>}
               </div>
             </div>
           )}
           {/* Right: Vera UI (your existing Vera call UI) */}
-          <div className="flex-1 pl-6">
+          <div className="flex-1 lg:pl-6 pt-6 lg:pt-0">
             <DialogTitle className="text-xl font-semibold text-center mb-2">Talk to Vera</DialogTitle>
             <div className="w-full flex items-center justify-center mb-2">
               {callStatus === 'connecting' && (
@@ -538,8 +598,8 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
                 </span>
               )}
             </div>
-            <div className="flex flex-col items-center space-y-6">
-              <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-primary/20 shadow-lg">
+            <div className="flex flex-col items-center space-y-4 lg:space-y-6">
+              <div className="relative w-24 h-24 lg:w-32 lg:h-32 rounded-full overflow-hidden border-4 border-primary/20 shadow-lg">
                 <img
                   src={veraAvatarCentered}
                   alt="Vera"
@@ -572,8 +632,8 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
                 
                 <div 
                   ref={transcriptContainerRef}
-                  className={`w-full bg-muted/30 rounded-lg overflow-y-auto p-4 scroll-smooth transition-all duration-300 border ${
-                    isTranscriptVisible ? 'h-[300px] opacity-100' : 'h-0 opacity-0'
+                  className={`w-full bg-muted/30 rounded-lg overflow-y-auto p-2 lg:p-4 scroll-smooth transition-all duration-300 border ${
+                    isTranscriptVisible ? 'h-[200px] lg:h-[300px] opacity-100' : 'h-0 opacity-0'
                   }`}
                 >
                   {transcripts.length === 0 && !currentPartial ? (
@@ -620,24 +680,24 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
                 </div>
               </div>
 
-              <div className="flex items-center space-x-4 pt-2">
+              <div className="flex items-center justify-center space-x-4 pt-2">
                 <Button
                   variant="outline"
                   size="icon"
                   onClick={handleMuteToggle}
-                  className={`h-12 w-12 rounded-full ${
+                  className={`h-10 w-10 lg:h-12 lg:w-12 rounded-full ${
                     isMuted ? 'bg-destructive/10 text-destructive hover:bg-destructive/20' : ''
                   }`}
                 >
-                  {isMuted ? <MicOff className="h-5 w-5" /> : <Mic className="h-5 w-5" />}
+                  {isMuted ? <MicOff className="h-4 w-4 lg:h-5 lg:w-5" /> : <Mic className="h-4 w-4 lg:h-5 lg:w-5" />}
                 </Button>
                 <Button
                   variant="destructive"
                   size="icon"
                   onClick={handleEndCall}
-                  className="h-12 w-12 rounded-full"
+                  className="h-10 w-10 lg:h-12 lg:w-12 rounded-full"
                 >
-                  <PhoneOff className="h-5 w-5" />
+                  <PhoneOff className="h-4 w-4 lg:h-5 lg:w-5" />
                 </Button>
               </div>
             </div>
