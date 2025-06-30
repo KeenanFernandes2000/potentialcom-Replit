@@ -6,6 +6,7 @@ import Solutions from "@/components/sections/Solutions";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 import { AutoSEO } from "@/components/SEO";
+import zeinAubImage from "@assets/ZEIN AUB.png";
 
 const Offerings = () => {
   // Case Studies section
@@ -114,7 +115,7 @@ const Offerings = () => {
           "The Potential platform was instrumental in our type of work, a timesaving enabler! Their great customer support and open mentality for user experience enhancement is the key success factor",
         name: "MAHA ZOUWAYHED",
         title: "ASSOCIATE DIRECTOR, TALAL AND MADIHA ZEIN AUB INNOVATION PARK",
-        avatar: "https://placehold.co/120x120/e9ddff/8844dd?text=MZ",
+        avatar: zeinAubImage,
       },
       {
         quote:
