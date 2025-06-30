@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 import { AutoSEO } from "@/components/SEO";
 import zeinAubImage from "@assets/ZEIN AUB.png";
+import wfzoImage from "@assets/WFZO.png";
 
 const Offerings = () => {
   // Case Studies section
@@ -122,7 +123,7 @@ const Offerings = () => {
           "We made use of Potential.com's platform to empower Free Zones around the world by giving them access to our learning resources and helping them take action and innovate with their stakeholders.",
         name: "DR. SAMIR HAMROUNI",
         title: "CEO, WORLD FREE ZONE ORGANIZATIONS",
-        avatar: "https://placehold.co/120x120/e9ddff/8844dd?text=SH",
+        avatar: wfzoImage,
       },
     ];
 
