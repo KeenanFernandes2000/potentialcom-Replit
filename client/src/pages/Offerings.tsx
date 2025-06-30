@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { AutoSEO } from "@/components/SEO";
 import zeinAubImage from "@assets/ZEIN AUB.png";
 import wfzoImage from "@assets/WFZO.png";
+import arliHomesImage from "@assets/arliHomes.png";
 
 const Offerings = () => {
   // Case Studies section
@@ -130,7 +131,7 @@ const Offerings = () => {
           "The AI Voice Agent setup was easy, and the team were very helpful in trying to get all our information into the system before we launched. Overall, it has been a positive experience, and I look forward to seeing Grace grow into a more mature AI receptionist for our business.",
         name: "SAMANTHA CALLEJA",
         title: "ARLI HOMES, MELBOURNE, AUSTRALIA",
-        avatar: "https://placehold.co/120x120/e9ddff/8844dd?text=SC",
+        avatar: arliHomesImage,
       },
     ];
 
