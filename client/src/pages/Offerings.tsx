@@ -125,6 +125,13 @@ const Offerings = () => {
         title: "CEO, WORLD FREE ZONE ORGANIZATIONS",
         avatar: wfzoImage,
       },
+      {
+        quote:
+          "We have been using the Potential AI for a few months now. The set up was easy and the team were very helpful in trying to get all our information into the system before we launched. At the beginning we had a few teething issues as to be expected, but we were able to resolve them efficiently. We have found that Grace is getting better as time goes on and she now attends to calls with more accuracy. Having the email transcript and caller's number recorded helps us to follow up as required. Overall it has been a positive experience and I look forward to seeing Grace grow into a more mature AI receptionist for our business.",
+        name: "SAMANTHA CALLEJA",
+        title: "ARLI HOMES, MELBOURNE, AUSTRALIA",
+        avatar: "https://placehold.co/120x120/e9ddff/8844dd?text=SC",
+      },
     ];
 
     return (
@@ -134,38 +141,40 @@ const Offerings = () => {
             <h2 className="text-3xl font-bold mb-6">Testimonials</h2>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {testimonials.map((testimonial, idx) => (
-              <div
-                key={idx}
-                className="glass-effect rounded-xl p-8 border border-border shadow-md"
-                data-aos="fade-up"
-                data-aos-delay={idx * 100}
-              >
-                <div className="flex flex-col h-full">
-                  <p className="text-lg font-medium mb-6 italic">
-                    "{testimonial.quote}"
-                  </p>
-                  <div className="mt-auto flex items-center">
-                    <div className="w-16 h-16 rounded-full overflow-hidden mr-4">
-                      <img
-                        src={testimonial.avatar}
-                        alt={testimonial.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div>
-                      <p className="font-bold text-primary">
-                        {testimonial.name}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {testimonial.title}
-                      </p>
+          <div className="overflow-x-auto pb-4">
+            <div className="flex gap-8 w-max">
+              {testimonials.map((testimonial, idx) => (
+                <div
+                  key={idx}
+                  className="glass-effect rounded-xl p-8 border border-border shadow-md w-80 md:w-96 flex-shrink-0"
+                  data-aos="fade-up"
+                  data-aos-delay={idx * 100}
+                >
+                  <div className="flex flex-col h-full">
+                    <p className="text-lg font-medium mb-6 italic">
+                      "{testimonial.quote}"
+                    </p>
+                    <div className="mt-auto flex items-center">
+                      <div className="w-16 h-16 rounded-full overflow-hidden mr-4">
+                        <img
+                          src={testimonial.avatar}
+                          alt={testimonial.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <p className="font-bold text-primary">
+                          {testimonial.name}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {testimonial.title}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
