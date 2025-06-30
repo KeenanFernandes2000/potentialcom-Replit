@@ -127,7 +127,7 @@ const Offerings = () => {
       },
       {
         quote:
-          "We have been using the Potential AI for a few months now. The set up was easy and the team were very helpful in trying to get all our information into the system before we launched. At the beginning we had a few teething issues as to be expected, but we were able to resolve them efficiently. We have found that Grace is getting better as time goes on and she now attends to calls with more accuracy. Having the email transcript and caller's number recorded helps us to follow up as required. Overall it has been a positive experience and I look forward to seeing Grace grow into a more mature AI receptionist for our business.",
+          "We have been using the Potential.com AI Voice Agent for a few months now. The set up was easy and the team were very helpful in trying to get all our information into the system before we launched. Overall it has been a positive experience and I look forward to seeing Grace grow into a more mature AI receptionist for our business.",
         name: "SAMANTHA CALLEJA",
         title: "ARLI HOMES, MELBOURNE, AUSTRALIA",
         avatar: "https://placehold.co/120x120/e9ddff/8844dd?text=SC",
