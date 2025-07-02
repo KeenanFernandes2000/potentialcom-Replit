@@ -256,6 +256,14 @@ const UseCases = () => {
     interface: ["All Interfaces"] as string[]
   });
 
+  // Function to scroll to the build agents section
+  const scrollToBuildAgents = () => {
+    const section = document.getElementById('build-agents');
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   // Filter and sort use cases based on selected filters
   const filteredUseCases = useMemo(() => {
     return useCases
@@ -718,12 +726,20 @@ const UseCases = () => {
                               </div>
                             </div>
 
-                            <div className="flex gap-4">
-                              <Button className="flex-1" onClick={() => window.location.href = "/vera"}>
-                                Schedule Consultation
-                              </Button>
-                              <Button variant="outline" className="flex-1" onClick={() => window.location.href = "/chatbot"}>
-                                Build Similar Agent
+                            <div className="flex flex-col gap-3">
+                              <div className="flex gap-4">
+                                <Button className="flex-1" onClick={() => window.location.href = "/vera"}>
+                                  Schedule Consultation
+                                </Button>
+                                <Button variant="outline" className="flex-1" onClick={() => window.location.href = "/chatbot"}>
+                                  Build Similar Agent
+                                </Button>
+                              </div>
+                              <Button 
+                                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+                                onClick={scrollToBuildAgents}
+                              >
+                                Build Similar AI Agents for Free
                               </Button>
                             </div>
                           </div>
@@ -751,7 +767,7 @@ const UseCases = () => {
         </section>
 
         {/* Call to Action */}
-        <section className="py-16 bg-muted/30">
+        <section id="build-agents" className="py-16 bg-muted/30">
           <div className="container">
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-3xl font-bold mb-4">Build Your AI Agents</h2>
