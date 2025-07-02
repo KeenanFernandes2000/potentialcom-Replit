@@ -894,9 +894,13 @@ const UseCases = () => {
                                     window.history.pushState(null, '', '/usecases#build-agents');
                                     const section = document.getElementById('build-agents');
                                     if (section) {
-                                      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                      const offsetTop = section.getBoundingClientRect().top + window.scrollY - 80;
+                                      window.scrollTo({
+                                        top: offsetTop,
+                                        behavior: 'smooth'
+                                      });
                                     }
-                                  }, 100);
+                                  }, 300);
                                 }}
                               >
                                 Build Similar AI Agents for Free
