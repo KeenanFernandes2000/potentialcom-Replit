@@ -256,15 +256,24 @@ const UseCases = () => {
       const allOption = `All ${type.charAt(0).toUpperCase() + type.slice(1)}${type === 'interface' ? 's' : type === 'industry' ? ' Industries' : type === 'task' ? ' Tasks' : ' Channels'}`;
       
       if (value === allOption) {
-        // If selecting "All", clear other selections
+        // If selecting "All", clear other selections and set only "All"
         return { ...prev, [type]: [allOption] };
       } else {
-        // If selecting a specific option, remove "All" if it exists
+        // If selecting a specific option, remove "All" if it exists and toggle the specific item
         const filteredOptions = currentFilters.filter(item => item !== allOption);
-        if (!filteredOptions.includes(value)) {
+        
+        if (filteredOptions.includes(value)) {
+          // If item is already selected, remove it
+          const updatedFilters = filteredOptions.filter(item => item !== value);
+          // If no specific items remain, revert to "All"
+          if (updatedFilters.length === 0) {
+            return { ...prev, [type]: [allOption] };
+          }
+          return { ...prev, [type]: updatedFilters };
+        } else {
+          // If item is not selected, add it
           return { ...prev, [type]: [...filteredOptions, value] };
         }
-        return prev;
       }
     });
   };
