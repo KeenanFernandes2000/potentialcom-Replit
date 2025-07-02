@@ -254,20 +254,22 @@ const UseCases = () => {
     interface: ["All Interfaces"] as string[]
   });
 
-  // Filter use cases based on selected filters
+  // Filter and sort use cases based on selected filters
   const filteredUseCases = useMemo(() => {
-    return useCases.filter(useCase => {
-      const matchesTask = selectedFilters.task.includes("All Tasks") || 
-        selectedFilters.task.some(task => useCase.tasks.includes(task));
-      const matchesIndustry = selectedFilters.industry.includes("All Industries") || 
-        selectedFilters.industry.includes(useCase.industry);
-      const matchesChannel = selectedFilters.channel.includes("All Channels") || 
-        selectedFilters.channel.some(channel => useCase.channels.includes(channel));
-      const matchesInterface = selectedFilters.interface.includes("All Interfaces") || 
-        selectedFilters.interface.some(interfaceType => useCase.interface.includes(interfaceType));
-      
-      return matchesTask && matchesIndustry && matchesChannel && matchesInterface;
-    });
+    return useCases
+      .filter(useCase => {
+        const matchesTask = selectedFilters.task.includes("All Tasks") || 
+          selectedFilters.task.some(task => useCase.tasks.includes(task));
+        const matchesIndustry = selectedFilters.industry.includes("All Industries") || 
+          selectedFilters.industry.includes(useCase.industry);
+        const matchesChannel = selectedFilters.channel.includes("All Channels") || 
+          selectedFilters.channel.some(channel => useCase.channels.includes(channel));
+        const matchesInterface = selectedFilters.interface.includes("All Interfaces") || 
+          selectedFilters.interface.some(interfaceType => useCase.interface.includes(interfaceType));
+        
+        return matchesTask && matchesIndustry && matchesChannel && matchesInterface;
+      })
+      .sort((a, b) => a.title.localeCompare(b.title));
   }, [selectedFilters]);
 
   const addFilter = (type: keyof typeof selectedFilters, value: string) => {
