@@ -52,7 +52,7 @@ const industryIcons = {
 const useCases = [
   {
     id: 1,
-    icon: "🏨",
+    icon: "hotel",
     title: "Hotel: Room Service Agent",
     description: "An AI voice agent that responds to guest calls, takes room service orders, and manages simple guest requests without staff intervention.",
     tasks: ["Place Orders", "Answer Questions", "Send Confirmations"],
@@ -555,26 +555,45 @@ const UseCases = () => {
                       <div className="flex items-center gap-3 mb-4">
                         <div className="text-primary p-2 rounded-lg bg-primary/10">
                           {(() => {
-                            // Map emojis to unique icon components
+                            // Map icon keys to unique icon components
                             const iconMap: { [key: string]: any } = {
-                              "🏨": Hotel,           // Hotel Room Service
-                              "🏥": Stethoscope,     // Healthcare Appointment
-                              "🩺": UserPlus,        // AI Doctor First Respondent
-                              "🧪": Microscope,      // Medical Test Analyzer
-                              "🛒": ShoppingCart,    // E-commerce
-                              "👥": Users,           // HR
-                              "🚗": Car,             // Automotive
-                              "🏢": Building2,       // Real Estate
-                              "🎓": GraduationCap,   // Education
-                              "✈️": Plane,           // Travel
-                              "🍽️": Utensils,       // Restaurant
-                              "💪": Dumbbell,        // Fitness
-                              "📋": FileText,        // Insurance
-                              "📞": PhoneCall,       // Sales
-                              "🏦": Banknote,        // Banking/Finance
-                              "🏪": Store,           // Retail
-                              "💼": Briefcase,       // Consulting
-                              "🛠": Wrench          // Tech Support
+                              "hotel": Hotel,
+                              "healthcare": Stethoscope,
+                              "doctor": UserPlus,
+                              "medical": Microscope,
+                              "ecommerce": ShoppingCart,
+                              "hr": Users,
+                              "automotive": Car,
+                              "realestate": Building2,
+                              "education": GraduationCap,
+                              "travel": Plane,
+                              "restaurant": Utensils,
+                              "fitness": Dumbbell,
+                              "insurance": FileText,
+                              "sales": PhoneCall,
+                              "finance": Banknote,
+                              "retail": Store,
+                              "consulting": Briefcase,
+                              "techsupport": Wrench,
+                              // Legacy emoji support (fallback)
+                              "🏨": Hotel,
+                              "🏥": Stethoscope,
+                              "🩺": UserPlus,
+                              "🧪": Microscope,
+                              "🛒": ShoppingCart,
+                              "👥": Users,
+                              "🚗": Car,
+                              "🏢": Building2,
+                              "🎓": GraduationCap,
+                              "✈️": Plane,
+                              "🍽️": Utensils,
+                              "💪": Dumbbell,
+                              "📋": FileText,
+                              "📞": PhoneCall,
+                              "🏦": Banknote,
+                              "🏪": Store,
+                              "💼": Briefcase,
+                              "🛠": Wrench
                             };
                             const IconComponent = iconMap[useCase.icon] || Building2;
                             return <IconComponent className="h-6 w-6" />;
@@ -634,26 +653,45 @@ const UseCases = () => {
                             <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
                               <div className="text-primary p-2 rounded-lg bg-primary/10">
                                 {(() => {
-                                  // Map emojis to unique icon components
+                                  // Map icon keys to unique icon components
                                   const iconMap: { [key: string]: any } = {
-                                    "🏨": Hotel,           // Hotel Room Service
-                                    "🏥": Stethoscope,     // Healthcare Appointment
-                                    "🩺": UserPlus,        // AI Doctor First Respondent
-                                    "🧪": Microscope,      // Medical Test Analyzer
-                                    "🛒": ShoppingCart,    // E-commerce
-                                    "👥": Users,           // HR
-                                    "🚗": Car,             // Automotive
-                                    "🏢": Building2,       // Real Estate
-                                    "🎓": GraduationCap,   // Education
-                                    "✈️": Plane,           // Travel
-                                    "🍽️": Utensils,       // Restaurant
-                                    "💪": Dumbbell,        // Fitness
-                                    "📋": FileText,        // Insurance
-                                    "📞": PhoneCall,       // Sales
-                                    "🏦": Banknote,        // Banking/Finance
-                                    "🏪": Store,           // Retail
-                                    "💼": Briefcase,       // Consulting
-                                    "🛠": Wrench          // Tech Support
+                                    "hotel": Hotel,
+                                    "healthcare": Stethoscope,
+                                    "doctor": UserPlus,
+                                    "medical": Microscope,
+                                    "ecommerce": ShoppingCart,
+                                    "hr": Users,
+                                    "automotive": Car,
+                                    "realestate": Building2,
+                                    "education": GraduationCap,
+                                    "travel": Plane,
+                                    "restaurant": Utensils,
+                                    "fitness": Dumbbell,
+                                    "insurance": FileText,
+                                    "sales": PhoneCall,
+                                    "finance": Banknote,
+                                    "retail": Store,
+                                    "consulting": Briefcase,
+                                    "techsupport": Wrench,
+                                    // Legacy emoji support (fallback)
+                                    "🏨": Hotel,
+                                    "🏥": Stethoscope,
+                                    "🩺": UserPlus,
+                                    "🧪": Microscope,
+                                    "🛒": ShoppingCart,
+                                    "👥": Users,
+                                    "🚗": Car,
+                                    "🏢": Building2,
+                                    "🎓": GraduationCap,
+                                    "✈️": Plane,
+                                    "🍽️": Utensils,
+                                    "💪": Dumbbell,
+                                    "📋": FileText,
+                                    "📞": PhoneCall,
+                                    "🏦": Banknote,
+                                    "🏪": Store,
+                                    "💼": Briefcase,
+                                    "🛠": Wrench
                                   };
                                   const IconComponent = iconMap[useCase.icon] || Building2;
                                   return <IconComponent className="h-6 w-6" />;
