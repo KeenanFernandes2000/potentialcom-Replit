@@ -876,7 +876,7 @@ const UseCases = () => {
                             
                             {/* Video Demo */}
                             <div className="aspect-video bg-muted rounded-lg mb-6 overflow-hidden">
-                              {useCase.title === "Customer Service Agent" && useCase.industry.includes("Finance") ? (
+                              {useCase.title === "Banking: Customer Support Agent" && useCase.industry === "Banking" ? (
                                 <iframe
                                   src="https://www.youtube.com/embed/qW_nQ5kx8GY"
                                   title="Banking Customer Service Agent Demo"
