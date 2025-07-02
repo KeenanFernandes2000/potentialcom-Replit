@@ -316,23 +316,10 @@ const UseCases = () => {
                 Use the filters below to find the perfect AI Agent for your needs
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                {/* Task Filter */}
-                <Select onValueChange={(value) => addFilter('task', value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select..." />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="All Tasks">All Tasks</SelectItem>
-                    {getAllTasks().map(task => (
-                      <SelectItem key={task} value={task}>{task}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-
                 {/* Industry Filter */}
                 <Select onValueChange={(value) => addFilter('industry', value)}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select..." />
+                    <SelectValue placeholder="Select Industry" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="All Industries">All Industries</SelectItem>
@@ -342,10 +329,23 @@ const UseCases = () => {
                   </SelectContent>
                 </Select>
 
+                {/* Task Filter */}
+                <Select onValueChange={(value) => addFilter('task', value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Agent Task" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="All Tasks">All Tasks</SelectItem>
+                    {getAllTasks().map(task => (
+                      <SelectItem key={task} value={task}>{task}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
                 {/* Channel Filter */}
                 <Select onValueChange={(value) => addFilter('channel', value)}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select..." />
+                    <SelectValue placeholder="Select Channel" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="All Channels">All Channels</SelectItem>
@@ -358,7 +358,7 @@ const UseCases = () => {
                 {/* Interface Filter */}
                 <Select onValueChange={(value) => addFilter('interface', value)}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select..." />
+                    <SelectValue placeholder="Select Interface" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="All Interfaces">All Interfaces</SelectItem>
