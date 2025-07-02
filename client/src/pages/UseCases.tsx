@@ -755,9 +755,7 @@ const UseCases = () => {
               <h2 className="text-3xl font-bold mb-4">
                 Don't See Your Use Case?
               </h2>
-              <p className="text-xl text-muted-foreground mb-8">
-                Our AI agents can be customized for any industry or business process. Schedule a consultation to discuss your specific needs.
-              </p>
+              <p className="text-xl text-muted-foreground mb-8">Our AI agents are fully customizable to fit any industry or business process. Start by testing an AI Voice Agent or AI chatbot, and we’ll work with you to tailor it further to your specific use case.</p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" onClick={() => window.location.href = "/vera"}>
                   Schedule Consultation
