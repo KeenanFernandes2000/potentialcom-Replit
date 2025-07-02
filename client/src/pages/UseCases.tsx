@@ -896,10 +896,14 @@ const UseCases = () => {
                                     closeButton.click();
                                   }
                                 }
-                                // Navigate to the anchor link after a brief delay
+                                // Update URL and scroll to the section after modal closes
                                 setTimeout(() => {
-                                  window.location.href = '/usecases#build-agents';
-                                }, 100);
+                                  window.history.pushState(null, '', '/usecases#build-agents');
+                                  const section = document.getElementById('build-agents');
+                                  if (section) {
+                                    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                  }
+                                }, 150);
                               }}
                             >
                               Build Similar AI Agents for Free
