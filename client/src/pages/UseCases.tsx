@@ -8,8 +8,28 @@ import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
-import { X, Check, ChevronDown } from "lucide-react";
+import { X, Check, ChevronDown, Hotel, Stethoscope, ShoppingCart, Users, Car, Building2, GraduationCap, Plane, Utensils, Dumbbell, Home, Briefcase, PhoneCall, FileText, Wrench } from "lucide-react";
 import { SEO } from "@/components/SEO";
+
+// Map of use case icons
+const useCaseIcons = {
+  hotel: Hotel,
+  healthcare: Stethoscope,
+  ecommerce: ShoppingCart,
+  hr: Users,
+  automotive: Car,
+  realestate: Building2,
+  education: GraduationCap,
+  travel: Plane,
+  restaurants: Utensils,
+  fitness: Dumbbell,
+  insurance: FileText,
+  sales: PhoneCall,
+  techsupport: Wrench,
+  consulting: Briefcase,
+  finance: Building2,
+  retail: Home
+};
 
 // Icons for different industries
 const industryIcons = {
@@ -533,7 +553,33 @@ const UseCases = () => {
                   <Card key={useCase.id} className="glass-effect border-border rounded-xl overflow-hidden card-hover h-full">
                     <CardContent className="p-6 flex flex-col h-full">
                       <div className="flex items-center gap-3 mb-4">
-                        <div className="text-3xl">{useCase.icon}</div>
+                        <div className="text-primary p-2 rounded-lg bg-primary/10">
+                          {(() => {
+                            // Map emojis to icon components
+                            const iconMap: { [key: string]: any } = {
+                              "🏨": Hotel,
+                              "🏥": Stethoscope,
+                              "🩺": Stethoscope,
+                              "🧪": FileText,
+                              "🛒": ShoppingCart,
+                              "👥": Users,
+                              "🚗": Car,
+                              "🏢": Building2,
+                              "🎓": GraduationCap,
+                              "✈️": Plane,
+                              "🍽️": Utensils,
+                              "💪": Dumbbell,
+                              "📋": FileText,
+                              "📞": PhoneCall,
+                              "🏦": Building2,
+                              "🏪": Home,
+                              "💼": Briefcase,
+                              "🛠": Wrench
+                            };
+                            const IconComponent = iconMap[useCase.icon] || Building2;
+                            return <IconComponent className="h-6 w-6" />;
+                          })()}
+                        </div>
                         <h3 className="text-lg font-semibold leading-tight">{useCase.title}</h3>
                       </div>
                       
@@ -546,7 +592,7 @@ const UseCases = () => {
                           <span className="text-xs font-medium text-muted-foreground mb-1 block">TASKS</span>
                           <div className="flex flex-wrap gap-1">
                             {useCase.tasks.map(task => (
-                              <Badge key={task} variant="outline" className="text-xs">
+                              <Badge key={task} className="text-xs text-white" style={{ backgroundColor: '#9f2064' }}>
                                 {task}
                               </Badge>
                             ))}
@@ -568,7 +614,7 @@ const UseCases = () => {
                           <span className="text-xs font-medium text-muted-foreground mb-1 block">INTERFACE</span>
                           <div className="flex flex-wrap gap-1">
                             {useCase.interface.map(interfaceType => (
-                              <Badge key={interfaceType} variant="default" className="text-xs">
+                              <Badge key={interfaceType} className="text-xs text-white" style={{ backgroundColor: '#eb217c' }}>
                                 {interfaceType}
                               </Badge>
                             ))}
@@ -586,7 +632,33 @@ const UseCases = () => {
                           <DialogTitle className="sr-only">{useCase.title}</DialogTitle>
                           <div className="p-6">
                             <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
-                              <span className="text-3xl">{useCase.icon}</span>
+                              <div className="text-primary p-2 rounded-lg bg-primary/10">
+                                {(() => {
+                                  // Map emojis to icon components
+                                  const iconMap: { [key: string]: any } = {
+                                    "🏨": Hotel,
+                                    "🏥": Stethoscope,
+                                    "🩺": Stethoscope,
+                                    "🧪": FileText,
+                                    "🛒": ShoppingCart,
+                                    "👥": Users,
+                                    "🚗": Car,
+                                    "🏢": Building2,
+                                    "🎓": GraduationCap,
+                                    "✈️": Plane,
+                                    "🍽️": Utensils,
+                                    "💪": Dumbbell,
+                                    "📋": FileText,
+                                    "📞": PhoneCall,
+                                    "🏦": Building2,
+                                    "🏪": Home,
+                                    "💼": Briefcase,
+                                    "🛠": Wrench
+                                  };
+                                  const IconComponent = iconMap[useCase.icon] || Building2;
+                                  return <IconComponent className="h-6 w-6" />;
+                                })()}
+                              </div>
                               {useCase.title}
                             </h3>
                             <p className="text-muted-foreground mb-6">
