@@ -887,7 +887,20 @@ const UseCases = () => {
 
                             <Button 
                               className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
-                              onClick={handleCloseAndScroll}
+                              onClick={() => {
+                                // Close the modal first
+                                const openDialog = document.querySelector('[data-state="open"][role="dialog"]');
+                                if (openDialog) {
+                                  const closeButton = openDialog.querySelector('[data-radix-dialog-close]') as HTMLElement;
+                                  if (closeButton) {
+                                    closeButton.click();
+                                  }
+                                }
+                                // Navigate to the anchor link after a brief delay
+                                setTimeout(() => {
+                                  window.location.href = '/usecases#build-agents';
+                                }, 100);
+                              }}
                             >
                               Build Similar AI Agents for Free
                             </Button>
