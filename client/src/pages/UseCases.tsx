@@ -40,6 +40,19 @@ import visaLogo from "@assets/Customer Logos/Visa logo.png";
 import wfzoLogo from "@assets/Customer Logos/WFZO logo.png";
 import intelLogo from "@assets/Customer Logos/intel logo.png";
 
+// Declare global chatembed function
+declare global {
+  interface Window {
+    chatembed: (config: {
+      botId: string;
+      botIcon: string;
+      botColor: string;
+      botName: string;
+      divPlacement: string;
+    }) => void;
+  }
+}
+
 // Map of use case icons
 const useCaseIcons = {
   hotel: Hotel,
@@ -310,6 +323,50 @@ const UseCases = () => {
 
     // Cleanup
     return () => observer.disconnect();
+  }, []);
+
+  // Load chat embed script
+  useEffect(() => {
+    // Add script to head if it doesn't exist
+    let script = document.querySelector('script[src*="section.js"]') as HTMLScriptElement;
+    
+    if (!script) {
+      script = document.createElement('script');
+      script.charset = 'utf-8';
+      script.type = 'text/javascript';
+      script.src = 'https://ai.potential.com/static/embed/section.js';
+      script.crossOrigin = 'anonymous';
+      script.async = true;
+      
+      // Wait for script to load, then initialize
+      script.addEventListener('load', () => {
+        setTimeout(() => {
+          const initScript = document.createElement('script');
+          initScript.innerHTML = `
+            if (typeof chatembed !== 'undefined') {
+              chatembed({
+                botId: "66503b02826171ae813a9f0c",
+                botIcon: "https://ai.potential.com/static/mentors/1716534012512-abulsheed_A_friendly_30_year_old_AI_wellness_well-being_and_nat_2d6fef22-3201-4fe4-b6b6-48a046c1f4b0.png",
+                botColor: "undefined",
+                botName: "Wellness Guru",
+                divPlacement: "potchat"
+              });
+            }
+          `;
+          document.head.appendChild(initScript);
+        }, 500);
+      });
+      
+      document.head.appendChild(script);
+    }
+
+    return () => {
+      // Cleanup on unmount
+      const potchatDiv = document.getElementById('potchat');
+      if (potchatDiv) {
+        potchatDiv.innerHTML = '';
+      }
+    };
   }, []);
 
   // Function to scroll to the build agents section
@@ -874,14 +931,24 @@ const UseCases = () => {
                               {useCase.description}
                             </p>
                             
-                            {/* Video Demo Placeholder */}
-                            <div className="aspect-video bg-muted rounded-lg flex items-center justify-center mb-6">
-                              <div className="text-center">
-                                <div className="text-4xl mb-2">🎥</div>
-                                <p className="text-muted-foreground">Video demo coming soon</p>
-                                <p className="text-sm text-muted-foreground mt-1">
-                                  This agent will showcase: {useCase.tasks.join(", ")}
-                                </p>
+                            {/* Interactive AI Demo */}
+                            <div className="aspect-video bg-gradient-to-br from-background to-muted/30 rounded-xl border border-border/50 p-6 mb-6 relative overflow-hidden">
+                              {/* Background pattern */}
+                              <div className="absolute inset-0 bg-grid-pattern opacity-5" />
+                              
+                              {/* Embed container */}
+                              <div className="relative z-10 h-full flex flex-col">
+                                <div className="mb-4">
+                                  <h4 className="text-lg font-semibold mb-2">Try This AI Agent Live</h4>
+                                  <p className="text-sm text-muted-foreground">
+                                    This agent will showcase: {useCase.tasks.join(", ")}
+                                  </p>
+                                </div>
+                                
+                                {/* Chat embed container */}
+                                <div className="flex-1 bg-background/80 backdrop-blur-sm rounded-lg border border-border/30 p-4">
+                                  <div id="potchat" className="h-full min-h-[300px] w-full" />
+                                </div>
                               </div>
                             </div>
 
