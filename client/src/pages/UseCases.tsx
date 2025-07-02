@@ -874,15 +874,28 @@ const UseCases = () => {
                               {useCase.description}
                             </p>
                             
-                            {/* Video Demo Placeholder */}
-                            <div className="aspect-video bg-muted rounded-lg flex items-center justify-center mb-6">
-                              <div className="text-center">
-                                <div className="text-4xl mb-2">🎥</div>
-                                <p className="text-muted-foreground">Video demo coming soon</p>
-                                <p className="text-sm text-muted-foreground mt-1">
-                                  This agent will showcase: {useCase.tasks.join(", ")}
-                                </p>
-                              </div>
+                            {/* Video Demo */}
+                            <div className="aspect-video bg-muted rounded-lg mb-6 overflow-hidden">
+                              {useCase.title === "Customer Service Agent" && useCase.industry.includes("Finance") ? (
+                                <iframe
+                                  src="https://www.youtube.com/embed/qW_nQ5kx8GY"
+                                  title="Banking Customer Service Agent Demo"
+                                  className="w-full h-full"
+                                  frameBorder="0"
+                                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                  allowFullScreen
+                                />
+                              ) : (
+                                <div className="w-full h-full flex items-center justify-center">
+                                  <div className="text-center">
+                                    <div className="text-4xl mb-2">🎥</div>
+                                    <p className="text-muted-foreground">Video demo coming soon</p>
+                                    <p className="text-sm text-muted-foreground mt-1">
+                                      This agent will showcase: {useCase.tasks.join(", ")}
+                                    </p>
+                                  </div>
+                                </div>
+                              )}
                             </div>
 
                             <DialogClose asChild>
