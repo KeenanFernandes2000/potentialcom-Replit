@@ -726,22 +726,25 @@ const UseCases = () => {
                               </div>
                             </div>
 
-                            <div className="flex flex-col gap-3">
-                              <div className="flex gap-4">
-                                <Button className="flex-1" onClick={() => window.location.href = "/vera"}>
-                                  Schedule Consultation
-                                </Button>
-                                <Button variant="outline" className="flex-1" onClick={() => window.location.href = "/chatbot"}>
-                                  Build Similar Agent
-                                </Button>
-                              </div>
-                              <Button 
-                                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
-                                onClick={scrollToBuildAgents}
-                              >
-                                Build Similar AI Agents for Free
-                              </Button>
-                            </div>
+                            <Button 
+                              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+                              onClick={(e) => {
+                                // Close the modal by triggering a click on the close button or backdrop
+                                const dialogElement = (e.target as HTMLElement).closest('[role="dialog"]');
+                                if (dialogElement) {
+                                  const closeButton = dialogElement.querySelector('[data-radix-dialog-close]') as HTMLElement;
+                                  if (closeButton) {
+                                    closeButton.click();
+                                  }
+                                }
+                                // Scroll to build agents section after a short delay to allow modal to close
+                                setTimeout(() => {
+                                  scrollToBuildAgents();
+                                }, 100);
+                              }}
+                            >
+                              Build Similar AI Agents for Free
+                            </Button>
                           </div>
                         </DialogContent>
                       </Dialog>
