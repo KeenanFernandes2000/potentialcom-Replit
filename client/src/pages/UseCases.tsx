@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { X } from "lucide-react";
 import { SEO } from "@/components/SEO";
@@ -279,29 +279,22 @@ const UseCases = () => {
         keywords="AI use cases, chatbot examples, voice agent applications, business automation, AI solutions by industry"
       />
       
-      <div className="min-h-screen bg-background">
+      <div className="font-inter min-h-screen">
         <Header />
-
-        {/* Hero Section */}
-        <section className="pt-24 pb-16 bg-muted/30 relative">
-          <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-background to-transparent"></div>
-          
-          <div className="container">
-            <div className="max-w-4xl mx-auto text-center">
-              <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-                Use Cases
-              </div>
-              <h1 className="text-4xl md:text-6xl font-bold mb-6">
+        
+        <main className="pt-32">
+          <div className="container mb-12">
+            <div className="max-w-6xl mx-auto">
+              <h1 className="text-4xl md:text-5xl font-bold mb-4">
                 Discover Powerful AI Use Cases for Every Industry
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              <p className="text-xl text-muted-foreground max-w-3xl">
                 Explore how AI Chatbots and Voice Agents can automate key business tasks, reduce costs, and boost customer engagement — across all channels and industries. Use the filters below to find the perfect agent for your needs.
               </p>
             </div>
           </div>
-        </section>
 
-        {/* Filters Section */}
+          {/* Filters Section */}
         <section className="py-8 bg-background border-b">
           <div className="container">
             <div className="max-w-6xl mx-auto">
@@ -438,6 +431,7 @@ const UseCases = () => {
                           </Button>
                         </DialogTrigger>
                         <DialogContent className="max-w-4xl">
+                          <DialogTitle className="sr-only">{useCase.title}</DialogTitle>
                           <div className="p-6">
                             <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
                               <span className="text-3xl">{useCase.icon}</span>
@@ -512,6 +506,7 @@ const UseCases = () => {
           </div>
         </section>
 
+        </main>
         <Footer />
       </div>
     </>
