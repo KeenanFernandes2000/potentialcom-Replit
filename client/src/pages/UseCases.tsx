@@ -319,9 +319,7 @@ const UseCases = () => {
                 {/* Task Filter */}
                 <Select onValueChange={(value) => addFilter('task', value)}>
                   <SelectTrigger>
-                    <SelectValue>
-                      {selectedFilters.task.length > 1 ? `${selectedFilters.task.length} tasks selected` : selectedFilters.task[0] || "Select Task"}
-                    </SelectValue>
+                    <SelectValue placeholder="Select..." />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="All Tasks">All Tasks</SelectItem>
@@ -334,9 +332,7 @@ const UseCases = () => {
                 {/* Industry Filter */}
                 <Select onValueChange={(value) => addFilter('industry', value)}>
                   <SelectTrigger>
-                    <SelectValue>
-                      {selectedFilters.industry.length > 1 ? `${selectedFilters.industry.length} industries selected` : selectedFilters.industry[0] || "Select Industry"}
-                    </SelectValue>
+                    <SelectValue placeholder="Select..." />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="All Industries">All Industries</SelectItem>
@@ -349,9 +345,7 @@ const UseCases = () => {
                 {/* Channel Filter */}
                 <Select onValueChange={(value) => addFilter('channel', value)}>
                   <SelectTrigger>
-                    <SelectValue>
-                      {selectedFilters.channel.length > 1 ? `${selectedFilters.channel.length} channels selected` : selectedFilters.channel[0] || "Select Channel"}
-                    </SelectValue>
+                    <SelectValue placeholder="Select..." />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="All Channels">All Channels</SelectItem>
@@ -364,9 +358,7 @@ const UseCases = () => {
                 {/* Interface Filter */}
                 <Select onValueChange={(value) => addFilter('interface', value)}>
                   <SelectTrigger>
-                    <SelectValue>
-                      {selectedFilters.interface.length > 1 ? `${selectedFilters.interface.length} interfaces selected` : selectedFilters.interface[0] || "Select Interface"}
-                    </SelectValue>
+                    <SelectValue placeholder="Select..." />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="All Interfaces">All Interfaces</SelectItem>
