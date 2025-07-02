@@ -340,11 +340,11 @@ const UseCases = () => {
                       <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-full p-0">
+                  <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[300px] p-0" side="bottom" align="start">
                     <Command>
                       <CommandInput placeholder="Search industries..." />
                       <CommandEmpty>No industries found.</CommandEmpty>
-                      <CommandGroup>
+                      <CommandGroup className="max-h-[240px] overflow-auto">
                         <CommandItem
                           onSelect={() => addFilter('industry', 'All Industries')}
                         >
@@ -381,11 +381,11 @@ const UseCases = () => {
                       <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-full p-0">
+                  <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[300px] p-0" side="bottom" align="start">
                     <Command>
                       <CommandInput placeholder="Search tasks..." />
                       <CommandEmpty>No tasks found.</CommandEmpty>
-                      <CommandGroup>
+                      <CommandGroup className="max-h-[240px] overflow-auto">
                         <CommandItem
                           onSelect={() => addFilter('task', 'All Tasks')}
                         >
@@ -422,11 +422,11 @@ const UseCases = () => {
                       <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-full p-0">
+                  <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[300px] p-0" side="bottom" align="start">
                     <Command>
                       <CommandInput placeholder="Search channels..." />
                       <CommandEmpty>No channels found.</CommandEmpty>
-                      <CommandGroup>
+                      <CommandGroup className="max-h-[240px] overflow-auto">
                         <CommandItem
                           onSelect={() => addFilter('channel', 'All Channels')}
                         >
@@ -463,11 +463,11 @@ const UseCases = () => {
                       <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-full p-0">
+                  <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[300px] p-0" side="bottom" align="start">
                     <Command>
                       <CommandInput placeholder="Search interfaces..." />
                       <CommandEmpty>No interfaces found.</CommandEmpty>
-                      <CommandGroup>
+                      <CommandGroup className="max-h-[240px] overflow-auto">
                         <CommandItem
                           onSelect={() => addFilter('interface', 'All Interfaces')}
                         >
