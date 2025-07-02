@@ -110,7 +110,7 @@ const useCases = [
     icon: "🛒",
     title: "Ecommerce: Shopping Assistant",
     description: "Helps users find products, answers their questions, and places orders — all via chat or voice.",
-    tasks: ["Answer Questions", "Suggest Products/Services", "Place Orders"],
+    tasks: ["Answer Questions", "Suggest Products/Services", "Place Orders", "Track Orders"],
     channels: ["Phone", "Website", "WhatsApp"],
     interface: ["Voice", "Chat"],
     industry: "Ecommerce",
