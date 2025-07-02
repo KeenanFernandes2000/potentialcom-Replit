@@ -231,19 +231,19 @@ const useCases = [
 // Extract unique filter options
 const getAllTasks = () => {
   const tasks = useCases.flatMap(useCase => useCase.tasks);
-  return tasks.filter((task, index, array) => array.indexOf(task) === index);
+  return tasks.filter((task, index, array) => array.indexOf(task) === index).sort();
 };
 const getAllIndustries = () => {
   const industries = useCases.map(useCase => useCase.industry);
-  return industries.filter((industry, index, array) => array.indexOf(industry) === index);
+  return industries.filter((industry, index, array) => array.indexOf(industry) === index).sort();
 };
 const getAllChannels = () => {
   const channels = useCases.flatMap(useCase => useCase.channels);
-  return channels.filter((channel, index, array) => array.indexOf(channel) === index);
+  return channels.filter((channel, index, array) => array.indexOf(channel) === index).sort();
 };
 const getAllInterfaces = () => {
   const interfaces = useCases.flatMap(useCase => useCase.interface);
-  return interfaces.filter((interfaceType, index, array) => array.indexOf(interfaceType) === index);
+  return interfaces.filter((interfaceType, index, array) => array.indexOf(interfaceType) === index).sort();
 };
 
 const UseCases = () => {
