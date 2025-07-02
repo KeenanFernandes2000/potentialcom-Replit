@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogClose } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
@@ -885,29 +885,23 @@ const UseCases = () => {
                               </div>
                             </div>
 
-                            <Button 
-                              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
-                              onClick={() => {
-                                // Close the modal first
-                                const openDialog = document.querySelector('[data-state="open"][role="dialog"]');
-                                if (openDialog) {
-                                  const closeButton = openDialog.querySelector('[data-radix-dialog-close]') as HTMLElement;
-                                  if (closeButton) {
-                                    closeButton.click();
-                                  }
-                                }
-                                // Update URL and scroll to the section after modal closes
-                                setTimeout(() => {
-                                  window.history.pushState(null, '', '/usecases#build-agents');
-                                  const section = document.getElementById('build-agents');
-                                  if (section) {
-                                    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                                  }
-                                }, 150);
-                              }}
-                            >
-                              Build Similar AI Agents for Free
-                            </Button>
+                            <DialogClose asChild>
+                              <Button 
+                                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+                                onClick={() => {
+                                  // Update URL and scroll to the section after modal closes
+                                  setTimeout(() => {
+                                    window.history.pushState(null, '', '/usecases#build-agents');
+                                    const section = document.getElementById('build-agents');
+                                    if (section) {
+                                      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                    }
+                                  }, 100);
+                                }}
+                              >
+                                Build Similar AI Agents for Free
+                              </Button>
+                            </DialogClose>
                           </div>
                         </DialogContent>
                       </Dialog>
