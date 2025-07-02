@@ -278,16 +278,13 @@ const UseCases = () => {
         description="Explore powerful AI chatbot and voice agent use cases across industries. From healthcare to hospitality, discover how AI can automate tasks, reduce costs, and boost customer engagement."
         keywords="AI use cases, chatbot examples, voice agent applications, business automation, AI solutions by industry"
       />
-      
       <div className="font-inter min-h-screen">
         <Header />
         
         <main className="pt-32">
           <div className="container mb-12">
             <div className="max-w-6xl mx-auto">
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                Discover Powerful AI Use Cases for Every Industry
-              </h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-4">Discover Powerful AI Agent Use Cases for Every Industry</h1>
               <p className="text-xl text-muted-foreground max-w-3xl">
                 Explore how AI Chatbots and Voice Agents can automate key business tasks, reduce costs, and boost customer engagement — across all channels and industries. Use the filters below to find the perfect agent for your needs.
               </p>
