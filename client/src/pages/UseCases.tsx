@@ -653,101 +653,101 @@ const UseCases = () => {
                         </div>
                       </div>
 
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <Button className="w-full bg-primary hover:bg-primary/90 text-white">
-                            Try This Agent
-                          </Button>
-                        </DialogTrigger>
-                        <DialogContent className="max-w-4xl">
-                          <DialogTitle className="sr-only">{useCase.title}</DialogTitle>
-                          <div className="p-6">
-                            <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
-                              <div className="text-primary p-2 rounded-lg bg-primary/10">
-                                {(() => {
-                                  // Map icon keys to unique icon components
-                                  const iconMap: { [key: string]: any } = {
-                                    "hotel": Hotel,
-                                    "healthcare": Stethoscope,
-                                    "doctor": UserPlus,
-                                    "medical": Microscope,
-                                    "ecommerce": ShoppingCart,
-                                    "hr": Users,
-                                    "automotive": Car,
-                                    "realestate": Building2,
-                                    "education": GraduationCap,
-                                    "travel": Plane,
-                                    "restaurant": Utensils,
-                                    "fitness": Dumbbell,
-                                    "insurance": FileText,
-                                    "sales": PhoneCall,
-                                    "finance": Banknote,
-                                    "retail": Store,
-                                    "consulting": Briefcase,
-                                    "techsupport": Wrench,
-                                    // Legacy emoji support (fallback)
-                                    "🏨": Hotel,
-                                    "🏥": Stethoscope,
-                                    "🩺": UserPlus,
-                                    "🧪": Microscope,
-                                    "🛒": ShoppingCart,
-                                    "👥": Users,
-                                    "🚗": Car,
-                                    "🏢": Building2,
-                                    "🎓": GraduationCap,
-                                    "✈️": Plane,
-                                    "🍽️": Utensils,
-                                    "💪": Dumbbell,
-                                    "📋": FileText,
-                                    "📞": PhoneCall,
-                                    "🏦": Banknote,
-                                    "🏪": Store,
-                                    "💼": Briefcase,
-                                    "🛠": Wrench
-                                  };
-                                  const IconComponent = iconMap[useCase.icon] || Building2;
-                                  return <IconComponent className="h-6 w-6" />;
-                                })()}
-                              </div>
-                              {useCase.title}
-                            </h3>
-                            <p className="text-muted-foreground mb-6">
-                              {useCase.description}
-                            </p>
-                            
-                            {/* Video Demo Placeholder */}
-                            <div className="aspect-video bg-muted rounded-lg flex items-center justify-center mb-6">
-                              <div className="text-center">
-                                <div className="text-4xl mb-2">🎥</div>
-                                <p className="text-muted-foreground">Video demo coming soon</p>
-                                <p className="text-sm text-muted-foreground mt-1">
-                                  This agent will showcase: {useCase.tasks.join(", ")}
+                      {(() => {
+                        const [isOpen, setIsOpen] = useState(false);
+                        
+                        return (
+                          <Dialog open={isOpen} onOpenChange={setIsOpen}>
+                            <DialogTrigger asChild>
+                              <Button className="w-full bg-primary hover:bg-primary/90 text-white">
+                                Try This Agent
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-4xl">
+                              <DialogTitle className="sr-only">{useCase.title}</DialogTitle>
+                              <div className="p-6">
+                                <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
+                                  <div className="text-primary p-2 rounded-lg bg-primary/10">
+                                    {(() => {
+                                      // Map icon keys to unique icon components
+                                      const iconMap: { [key: string]: any } = {
+                                        "hotel": Hotel,
+                                        "healthcare": Stethoscope,
+                                        "doctor": UserPlus,
+                                        "medical": Microscope,
+                                        "ecommerce": ShoppingCart,
+                                        "hr": Users,
+                                        "automotive": Car,
+                                        "realestate": Building2,
+                                        "education": GraduationCap,
+                                        "travel": Plane,
+                                        "restaurant": Utensils,
+                                        "fitness": Dumbbell,
+                                        "insurance": FileText,
+                                        "sales": PhoneCall,
+                                        "finance": Banknote,
+                                        "retail": Store,
+                                        "consulting": Briefcase,
+                                        "techsupport": Wrench,
+                                        // Legacy emoji support (fallback)
+                                        "🏨": Hotel,
+                                        "🏥": Stethoscope,
+                                        "🩺": UserPlus,
+                                        "🧪": Microscope,
+                                        "🛒": ShoppingCart,
+                                        "👥": Users,
+                                        "🚗": Car,
+                                        "🏢": Building2,
+                                        "🎓": GraduationCap,
+                                        "✈️": Plane,
+                                        "🍽️": Utensils,
+                                        "💪": Dumbbell,
+                                        "📋": FileText,
+                                        "📞": PhoneCall,
+                                        "🏦": Banknote,
+                                        "🏪": Store,
+                                        "💼": Briefcase,
+                                        "🛠": Wrench
+                                      };
+                                      const IconComponent = iconMap[useCase.icon] || Building2;
+                                      return <IconComponent className="h-6 w-6" />;
+                                    })()}
+                                  </div>
+                                  {useCase.title}
+                                </h3>
+                                <p className="text-muted-foreground mb-6">
+                                  {useCase.description}
                                 </p>
-                              </div>
-                            </div>
+                                
+                                {/* Video Demo Placeholder */}
+                                <div className="aspect-video bg-muted rounded-lg flex items-center justify-center mb-6">
+                                  <div className="text-center">
+                                    <div className="text-4xl mb-2">🎥</div>
+                                    <p className="text-muted-foreground">Video demo coming soon</p>
+                                    <p className="text-sm text-muted-foreground mt-1">
+                                      This agent will showcase: {useCase.tasks.join(", ")}
+                                    </p>
+                                  </div>
+                                </div>
 
-                            <Button 
-                              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
-                              onClick={(e) => {
-                                // Close the modal by triggering a click on the close button or backdrop
-                                const dialogElement = (e.target as HTMLElement).closest('[role="dialog"]');
-                                if (dialogElement) {
-                                  const closeButton = dialogElement.querySelector('[data-radix-dialog-close]') as HTMLElement;
-                                  if (closeButton) {
-                                    closeButton.click();
-                                  }
-                                }
-                                // Scroll to build agents section after a short delay to allow modal to close
-                                setTimeout(() => {
-                                  scrollToBuildAgents();
-                                }, 100);
-                              }}
-                            >
-                              Build Similar AI Agents for Free
-                            </Button>
-                          </div>
-                        </DialogContent>
-                      </Dialog>
+                                <Button 
+                                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+                                  onClick={() => {
+                                    // Close the modal first
+                                    setIsOpen(false);
+                                    // Scroll to build agents section after a short delay
+                                    setTimeout(() => {
+                                      scrollToBuildAgents();
+                                    }, 100);
+                                  }}
+                                >
+                                  Build Similar AI Agents for Free
+                                </Button>
+                              </div>
+                            </DialogContent>
+                          </Dialog>
+                        );
+                      })()}
                     </CardContent>
                   </Card>
                 ))}
