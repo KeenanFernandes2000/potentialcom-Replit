@@ -256,9 +256,6 @@ const UseCases = () => {
     interface: ["All Interfaces"] as string[]
   });
 
-  // State for managing dialog open/close for each use case
-  const [openDialogs, setOpenDialogs] = useState<{[key: string]: boolean}>({});
-
   // Function to scroll to the build agents section
   const scrollToBuildAgents = () => {
     const section = document.getElementById('build-agents');
@@ -267,12 +264,20 @@ const UseCases = () => {
     }
   };
 
-  // Function to handle dialog state changes
-  const setDialogOpen = (useCaseId: string, isOpen: boolean) => {
-    setOpenDialogs(prev => ({
-      ...prev,
-      [useCaseId]: isOpen
-    }));
+  // Function to handle close and scroll
+  const handleCloseAndScroll = () => {
+    // Find and close any open dialog
+    const openDialog = document.querySelector('[data-state="open"][role="dialog"]');
+    if (openDialog) {
+      const closeButton = openDialog.querySelector('[data-radix-dialog-close]') as HTMLElement;
+      if (closeButton) {
+        closeButton.click();
+      }
+    }
+    // Scroll after a brief delay
+    setTimeout(() => {
+      scrollToBuildAgents();
+    }, 150);
   };
 
   // Filter and sort use cases based on selected filters
@@ -664,10 +669,7 @@ const UseCases = () => {
                         </div>
                       </div>
 
-                      <Dialog 
-                        open={openDialogs[useCase.id] || false} 
-                        onOpenChange={(open) => setDialogOpen(useCase.id.toString(), open)}
-                      >
+                      <Dialog>
                         <DialogTrigger asChild>
                           <Button className="w-full bg-primary hover:bg-primary/90 text-white">
                             Try This Agent
@@ -742,14 +744,7 @@ const UseCases = () => {
 
                             <Button 
                               className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
-                              onClick={() => {
-                                // Close the modal first
-                                setDialogOpen(useCase.id.toString(), false);
-                                // Scroll to build agents section after a short delay
-                                setTimeout(() => {
-                                  scrollToBuildAgents();
-                                }, 100);
-                              }}
+                              onClick={handleCloseAndScroll}
                             >
                               Build Similar AI Agents for Free
                             </Button>
