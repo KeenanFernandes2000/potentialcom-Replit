@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
-import { X, Check, ChevronDown, Hotel, Stethoscope, ShoppingCart, Users, Car, Building2, GraduationCap, Plane, Utensils, Dumbbell, Home, Briefcase, PhoneCall, FileText, Wrench } from "lucide-react";
+import { X, Check, ChevronDown, Hotel, Stethoscope, ShoppingCart, Users, Car, Building2, GraduationCap, Plane, Utensils, Dumbbell, Home, Briefcase, PhoneCall, FileText, Wrench, Microscope, UserPlus, Store, Banknote, HeadphonesIcon, Calculator, MapPin, Clock, BookOpen } from "lucide-react";
 import { SEO } from "@/components/SEO";
 
 // Map of use case icons
@@ -555,26 +555,26 @@ const UseCases = () => {
                       <div className="flex items-center gap-3 mb-4">
                         <div className="text-primary p-2 rounded-lg bg-primary/10">
                           {(() => {
-                            // Map emojis to icon components
+                            // Map emojis to unique icon components
                             const iconMap: { [key: string]: any } = {
-                              "🏨": Hotel,
-                              "🏥": Stethoscope,
-                              "🩺": Stethoscope,
-                              "🧪": FileText,
-                              "🛒": ShoppingCart,
-                              "👥": Users,
-                              "🚗": Car,
-                              "🏢": Building2,
-                              "🎓": GraduationCap,
-                              "✈️": Plane,
-                              "🍽️": Utensils,
-                              "💪": Dumbbell,
-                              "📋": FileText,
-                              "📞": PhoneCall,
-                              "🏦": Building2,
-                              "🏪": Home,
-                              "💼": Briefcase,
-                              "🛠": Wrench
+                              "🏨": Hotel,           // Hotel Room Service
+                              "🏥": Stethoscope,     // Healthcare Appointment
+                              "🩺": UserPlus,        // AI Doctor First Respondent
+                              "🧪": Microscope,      // Medical Test Analyzer
+                              "🛒": ShoppingCart,    // E-commerce
+                              "👥": Users,           // HR
+                              "🚗": Car,             // Automotive
+                              "🏢": Building2,       // Real Estate
+                              "🎓": GraduationCap,   // Education
+                              "✈️": Plane,           // Travel
+                              "🍽️": Utensils,       // Restaurant
+                              "💪": Dumbbell,        // Fitness
+                              "📋": FileText,        // Insurance
+                              "📞": PhoneCall,       // Sales
+                              "🏦": Banknote,        // Banking/Finance
+                              "🏪": Store,           // Retail
+                              "💼": Briefcase,       // Consulting
+                              "🛠": Wrench          // Tech Support
                             };
                             const IconComponent = iconMap[useCase.icon] || Building2;
                             return <IconComponent className="h-6 w-6" />;
@@ -634,26 +634,26 @@ const UseCases = () => {
                             <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
                               <div className="text-primary p-2 rounded-lg bg-primary/10">
                                 {(() => {
-                                  // Map emojis to icon components
+                                  // Map emojis to unique icon components
                                   const iconMap: { [key: string]: any } = {
-                                    "🏨": Hotel,
-                                    "🏥": Stethoscope,
-                                    "🩺": Stethoscope,
-                                    "🧪": FileText,
-                                    "🛒": ShoppingCart,
-                                    "👥": Users,
-                                    "🚗": Car,
-                                    "🏢": Building2,
-                                    "🎓": GraduationCap,
-                                    "✈️": Plane,
-                                    "🍽️": Utensils,
-                                    "💪": Dumbbell,
-                                    "📋": FileText,
-                                    "📞": PhoneCall,
-                                    "🏦": Building2,
-                                    "🏪": Home,
-                                    "💼": Briefcase,
-                                    "🛠": Wrench
+                                    "🏨": Hotel,           // Hotel Room Service
+                                    "🏥": Stethoscope,     // Healthcare Appointment
+                                    "🩺": UserPlus,        // AI Doctor First Respondent
+                                    "🧪": Microscope,      // Medical Test Analyzer
+                                    "🛒": ShoppingCart,    // E-commerce
+                                    "👥": Users,           // HR
+                                    "🚗": Car,             // Automotive
+                                    "🏢": Building2,       // Real Estate
+                                    "🎓": GraduationCap,   // Education
+                                    "✈️": Plane,           // Travel
+                                    "🍽️": Utensils,       // Restaurant
+                                    "💪": Dumbbell,        // Fitness
+                                    "📋": FileText,        // Insurance
+                                    "📞": PhoneCall,       // Sales
+                                    "🏦": Banknote,        // Banking/Finance
+                                    "🏪": Store,           // Retail
+                                    "💼": Briefcase,       // Consulting
+                                    "🛠": Wrench          // Tech Support
                                   };
                                   const IconComponent = iconMap[useCase.icon] || Building2;
                                   return <IconComponent className="h-6 w-6" />;
