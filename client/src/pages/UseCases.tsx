@@ -6,7 +6,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { X } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
+import { X, Check, ChevronDown } from "lucide-react";
 import { SEO } from "@/components/SEO";
 
 // Icons for different industries
@@ -317,56 +319,168 @@ const UseCases = () => {
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
                 {/* Industry Filter */}
-                <Select onValueChange={(value) => addFilter('industry', value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Industry" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="All Industries">All Industries</SelectItem>
-                    {getAllIndustries().map(industry => (
-                      <SelectItem key={industry} value={industry}>{industry}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="outline" className="w-full justify-between">
+                      Select Industry
+                      <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-full p-0">
+                    <Command>
+                      <CommandInput placeholder="Search industries..." />
+                      <CommandEmpty>No industries found.</CommandEmpty>
+                      <CommandGroup>
+                        <CommandItem
+                          onSelect={() => addFilter('industry', 'All Industries')}
+                        >
+                          <Check
+                            className={`mr-2 h-4 w-4 ${
+                              selectedFilters.industry.includes('All Industries') ? 'opacity-100' : 'opacity-0'
+                            }`}
+                          />
+                          All Industries
+                        </CommandItem>
+                        {getAllIndustries().map((industry) => (
+                          <CommandItem
+                            key={industry}
+                            onSelect={() => addFilter('industry', industry)}
+                          >
+                            <Check
+                              className={`mr-2 h-4 w-4 ${
+                                selectedFilters.industry.includes(industry) ? 'opacity-100' : 'opacity-0'
+                              }`}
+                            />
+                            {industry}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
 
                 {/* Task Filter */}
-                <Select onValueChange={(value) => addFilter('task', value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Agent Task" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="All Tasks">All Tasks</SelectItem>
-                    {getAllTasks().map(task => (
-                      <SelectItem key={task} value={task}>{task}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="outline" className="w-full justify-between">
+                      Select Agent Task
+                      <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-full p-0">
+                    <Command>
+                      <CommandInput placeholder="Search tasks..." />
+                      <CommandEmpty>No tasks found.</CommandEmpty>
+                      <CommandGroup>
+                        <CommandItem
+                          onSelect={() => addFilter('task', 'All Tasks')}
+                        >
+                          <Check
+                            className={`mr-2 h-4 w-4 ${
+                              selectedFilters.task.includes('All Tasks') ? 'opacity-100' : 'opacity-0'
+                            }`}
+                          />
+                          All Tasks
+                        </CommandItem>
+                        {getAllTasks().map((task) => (
+                          <CommandItem
+                            key={task}
+                            onSelect={() => addFilter('task', task)}
+                          >
+                            <Check
+                              className={`mr-2 h-4 w-4 ${
+                                selectedFilters.task.includes(task) ? 'opacity-100' : 'opacity-0'
+                              }`}
+                            />
+                            {task}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
 
                 {/* Channel Filter */}
-                <Select onValueChange={(value) => addFilter('channel', value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Channel" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="All Channels">All Channels</SelectItem>
-                    {getAllChannels().map(channel => (
-                      <SelectItem key={channel} value={channel}>{channel}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="outline" className="w-full justify-between">
+                      Select Channel
+                      <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-full p-0">
+                    <Command>
+                      <CommandInput placeholder="Search channels..." />
+                      <CommandEmpty>No channels found.</CommandEmpty>
+                      <CommandGroup>
+                        <CommandItem
+                          onSelect={() => addFilter('channel', 'All Channels')}
+                        >
+                          <Check
+                            className={`mr-2 h-4 w-4 ${
+                              selectedFilters.channel.includes('All Channels') ? 'opacity-100' : 'opacity-0'
+                            }`}
+                          />
+                          All Channels
+                        </CommandItem>
+                        {getAllChannels().map((channel) => (
+                          <CommandItem
+                            key={channel}
+                            onSelect={() => addFilter('channel', channel)}
+                          >
+                            <Check
+                              className={`mr-2 h-4 w-4 ${
+                                selectedFilters.channel.includes(channel) ? 'opacity-100' : 'opacity-0'
+                              }`}
+                            />
+                            {channel}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
 
                 {/* Interface Filter */}
-                <Select onValueChange={(value) => addFilter('interface', value)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Interface" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="All Interfaces">All Interfaces</SelectItem>
-                    {getAllInterfaces().map(interfaceType => (
-                      <SelectItem key={interfaceType} value={interfaceType}>{interfaceType}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="outline" className="w-full justify-between">
+                      Select Interface
+                      <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-full p-0">
+                    <Command>
+                      <CommandInput placeholder="Search interfaces..." />
+                      <CommandEmpty>No interfaces found.</CommandEmpty>
+                      <CommandGroup>
+                        <CommandItem
+                          onSelect={() => addFilter('interface', 'All Interfaces')}
+                        >
+                          <Check
+                            className={`mr-2 h-4 w-4 ${
+                              selectedFilters.interface.includes('All Interfaces') ? 'opacity-100' : 'opacity-0'
+                            }`}
+                          />
+                          All Interfaces
+                        </CommandItem>
+                        {getAllInterfaces().map((interfaceType) => (
+                          <CommandItem
+                            key={interfaceType}
+                            onSelect={() => addFilter('interface', interfaceType)}
+                          >
+                            <Check
+                              className={`mr-2 h-4 w-4 ${
+                                selectedFilters.interface.includes(interfaceType) ? 'opacity-100' : 'opacity-0'
+                              }`}
+                            />
+                            {interfaceType}
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
               </div>
 
               {/* Active Filters */}
