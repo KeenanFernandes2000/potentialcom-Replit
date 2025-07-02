@@ -226,22 +226,22 @@ const getAllInterfaces = () => {
 
 const UseCases = () => {
   const [selectedFilters, setSelectedFilters] = useState({
-    task: [] as string[],
-    industry: [] as string[],
-    channel: [] as string[],
-    interface: [] as string[]
+    task: ["All Tasks"] as string[],
+    industry: ["All Industries"] as string[],
+    channel: ["All Channels"] as string[],
+    interface: ["All Interfaces"] as string[]
   });
 
   // Filter use cases based on selected filters
   const filteredUseCases = useMemo(() => {
     return useCases.filter(useCase => {
-      const matchesTask = selectedFilters.task.length === 0 || 
+      const matchesTask = selectedFilters.task.includes("All Tasks") || 
         selectedFilters.task.some(task => useCase.tasks.includes(task));
-      const matchesIndustry = selectedFilters.industry.length === 0 || 
+      const matchesIndustry = selectedFilters.industry.includes("All Industries") || 
         selectedFilters.industry.includes(useCase.industry);
-      const matchesChannel = selectedFilters.channel.length === 0 || 
+      const matchesChannel = selectedFilters.channel.includes("All Channels") || 
         selectedFilters.channel.some(channel => useCase.channels.includes(channel));
-      const matchesInterface = selectedFilters.interface.length === 0 || 
+      const matchesInterface = selectedFilters.interface.includes("All Interfaces") || 
         selectedFilters.interface.some(interfaceType => useCase.interface.includes(interfaceType));
       
       return matchesTask && matchesIndustry && matchesChannel && matchesInterface;
@@ -249,25 +249,44 @@ const UseCases = () => {
   }, [selectedFilters]);
 
   const addFilter = (type: keyof typeof selectedFilters, value: string) => {
-    setSelectedFilters(prev => ({
-      ...prev,
-      [type]: [...prev[type], value]
-    }));
+    setSelectedFilters(prev => {
+      const currentFilters = prev[type];
+      const allOption = `All ${type.charAt(0).toUpperCase() + type.slice(1)}${type === 'interface' ? 's' : type === 'industry' ? ' Industries' : type === 'task' ? ' Tasks' : ' Channels'}`;
+      
+      if (value === allOption) {
+        // If selecting "All", clear other selections
+        return { ...prev, [type]: [allOption] };
+      } else {
+        // If selecting a specific option, remove "All" if it exists
+        const filteredOptions = currentFilters.filter(item => item !== allOption);
+        if (!filteredOptions.includes(value)) {
+          return { ...prev, [type]: [...filteredOptions, value] };
+        }
+        return prev;
+      }
+    });
   };
 
   const removeFilter = (type: keyof typeof selectedFilters, value: string) => {
-    setSelectedFilters(prev => ({
-      ...prev,
-      [type]: prev[type].filter(item => item !== value)
-    }));
+    setSelectedFilters(prev => {
+      const newFilters = prev[type].filter(item => item !== value);
+      const allOption = `All ${type.charAt(0).toUpperCase() + type.slice(1)}${type === 'interface' ? 's' : type === 'industry' ? ' Industries' : type === 'task' ? ' Tasks' : ' Channels'}`;
+      
+      // If no specific filters remain, revert to "All"
+      if (newFilters.length === 0) {
+        return { ...prev, [type]: [allOption] };
+      }
+      
+      return { ...prev, [type]: newFilters };
+    });
   };
 
   const clearAllFilters = () => {
     setSelectedFilters({
-      task: [],
-      industry: [],
-      channel: [],
-      interface: []
+      task: ["All Tasks"],
+      industry: ["All Industries"],
+      channel: ["All Channels"],
+      interface: ["All Interfaces"]
     });
   };
 
@@ -300,9 +319,12 @@ const UseCases = () => {
                 {/* Task Filter */}
                 <Select onValueChange={(value) => addFilter('task', value)}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select Task" />
+                    <SelectValue>
+                      {selectedFilters.task.length > 1 ? `${selectedFilters.task.length} tasks selected` : selectedFilters.task[0] || "Select Task"}
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="All Tasks">All Tasks</SelectItem>
                     {getAllTasks().map(task => (
                       <SelectItem key={task} value={task}>{task}</SelectItem>
                     ))}
@@ -312,9 +334,12 @@ const UseCases = () => {
                 {/* Industry Filter */}
                 <Select onValueChange={(value) => addFilter('industry', value)}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select Industry" />
+                    <SelectValue>
+                      {selectedFilters.industry.length > 1 ? `${selectedFilters.industry.length} industries selected` : selectedFilters.industry[0] || "Select Industry"}
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="All Industries">All Industries</SelectItem>
                     {getAllIndustries().map(industry => (
                       <SelectItem key={industry} value={industry}>{industry}</SelectItem>
                     ))}
@@ -324,9 +349,12 @@ const UseCases = () => {
                 {/* Channel Filter */}
                 <Select onValueChange={(value) => addFilter('channel', value)}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select Channel" />
+                    <SelectValue>
+                      {selectedFilters.channel.length > 1 ? `${selectedFilters.channel.length} channels selected` : selectedFilters.channel[0] || "Select Channel"}
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="All Channels">All Channels</SelectItem>
                     {getAllChannels().map(channel => (
                       <SelectItem key={channel} value={channel}>{channel}</SelectItem>
                     ))}
@@ -336,9 +364,12 @@ const UseCases = () => {
                 {/* Interface Filter */}
                 <Select onValueChange={(value) => addFilter('interface', value)}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select Interface" />
+                    <SelectValue>
+                      {selectedFilters.interface.length > 1 ? `${selectedFilters.interface.length} interfaces selected` : selectedFilters.interface[0] || "Select Interface"}
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
+                    <SelectItem value="All Interfaces">All Interfaces</SelectItem>
                     {getAllInterfaces().map(interfaceType => (
                       <SelectItem key={interfaceType} value={interfaceType}>{interfaceType}</SelectItem>
                     ))}
@@ -349,18 +380,21 @@ const UseCases = () => {
               {/* Active Filters */}
               <div className="flex flex-wrap gap-2 items-center">
                 {Object.entries(selectedFilters).map(([type, values]) =>
-                  values.map(value => (
-                    <Badge key={`${type}-${value}`} variant="secondary" className="flex items-center gap-1">
-                      {value}
-                      <X 
-                        className="h-3 w-3 cursor-pointer hover:text-destructive" 
-                        onClick={() => removeFilter(type as keyof typeof selectedFilters, value)}
-                      />
-                    </Badge>
-                  ))
+                  values
+                    .filter(value => !value.startsWith('All ')) // Hide "All" options from badges
+                    .map(value => (
+                      <Badge key={`${type}-${value}`} variant="secondary" className="flex items-center gap-1">
+                        {value}
+                        <X 
+                          className="h-3 w-3 cursor-pointer hover:text-destructive" 
+                          onClick={() => removeFilter(type as keyof typeof selectedFilters, value)}
+                        />
+                      </Badge>
+                    ))
                 )}
-                {(selectedFilters.task.length > 0 || selectedFilters.industry.length > 0 || 
-                  selectedFilters.channel.length > 0 || selectedFilters.interface.length > 0) && (
+                {Object.values(selectedFilters).some(filters => 
+                  filters.some(filter => !filter.startsWith('All '))
+                ) && (
                   <Button variant="ghost" size="sm" onClick={clearAllFilters} className="text-muted-foreground">
                     Clear All
                   </Button>
