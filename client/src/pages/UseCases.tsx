@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,33 @@ import { X, Check, ChevronDown, Hotel, Stethoscope, ShoppingCart, Users, Car, Bu
 import { SEO } from "@/components/SEO";
 import { AIChatbotForm } from "@/components/AIChatbotForm";
 import { AIVoiceAgentForm } from "@/components/AIVoiceAgentForm";
+
+// Import all customer logos
+import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
+import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
+import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
+import cartierLogo from "@assets/Customer Logos/Cartier logo.png";
+import ciscoLogo from "@assets/Customer Logos/Cisco Logo.png";
+import dctLogo from "@assets/Customer Logos/DCT Logo.png";
+import dldLogo from "@assets/Customer Logos/DLD Logo.png";
+import dellLogo from "@assets/Customer Logos/Dell logo.png";
+import edbLogo from "@assets/Customer Logos/EDB logo.png";
+import fordLogo from "@assets/Customer Logos/Ford logo.png";
+import googleLogo from "@assets/Customer Logos/Google logo.png";
+import govAbuDhabiLogo from "@assets/Customer Logos/Government of Abu Dhabi logo.png";
+import govDubaiLogo from "@assets/Customer Logos/Government of Dubai logo.png";
+import hsbcLogo from "@assets/Customer Logos/HSBC logo.png";
+import inditexLogo from "@assets/Customer Logos/Inditex logo.png";
+import khalifaFundLogo from "@assets/Customer Logos/Khalifa Fund logo.png";
+import mbcLogo from "@assets/Customer Logos/MBC logo.png";
+import microsoftLogo from "@assets/Customer Logos/Microsoft logo.png";
+import nestleLogo from "@assets/Customer Logos/Nestle Logo.png";
+import pepsicoLogo from "@assets/Customer Logos/Pepsico logo.png";
+import unWomenLogo from "@assets/Customer Logos/UN Women logo.png";
+import unLogo from "@assets/Customer Logos/UN logo.png";
+import visaLogo from "@assets/Customer Logos/Visa logo.png";
+import wfzoLogo from "@assets/Customer Logos/WFZO logo.png";
+import intelLogo from "@assets/Customer Logos/intel logo.png";
 
 // Map of use case icons
 const useCaseIcons = {
@@ -256,6 +283,35 @@ const UseCases = () => {
     interface: ["All Interfaces"] as string[]
   });
 
+  // State to track theme for logo filtering
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // Detect dark mode
+  useEffect(() => {
+    const checkDarkMode = () => {
+      const isDark = document.documentElement.classList.contains("dark");
+      setIsDarkMode(isDark);
+    };
+
+    // Initial check
+    checkDarkMode();
+
+    // Create a mutation observer to monitor class changes on html element
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === "attributes" && mutation.attributeName === "class") {
+          checkDarkMode();
+        }
+      });
+    });
+
+    // Start observing
+    observer.observe(document.documentElement, { attributes: true });
+
+    // Cleanup
+    return () => observer.disconnect();
+  }, []);
+
   // Function to scroll to the build agents section
   const scrollToBuildAgents = () => {
     const section = document.getElementById('build-agents');
@@ -278,6 +334,93 @@ const UseCases = () => {
     setTimeout(() => {
       scrollToBuildAgents();
     }, 150);
+  };
+
+  // Logo grid for trusted companies with scrolling animation
+  const LogoGrid = () => {
+    // All 25 customer logos in updated order
+    const clientLogos = [
+      { name: "ADGM", logo: adgmLogo },
+      { name: "Airbus", logo: airbusLogo },
+      { name: "Bank Muscat", logo: bankMuscatLogo },
+      { name: "Cartier", logo: cartierLogo },
+      { name: "Cisco", logo: ciscoLogo },
+      { name: "DCT", logo: dctLogo },
+      { name: "DLD", logo: dldLogo },
+      { name: "Dell", logo: dellLogo },
+      { name: "EDB", logo: edbLogo },
+      { name: "Ford", logo: fordLogo },
+      { name: "Google", logo: googleLogo },
+      { name: "Government of Abu Dhabi", logo: govAbuDhabiLogo },
+      { name: "Government of Dubai", logo: govDubaiLogo },
+      { name: "HSBC", logo: hsbcLogo },
+      { name: "Inditex", logo: inditexLogo },
+      { name: "Intel", logo: intelLogo },
+      { name: "Khalifa Fund", logo: khalifaFundLogo },
+      { name: "MBC", logo: mbcLogo },
+      { name: "Microsoft", logo: microsoftLogo },
+      { name: "Nestle", logo: nestleLogo },
+      { name: "PepsiCo", logo: pepsicoLogo },
+      { name: "UN Women", logo: unWomenLogo },
+      { name: "United Nations", logo: unLogo },
+      { name: "Visa", logo: visaLogo },
+      { name: "WFZO", logo: wfzoLogo },
+    ];
+
+    return (
+      <div
+        className="client-logos py-8"
+        data-aos="fade-up"
+        data-aos-delay="100"
+      >
+        <h3 className="text-center text-muted-foreground uppercase text-sm tracking-wider mb-6">
+          Trusted for over 20 years by leading organizations around the world
+        </h3>
+
+        {/* Scrolling container */}
+        <div className="relative overflow-hidden">
+          <div
+            className="flex animate-scroll hover:pause-animation"
+            style={{
+              width: `${clientLogos.length * 2 * 120}px`, // Double width for seamless loop
+            }}
+          >
+            {/* First set of logos */}
+            {clientLogos.map((client, i) => (
+              <div
+                key={`first-${i}`}
+                className="flex-shrink-0 w-32 h-16 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity mx-4"
+              >
+                <img
+                  src={client.logo}
+                  alt={`${client.name} logo`}
+                  className="max-h-12 max-w-full object-contain"
+                  style={{
+                    filter: isDarkMode ? "brightness(0) invert(1)" : "none",
+                  }}
+                />
+              </div>
+            ))}
+            {/* Duplicate set for seamless scrolling */}
+            {clientLogos.map((client, i) => (
+              <div
+                key={`second-${i}`}
+                className="flex-shrink-0 w-32 h-16 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity mx-4"
+              >
+                <img
+                  src={client.logo}
+                  alt={`${client.name} logo`}
+                  className="max-h-12 max-w-full object-contain"
+                  style={{
+                    filter: isDarkMode ? "brightness(0) invert(1)" : "none",
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
   };
 
   // Filter and sort use cases based on selected filters
@@ -801,6 +944,13 @@ const UseCases = () => {
                 />
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Trusted Organizations Section */}
+        <section className="py-16 bg-background">
+          <div className="container mx-auto px-4">
+            <LogoGrid />
           </div>
         </section>
 
