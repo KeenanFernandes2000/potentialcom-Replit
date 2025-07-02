@@ -255,24 +255,31 @@ const UseCases = () => {
       const currentFilters = prev[type];
       const allOption = `All ${type.charAt(0).toUpperCase() + type.slice(1)}${type === 'interface' ? 's' : type === 'industry' ? ' Industries' : type === 'task' ? ' Tasks' : ' Channels'}`;
       
+      console.log('Filter clicked:', { type, value, currentFilters, allOption });
+      
       if (value === allOption) {
         // If selecting "All", clear other selections and set only "All"
+        console.log('Setting to All only');
         return { ...prev, [type]: [allOption] };
       } else {
         // If selecting a specific option, remove "All" if it exists and toggle the specific item
-        const filteredOptions = currentFilters.filter(item => item !== allOption);
+        const withoutAll = currentFilters.filter(item => item !== allOption);
         
-        if (filteredOptions.includes(value)) {
+        if (withoutAll.includes(value)) {
           // If item is already selected, remove it
-          const updatedFilters = filteredOptions.filter(item => item !== value);
+          const updatedFilters = withoutAll.filter(item => item !== value);
+          console.log('Removing item, updated filters:', updatedFilters);
           // If no specific items remain, revert to "All"
           if (updatedFilters.length === 0) {
+            console.log('No items left, reverting to All');
             return { ...prev, [type]: [allOption] };
           }
           return { ...prev, [type]: updatedFilters };
         } else {
-          // If item is not selected, add it
-          return { ...prev, [type]: [...filteredOptions, value] };
+          // If item is not selected, add it (and ensure "All" is removed)
+          const newFilters = [...withoutAll, value];
+          console.log('Adding item, new filters:', newFilters);
+          return { ...prev, [type]: newFilters };
         }
       }
     });
