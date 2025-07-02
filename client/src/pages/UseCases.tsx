@@ -757,11 +757,19 @@ const UseCases = () => {
               </h2>
               <p className="text-xl text-muted-foreground mb-8">Our AI agents are fully customizable to fit any industry or business process. Start by testing an AI Voice Agent or AI chatbot, and we’ll work with you to tailor it further to your specific use case.</p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" onClick={() => window.location.href = "/vera"}>
-                  Schedule Consultation
+                <Button 
+                  size="lg" 
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                  onClick={() => window.location.href = "/chatbot"}
+                >
+                  Create your Free AI Chatbot
                 </Button>
-                <Button size="lg" variant="outline" onClick={() => window.location.href = "/chatbot"}>
-                  Build Custom Agent
+                <Button 
+                  size="lg" 
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                  onClick={() => window.location.href = "/voice"}
+                >
+                  Create Your Free AI Voice Agent
                 </Button>
               </div>
             </div>
