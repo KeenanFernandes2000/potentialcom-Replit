@@ -100,7 +100,7 @@ const useCases = [
     id: 3,
     icon: "hotel",
     title: "Concierge AI Agent",
-    description: "Assists hotel guests, patients, or VIP clients with bookings, directions, and service requests.",
+    description: "Assists hotel guests, patients, or clients with bookings, directions, and service requests.",
     tasks: ["Book Appointments", "Recommend Services", "Answer Queries"],
     channels: ["Phone", "Website", "WhatsApp"],
     interface: ["Voice", "Chat"],
