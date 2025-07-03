@@ -648,16 +648,7 @@ const UseCases = () => {
                           </div>
                         </div>
                         
-                        <div>
-                          <span className="text-xs text-muted-foreground mb-1 block font-bold">CHANNELS</span>
-                          <div className="flex flex-wrap gap-1">
-                            {useCase.channels.map(channel => (
-                              <Badge key={channel} variant="secondary" className="text-xs">
-                                {channel}
-                              </Badge>
-                            ))}
-                          </div>
-                        </div>
+                        
                         
                         
 
