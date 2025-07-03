@@ -422,114 +422,114 @@ const UseCases = () => {
               <div className="text-center mb-8">
                 <p className="text-lg text-muted-foreground">Use the filters below to find the perfect AI Agent for your needs</p>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                {/* Job Role Filter */}
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button variant="outline" className="w-full justify-between">
-                      Filter by Job Role
-                      <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[300px] p-0" side="bottom" align="start">
-                    <Command>
-                      <CommandInput placeholder="Search job roles..." />
-                      <CommandEmpty>No job roles found.</CommandEmpty>
-                      <CommandGroup className="max-h-[240px] overflow-auto">
-                        <CommandItem
-                          onSelect={() => addFilter('industry', 'All Industries')}
-                        >
-                          <Check
-                            className={`mr-2 h-4 w-4 ${
-                              selectedFilters.industry.includes('All Industries') ? 'opacity-100' : 'opacity-0'
-                            }`}
-                          />
-                          All Job Roles
-                        </CommandItem>
-                        {getAllIndustries().map((industry) => (
+              <div className="flex flex-col items-center">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 w-full max-w-2xl">
+                  {/* Job Role Filter */}
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button variant="outline" className="w-full justify-between">
+                        Filter by Job Role
+                        <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[300px] p-0" side="bottom" align="start">
+                      <Command>
+                        <CommandInput placeholder="Search job roles..." />
+                        <CommandEmpty>No job roles found.</CommandEmpty>
+                        <CommandGroup className="max-h-[240px] overflow-auto">
                           <CommandItem
-                            key={industry}
-                            onSelect={() => addFilter('industry', industry)}
+                            onSelect={() => addFilter('industry', 'All Industries')}
                           >
                             <Check
                               className={`mr-2 h-4 w-4 ${
-                                selectedFilters.industry.includes(industry) ? 'opacity-100' : 'opacity-0'
+                                selectedFilters.industry.includes('All Industries') ? 'opacity-100' : 'opacity-0'
                               }`}
                             />
-                            {industry}
+                            All Job Roles
                           </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
+                          {getAllIndustries().map((industry) => (
+                            <CommandItem
+                              key={industry}
+                              onSelect={() => addFilter('industry', industry)}
+                            >
+                              <Check
+                                className={`mr-2 h-4 w-4 ${
+                                  selectedFilters.industry.includes(industry) ? 'opacity-100' : 'opacity-0'
+                                }`}
+                              />
+                              {industry}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
 
-                {/* Capabilities Filter */}
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button variant="outline" className="w-full justify-between">
-                      Filter by Capabilities
-                      <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[300px] p-0" side="bottom" align="start">
-                    <Command>
-                      <CommandInput placeholder="Search capabilities..." />
-                      <CommandEmpty>No capabilities found.</CommandEmpty>
-                      <CommandGroup className="max-h-[240px] overflow-auto">
-                        <CommandItem
-                          onSelect={() => addFilter('task', 'All Tasks')}
-                        >
-                          <Check
-                            className={`mr-2 h-4 w-4 ${
-                              selectedFilters.task.includes('All Tasks') ? 'opacity-100' : 'opacity-0'
-                            }`}
-                          />
-                          All Capabilities
-                        </CommandItem>
-                        {getAllTasks().map((task) => (
+                  {/* Capabilities Filter */}
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button variant="outline" className="w-full justify-between">
+                        Filter by Capabilities
+                        <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[300px] p-0" side="bottom" align="start">
+                      <Command>
+                        <CommandInput placeholder="Search capabilities..." />
+                        <CommandEmpty>No capabilities found.</CommandEmpty>
+                        <CommandGroup className="max-h-[240px] overflow-auto">
                           <CommandItem
-                            key={task}
-                            onSelect={() => addFilter('task', task)}
+                            onSelect={() => addFilter('task', 'All Tasks')}
                           >
                             <Check
                               className={`mr-2 h-4 w-4 ${
-                                selectedFilters.task.includes(task) ? 'opacity-100' : 'opacity-0'
+                                selectedFilters.task.includes('All Tasks') ? 'opacity-100' : 'opacity-0'
                               }`}
                             />
-                            {task}
+                            All Capabilities
                           </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
+                          {getAllTasks().map((task) => (
+                            <CommandItem
+                              key={task}
+                              onSelect={() => addFilter('task', task)}
+                            >
+                              <Check
+                                className={`mr-2 h-4 w-4 ${
+                                  selectedFilters.task.includes(task) ? 'opacity-100' : 'opacity-0'
+                                }`}
+                              />
+                              {task}
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                </div>
 
-                
-              </div>
-
-              {/* Active Filters */}
-              <div className="flex flex-wrap gap-2 items-center">
-                {Object.entries(selectedFilters).map(([type, values]) =>
-                  values
-                    .filter(value => !value.startsWith('All ')) // Hide "All" options from badges
-                    .map(value => (
-                      <Badge key={`${type}-${value}`} variant="secondary" className="flex items-center gap-1">
-                        {value}
-                        <X 
-                          className="h-3 w-3 cursor-pointer hover:text-destructive" 
-                          onClick={() => removeFilter(type as keyof typeof selectedFilters, value)}
-                        />
-                      </Badge>
-                    ))
-                )}
-                {Object.values(selectedFilters).some(filters => 
-                  filters.some(filter => !filter.startsWith('All '))
-                ) && (
-                  <Button variant="ghost" size="sm" onClick={clearAllFilters} className="text-muted-foreground">
-                    Clear All
-                  </Button>
-                )}
+                {/* Active Filters */}
+                <div className="flex flex-wrap gap-2 items-center justify-center">
+                  {Object.entries(selectedFilters).map(([type, values]) =>
+                    values
+                      .filter(value => !value.startsWith('All ')) // Hide "All" options from badges
+                      .map(value => (
+                        <Badge key={`${type}-${value}`} variant="secondary" className="flex items-center gap-1">
+                          {value}
+                          <X 
+                            className="h-3 w-3 cursor-pointer hover:text-destructive" 
+                            onClick={() => removeFilter(type as keyof typeof selectedFilters, value)}
+                          />
+                        </Badge>
+                      ))
+                  )}
+                  {Object.values(selectedFilters).some(filters => 
+                    filters.some(filter => !filter.startsWith('All '))
+                  ) && (
+                    <Button variant="ghost" size="sm" onClick={clearAllFilters} className="text-muted-foreground">
+                      Clear All
+                    </Button>
+                  )}
+                </div>
               </div>
             </div>
           </div>
