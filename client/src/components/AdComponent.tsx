@@ -84,8 +84,6 @@ export const AdComponent: React.FC<AdComponentProps> = ({
     };
   }, []);
 
-  const isProduction = process.env.NODE_ENV === "production";
-
   // Use span for inline rendering, div for block rendering
   const Container = inline ? "span" : "div";
 
@@ -102,7 +100,6 @@ export const AdComponent: React.FC<AdComponentProps> = ({
         data-ad-slot={slot}
         data-ad-format={format}
         data-full-width-responsive={responsive.toString()}
-        data-adtest={!isProduction ? "on" : undefined}
       />
     </Container>
   );
