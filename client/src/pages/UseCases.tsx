@@ -145,7 +145,7 @@ const useCases = [
     icon: "hr",
     title: "HR/Training AI Agent",
     description: "Onboards employees, delivers internal training, explains HR policies, or interviews candidates.",
-    tasks: ["Provide Coaching", "Answer HR Questions", "Analyze Interviews", "Send Reminders"],
+    tasks: ["Provide Coaching", "Answer Queries", "Conduct Interviews"],
     channels: ["Website", "WhatsApp"],
     interface: ["Chat", "Voice"],
     industry: "HR",
