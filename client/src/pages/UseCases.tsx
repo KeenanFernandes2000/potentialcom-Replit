@@ -420,7 +420,6 @@ const UseCases = () => {
           <div className="container">
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold mb-2">Your AI Agent Isn't Just For Answering Questions—It's Your Digital Employee</h2>
                 <p className="text-lg text-muted-foreground">Use the filters below to find the perfect AI Agent for your needs</p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
