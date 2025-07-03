@@ -887,8 +887,8 @@ const UseCases = () => {
                       <svg className="w-full h-full opacity-15">
                         <defs>
                           <linearGradient id="connectionGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stopColor="rgb(168, 85, 247)" />
-                            <stop offset="100%" stopColor="rgb(59, 130, 246)" />
+                            <stop offset="0%" stopColor="hsl(270, 70%, 56%)" />
+                            <stop offset="100%" stopColor="hsl(270, 70%, 40%)" />
                           </linearGradient>
                         </defs>
                         
