@@ -504,7 +504,7 @@ const UseCases = () => {
           <div className="container mb-12">
             <div className="max-w-6xl mx-auto">
               <h1 className="text-4xl md:text-5xl font-bold mb-4 max-w-3xl">AI Employees, On Demand — Scalable Use Cases for Your Business</h1>
-              <p className="text-xl text-muted-foreground max-w-3xl">Explore how AI Chatbots and Voice Agents can automate key business tasks, reduce costs, and boost customer engagement — across all channels and industries.</p>
+              <p className="text-xl text-muted-foreground max-w-3xl">Explore how AI Chatbots and Voice Agents can automate key business tasks, reduce costs, and boost customer engagement 24/7 — across all channels and industries.</p>
             </div>
           </div>
 
