@@ -807,7 +807,7 @@ const UseCases = () => {
 
         {/* Speak Every Customer's Language Section */}
         <section className="py-16 lg:py-20 bg-background pt-[0px] pb-[0px] flex items-center min-h-[600px]">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full pl-[60px] pr-[60px]">
             {/* Language Support Subsection */}
             <div className="border-t border-border/20 pt-16">
               <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
