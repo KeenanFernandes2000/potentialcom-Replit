@@ -806,158 +806,130 @@ const UseCases = () => {
         </section>
 
         {/* Integration Section */}
-        <section className="py-16 lg:py-20 bg-gradient-to-b from-background to-muted/20 overflow-hidden">
+        <section className="py-12 lg:py-16 bg-gradient-to-b from-background to-muted/20 overflow-hidden">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Section Header */}
-            <div className="text-center mb-16" data-aos="fade-up">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-                Integrates Seamlessly With the Tools You Already Use
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                Our AI Employees connect with your CRM, website, phones, booking tools, and more — so they work like your best-trained staff from day one.
-              </p>
-            </div>
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+              {/* Left Content - Animation */}
+              <div className="flex justify-center lg:justify-start" data-aos="fade-right">
+                <div className="relative w-full max-w-lg">
+                  {/* Integration Animation */}
+                  <div className="relative flex items-center justify-center h-[400px]">
+                    {/* Central AI Agent */}
+                    <div className="relative z-10" data-aos="zoom-in" data-aos-delay="200">
+                      <div className="w-20 h-20 bg-gradient-to-br from-primary via-purple-500 to-blue-500 rounded-2xl shadow-xl flex items-center justify-center animate-pulse">
+                        <div className="text-white text-2xl">🤖</div>
+                      </div>
+                      <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2">
+                        <div className="bg-background/90 backdrop-blur-sm rounded-lg px-2 py-1 border border-border/50 shadow-lg">
+                          <span className="text-xs font-medium text-foreground">AI Agent</span>
+                        </div>
+                      </div>
+                    </div>
 
-            {/* Integration Animation */}
-            <div className="relative flex items-center justify-center min-h-[600px]">
-              {/* Central AI Agent */}
-              <div className="relative z-10" data-aos="zoom-in" data-aos-delay="200">
-                <div className="w-32 h-32 bg-gradient-to-br from-primary via-purple-500 to-blue-500 rounded-3xl shadow-2xl flex items-center justify-center animate-pulse">
-                  <div className="text-white text-4xl">🤖</div>
-                </div>
-                <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2">
-                  <div className="bg-background/90 backdrop-blur-sm rounded-lg px-3 py-1 border border-border/50 shadow-lg">
-                    <span className="text-sm font-medium text-foreground">AI Agent</span>
+                    {/* Floating Integration Cards - Smaller */}
+                    {/* CRM Systems - Top Left */}
+                    <div className="absolute top-4 left-4 animate-float" data-aos="fade-up" data-aos-delay="400">
+                      <div className="bg-background/80 backdrop-blur-sm rounded-lg p-2 shadow-lg border border-border/50 hover:shadow-xl transition-all duration-300">
+                        <div className="text-center">
+                          <div className="text-xl mb-1">📊</div>
+                          <div className="text-xs font-medium text-foreground">CRM</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Ecommerce - Top Right */}
+                    <div className="absolute top-4 right-4 animate-float-delayed" data-aos="fade-up" data-aos-delay="500">
+                      <div className="bg-background/80 backdrop-blur-sm rounded-lg p-2 shadow-lg border border-border/50 hover:shadow-xl transition-all duration-300">
+                        <div className="text-center">
+                          <div className="text-xl mb-1">🛒</div>
+                          <div className="text-xs font-medium text-foreground">Shop</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Telephony - Left */}
+                    <div className="absolute left-2 top-1/2 transform -translate-y-1/2 animate-float" data-aos="fade-right" data-aos-delay="600">
+                      <div className="bg-background/80 backdrop-blur-sm rounded-lg p-2 shadow-lg border border-border/50 hover:shadow-xl transition-all duration-300">
+                        <div className="text-center">
+                          <div className="text-xl mb-1">📞</div>
+                          <div className="text-xs font-medium text-foreground">Phone</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Calendar - Right */}
+                    <div className="absolute right-2 top-1/2 transform -translate-y-1/2 animate-float-delayed" data-aos="fade-left" data-aos-delay="700">
+                      <div className="bg-background/80 backdrop-blur-sm rounded-lg p-2 shadow-lg border border-border/50 hover:shadow-xl transition-all duration-300">
+                        <div className="text-center">
+                          <div className="text-xl mb-1">📅</div>
+                          <div className="text-xs font-medium text-foreground">Calendar</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Helpdesk - Bottom Left */}
+                    <div className="absolute bottom-4 left-4 animate-float" data-aos="fade-up" data-aos-delay="800">
+                      <div className="bg-background/80 backdrop-blur-sm rounded-lg p-2 shadow-lg border border-border/50 hover:shadow-xl transition-all duration-300">
+                        <div className="text-center">
+                          <div className="text-xl mb-1">🎧</div>
+                          <div className="text-xs font-medium text-foreground">Support</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Email - Bottom Right */}
+                    <div className="absolute bottom-4 right-4 animate-float-delayed" data-aos="fade-up" data-aos-delay="900">
+                      <div className="bg-background/80 backdrop-blur-sm rounded-lg p-2 shadow-lg border border-border/50 hover:shadow-xl transition-all duration-300">
+                        <div className="text-center">
+                          <div className="text-xl mb-1">📧</div>
+                          <div className="text-xs font-medium text-foreground">Email</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Connection Lines */}
+                    <div className="absolute inset-0 pointer-events-none">
+                      <svg className="w-full h-full opacity-15">
+                        <defs>
+                          <linearGradient id="connectionGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stopColor="rgb(168, 85, 247)" />
+                            <stop offset="100%" stopColor="rgb(59, 130, 246)" />
+                          </linearGradient>
+                        </defs>
+                        
+                        {/* Lines to each integration point */}
+                        <line x1="50%" y1="50%" x2="20%" y2="20%" stroke="url(#connectionGradient)" strokeWidth="1.5" className="animate-pulse" strokeDasharray="3,3">
+                          <animate attributeName="stroke-dashoffset" values="0;6" dur="2s" repeatCount="indefinite"/>
+                        </line>
+                        <line x1="50%" y1="50%" x2="80%" y2="20%" stroke="url(#connectionGradient)" strokeWidth="1.5" className="animate-pulse" strokeDasharray="3,3">
+                          <animate attributeName="stroke-dashoffset" values="0;6" dur="2.5s" repeatCount="indefinite"/>
+                        </line>
+                        <line x1="50%" y1="50%" x2="15%" y2="50%" stroke="url(#connectionGradient)" strokeWidth="1.5" className="animate-pulse" strokeDasharray="3,3">
+                          <animate attributeName="stroke-dashoffset" values="0;6" dur="3s" repeatCount="indefinite"/>
+                        </line>
+                        <line x1="50%" y1="50%" x2="85%" y2="50%" stroke="url(#connectionGradient)" strokeWidth="1.5" className="animate-pulse" strokeDasharray="3,3">
+                          <animate attributeName="stroke-dashoffset" values="0;6" dur="2.2s" repeatCount="indefinite"/>
+                        </line>
+                        <line x1="50%" y1="50%" x2="20%" y2="80%" stroke="url(#connectionGradient)" strokeWidth="1.5" className="animate-pulse" strokeDasharray="3,3">
+                          <animate attributeName="stroke-dashoffset" values="0;6" dur="2.8s" repeatCount="indefinite"/>
+                        </line>
+                        <line x1="50%" y1="50%" x2="80%" y2="80%" stroke="url(#connectionGradient)" strokeWidth="1.5" className="animate-pulse" strokeDasharray="3,3">
+                          <animate attributeName="stroke-dashoffset" values="0;6" dur="2.3s" repeatCount="indefinite"/>
+                        </line>
+                      </svg>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* Floating Integration Cards */}
-              {/* CRM Systems - Top Left */}
-              <div className="absolute top-8 left-8 animate-float" data-aos="fade-up" data-aos-delay="400">
-                <div className="bg-background/80 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-border/50 hover:shadow-xl transition-all duration-300">
-                  <div className="text-center">
-                    <div className="text-3xl mb-2">📊</div>
-                    <div className="text-xs font-medium text-foreground">CRM</div>
-                    <div className="text-xs text-muted-foreground">Salesforce, HubSpot</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Ecommerce - Top Right */}
-              <div className="absolute top-8 right-8 animate-float-delayed" data-aos="fade-up" data-aos-delay="500">
-                <div className="bg-background/80 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-border/50 hover:shadow-xl transition-all duration-300">
-                  <div className="text-center">
-                    <div className="text-3xl mb-2">🛒</div>
-                    <div className="text-xs font-medium text-foreground">Ecommerce</div>
-                    <div className="text-xs text-muted-foreground">Shopify, WooCommerce</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Telephony - Left */}
-              <div className="absolute left-4 top-1/2 transform -translate-y-1/2 animate-float" data-aos="fade-right" data-aos-delay="600">
-                <div className="bg-background/80 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-border/50 hover:shadow-xl transition-all duration-300">
-                  <div className="text-center">
-                    <div className="text-3xl mb-2">📞</div>
-                    <div className="text-xs font-medium text-foreground">Telephony</div>
-                    <div className="text-xs text-muted-foreground">Twilio, Genesys</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Calendar - Right */}
-              <div className="absolute right-4 top-1/2 transform -translate-y-1/2 animate-float-delayed" data-aos="fade-left" data-aos-delay="700">
-                <div className="bg-background/80 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-border/50 hover:shadow-xl transition-all duration-300">
-                  <div className="text-center">
-                    <div className="text-3xl mb-2">📅</div>
-                    <div className="text-xs font-medium text-foreground">Calendar</div>
-                    <div className="text-xs text-muted-foreground">Google, Calendly</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Helpdesk - Bottom Left */}
-              <div className="absolute bottom-8 left-8 animate-float" data-aos="fade-up" data-aos-delay="800">
-                <div className="bg-background/80 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-border/50 hover:shadow-xl transition-all duration-300">
-                  <div className="text-center">
-                    <div className="text-3xl mb-2">🎧</div>
-                    <div className="text-xs font-medium text-foreground">Helpdesk</div>
-                    <div className="text-xs text-muted-foreground">Zendesk, Intercom</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Email - Bottom Right */}
-              <div className="absolute bottom-8 right-8 animate-float-delayed" data-aos="fade-up" data-aos-delay="900">
-                <div className="bg-background/80 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-border/50 hover:shadow-xl transition-all duration-300">
-                  <div className="text-center">
-                    <div className="text-3xl mb-2">📧</div>
-                    <div className="text-xs font-medium text-foreground">Email</div>
-                    <div className="text-xs text-muted-foreground">Mailchimp, SendGrid</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* HR Systems - Top Center */}
-              <div className="absolute top-4 left-1/2 transform -translate-x-1/2 animate-float" data-aos="fade-down" data-aos-delay="1000">
-                <div className="bg-background/80 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-border/50 hover:shadow-xl transition-all duration-300">
-                  <div className="text-center">
-                    <div className="text-3xl mb-2">👥</div>
-                    <div className="text-xs font-medium text-foreground">HR</div>
-                    <div className="text-xs text-muted-foreground">BambooHR, Workday</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* ERP - Bottom Center */}
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 animate-float-delayed" data-aos="fade-up" data-aos-delay="1100">
-                <div className="bg-background/80 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-border/50 hover:shadow-xl transition-all duration-300">
-                  <div className="text-center">
-                    <div className="text-3xl mb-2">🏢</div>
-                    <div className="text-xs font-medium text-foreground">ERP</div>
-                    <div className="text-xs text-muted-foreground">SAP, Oracle</div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Connection Lines */}
-              <div className="absolute inset-0 pointer-events-none">
-                {/* Animated connection lines radiating from center */}
-                <svg className="w-full h-full opacity-20">
-                  <defs>
-                    <linearGradient id="connectionGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="rgb(168, 85, 247)" />
-                      <stop offset="100%" stopColor="rgb(59, 130, 246)" />
-                    </linearGradient>
-                  </defs>
-                  
-                  {/* Lines to each integration point */}
-                  <line x1="50%" y1="50%" x2="15%" y2="15%" stroke="url(#connectionGradient)" strokeWidth="2" className="animate-pulse" strokeDasharray="5,5">
-                    <animate attributeName="stroke-dashoffset" values="0;10" dur="2s" repeatCount="indefinite"/>
-                  </line>
-                  <line x1="50%" y1="50%" x2="85%" y2="15%" stroke="url(#connectionGradient)" strokeWidth="2" className="animate-pulse" strokeDasharray="5,5">
-                    <animate attributeName="stroke-dashoffset" values="0;10" dur="2.5s" repeatCount="indefinite"/>
-                  </line>
-                  <line x1="50%" y1="50%" x2="10%" y2="50%" stroke="url(#connectionGradient)" strokeWidth="2" className="animate-pulse" strokeDasharray="5,5">
-                    <animate attributeName="stroke-dashoffset" values="0;10" dur="3s" repeatCount="indefinite"/>
-                  </line>
-                  <line x1="50%" y1="50%" x2="90%" y2="50%" stroke="url(#connectionGradient)" strokeWidth="2" className="animate-pulse" strokeDasharray="5,5">
-                    <animate attributeName="stroke-dashoffset" values="0;10" dur="2.2s" repeatCount="indefinite"/>
-                  </line>
-                  <line x1="50%" y1="50%" x2="15%" y2="85%" stroke="url(#connectionGradient)" strokeWidth="2" className="animate-pulse" strokeDasharray="5,5">
-                    <animate attributeName="stroke-dashoffset" values="0;10" dur="2.8s" repeatCount="indefinite"/>
-                  </line>
-                  <line x1="50%" y1="50%" x2="85%" y2="85%" stroke="url(#connectionGradient)" strokeWidth="2" className="animate-pulse" strokeDasharray="5,5">
-                    <animate attributeName="stroke-dashoffset" values="0;10" dur="2.3s" repeatCount="indefinite"/>
-                  </line>
-                  <line x1="50%" y1="50%" x2="50%" y2="10%" stroke="url(#connectionGradient)" strokeWidth="2" className="animate-pulse" strokeDasharray="5,5">
-                    <animate attributeName="stroke-dashoffset" values="0;10" dur="2.7s" repeatCount="indefinite"/>
-                  </line>
-                  <line x1="50%" y1="50%" x2="50%" y2="90%" stroke="url(#connectionGradient)" strokeWidth="2" className="animate-pulse" strokeDasharray="5,5">
-                    <animate attributeName="stroke-dashoffset" values="0;10" dur="2.6s" repeatCount="indefinite"/>
-                  </line>
-                </svg>
+              {/* Right Content - Text */}
+              <div className="text-center lg:text-left" data-aos="fade-left">
+                <h2 className="text-3xl sm:text-4xl lg:text-4xl font-bold text-foreground mb-6">
+                  Integrates Seamlessly With the Tools You Already Use
+                </h2>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Our AI Employees connect with your CRM, website, phones, booking tools, and more — so they work like your best-trained staff from day one.
+                </p>
               </div>
             </div>
           </div>
