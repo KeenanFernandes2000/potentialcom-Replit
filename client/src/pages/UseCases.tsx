@@ -778,7 +778,7 @@ const UseCases = () => {
                                   }, 300);
                                 }}
                               >
-                                Build Similar AI Agents for Free
+                                Hire Your Next {useCase.title} starting from $500/month
                               </Button>
                             </DialogClose>
                           </div>
