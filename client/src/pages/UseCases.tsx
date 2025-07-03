@@ -957,11 +957,11 @@ const UseCases = () => {
         </section>
 
         {/* Speak Every Customer's Language Section */}
-        <section className="py-16 lg:py-20 bg-background pt-[0px] pb-[0px] flex items-center min-h-[600px]">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full lg:pl-[60px] lg:pr-[60px]">
+        <section className="py-16 lg:py-20 bg-background">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             {/* Language Support Subsection */}
             <div className="border-t border-border/20 pt-16">
-              <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                 {/* Left Content */}
                 <div className="text-center lg:text-left" data-aos="fade-right">
                   <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">
@@ -972,10 +972,10 @@ const UseCases = () => {
 
                 {/* Right Content - Animated Country Flags */}
                 <div className="flex justify-center lg:justify-end" data-aos="fade-left">
-                  <div className="relative w-full max-w-md">
+                  <div className="relative w-full max-w-sm lg:max-w-md">
                     {/* Scrolling Flags Container */}
-                    <div className="overflow-hidden rounded-2xl bg-gradient-to-br from-background to-muted/50 p-4 sm:p-6 lg:p-8 shadow-xl border border-border/50">
-                      <div className="space-y-3 sm:space-y-4 lg:space-y-6">
+                    <div className="overflow-hidden rounded-2xl bg-gradient-to-br from-background to-muted/50 p-3 sm:p-4 lg:p-6 shadow-xl border border-border/50">
+                      <div className="space-y-2 sm:space-y-3 lg:space-y-4">
                         {/* Row 1 - Moving Right */}
                         <div className="overflow-hidden">
                           <div className="flex animate-scroll-right space-x-2 sm:space-x-3 lg:space-x-4">
