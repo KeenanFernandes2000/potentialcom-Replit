@@ -62,7 +62,7 @@ const useCaseIcons = {
 
 // Icons for different industries
 const industryIcons = {
-  "Hotel": "🏨",
+  "Room Service": "🚪",
   "Receptionist": "🛎️",
   "Concierge": "🌟",
   "Customer Support": "💬",
@@ -93,7 +93,7 @@ const useCases = [
     tasks: ["Place Orders", "Track Orders", "Send Confirmations", "Answer Queries"],
     channels: ["Phone", "WhatsApp"],
     interface: ["Voice", "Chat"],
-    industry: "Hotel",
+    industry: "Room Service",
     videoUrl: "https://example.com/room-service-demo"
   },
   {
