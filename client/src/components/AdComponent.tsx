@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { safelyObserveDOM } from "@/lib/utils";
 
 interface AdComponentProps {
   slot: string;
@@ -24,19 +25,63 @@ export const AdComponent: React.FC<AdComponentProps> = ({
   inline = false,
 }) => {
   const adRef = useRef<HTMLElement>(null);
+  const initialized = useRef(false);
 
   useEffect(() => {
-    try {
-      // Initialize adsbygoogle array if it doesn't exist
-      if (typeof window !== "undefined") {
+    // Prevent multiple initializations
+    if (initialized.current) return;
+
+    // Check if we're in a browser environment
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    // Only initialize if we have a valid DOM element
+    if (!adRef.current) {
+      return;
+    }
+
+    // Use the safe DOM utility to ensure proper initialization
+    safelyObserveDOM.onReady(() => {
+      initializeAd();
+    });
+
+    function initializeAd() {
+      try {
+        // Check if element is still valid
+        if (!safelyObserveDOM.isValidElement(adRef.current)) {
+          return;
+        }
+
+        // Initialize adsbygoogle array if it doesn't exist
         window.adsbygoogle = window.adsbygoogle || [];
 
-        // Push the ad for initialization
-        window.adsbygoogle.push({});
+        // Use requestAnimationFrame to ensure DOM is fully ready
+        requestAnimationFrame(() => {
+          try {
+            // Final check before initialization
+            if (
+              safelyObserveDOM.isValidElement(adRef.current) &&
+              !initialized.current
+            ) {
+              initialized.current = true;
+              window.adsbygoogle.push({});
+            }
+          } catch (error) {
+            console.error("AdSense requestAnimationFrame error:", error);
+          }
+        });
+      } catch (error) {
+        console.error("AdSense initialization error:", error);
       }
-    } catch (error) {
-      console.error("AdSense initialization error:", error);
     }
+  }, []);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      initialized.current = false;
+    };
   }, []);
 
   const isProduction = process.env.NODE_ENV === "production";
