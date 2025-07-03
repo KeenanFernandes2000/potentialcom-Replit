@@ -927,16 +927,6 @@ const UseCases = () => {
                           </div>
                         </div>
                       </div>
-
-                      {/* Central Highlight */}
-                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                        <div className="bg-background/90 backdrop-blur-sm rounded-xl p-4 border border-primary/20 shadow-lg">
-                          <div className="text-center">
-                            <div className="text-2xl font-bold text-primary mb-1">100+</div>
-                            <div className="text-sm text-muted-foreground font-medium">Languages</div>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
