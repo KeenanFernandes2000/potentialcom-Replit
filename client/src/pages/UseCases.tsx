@@ -100,8 +100,8 @@ const useCases = [
     id: 3,
     icon: "hotel",
     title: "Concierge AI Agent",
-    description: "Assists hotel guests, patients, or VIP clients with bookings, directions, and service requests.",
-    tasks: ["Book Appointments", "Recommend Services", "Answer Queries"],
+    description: "Assists hotel guests, patients, or clients with bookings, directions, and service requests.",
+    tasks: ["Book Appointments", "Suggest Products/Services", "Answer Queries"],
     channels: ["Phone", "Website", "WhatsApp"],
     interface: ["Voice", "Chat"],
     industry: "Concierge",
@@ -123,7 +123,7 @@ const useCases = [
     icon: "ecommerce",
     title: "Ecommerce Sales AI Agent",
     description: "Acts as a personal shopping assistant — understands customer needs and suggests the right products.",
-    tasks: ["Suggest Products", "Place Orders", "Answer Queries", "Follow Up", "Track Orders"],
+    tasks: ["Suggest Products/Services", "Place Orders", "Answer Queries", "Follow Up", "Track Orders"],
     channels: ["Website", "WhatsApp", "Phone"],
     interface: ["Voice", "Chat"],
     industry: "Ecommerce",
@@ -134,7 +134,7 @@ const useCases = [
     icon: "sales",
     title: "Sales AI Agent",
     description: "Qualifies leads, recommends solutions, follows up automatically, and closes more deals.",
-    tasks: ["Capture Leads", "Suggest Products", "Send Follow-Ups"],
+    tasks: ["Capture Leads", "Suggest Products/Services", "Follow up"],
     channels: ["Phone", "Website", "WhatsApp"],
     interface: ["Voice", "Chat"],
     industry: "Sales",
@@ -145,7 +145,7 @@ const useCases = [
     icon: "hr",
     title: "HR/Training AI Agent",
     description: "Onboards employees, delivers internal training, explains HR policies, or interviews candidates.",
-    tasks: ["Provide Coaching", "Answer HR Questions", "Analyze Interviews", "Send Reminders"],
+    tasks: ["Provide Coaching", "Answer Queries", "Conduct Interviews"],
     channels: ["Website", "WhatsApp"],
     interface: ["Chat", "Voice"],
     industry: "HR",
@@ -156,7 +156,7 @@ const useCases = [
     icon: "consulting",
     title: "Marketing & Outreach AI Agent",
     description: "Sends out promotional messages, collects feedback, and manages surveys or review requests.",
-    tasks: ["Send Campaigns", "Collect Feedback", "Schedule Follow-Ups"],
+    tasks: ["Send Campaigns", "Collect Feedback", "Follow up"],
     channels: ["WhatsApp", "Phone", "Email"],
     interface: ["Voice", "Chat"],
     industry: "Marketing",
@@ -420,7 +420,6 @@ const UseCases = () => {
           <div className="container">
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold mb-2">Your AI Agent Isn't Just For Answering Questions—It's Your Digital Employee</h2>
                 <p className="text-lg text-muted-foreground">Use the filters below to find the perfect AI Agent for your needs</p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
