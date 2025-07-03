@@ -2,8 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+/* AdSense styling */
+.ad-container {
+  display: block;
+  text-align: center;
+  margin: 2rem auto;
+  min-height: 90px; /* Minimum height for ad containers */
+}
+
+.ad-container .adsbygoogle {
+  display: block !important;
+}
+
+@media (max-width: 768px) {
+  .ad-container {
+    margin: 1.5rem auto;
+  }
+}
+
 /* Prevent horizontal scrolling on mobile */
-html, body {
+html,
+body {
   overflow-x: hidden;
   max-width: 100vw;
 }
@@ -16,7 +35,7 @@ html, body {
   /* Base colors */
   --background: 0 0% 100%;
   --foreground: 222 47% 11%;
-  
+
   /* UI Elements */
   --muted: 210 40% 96.1%;
   --muted-foreground: 215 16% 47%;
@@ -26,7 +45,7 @@ html, body {
   --card-foreground: 222 47% 11%;
   --border: 214 32% 91%;
   --input: 214 32% 91%;
-  
+
   /* Brand Colors */
   --primary: 270 70% 56%; /* Purple color - #8844DD */
   --primary-foreground: 0 0% 100%;
@@ -34,13 +53,13 @@ html, body {
   --secondary-foreground: 0 0% 100%;
   --accent: 270 70% 94%;
   --accent-foreground: 222 47% 11%;
-  
+
   /* Status Colors */
   --destructive: 0 84.2% 60.2%;
   --destructive-foreground: 60 9.1% 97.8%;
   --success: 142 76% 36%;
   --success-foreground: 0 0% 100%;
-  
+
   /* Misc */
   --ring: 270 70% 56%;
   --radius: 1rem;
@@ -50,7 +69,7 @@ html, body {
   /* Base colors */
   --background: 222 47% 7%;
   --foreground: 210 40% 98%;
-  
+
   /* UI Elements */
   --muted: 217 33% 17%;
   --muted-foreground: 215 20% 65%;
@@ -60,7 +79,7 @@ html, body {
   --card-foreground: 210 40% 98%;
   --border: 217 33% 17%;
   --input: 217 33% 17%;
-  
+
   /* Brand Colors */
   --primary: 270 80% 60%; /* Brighter purple for dark mode - #9955FF */
   --primary-foreground: 0 0% 100%;
@@ -68,13 +87,13 @@ html, body {
   --secondary-foreground: 210 40% 98%;
   --accent: 270 70% 30%;
   --accent-foreground: 210 40% 98%;
-  
+
   /* Status Colors */
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 0 0% 98%;
   --success: 142 76% 36%;
   --success-foreground: 0 0% 100%;
-  
+
   /* Misc */
   --ring: 270 80% 60%;
   --radius: 1rem;
@@ -88,15 +107,15 @@ html, body {
   body {
     @apply font-sans antialiased bg-background text-foreground transition-colors duration-300;
   }
-  
+
   ::-webkit-scrollbar {
     @apply w-2;
   }
-  
+
   ::-webkit-scrollbar-track {
     @apply bg-muted;
   }
-  
+
   ::-webkit-scrollbar-thumb {
     @apply bg-primary/50 rounded-full hover:bg-primary;
   }
@@ -106,34 +125,48 @@ html, body {
   .container {
     @apply px-4 md:px-6 max-w-7xl mx-auto;
   }
-  
+
   .glass-effect {
     @apply bg-background/50 backdrop-blur-lg border border-border/50;
   }
-  
+
   .section-title {
     @apply text-3xl md:text-4xl font-bold text-foreground mb-6;
   }
-  
+
   .gradient-text {
     @apply text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary;
   }
-  
+
   .card-hover {
     @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
   }
-  
+
   .bg-grid-pattern {
     background-size: 30px 30px;
-    background-image: 
-      linear-gradient(to right, hsla(var(--secondary) / 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, hsla(var(--secondary) / 0.05) 1px, transparent 1px);
+    background-image: linear-gradient(
+        to right,
+        hsla(var(--secondary) / 0.05) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        hsla(var(--secondary) / 0.05) 1px,
+        transparent 1px
+      );
   }
-  
+
   .dark .bg-grid-pattern {
-    background-image: 
-      linear-gradient(to right, hsla(var(--muted-foreground) / 0.1) 1px, transparent 1px),
-      linear-gradient(to bottom, hsla(var(--muted-foreground) / 0.1) 1px, transparent 1px);
+    background-image: linear-gradient(
+        to right,
+        hsla(var(--muted-foreground) / 0.1) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        hsla(var(--muted-foreground) / 0.1) 1px,
+        transparent 1px
+      );
   }
 }
 
@@ -147,11 +180,11 @@ html, body {
       transform: translateX(-50%);
     }
   }
-  
+
   .animate-scroll {
     animation: scroll 30s linear infinite;
   }
-  
+
   /* Country flags scrolling animations */
   @keyframes scroll-right {
     0% {
@@ -161,7 +194,7 @@ html, body {
       transform: translateX(0%);
     }
   }
-  
+
   @keyframes scroll-left {
     0% {
       transform: translateX(0%);
@@ -170,19 +203,19 @@ html, body {
       transform: translateX(-50%);
     }
   }
-  
+
   .animate-scroll-right {
     animation: scroll-right 20s linear infinite;
   }
-  
+
   .animate-scroll-left {
     animation: scroll-left 20s linear infinite;
   }
-  
+
   .pause-animation {
     animation-play-state: paused;
   }
-  
+
   .hover\:pause-animation:hover {
     animation-play-state: paused;
   }

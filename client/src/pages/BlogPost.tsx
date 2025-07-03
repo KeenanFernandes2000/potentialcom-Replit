@@ -14,6 +14,7 @@ import { BlogSEO } from "@/components/SEO";
 import { format } from "date-fns";
 import React from "react";
 import { detectLanguage } from "@/lib/language-utils";
+import { BlogContentWithAds } from "@/components/BlogContentWithAds";
 
 // Function to remove the first p tag containing the featured image
 const removeFirstImageFromContent = (
@@ -200,9 +201,9 @@ function BlogPostContent() {
                   </div>
                 )}
 
-                <div
+                <BlogContentWithAds
+                  content={processedContent}
                   className="prose prose-lg max-w-none dark:prose-invert"
-                  dangerouslySetInnerHTML={{ __html: processedContent }}
                 />
               </>
             ) : null}
