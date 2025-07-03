@@ -679,11 +679,11 @@ const UseCases = () => {
                             Try This Agent
                           </Button>
                         </DialogTrigger>
-                        <DialogContent className="max-w-4xl">
+                        <DialogContent className="max-w-4xl w-[95vw] max-h-[90vh] overflow-y-auto">
                           <DialogTitle className="sr-only">{useCase.title}</DialogTitle>
-                          <div className="p-6">
-                            <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
-                              <div className="text-primary p-2 rounded-lg bg-primary/10">
+                          <div className="p-4 sm:p-6">
+                            <h3 className="text-xl sm:text-2xl font-bold mb-4 flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                              <div className="text-primary p-2 rounded-lg bg-primary/10 flex-shrink-0">
                                 {(() => {
                                   // Map icon keys to unique icon components
                                   const iconMap: { [key: string]: any } = {
@@ -729,14 +729,14 @@ const UseCases = () => {
                                   return <IconComponent className="h-6 w-6" />;
                                 })()}
                               </div>
-                              {useCase.title}
+                              <span className="leading-tight">{useCase.title}</span>
                             </h3>
-                            <p className="text-muted-foreground mb-6">
+                            <p className="text-muted-foreground mb-4 sm:mb-6 text-sm sm:text-base">
                               {useCase.description}
                             </p>
                             
                             {/* Video Demo */}
-                            <div className="aspect-video bg-muted rounded-lg mb-6 overflow-hidden">
+                            <div className="aspect-video bg-muted rounded-lg mb-4 sm:mb-6 overflow-hidden">
                               {useCase.title === "Banking: Customer Support Agent" && useCase.industry === "Banking" ? (
                                 <iframe
                                   src="https://www.youtube.com/embed/qW_nQ5kx8GY"
@@ -747,11 +747,11 @@ const UseCases = () => {
                                   allowFullScreen
                                 />
                               ) : (
-                                <div className="w-full h-full flex items-center justify-center">
+                                <div className="w-full h-full flex items-center justify-center p-4">
                                   <div className="text-center">
-                                    <div className="text-4xl mb-2">🎥</div>
-                                    <p className="text-muted-foreground">Video demo coming soon</p>
-                                    <p className="text-sm text-muted-foreground mt-1">
+                                    <div className="text-3xl sm:text-4xl mb-2">🎥</div>
+                                    <p className="text-muted-foreground text-sm sm:text-base">Video demo coming soon</p>
+                                    <p className="text-xs sm:text-sm text-muted-foreground mt-1 px-2">
                                       This agent will showcase: {useCase.tasks.join(", ")}
                                     </p>
                                   </div>
@@ -761,7 +761,7 @@ const UseCases = () => {
 
                             <DialogClose asChild>
                               <Button 
-                                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
+                                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm sm:text-base py-2 sm:py-3"
                                 onClick={() => {
                                   // Update URL and scroll to the section after modal closes
                                   setTimeout(() => {
@@ -777,7 +777,8 @@ const UseCases = () => {
                                   }, 300);
                                 }}
                               >
-                                Hire Your Next {useCase.title} starting from $500/month
+                                <span className="hidden sm:inline">Hire Your Next {useCase.title} starting from $500/month</span>
+                                <span className="sm:hidden">Hire This Agent - $500/month</span>
                               </Button>
                             </DialogClose>
                           </div>
