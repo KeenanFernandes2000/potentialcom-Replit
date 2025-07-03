@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import UTMLink from "@/components/UTMLink";
 import { SEO } from "@/components/SEO";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -31,12 +31,12 @@ export default function NotFound() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link href="/">
+              <UTMLink href="/">
                 <Button className="flex items-center gap-2" size="lg">
                   <Home className="h-4 w-4" />
                   Go Home
                 </Button>
-              </Link>
+              </UTMLink>
               <Button
                 variant="outline"
                 size="lg"

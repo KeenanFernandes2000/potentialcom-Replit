@@ -3,7 +3,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "@/hooks/use-toast";
-import { Link } from "wouter";
+import UTMLink from "@/components/UTMLink";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { AutoSEO } from "@/components/SEO";
@@ -85,13 +85,13 @@ export default function ForgotPassword() {
       <main className="flex-grow flex items-center justify-center px-4 py-8 mt-14">
         <div className="container max-w-md py-16">
           <div className="mb-8">
-            <Link
+            <UTMLink
               href="/login"
               className="flex items-center text-sm text-muted-foreground hover:text-primary transition-colors mb-6"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to login
-            </Link>
+            </UTMLink>
             <h1 className="text-3xl font-bold mb-2">Reset Your Password</h1>
             <p className="text-muted-foreground">
               Enter your email address and we'll send you instructions to reset
@@ -108,7 +108,7 @@ export default function ForgotPassword() {
               </p>
               <div className="flex flex-col space-y-4">
                 <Button asChild>
-                  <Link href="/login">Return to Login</Link>
+                  <UTMLink href="/login">Return to Login</UTMLink>
                 </Button>
               </div>
             </div>

@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { navigateWithUTM } from "@/lib/utm-utils";
 
 const Solutions = () => {
   const solutionsByProfile = [
@@ -70,7 +71,7 @@ const Solutions = () => {
                 <Button
                   variant="ghost"
                   className="text-primary font-medium p-0 hover:bg-transparent flex items-center group gtm-solutions-learn-more"
-                  onClick={() => window.location.href = "/vera"}
+                  onClick={() => navigateWithUTM("/vera")}
                 >
                   Learn More{" "}
                   <ArrowRight className="ml-1 w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -88,7 +89,7 @@ const Solutions = () => {
           <Button
             className="rounded-full bg-primary hover:bg-primary/90 text-white font-medium px-6 py-6 gtm-solutions-schedule-consultation"
             size="lg"
-            onClick={() => window.location.href = "/vera"}
+            onClick={() => navigateWithUTM("/vera")}
           >
             Schedule a Consultation <ChevronRight className="ml-2 h-4 w-4" />
           </Button>

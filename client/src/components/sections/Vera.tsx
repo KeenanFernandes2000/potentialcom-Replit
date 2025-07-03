@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { MessageCircle, Bot, Send } from "lucide-react";
 import veraAvatarCentered from "@assets/Vera Avatar Centered.png";
+import { navigateWithUTM } from "@/lib/utm-utils";
 
 const Vera = () => {
   const chatMessages = [
@@ -114,7 +115,7 @@ const Vera = () => {
             <Button
               className="rounded-full bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-6 gtm-vera-talk-to-vera"
               size="lg"
-              onClick={() => window.location.href = "/vera"}
+              onClick={() => navigateWithUTM("/vera")}
             >
               Talk to Vera
             </Button>

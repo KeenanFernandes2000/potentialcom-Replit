@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useRoute, Link, useLocation } from "wouter";
+import { useRoute, useLocation } from "wouter";
+import UTMLink from "@/components/UTMLink";
 import { fetchPosts, fetchCategories } from "@/lib/blog-api";
 import { useBlogContext } from "@/lib/blog-context";
 import { BlogProvider } from "@/lib/blog-context";
@@ -98,7 +99,7 @@ function BlogCategoryContent() {
       <main className="flex-grow container mx-auto px-4 py-8 mt-14">
         <div className="flex items-center mb-4">
           <Button variant="ghost" size="sm" asChild>
-            <Link href="/blog">
+            <UTMLink href="/blog">
               {isRTL ? (
                 <>
                   <ChevronRight className="mr-1 h-4 w-4" />{" "}
@@ -110,7 +111,7 @@ function BlogCategoryContent() {
                   {language === "en" ? "Back to Blog" : "العودة إلى المدونة"}
                 </>
               )}
-            </Link>
+            </UTMLink>
           </Button>
         </div>
 

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, ChevronRight, Sparkles } from "lucide-react";
 import { useState, useEffect } from "react";
 import { scrollToSection } from "@/lib/animations";
+import { navigateWithUTM } from "@/lib/utm-utils";
 
 // Import all customer logos
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
@@ -247,7 +248,7 @@ const Hero = () => {
                 variant="outline"
                 className="rounded-full border-primary text-primary hover:bg-primary/10 gtm-hero-talk-to-consultant"
                 size="lg"
-                onClick={() => (window.location.href = "/vera")}
+                onClick={() => navigateWithUTM("/vera")}
               >
                 Talk to AI Consultant <ArrowRight className="ml-2 h-4 w-4" />
               </Button>

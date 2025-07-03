@@ -1,6 +1,7 @@
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { scrollToSection } from "@/lib/animations";
+import { navigateWithUTM } from "@/lib/utm-utils";
 
 const Pricing = () => {
   const pricingPlans = [
@@ -106,12 +107,15 @@ const Pricing = () => {
                 }`}
                 onClick={() => {
                   if (plan.name === "Growth" || plan.name === "Starter") {
-                    window.location.href = "/solutions";
+                    navigateWithUTM("/solutions");
                     setTimeout(() => {
                       scrollToSection("agents");
                     }, 100);
-                  } else if (plan.name === "Enterprise" || plan.name === "Micro Platform") {
-                    window.location.href = "/vera";
+                  } else if (
+                    plan.name === "Enterprise" ||
+                    plan.name === "Micro Platform"
+                  ) {
+                    navigateWithUTM("/vera");
                   }
                 }}
               >
@@ -129,7 +133,7 @@ const Pricing = () => {
           <Button
             variant="link"
             className="text-primary font-medium mt-2 gtm-pricing-contact-sales"
-            onClick={() => window.location.href = "/vera"}
+            onClick={() => navigateWithUTM("/vera")}
           >
             Contact our sales team
           </Button>

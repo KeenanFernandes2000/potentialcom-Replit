@@ -1,4 +1,4 @@
-import { Link } from "wouter";
+import UTMLink from "@/components/UTMLink";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCategories } from "@/lib/blog-api";
 import { useBlogContext } from "@/lib/blog-context";

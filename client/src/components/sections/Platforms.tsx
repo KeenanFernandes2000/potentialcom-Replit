@@ -11,6 +11,7 @@ import {
   Heart,
   Award,
 } from "lucide-react";
+import { navigateWithUTM } from "@/lib/utm-utils";
 
 const Platforms = () => {
   const platforms = [
@@ -157,7 +158,7 @@ const Platforms = () => {
               <Button
                 variant="outline"
                 className="w-full rounded-full hover:bg-primary hover:text-white gtm-platforms-learn-more"
-                onClick={() => window.location.href = "/vera"}
+                onClick={() => navigateWithUTM("/vera")}
               >
                 Learn More
               </Button>

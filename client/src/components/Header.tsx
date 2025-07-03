@@ -3,6 +3,7 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 import { Logo } from "./Logo";
+import UTMLink from "@/components/UTMLink";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -43,76 +44,82 @@ const Header = () => {
     >
       <div className="container py-4 flex justify-between items-center">
         <div className="logo">
-          <a href="/" className="flex items-center">
+          <UTMLink href="/" className="flex items-center">
             <Logo height={40} />
-          </a>
+          </UTMLink>
         </div>
 
         <nav className="hidden md:flex items-center space-x-8">
-          <div 
+          <div
             className="relative"
             onMouseEnter={() => setIsSolutionsDropdownOpen(true)}
             onMouseLeave={() => setIsSolutionsDropdownOpen(false)}
           >
             <button
               className="text-foreground/80 hover:text-primary font-medium transition-colors flex items-center gap-1"
-              onClick={() => setIsSolutionsDropdownOpen(!isSolutionsDropdownOpen)}
+              onClick={() =>
+                setIsSolutionsDropdownOpen(!isSolutionsDropdownOpen)
+              }
             >
               Solutions
-              <ChevronDown className={`h-4 w-4 transition-transform ${isSolutionsDropdownOpen ? 'rotate-180' : ''}`} />
+              <ChevronDown
+                className={`h-4 w-4 transition-transform ${
+                  isSolutionsDropdownOpen ? "rotate-180" : ""
+                }`}
+              />
             </button>
-            
+
             {isSolutionsDropdownOpen && (
               <div className="absolute top-full left-0 pt-2 w-48 z-50">
                 <div className="bg-background/95 backdrop-blur-sm border border-border rounded-lg shadow-lg">
                   <div className="py-2">
-                    <a
+                    <UTMLink
                       href="/voice"
                       className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
                     >
                       AI Voice Agent
-                    </a>
-                    <a
+                    </UTMLink>
+                    <UTMLink
                       href="/chatbot"
                       className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
                     >
                       AI Chatbot
-                    </a>
-                    <a
+                    </UTMLink>
+                    <UTMLink
                       href="/solutions"
                       className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
                     >
                       All Solutions
-                    </a>
+                    </UTMLink>
                   </div>
                 </div>
               </div>
             )}
           </div>
-          <a
+          <UTMLink
             href="/pricing"
             className="text-foreground/80 hover:text-primary font-medium transition-colors"
           >
             Pricing
-          </a>
-          <a
+          </UTMLink>
+          <UTMLink
             href="/resources"
             className="text-foreground/80 hover:text-primary font-medium transition-colors"
           >
             Resources
-          </a>
-          <a
+          </UTMLink>
+          <UTMLink
             href="/about"
             className="text-foreground/80 hover:text-primary font-medium transition-colors"
           >
             About Us
-          </a>
-          <a
+          </UTMLink>
+          <UTMLink
             href="/vera"
             className="text-foreground/80 hover:text-primary font-medium transition-colors"
           >
             Talk to Vera
-          </a>
+          </UTMLink>
 
           <div className="pl-4">
             <ThemeToggle />
@@ -141,57 +148,57 @@ const Header = () => {
           <div className="mb-2">
             <div className="py-3 text-foreground font-medium">Solutions</div>
             <div className="ml-4 space-y-2">
-              <a
+              <UTMLink
                 href="/voice"
                 className="block py-2 text-foreground/80 hover:text-primary transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 AI Voice Agent
-              </a>
-              <a
+              </UTMLink>
+              <UTMLink
                 href="/chatbot"
                 className="block py-2 text-foreground/80 hover:text-primary transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 AI Chatbot
-              </a>
-              <a
+              </UTMLink>
+              <UTMLink
                 href="/solutions"
                 className="block py-2 text-foreground/80 hover:text-primary transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 All Solutions
-              </a>
+              </UTMLink>
             </div>
           </div>
-          <a
+          <UTMLink
             href="/pricing"
             className="py-3 text-foreground hover:text-primary font-medium transition-colors"
             onClick={() => setIsMenuOpen(false)}
           >
             Pricing
-          </a>
-          <a
+          </UTMLink>
+          <UTMLink
             href="/resources"
             className="py-3 text-foreground hover:text-primary font-medium transition-colors"
             onClick={() => setIsMenuOpen(false)}
           >
             Resources
-          </a>
-          <a
+          </UTMLink>
+          <UTMLink
             href="/about"
             className="py-3 text-foreground hover:text-primary font-medium transition-colors"
             onClick={() => setIsMenuOpen(false)}
           >
             About Us
-          </a>
-          <a
+          </UTMLink>
+          <UTMLink
             href="/vera"
             className="py-3 text-foreground hover:text-primary font-medium transition-colors"
             onClick={() => setIsMenuOpen(false)}
           >
             Talk to Vera
-          </a>
+          </UTMLink>
         </div>
       )}
     </header>

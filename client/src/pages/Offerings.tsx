@@ -6,6 +6,7 @@ import Solutions from "@/components/sections/Solutions";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 import { AutoSEO } from "@/components/SEO";
+import { navigateWithUTM } from "@/lib/utm-utils";
 import zeinAubImage from "@assets/ZEIN AUB.png";
 import wfzoImage from "@assets/WFZO.png";
 import arliHomesImage from "@assets/arliHomes.png";
@@ -96,7 +97,7 @@ const Offerings = () => {
                   <Button
                     variant="link"
                     className="px-0 text-primary gtm-offerings-case-study"
-                    onClick={() => window.location.href = "/vera"}
+                    onClick={() => navigateWithUTM("/vera")}
                   >
                     Read full case study
                   </Button>

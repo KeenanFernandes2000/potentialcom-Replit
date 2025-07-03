@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { AutoSEO } from "@/components/SEO";
+import { navigateWithUTM } from "@/lib/utm-utils";
 
 export default function About() {
   return (
@@ -317,7 +318,7 @@ export default function About() {
               <Button
                 size="lg"
                 className="rounded-full px-8 gtm-about-partner-with-us"
-                onClick={() => (window.location.href = "/partner")}
+                onClick={() => navigateWithUTM("/partner")}
               >
                 Partner With Us
               </Button>

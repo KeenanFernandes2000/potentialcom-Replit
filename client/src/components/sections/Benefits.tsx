@@ -8,6 +8,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { navigateWithUTM } from "@/lib/utm-utils";
 
 const Benefits = () => {
   const benefits = [
@@ -84,6 +85,10 @@ const Benefits = () => {
               <a
                 href="/vera"
                 className="text-primary font-medium flex items-center group hover:underline text-sm"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigateWithUTM("/vera");
+                }}
               >
                 Learn more{" "}
                 <ArrowRight className="ml-1 w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
@@ -96,9 +101,7 @@ const Benefits = () => {
           <Button
             className="rounded-full bg-primary hover:bg-primary/90 text-white font-medium px-8 py-6 gtm-benefits-explore-features"
             size="lg"
-            onClick={() => {
-              window.location.href = "/vera";
-            }}
+            onClick={() => navigateWithUTM("/vera")}
           >
             Explore All Features
           </Button>

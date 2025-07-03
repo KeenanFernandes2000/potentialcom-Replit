@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { Link } from "wouter";
+import UTMLink from "@/components/UTMLink";
 import { useBlogContext } from "@/lib/blog-context";
 import { WordPressPost } from "@/lib/blog-api";
 import { formatUrlWithLanguage } from "@/lib/language-utils";
@@ -56,7 +56,9 @@ export function BlogCard({ post }: BlogCardProps) {
       </CardContent>
       <CardFooter>
         <Button asChild variant="outline" className="w-full">
-          <Link href={postUrl}>{isRTL ? "اقرأ المزيد" : "Read More"}</Link>
+          <UTMLink href={postUrl}>
+            {isRTL ? "اقرأ المزيد" : "Read More"}
+          </UTMLink>
         </Button>
       </CardFooter>
     </Card>

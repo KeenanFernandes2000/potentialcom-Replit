@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { RocketIcon, CalendarIcon, Users } from "lucide-react";
 import { scrollToSection } from "@/lib/animations";
+import { navigateWithUTM } from "@/lib/utm-utils";
 
 const Start = () => {
   return (
@@ -59,9 +60,7 @@ const Start = () => {
             <Button
               className="rounded-full bg-primary hover:bg-primary/90 text-white font-semibold px-8 w-full gtm-start-talk-to-consultant"
               size="lg"
-              onClick={() => {
-                window.location.href = "/vera";
-              }}
+              onClick={() => navigateWithUTM("/vera")}
             >
               Talk to AI Consultant
             </Button>
@@ -83,9 +82,7 @@ const Start = () => {
             <Button
               className="rounded-full bg-primary hover:bg-primary/90 text-white font-semibold px-8 w-full gtm-start-become-partner"
               size="lg"
-              onClick={() => {
-                window.location.href = "/partner";
-              }}
+              onClick={() => navigateWithUTM("/partner")}
             >
               Become a Partner
             </Button>
