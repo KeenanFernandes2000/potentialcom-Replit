@@ -805,6 +805,146 @@ const UseCases = () => {
           </div>
         </section>
 
+        {/* Speak Every Customer's Language Section */}
+        <section className="py-16 lg:py-20 bg-background">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Language Support Subsection */}
+            <div className="mt-20 pt-16 border-t border-border/20">
+              <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                {/* Left Content */}
+                <div className="text-center lg:text-left" data-aos="fade-right">
+                  <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">
+                    Speak Every Customer's Language
+                  </h3>
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    Potential.com's AI Voice Agents support 100+ languages and a wide range of regional accents—perfect for engaging a global audience. You might also clone your own voice for a truly personalized experience.
+                  </p>
+                </div>
+
+                {/* Right Content - Animated Country Flags */}
+                <div className="flex justify-center lg:justify-end" data-aos="fade-left">
+                  <div className="relative w-full max-w-md">
+                    {/* Scrolling Flags Container */}
+                    <div className="overflow-hidden rounded-2xl bg-gradient-to-br from-background to-muted/50 p-8 shadow-xl border border-border/50">
+                      <div className="space-y-6">
+                        {/* Row 1 - Moving Right */}
+                        <div className="overflow-hidden">
+                          <div className="flex animate-scroll-right space-x-4">
+                          {[
+                            { flag: "🇺🇸", name: "USA" },
+                            { flag: "🇬🇧", name: "UK" },
+                            { flag: "🇫🇷", name: "France" },
+                            { flag: "🇩🇪", name: "Germany" },
+                            { flag: "🇪🇸", name: "Spain" },
+                            { flag: "🇮🇹", name: "Italy" },
+                            { flag: "🇺🇸", name: "USA" },
+                            { flag: "🇬🇧", name: "UK" },
+                            { flag: "🇫🇷", name: "France" },
+                            { flag: "🇩🇪", name: "Germany" },
+                            { flag: "🇪🇸", name: "Spain" },
+                            { flag: "🇮🇹", name: "Italy" }
+                          ].map((country, index) => (
+                            <div key={index} className="flex-shrink-0 text-center">
+                              <div className="text-4xl mb-2">{country.flag}</div>
+                              <div className="text-xs text-muted-foreground font-medium">{country.name}</div>
+                            </div>
+                          ))}
+                          </div>
+                        </div>
+
+                        {/* Row 2 - Moving Left */}
+                        <div className="overflow-hidden">
+                          <div className="flex animate-scroll-left space-x-4">
+                          {[
+                            { flag: "🇯🇵", name: "Japan" },
+                            { flag: "🇰🇷", name: "Korea" },
+                            { flag: "🇨🇳", name: "China" },
+                            { flag: "🇮🇳", name: "India" },
+                            { flag: "🇧🇷", name: "Brazil" },
+                            { flag: "🇷🇺", name: "Russia" },
+                            { flag: "🇯🇵", name: "Japan" },
+                            { flag: "🇰🇷", name: "Korea" },
+                            { flag: "🇨🇳", name: "China" },
+                            { flag: "🇮🇳", name: "India" },
+                            { flag: "🇧🇷", name: "Brazil" },
+                            { flag: "🇷🇺", name: "Russia" }
+                          ].map((country, index) => (
+                            <div key={index} className="flex-shrink-0 text-center">
+                              <div className="text-4xl mb-2">{country.flag}</div>
+                              <div className="text-xs text-muted-foreground font-medium">{country.name}</div>
+                            </div>
+                          ))}
+                          </div>
+                        </div>
+
+                        {/* Row 3 - Moving Right */}
+                        <div className="overflow-hidden">
+                          <div className="flex animate-scroll-right space-x-4">
+                          {[
+                            { flag: "🇳🇱", name: "Netherlands" },
+                            { flag: "🇸🇪", name: "Sweden" },
+                            { flag: "🇳🇴", name: "Norway" },
+                            { flag: "🇩🇰", name: "Denmark" },
+                            { flag: "🇫🇮", name: "Finland" },
+                            { flag: "🇵🇱", name: "Poland" },
+                            { flag: "🇳🇱", name: "Netherlands" },
+                            { flag: "🇸🇪", name: "Sweden" },
+                            { flag: "🇳🇴", name: "Norway" },
+                            { flag: "🇩🇰", name: "Denmark" },
+                            { flag: "🇫🇮", name: "Finland" },
+                            { flag: "🇵🇱", name: "Poland" }
+                          ].map((country, index) => (
+                            <div key={index} className="flex-shrink-0 text-center">
+                              <div className="text-4xl mb-2">{country.flag}</div>
+                              <div className="text-xs text-muted-foreground font-medium">{country.name}</div>
+                            </div>
+                          ))}
+                          </div>
+                        </div>
+
+                        {/* Row 4 - Moving Left */}
+                        <div className="overflow-hidden">
+                          <div className="flex animate-scroll-left space-x-4">
+                          {[
+                            { flag: "🇦🇺", name: "Australia" },
+                            { flag: "🇨🇦", name: "Canada" },
+                            { flag: "🇲🇽", name: "Mexico" },
+                            { flag: "🇦🇷", name: "Argentina" },
+                            { flag: "🇿🇦", name: "S. Africa" },
+                            { flag: "🇪🇬", name: "Egypt" },
+                            { flag: "🇦🇺", name: "Australia" },
+                            { flag: "🇨🇦", name: "Canada" },
+                            { flag: "🇲🇽", name: "Mexico" },
+                            { flag: "🇦🇷", name: "Argentina" },
+                            { flag: "🇿🇦", name: "S. Africa" },
+                            { flag: "🇪🇬", name: "Egypt" }
+                          ].map((country, index) => (
+                            <div key={index} className="flex-shrink-0 text-center">
+                              <div className="text-4xl mb-2">{country.flag}</div>
+                              <div className="text-xs text-muted-foreground font-medium">{country.name}</div>
+                            </div>
+                          ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Central Highlight */}
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div className="bg-background/90 backdrop-blur-sm rounded-xl p-4 border border-primary/20 shadow-lg">
+                          <div className="text-center">
+                            <div className="text-2xl font-bold text-primary mb-1">100+</div>
+                            <div className="text-sm text-muted-foreground font-medium">Languages</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Call to Action */}
         <section id="build-agents" className="py-16 bg-muted/30">
           <div className="container">
