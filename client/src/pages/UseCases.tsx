@@ -806,10 +806,10 @@ const UseCases = () => {
         </section>
 
         {/* Speak Every Customer's Language Section */}
-        <section className="py-16 lg:py-20 bg-background pt-[0px] pb-[0px]">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-16 lg:py-20 bg-background pt-[0px] pb-[0px] flex items-center min-h-[600px]">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full">
             {/* Language Support Subsection */}
-            <div className="mt-20 pt-16 border-t border-border/20">
+            <div className="border-t border-border/20 pt-16">
               <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                 {/* Left Content */}
                 <div className="text-center lg:text-left" data-aos="fade-right">
