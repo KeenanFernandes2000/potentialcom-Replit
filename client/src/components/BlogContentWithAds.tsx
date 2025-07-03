@@ -34,13 +34,26 @@ export const BlogContentWithAds: React.FC<BlogContentWithAdsProps> = ({
         const responsive =
           domNode.attribs["data-full-width-responsive"] !== "false";
 
+        console.log(domNode);
+
+        // Check if this ins tag is inside a paragraph or other inline context
+        // We'll determine this by checking if the parent context suggests inline usage
+        const isInlineContext = !!(
+          domNode.parent &&
+          domNode.parent.type === "tag" &&
+          ["p", "span", "a", "em", "strong", "i", "b", "u", "small"].includes(
+            domNode.parent.name
+          )
+        );
+
         if (slot) {
           return (
             <AdComponent
               slot={slot}
               format={format}
               responsive={responsive}
-              className="my-8"
+              className={isInlineContext ? "my-2" : "my-8"}
+              inline={isInlineContext}
             />
           );
         }
