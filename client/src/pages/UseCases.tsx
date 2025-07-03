@@ -816,9 +816,7 @@ const UseCases = () => {
                   <h3 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">
                     Speak Every Customer's Language
                   </h3>
-                  <p className="text-lg text-muted-foreground leading-relaxed">
-                    Potential.com's AI Voice Agents support 100+ languages and a wide range of regional accents—perfect for engaging a global audience. You might also clone your own voice for a truly personalized experience.
-                  </p>
+                  <p className="text-lg text-muted-foreground leading-relaxed">Whether it’s English, Arabic, French, or more — your AI employee speaks the language your customer understands best. Potential.com's AI Agents support 100+ languages. </p>
                 </div>
 
                 {/* Right Content - Animated Country Flags */}
