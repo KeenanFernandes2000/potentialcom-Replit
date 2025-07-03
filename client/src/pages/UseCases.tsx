@@ -958,7 +958,7 @@ const UseCases = () => {
 
         {/* Speak Every Customer's Language Section */}
         <section className="py-16 lg:py-20 bg-background pt-[0px] pb-[0px] flex items-center min-h-[600px]">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full pl-[60px] pr-[60px]">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full lg:pl-[60px] lg:pr-[60px]">
             {/* Language Support Subsection */}
             <div className="border-t border-border/20 pt-16">
               <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -974,11 +974,11 @@ const UseCases = () => {
                 <div className="flex justify-center lg:justify-end" data-aos="fade-left">
                   <div className="relative w-full max-w-md">
                     {/* Scrolling Flags Container */}
-                    <div className="overflow-hidden rounded-2xl bg-gradient-to-br from-background to-muted/50 p-8 shadow-xl border border-border/50">
-                      <div className="space-y-6">
+                    <div className="overflow-hidden rounded-2xl bg-gradient-to-br from-background to-muted/50 p-4 sm:p-6 lg:p-8 shadow-xl border border-border/50">
+                      <div className="space-y-3 sm:space-y-4 lg:space-y-6">
                         {/* Row 1 - Moving Right */}
                         <div className="overflow-hidden">
-                          <div className="flex animate-scroll-right space-x-4">
+                          <div className="flex animate-scroll-right space-x-2 sm:space-x-3 lg:space-x-4">
                           {[
                             { flag: "🇺🇸", name: "USA" },
                             { flag: "🇬🇧", name: "UK" },
@@ -994,7 +994,7 @@ const UseCases = () => {
                             { flag: "🇮🇹", name: "Italy" }
                           ].map((country, index) => (
                             <div key={index} className="flex-shrink-0 text-center">
-                              <div className="text-4xl mb-2">{country.flag}</div>
+                              <div className="text-3xl sm:text-4xl mb-1 sm:mb-2">{country.flag}</div>
                               <div className="text-xs text-muted-foreground font-medium">{country.name}</div>
                             </div>
                           ))}
@@ -1003,7 +1003,7 @@ const UseCases = () => {
 
                         {/* Row 2 - Moving Left */}
                         <div className="overflow-hidden">
-                          <div className="flex animate-scroll-left space-x-4">
+                          <div className="flex animate-scroll-left space-x-2 sm:space-x-3 lg:space-x-4">
                           {[
                             { flag: "🇯🇵", name: "Japan" },
                             { flag: "🇰🇷", name: "Korea" },
@@ -1019,7 +1019,7 @@ const UseCases = () => {
                             { flag: "🇷🇺", name: "Russia" }
                           ].map((country, index) => (
                             <div key={index} className="flex-shrink-0 text-center">
-                              <div className="text-4xl mb-2">{country.flag}</div>
+                              <div className="text-3xl sm:text-4xl mb-1 sm:mb-2">{country.flag}</div>
                               <div className="text-xs text-muted-foreground font-medium">{country.name}</div>
                             </div>
                           ))}
@@ -1028,7 +1028,7 @@ const UseCases = () => {
 
                         {/* Row 3 - Moving Right */}
                         <div className="overflow-hidden">
-                          <div className="flex animate-scroll-right space-x-4">
+                          <div className="flex animate-scroll-right space-x-2 sm:space-x-3 lg:space-x-4">
                           {[
                             { flag: "🇳🇱", name: "Netherlands" },
                             { flag: "🇸🇪", name: "Sweden" },
@@ -1044,7 +1044,7 @@ const UseCases = () => {
                             { flag: "🇵🇱", name: "Poland" }
                           ].map((country, index) => (
                             <div key={index} className="flex-shrink-0 text-center">
-                              <div className="text-4xl mb-2">{country.flag}</div>
+                              <div className="text-3xl sm:text-4xl mb-1 sm:mb-2">{country.flag}</div>
                               <div className="text-xs text-muted-foreground font-medium">{country.name}</div>
                             </div>
                           ))}
@@ -1053,7 +1053,7 @@ const UseCases = () => {
 
                         {/* Row 4 - Moving Left */}
                         <div className="overflow-hidden">
-                          <div className="flex animate-scroll-left space-x-4">
+                          <div className="flex animate-scroll-left space-x-2 sm:space-x-3 lg:space-x-4">
                           {[
                             { flag: "🇦🇺", name: "Australia" },
                             { flag: "🇨🇦", name: "Canada" },
@@ -1069,7 +1069,7 @@ const UseCases = () => {
                             { flag: "🇪🇬", name: "Egypt" }
                           ].map((country, index) => (
                             <div key={index} className="flex-shrink-0 text-center">
-                              <div className="text-4xl mb-2">{country.flag}</div>
+                              <div className="text-3xl sm:text-4xl mb-1 sm:mb-2">{country.flag}</div>
                               <div className="text-xs text-muted-foreground font-medium">{country.name}</div>
                             </div>
                           ))}
