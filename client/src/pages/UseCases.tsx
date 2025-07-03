@@ -659,17 +659,7 @@ const UseCases = () => {
                           </div>
                         </div>
                         
-                        <div>
-                          <span className="text-xs text-muted-foreground mb-1 block font-bold">INTERFACE</span>
-                          <div className="flex flex-wrap gap-1">
-                            <Badge className="text-xs text-white" style={{ backgroundColor: '#eb217c' }}>
-                              Chat
-                            </Badge>
-                            <Badge className="text-xs text-white" style={{ backgroundColor: '#eb217c' }}>
-                              Voice
-                            </Badge>
-                          </div>
-                        </div>
+                        
 
                       </div>
 
