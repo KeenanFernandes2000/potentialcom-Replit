@@ -661,7 +661,7 @@ const UseCases = () => {
                         </div>
                         
                         <div>
-                          <span className="text-xs font-medium text-muted-foreground mb-1 block">INTERFACE</span>
+                          <span className="text-xs text-muted-foreground mb-1 block font-bold">INTERFACE</span>
                           <div className="flex flex-wrap gap-1">
                             <Badge className="text-xs text-white" style={{ backgroundColor: '#eb217c' }}>
                               Chat
