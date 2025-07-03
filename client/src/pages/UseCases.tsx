@@ -270,17 +270,13 @@ const getAllChannels = () => {
   const channels = useCases.flatMap(useCase => useCase.channels);
   return channels.filter((channel, index, array) => array.indexOf(channel) === index).sort();
 };
-const getAllInterfaces = () => {
-  const interfaces = useCases.flatMap(useCase => useCase.interface);
-  return interfaces.filter((interfaceType, index, array) => array.indexOf(interfaceType) === index).sort();
-};
+
 
 const UseCases = () => {
   const [selectedFilters, setSelectedFilters] = useState({
     task: ["All Tasks"] as string[],
     industry: ["All Industries"] as string[],
-    channel: ["All Channels"] as string[],
-    interface: ["All Interfaces"] as string[]
+    channel: ["All Channels"] as string[]
   });
 
   // State to track theme for logo filtering
@@ -433,10 +429,8 @@ const UseCases = () => {
           selectedFilters.industry.includes(useCase.industry);
         const matchesChannel = selectedFilters.channel.includes("All Channels") || 
           selectedFilters.channel.some(channel => useCase.channels.includes(channel));
-        const matchesInterface = selectedFilters.interface.includes("All Interfaces") || 
-          selectedFilters.interface.some(interfaceType => useCase.interface.includes(interfaceType));
         
-        return matchesTask && matchesIndustry && matchesChannel && matchesInterface;
+        return matchesTask && matchesIndustry && matchesChannel;
       })
       .sort((a, b) => a.title.localeCompare(b.title));
   }, [selectedFilters]);
@@ -477,7 +471,7 @@ const UseCases = () => {
   const removeFilter = (type: keyof typeof selectedFilters, value: string) => {
     setSelectedFilters(prev => {
       const newFilters = prev[type].filter(item => item !== value);
-      const allOption = `All ${type.charAt(0).toUpperCase() + type.slice(1)}${type === 'interface' ? 's' : type === 'industry' ? ' Industries' : type === 'task' ? ' Tasks' : ' Channels'}`;
+      const allOption = `All ${type.charAt(0).toUpperCase() + type.slice(1)}${type === 'industry' ? ' Industries' : type === 'task' ? ' Tasks' : ' Channels'}`;
       
       // If no specific filters remain, revert to "All"
       if (newFilters.length === 0) {
@@ -492,8 +486,7 @@ const UseCases = () => {
     setSelectedFilters({
       task: ["All Tasks"],
       industry: ["All Industries"],
-      channel: ["All Channels"],
-      interface: ["All Interfaces"]
+      channel: ["All Channels"]
     });
   };
 
@@ -522,19 +515,19 @@ const UseCases = () => {
               <h2 className="text-2xl font-semibold text-center mb-8">
                 Use the filters below to find the perfect AI Agent for your needs
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                {/* Industry Filter */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                {/* Job Role Filter */}
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button variant="outline" className="w-full justify-between">
-                      Select Industry
+                      Filter by Job Role
                       <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[300px] p-0" side="bottom" align="start">
                     <Command>
-                      <CommandInput placeholder="Search industries..." />
-                      <CommandEmpty>No industries found.</CommandEmpty>
+                      <CommandInput placeholder="Search job roles..." />
+                      <CommandEmpty>No job roles found.</CommandEmpty>
                       <CommandGroup className="max-h-[240px] overflow-auto">
                         <CommandItem
                           onSelect={() => addFilter('industry', 'All Industries')}
@@ -544,7 +537,7 @@ const UseCases = () => {
                               selectedFilters.industry.includes('All Industries') ? 'opacity-100' : 'opacity-0'
                             }`}
                           />
-                          All Industries
+                          All Job Roles
                         </CommandItem>
                         {getAllIndustries().map((industry) => (
                           <CommandItem
@@ -564,18 +557,18 @@ const UseCases = () => {
                   </PopoverContent>
                 </Popover>
 
-                {/* Task Filter */}
+                {/* Capabilities Filter */}
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button variant="outline" className="w-full justify-between">
-                      Select Agent Task
+                      Filter by Capabilities
                       <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[300px] p-0" side="bottom" align="start">
                     <Command>
-                      <CommandInput placeholder="Search tasks..." />
-                      <CommandEmpty>No tasks found.</CommandEmpty>
+                      <CommandInput placeholder="Search capabilities..." />
+                      <CommandEmpty>No capabilities found.</CommandEmpty>
                       <CommandGroup className="max-h-[240px] overflow-auto">
                         <CommandItem
                           onSelect={() => addFilter('task', 'All Tasks')}
@@ -585,7 +578,7 @@ const UseCases = () => {
                               selectedFilters.task.includes('All Tasks') ? 'opacity-100' : 'opacity-0'
                             }`}
                           />
-                          All Tasks
+                          All Capabilities
                         </CommandItem>
                         {getAllTasks().map((task) => (
                           <CommandItem
@@ -609,7 +602,7 @@ const UseCases = () => {
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button variant="outline" className="w-full justify-between">
-                      Select Channel
+                      Filter by Channel
                       <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </PopoverTrigger>
@@ -639,47 +632,6 @@ const UseCases = () => {
                               }`}
                             />
                             {channel}
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
-
-                {/* Interface Filter */}
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button variant="outline" className="w-full justify-between">
-                      Select Interface
-                      <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[300px] p-0" side="bottom" align="start">
-                    <Command>
-                      <CommandInput placeholder="Search interfaces..." />
-                      <CommandEmpty>No interfaces found.</CommandEmpty>
-                      <CommandGroup className="max-h-[240px] overflow-auto">
-                        <CommandItem
-                          onSelect={() => addFilter('interface', 'All Interfaces')}
-                        >
-                          <Check
-                            className={`mr-2 h-4 w-4 ${
-                              selectedFilters.interface.includes('All Interfaces') ? 'opacity-100' : 'opacity-0'
-                            }`}
-                          />
-                          All Interfaces
-                        </CommandItem>
-                        {getAllInterfaces().map((interfaceType) => (
-                          <CommandItem
-                            key={interfaceType}
-                            onSelect={() => addFilter('interface', interfaceType)}
-                          >
-                            <Check
-                              className={`mr-2 h-4 w-4 ${
-                                selectedFilters.interface.includes(interfaceType) ? 'opacity-100' : 'opacity-0'
-                              }`}
-                            />
-                            {interfaceType}
                           </CommandItem>
                         ))}
                       </CommandGroup>
@@ -779,7 +731,7 @@ const UseCases = () => {
 
                       <div className="space-y-3 mb-6">
                         <div>
-                          <span className="text-xs font-medium text-muted-foreground mb-1 block">TASKS</span>
+                          <span className="text-xs font-medium text-muted-foreground mb-1 block">CAPABILITIES</span>
                           <div className="flex flex-wrap gap-1">
                             {useCase.tasks.map(task => (
                               <Badge key={task} className="text-xs text-white" style={{ backgroundColor: '#9f2064' }}>
@@ -800,16 +752,7 @@ const UseCases = () => {
                           </div>
                         </div>
                         
-                        <div>
-                          <span className="text-xs font-medium text-muted-foreground mb-1 block">INTERFACE</span>
-                          <div className="flex flex-wrap gap-1">
-                            {useCase.interface.map(interfaceType => (
-                              <Badge key={interfaceType} className="text-xs text-white" style={{ backgroundColor: '#eb217c' }}>
-                                {interfaceType}
-                              </Badge>
-                            ))}
-                          </div>
-                        </div>
+
                       </div>
 
                       <Dialog>
