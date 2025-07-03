@@ -819,11 +819,6 @@ const UseCases = () => {
                       <div className="w-20 h-20 bg-gradient-to-br from-primary via-purple-500 to-blue-500 rounded-2xl shadow-xl flex items-center justify-center animate-pulse">
                         <div className="text-white text-2xl">🤖</div>
                       </div>
-                      <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2">
-                        <div className="bg-background/90 backdrop-blur-sm rounded-lg px-2 py-1 border border-border/50 shadow-lg">
-                          <span className="text-xs font-medium text-foreground">AI Agent</span>
-                        </div>
-                      </div>
                     </div>
 
                     {/* Floating Integration Cards - Smaller */}
