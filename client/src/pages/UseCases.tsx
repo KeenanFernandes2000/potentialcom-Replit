@@ -505,46 +505,7 @@ const UseCases = () => {
                   </PopoverContent>
                 </Popover>
 
-                {/* Channel Filter */}
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button variant="outline" className="w-full justify-between">
-                      Filter by Channel
-                      <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[300px] p-0" side="bottom" align="start">
-                    <Command>
-                      <CommandInput placeholder="Search channels..." />
-                      <CommandEmpty>No channels found.</CommandEmpty>
-                      <CommandGroup className="max-h-[240px] overflow-auto">
-                        <CommandItem
-                          onSelect={() => addFilter('channel', 'All Channels')}
-                        >
-                          <Check
-                            className={`mr-2 h-4 w-4 ${
-                              selectedFilters.channel.includes('All Channels') ? 'opacity-100' : 'opacity-0'
-                            }`}
-                          />
-                          All Channels
-                        </CommandItem>
-                        {getAllChannels().map((channel) => (
-                          <CommandItem
-                            key={channel}
-                            onSelect={() => addFilter('channel', channel)}
-                          >
-                            <Check
-                              className={`mr-2 h-4 w-4 ${
-                                selectedFilters.channel.includes(channel) ? 'opacity-100' : 'opacity-0'
-                              }`}
-                            />
-                            {channel}
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </Command>
-                  </PopoverContent>
-                </Popover>
+                
               </div>
 
               {/* Active Filters */}
