@@ -641,7 +641,7 @@ const UseCases = () => {
                           <span className="text-xs text-muted-foreground mb-1 block font-bold">CAPABILITIES</span>
                           <div className="flex flex-wrap gap-1">
                             {useCase.tasks.map(task => (
-                              <Badge key={task} className="text-xs text-white" style={{ backgroundColor: '#9f2064' }}>
+                              <Badge key={task} className="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 text-xs text-white bg-[#eb217c]">
                                 {task}
                               </Badge>
                             ))}
