@@ -1,0 +1,31 @@
+🛎 Receptionist AI Agent
+
+What it does: Greets users, answers calls/chats, books appointments, and routes them to the right place.Capabilities: Book Appointments Answer Queries Send Confirmations Route to HumanChannels: Phone Website WhatsAppInterface: Voice Chat
+
+🚪 Room Service AI Agent
+
+What it does: Takes guest requests like food orders, amenity needs, and checkout extensions.Capabilities: Place Orders Track Orders Send Confirmations Answer QueriesChannels: Phone WhatsAppInterface: Voice Chat
+
+🌟 Concierge AI Agent
+
+What it does: Assists hotel guests, patients, or VIP clients with bookings, directions, and service requests.Capabilities: Book Appointments Recommend Services Answer QueriesChannels: Phone Website WhatsAppInterface: Voice Chat
+
+💬 Customer Support AI Agent
+
+What it does: Handles FAQs, returns, escalations, policy questions, and ticketing 24/7.Capabilities: Answer Queries Troubleshoot Issues Route to Human Track OrdersChannels: Website WhatsApp PhoneInterface: Voice Chat
+
+🛍 Ecommerce Sales AI Agent
+
+What it does: Acts as a personal shopping assistant — understands customer needs and suggests the right products.Capabilities: Suggest Products Place Orders Answer Queries Follow Up Track OrdersChannels: Website WhatsApp PhoneInterface: Voice Chat
+
+🧑‍💼 Sales AI Agent
+
+What it does: Qualifies leads, recommends solutions, follows up automatically, and closes more deals.Capabilities: Capture Leads Suggest Products Send Follow-UpsChannels: Phone Website WhatsAppInterface: Voice Chat
+
+🧑‍🏫 HR/Training AI Agent
+
+What it does: Onboards employees, delivers internal training, explains HR policies, or interviews candidates.Capabilities: Provide Coaching Answer HR Questions Analyze Interviews Send RemindersChannels: Website WhatsAppInterface: Chat Voice
+
+📣 Marketing & Outreach AI Agent
+
+What it does: Sends out promotional messages, collects feedback, and manages surveys or review requests.Capabilities: Send Campaigns Collect Feedback Schedule Follow-UpsChannels: WhatsApp Phone EmailInterface: Voice Chat

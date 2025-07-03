@@ -63,18 +63,13 @@ const useCaseIcons = {
 // Icons for different industries
 const industryIcons = {
   "Hotel": "🏨",
-  "Clinic/Hospital": "🏥", 
-  "Ecommerce": "🛒",
-  "HR": "👩‍💼",
-  "AI Coaches": "🎓",
-  "Automotive": "🚗",
-  "Banking": "🏦",
-  "Restaurant": "🍽",
-  "Education": "🧑‍🏫",
-  "Real Estate": "🏘",
-  "Events": "🎟",
-  "Wellbeing": "🧘",
-  "Tech Support": "🛠"
+  "Receptionist": "🛎️",
+  "Concierge": "🌟",
+  "Customer Support": "💬",
+  "Ecommerce": "🛍️",
+  "Sales": "🧑‍💼",
+  "HR": "🧑‍🏫",
+  "Marketing": "📣"
 };
 
 // Use cases data
@@ -82,178 +77,90 @@ const useCases = [
   {
     id: 1,
     icon: "hotel",
-    title: "Hotel: Room Service Agent",
-    description: "An AI voice agent that responds to guest calls, takes room service orders, and manages simple guest requests without staff intervention.",
-    tasks: ["Place Orders", "Answer Questions", "Send Confirmations"],
-    channels: ["Phone"],
-    interface: ["Voice"],
-    industry: "Hotel",
-    videoUrl: "https://example.com/hotel-room-service-demo" // Placeholder
+    title: "Receptionist AI Agent",
+    description: "Greets users, answers calls/chats, books appointments, and routes them to the right place.",
+    tasks: ["Book Appointments", "Answer Queries", "Send Confirmations", "Route to Human"],
+    channels: ["Phone", "Website", "WhatsApp"],
+    interface: ["Voice", "Chat"],
+    industry: "Receptionist",
+    videoUrl: "https://example.com/receptionist-demo"
   },
   {
     id: 2,
-    icon: "🏨",
-    title: "Hotel: Receptionist Agent",
-    description: "This digital receptionist books rooms, responds to inquiries, and sends confirmations — 24/7.",
-    tasks: ["Book Appointments", "Answer Questions", "Send Confirmations"],
-    channels: ["Phone", "Website", "WhatsApp"],
+    icon: "hotel",
+    title: "Room Service AI Agent",
+    description: "Takes guest requests like food orders, amenity needs, and checkout extensions.",
+    tasks: ["Place Orders", "Track Orders", "Send Confirmations", "Answer Queries"],
+    channels: ["Phone", "WhatsApp"],
     interface: ["Voice", "Chat"],
     industry: "Hotel",
-    videoUrl: "https://example.com/hotel-receptionist-demo"
+    videoUrl: "https://example.com/room-service-demo"
   },
   {
     id: 3,
-    icon: "🏥",
-    title: "Clinic/Hospital: Appointment Receptionist",
-    description: "Helps patients book and confirm appointments across all touchpoints, reducing call center overload and improving experience.",
-    tasks: ["Book Appointments", "Answer Questions", "Send Confirmations"],
+    icon: "hotel",
+    title: "Concierge AI Agent",
+    description: "Assists hotel guests, patients, or VIP clients with bookings, directions, and service requests.",
+    tasks: ["Book Appointments", "Recommend Services", "Answer Queries"],
     channels: ["Phone", "Website", "WhatsApp"],
     interface: ["Voice", "Chat"],
-    industry: "Clinic/Hospital",
-    videoUrl: "https://example.com/clinic-receptionist-demo"
+    industry: "Concierge",
+    videoUrl: "https://example.com/concierge-demo"
   },
   {
     id: 4,
-    icon: "🩺",
-    title: "Clinic/Hospital: AI Doctor First Respondent",
-    description: "Acts as a first-line responder to medical inquiries, offering smart advice and recommending the right doctors.",
-    tasks: ["Answer Questions", "Suggest Products/Services", "Route to Human"],
-    channels: ["Phone", "Website", "WhatsApp"],
+    icon: "techsupport",
+    title: "Customer Support AI Agent",
+    description: "Handles FAQs, returns, escalations, policy questions, and ticketing 24/7.",
+    tasks: ["Answer Queries", "Troubleshoot Issues", "Route to Human", "Track Orders"],
+    channels: ["Website", "WhatsApp", "Phone"],
     interface: ["Voice", "Chat"],
-    industry: "Clinic/Hospital",
-    videoUrl: "https://example.com/ai-doctor-demo"
+    industry: "Customer Support",
+    videoUrl: "https://example.com/customer-support-demo"
   },
   {
     id: 5,
-    icon: "🧪",
-    title: "Clinic: Medical Test Analyzer",
-    description: "Accepts uploaded lab reports, interprets results using AI, and summarizes insights for patients.",
-    tasks: ["Analyze Reports/Responses", "Recommend Resources"],
-    channels: ["Website"],
-    interface: ["Chat"],
-    industry: "Clinic/Hospital",
-    videoUrl: "https://example.com/medical-analyzer-demo"
+    icon: "ecommerce",
+    title: "Ecommerce Sales AI Agent",
+    description: "Acts as a personal shopping assistant — understands customer needs and suggests the right products.",
+    tasks: ["Suggest Products", "Place Orders", "Answer Queries", "Follow Up", "Track Orders"],
+    channels: ["Website", "WhatsApp", "Phone"],
+    interface: ["Voice", "Chat"],
+    industry: "Ecommerce",
+    videoUrl: "https://example.com/ecommerce-sales-demo"
   },
   {
     id: 6,
-    icon: "🛒",
-    title: "Ecommerce: Shopping Assistant",
-    description: "Helps users find products, answers their questions, and places orders — all via chat or voice.",
-    tasks: ["Answer Questions", "Suggest Products/Services", "Place Orders", "Track Orders"],
+    icon: "sales",
+    title: "Sales AI Agent",
+    description: "Qualifies leads, recommends solutions, follows up automatically, and closes more deals.",
+    tasks: ["Capture Leads", "Suggest Products", "Send Follow-Ups"],
     channels: ["Phone", "Website", "WhatsApp"],
     interface: ["Voice", "Chat"],
-    industry: "Ecommerce",
-    videoUrl: "https://example.com/shopping-assistant-demo"
+    industry: "Sales",
+    videoUrl: "https://example.com/sales-demo"
   },
   {
     id: 7,
-    icon: "👩‍💼",
-    title: "HR: Interview Assistant",
-    description: "Conducts candidate interviews, analyzes responses, and suggests the best candidates for HR to review.",
-    tasks: ["Answer Questions", "Analyze Reports/Responses", "Suggest Products/Services"],
-    channels: ["Phone", "Website"],
-    interface: ["Voice", "Chat"],
+    icon: "hr",
+    title: "HR/Training AI Agent",
+    description: "Onboards employees, delivers internal training, explains HR policies, or interviews candidates.",
+    tasks: ["Provide Coaching", "Answer HR Questions", "Analyze Interviews", "Send Reminders"],
+    channels: ["Website", "WhatsApp"],
+    interface: ["Chat", "Voice"],
     industry: "HR",
-    videoUrl: "https://example.com/hr-interview-demo"
+    videoUrl: "https://example.com/hr-training-demo"
   },
   {
     id: 8,
-    icon: "🎓",
-    title: "AI Coaches",
-    description: "AI-powered coaches trained on specific topics that engage, support, and train users interactively.",
-    tasks: ["Provide Coaching", "Analyze Reports/Responses", "Recommend Resources"],
-    channels: ["Phone", "Website", "WhatsApp"],
+    icon: "consulting",
+    title: "Marketing & Outreach AI Agent",
+    description: "Sends out promotional messages, collects feedback, and manages surveys or review requests.",
+    tasks: ["Send Campaigns", "Collect Feedback", "Schedule Follow-Ups"],
+    channels: ["WhatsApp", "Phone", "Email"],
     interface: ["Voice", "Chat"],
-    industry: "AI Coaches",
-    videoUrl: "https://example.com/ai-coaches-demo"
-  },
-  {
-    id: 9,
-    icon: "🚗",
-    title: "Automotive: Customer Service Agent",
-    description: "Books appointments for services or test drives, answers product queries, and helps customers quickly.",
-    tasks: ["Book Appointments", "Answer Questions", "Send Confirmations"],
-    channels: ["Phone", "Website", "WhatsApp"],
-    interface: ["Voice", "Chat"],
-    industry: "Automotive",
-    videoUrl: "https://example.com/automotive-service-demo"
-  },
-  {
-    id: 10,
-    icon: "🏦",
-    title: "Banking: Customer Support Agent",
-    description: "Assists customers with account queries, recommends financial products, and ensures round-the-clock service.",
-    tasks: ["Answer Questions", "Suggest Products/Services", "Route to Human"],
-    channels: ["Phone", "Website", "WhatsApp"],
-    interface: ["Voice", "Chat"],
-    industry: "Banking",
-    videoUrl: "https://example.com/banking-support-demo"
-  },
-  {
-    id: 11,
-    icon: "🍽",
-    title: "Restaurant: Reservation & Order Agent",
-    description: "Books tables, takes pre-orders, sends confirmations, and handles peak-time traffic seamlessly.",
-    tasks: ["Book Appointments", "Place Orders", "Send Confirmations"],
-    channels: ["Phone", "Website", "WhatsApp"],
-    interface: ["Voice", "Chat"],
-    industry: "Restaurant",
-    videoUrl: "https://example.com/restaurant-booking-demo"
-  },
-  {
-    id: 12,
-    icon: "🧑‍🏫",
-    title: "Education: Learning Coach",
-    description: "Guides students through study topics, assigns quizzes, tracks performance, and offers study support.",
-    tasks: ["Provide Coaching", "Analyze Reports/Responses", "Recommend Resources"],
-    channels: ["Website", "WhatsApp"],
-    interface: ["Chat"],
-    industry: "Education",
-    videoUrl: "https://example.com/learning-coach-demo"
-  },
-  {
-    id: 13,
-    icon: "🏘",
-    title: "Real Estate: Property Inquiry and Sales Agent",
-    description: "Captures leads, recommends listings, answers questions, and books property visits.",
-    tasks: ["Capture Leads", "Suggest Products/Services", "Book Appointments", "Answer Questions"],
-    channels: ["Phone", "Website", "WhatsApp"],
-    interface: ["Voice", "Chat"],
-    industry: "Real Estate",
-    videoUrl: "https://example.com/real-estate-agent-demo"
-  },
-  {
-    id: 14,
-    icon: "🎟",
-    title: "Events: Registration Agent",
-    description: "Manages event signups, provides info, and sends updates to attendees automatically.",
-    tasks: ["Register Users", "Send Confirmations", "Answer Questions"],
-    channels: ["Website", "WhatsApp", "Phone"],
-    interface: ["Voice", "Chat"],
-    industry: "Events",
-    videoUrl: "https://example.com/events-registration-demo"
-  },
-  {
-    id: 15,
-    icon: "🧘",
-    title: "Wellbeing: Wellbeing Agent",
-    description: "Performs routine emotional wellness check-ins, provides wellness tips, and books sessions with experts.",
-    tasks: ["Provide Coaching", "Book Appointments", "Recommend Resources", "Answer Questions"],
-    channels: ["Website", "WhatsApp", "Phone"],
-    interface: ["Chat", "Voice"],
-    industry: "Wellbeing",
-    videoUrl: "https://example.com/wellbeing-agent-demo"
-  },
-  {
-    id: 16,
-    icon: "🛠",
-    title: "Tech Support: Troubleshooting Assistant",
-    description: "Resolves common issues, creates support tickets, and escalates complex cases to technical teams.",
-    tasks: ["Troubleshoot Issues", "Track Orders", "Route to Human"],
-    channels: ["Phone", "Website", "WhatsApp"],
-    interface: ["Voice", "Chat"],
-    industry: "Tech Support",
-    videoUrl: "https://example.com/tech-support-demo"
+    industry: "Marketing",
+    videoUrl: "https://example.com/marketing-demo"
   }
 ];
 
