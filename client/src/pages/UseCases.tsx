@@ -883,7 +883,7 @@ const UseCases = () => {
                     </div>
 
                     {/* HR System - Top Center */}
-                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 animate-float" data-aos="fade-down" data-aos-delay="1000">
+                    <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 animate-float" data-aos="fade-down" data-aos-delay="1000">
                       <div className="bg-background/80 backdrop-blur-sm rounded-lg p-2 shadow-lg border border-border/50 hover:shadow-xl transition-all duration-300">
                         <div className="text-center">
                           <Users className="w-5 h-5 mb-1 mx-auto text-primary" />
@@ -893,7 +893,7 @@ const UseCases = () => {
                     </div>
 
                     {/* ERP - Bottom Center */}
-                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 animate-float-delayed" data-aos="fade-up" data-aos-delay="1100">
+                    <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 animate-float-delayed" data-aos="fade-up" data-aos-delay="1100">
                       <div className="bg-background/80 backdrop-blur-sm rounded-lg p-2 shadow-lg border border-border/50 hover:shadow-xl transition-all duration-300">
                         <div className="text-center">
                           <Factory className="w-5 h-5 mb-1 mx-auto text-primary" />
