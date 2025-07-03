@@ -1,0 +1,39 @@
+# Allow OpenAI bots
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+# Allow Google’s AI (Bard / Gemini)
+User-agent: Google-Extended
+Allow: /
+
+# Allow Anthropic (Claude)
+User-agent: anthropic-ai
+Allow: /
+
+# Allow Perplexity AI bot
+User-agent: PerplexityBot
+Allow: /
+
+# Allow Common Crawl (used for training many models)
+User-agent: CCBot
+Allow: /
+
+# Allow Cohere’s AI crawler
+User-agent: cohere-ai
+Allow: /
+
+# Allow general AI crawlers
+User-agent: ai-crawler
+Allow: /
+
+# Allow Microsoft Copilot (if identified by this name)
+User-agent: CopilotBot
+Allow: /
+
+# Default bot rules
+User-agent: *
+Disallow: /admin/
+Disallow: /private/

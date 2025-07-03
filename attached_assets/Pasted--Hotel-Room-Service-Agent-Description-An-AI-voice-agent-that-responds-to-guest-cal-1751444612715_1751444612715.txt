@@ -1,0 +1,161 @@
+---
+
+### 🏨 Hotel: Room Service Agent
+
+**Description**:
+An AI voice agent that responds to guest calls, takes room service orders, and manages simple guest requests without staff intervention.
+**Tasks**: `Place Orders` `Answer Questions` `Send Confirmations`
+**Channels**: `Phone`
+**Interface**: `Voice`
+
+---
+
+### 🏨 Hotel: Receptionist Agent
+
+**Description**:
+This digital receptionist books rooms, responds to inquiries, and sends confirmations — 24/7.
+**Tasks**: `Book Appointments` `Answer Questions` `Send Confirmations`
+**Channels**: `Phone` `Website` `WhatsApp`
+**Interface**: `Voice` `Chat`
+
+---
+
+### 🏥 Clinic/Hospital: Appointment Receptionist
+
+**Description**:
+Helps patients book and confirm appointments across all touchpoints, reducing call center overload and improving experience.
+**Tasks**: `Book Appointments` `Answer Questions` `Send Confirmations`
+**Channels**: `Phone` `Website` `WhatsApp`
+**Interface**: `Voice` `Chat`
+
+---
+
+### 🩺 Clinic/Hospital: AI Doctor First Respondent
+
+**Description**:
+Acts as a first-line responder to medical inquiries, offering smart advice and recommending the right doctors.
+**Tasks**: `Answer Questions` `Suggest Products or Services` `Route to Specialist or Human`
+**Channels**: `Phone` `Website` `WhatsApp`
+**Interface**: `Voice` `Chat`
+
+---
+
+### 🧪 Clinic: Medical Test Analyzer
+
+**Description**:
+Accepts uploaded lab reports, interprets results using AI, and summarizes insights for patients.
+**Tasks**: `Analyze Reports or Responses` `Recommend Content or Resources`
+**Channels**: `Website`
+**Interface**: `Chat`
+
+---
+
+### 🛒 Ecommerce: Shopping Assistant
+
+**Description**:
+Helps users find products, answers their questions, and places orders — all via chat or voice.
+**Tasks**: `Answer Questions` `Suggest Products or Services` `Place Orders`
+**Channels**: `Phone` `Website` `WhatsApp`
+**Interface**: `Voice` `Chat`
+
+---
+
+### 👩‍💼 HR: Interview Assistant
+
+**Description**:
+Conducts candidate interviews, analyzes responses, and suggests the best candidates for HR to review.
+**Tasks**: `Answer Questions` `Analyze Reports or Responses` `Suggest Products or Services`
+**Channels**: `Phone` `Website`
+**Interface**: `Voice` `Chat`
+
+---
+
+### 🎓 AI Coaches
+
+**Description**:
+AI-powered coaches trained on specific topics that engage, support, and train users interactively.
+**Tasks**: `Provide Coaching or Training` `Analyze Reports or Responses` `Recommend Content or Resources`
+**Channels**: `Phone` `Website` `WhatsApp`
+**Interface**: `Voice` `Chat`
+
+---
+
+### 🚗 Automotive: Customer Service Agent
+
+**Description**:
+Books appointments for services or test drives, answers product queries, and helps customers quickly.
+**Tasks**: `Book Appointments` `Answer Questions` `Send Confirmations`
+**Channels**: `Phone` `Website` `WhatsApp`
+**Interface**: `Voice` `Chat`
+
+---
+
+### 🏦 Banking: Customer Support Agent
+
+**Description**:
+Assists customers with account queries, recommends financial products, and ensures round-the-clock service.
+**Tasks**: `Answer Questions` `Suggest Products or Services` `Route to Specialist or Human`
+**Channels**: `Phone` `Website` `WhatsApp`
+**Interface**: `Voice` `Chat`
+
+---
+
+### 🍽 Restaurant: Reservation & Order Agent
+
+**Description**:
+Books tables, takes pre-orders, sends confirmations, and handles peak-time traffic seamlessly.
+**Tasks**: `Book Appointments` `Place Orders` `Send Confirmations`
+**Channels**: `Phone` `Website` `WhatsApp`
+**Interface**: `Voice` `Chat`
+
+---
+
+### 🧑‍🏫 Education: Learning Coach
+
+**Description**:
+Guides students through study topics, assigns quizzes, tracks performance, and offers study support.
+**Tasks**: `Provide Coaching or Training` `Analyze Reports or Responses` `Recommend Content or Resources`
+**Channels**: `Website` `WhatsApp`
+**Interface**: `Chat`
+
+---
+
+### 🏘 Real Estate: Property Inquiry and Sales Agent
+
+**Description**:
+Captures leads, recommends listings, answers questions, and books property visits.
+**Tasks**: `Capture Leads` `Suggest Products or Services` `Book Appointments` `Answer Questions`
+**Channels**: `Phone` `Website` `WhatsApp`
+**Interface**: `Voice` `Chat`
+
+---
+
+### 🎟 Events: Registration Agent
+
+**Description**:
+Manages event signups, provides info, and sends updates to attendees automatically.
+**Tasks**: `Register Users or Attendees` `Send Confirmations` `Answer Questions`
+**Channels**: `Website` `WhatsApp` `Phone`
+**Interface**: `Voice` `Chat`
+
+---
+
+### 🧘 Wellbeing: Wellbeing Agent
+
+**Description**:
+Performs routine emotional wellness check-ins, provides wellness tips, and books sessions with experts.
+**Tasks**: `Provide Coaching or Training` `Book Appointments` `Recommend Content or Resources` `Answer Questions`
+**Channels**: `Website` `WhatsApp` `Phone`
+**Interface**: `Chat` `Voice`
+
+---
+
+### 🛠 Tech Support: Troubleshooting Assistant
+
+**Description**:
+Resolves common issues, creates support tickets, and escalates complex cases to technical teams.
+**Tasks**: `Troubleshoot Issues` `Track Requests or Orders` `Route to Specialist or Human`
+**Channels**: `Phone` `Website` `WhatsApp`
+**Interface**: `Voice` `Chat`
+
+---

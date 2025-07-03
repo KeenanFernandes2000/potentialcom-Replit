@@ -6,6 +6,9 @@ import Solutions from "@/components/sections/Solutions";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 import { AutoSEO } from "@/components/SEO";
+import zeinAubImage from "@assets/ZEIN AUB.png";
+import wfzoImage from "@assets/WFZO.png";
+import arliHomesImage from "@assets/arliHomes.png";
 
 const Offerings = () => {
   // Case Studies section
@@ -114,14 +117,21 @@ const Offerings = () => {
           "The Potential platform was instrumental in our type of work, a timesaving enabler! Their great customer support and open mentality for user experience enhancement is the key success factor",
         name: "MAHA ZOUWAYHED",
         title: "ASSOCIATE DIRECTOR, TALAL AND MADIHA ZEIN AUB INNOVATION PARK",
-        avatar: "https://placehold.co/120x120/e9ddff/8844dd?text=MZ",
+        avatar: zeinAubImage,
       },
       {
         quote:
           "We made use of Potential.com's platform to empower Free Zones around the world by giving them access to our learning resources and helping them take action and innovate with their stakeholders.",
         name: "DR. SAMIR HAMROUNI",
         title: "CEO, WORLD FREE ZONE ORGANIZATIONS",
-        avatar: "https://placehold.co/120x120/e9ddff/8844dd?text=SH",
+        avatar: wfzoImage,
+      },
+      {
+        quote:
+          "The AI Voice Agent setup was easy, and the team were very helpful in trying to get all our information into the system before we launched. Overall, it has been a positive experience, and I look forward to seeing Grace grow into a more mature AI receptionist for our business.",
+        name: "SAMANTHA CALLEJA",
+        title: "ARLI HOMES, MELBOURNE, AUSTRALIA",
+        avatar: arliHomesImage,
       },
     ];
 
@@ -132,38 +142,40 @@ const Offerings = () => {
             <h2 className="text-3xl font-bold mb-6">Testimonials</h2>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {testimonials.map((testimonial, idx) => (
-              <div
-                key={idx}
-                className="glass-effect rounded-xl p-8 border border-border shadow-md"
-                data-aos="fade-up"
-                data-aos-delay={idx * 100}
-              >
-                <div className="flex flex-col h-full">
-                  <p className="text-lg font-medium mb-6 italic">
-                    "{testimonial.quote}"
-                  </p>
-                  <div className="mt-auto flex items-center">
-                    <div className="w-16 h-16 rounded-full overflow-hidden mr-4">
-                      <img
-                        src={testimonial.avatar}
-                        alt={testimonial.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div>
-                      <p className="font-bold text-primary">
-                        {testimonial.name}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {testimonial.title}
-                      </p>
+          <div className="overflow-x-auto pb-4">
+            <div className="flex gap-8 w-max">
+              {testimonials.map((testimonial, idx) => (
+                <div
+                  key={idx}
+                  className="glass-effect rounded-xl p-8 border border-border shadow-md w-80 md:w-96 flex-shrink-0"
+                  data-aos="fade-up"
+                  data-aos-delay={idx * 100}
+                >
+                  <div className="flex flex-col h-full">
+                    <p className="text-lg font-medium mb-6 italic">
+                      "{testimonial.quote}"
+                    </p>
+                    <div className="mt-auto flex items-center">
+                      <div className="w-16 h-16 rounded-full overflow-hidden mr-4">
+                        <img
+                          src={testimonial.avatar}
+                          alt={testimonial.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <p className="font-bold text-primary">
+                          {testimonial.name}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {testimonial.title}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </section>
