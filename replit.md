@@ -97,6 +97,8 @@ This is a modern full-stack web application for Potential.com, an AI agents plat
 - CDN integration for static assets
 
 ## Changelog
+- July 4, 2025. Added hyperlink functionality to footer logo linking to home page across all website pages
+- July 4, 2025. Fixed AI agent images deployment issue with proper static file serving for production
 - July 4, 2025. Added AI agent images to use case cards with proper design and hover effects
 - June 17, 2025. Initial setup
 

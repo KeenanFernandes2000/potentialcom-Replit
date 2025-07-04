@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "wouter";
 
 // Import the logo images directly
 import logoLight from "@assets/Potential.com Logos Main-01.png";
@@ -42,15 +43,17 @@ export function FooterLogo({ className = "", height = 40 }: FooterLogoProps) {
   }, []);
 
   return (
-    <img
-      src={isDarkMode ? logoDark : logoLight}
-      alt="Potential.com Logo"
-      height={height}
-      className={`h-auto ${className}`}
-      style={{ 
-        height: `${height}px`,
-        filter: "brightness(0) invert(1)"
-      }}
-    />
+    <Link href="/" className="inline-block">
+      <img
+        src={isDarkMode ? logoDark : logoLight}
+        alt="Potential.com Logo"
+        height={height}
+        className={`h-auto cursor-pointer hover:opacity-80 transition-opacity ${className}`}
+        style={{ 
+          height: `${height}px`,
+          filter: "brightness(0) invert(1)"
+        }}
+      />
+    </Link>
   );
 }
