@@ -560,7 +560,7 @@ const UseCases = () => {
                       {/* Agent Image */}
                       <div className="relative h-48 w-full overflow-hidden">
                         <img 
-                          src={agentImages[useCase.title] || "/assets/images/AI Employees/Receptionist AI Agent.png"} 
+                          src={agentImages[useCase.title] || "/assets/images/AI Employees/Concierge AI Agent.png"} 
                           alt={useCase.title}
                           className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                         />
