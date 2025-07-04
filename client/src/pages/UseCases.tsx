@@ -40,6 +40,8 @@ import visaLogo from "@assets/Customer Logos/Visa logo.png";
 import wfzoLogo from "@assets/Customer Logos/WFZO logo.png";
 import intelLogo from "@assets/Customer Logos/intel logo.png";
 
+
+
 // Map of use case icons
 const useCaseIcons = {
   hotel: Hotel,
@@ -70,6 +72,18 @@ const industryIcons = {
   "Sales": "🧑‍💼",
   "HR": "🧑‍🏫",
   "Marketing": "📣"
+};
+
+// Map agent titles to their respective images using direct file paths
+const agentImages: { [key: string]: string } = {
+  "Receptionist AI Agent": "/assets/images/AI Employees/Receptionist AI Agent.png",
+  "Room Service AI Agent": "/assets/images/AI Employees/Room Service AI Agent.png",
+  "Concierge AI Agent": "/assets/images/AI Employees/Concierge AI Agent.png",
+  "Customer Support AI Agent": "/assets/images/AI Employees/Customer Support AI Agent.png",
+  "Ecommerce Sales AI Agent": "/assets/images/AI Employees/Ecommerce Sales AI Agent.png",
+  "Sales AI Agent": "/assets/images/AI Employees/Sales AI Agent.png",
+  "HR/Training AI Agent": "/assets/images/AI Employees/HR:Training AI Agent.png",
+  "Marketing & Outreach AI Agent": "/assets/images/AI Employees/Marketing & Outreach AI Agent.png"
 };
 
 // Use cases data
@@ -542,8 +556,19 @@ const UseCases = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredUseCases.map((useCase) => (
                   <Card key={useCase.id} className="glass-effect border-border rounded-xl overflow-hidden card-hover h-full">
-                    <CardContent className="p-6 flex flex-col h-full">
-                      <div className="flex items-center gap-3 mb-4">
+                    <CardContent className="p-0 flex flex-col h-full">
+                      {/* Agent Image */}
+                      <div className="relative h-48 w-full overflow-hidden">
+                        <img 
+                          src={agentImages[useCase.title] || "/assets/images/AI Employees/Receptionist AI Agent.png"} 
+                          alt={useCase.title}
+                          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                      </div>
+                      
+                      <div className="p-6 flex flex-col flex-grow">
+                        <div className="flex items-center gap-3 mb-4">
                         <div className="text-primary p-2 rounded-lg bg-primary/10">
                           {(() => {
                             // Map icon keys to unique icon components
@@ -726,6 +751,7 @@ const UseCases = () => {
                           </div>
                         </DialogContent>
                       </Dialog>
+                      </div>
                     </CardContent>
                   </Card>
                 ))}
