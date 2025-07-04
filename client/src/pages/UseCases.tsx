@@ -74,16 +74,16 @@ const industryIcons = {
   "Marketing": "📣"
 };
 
-// Map agent titles to their respective images using direct file paths
+// Map agent titles to their respective images using clean file paths
 const agentImages: { [key: string]: string } = {
-  "Receptionist AI Agent": "/assets/images/AI Employees/Receptionist AI Agent.png",
-  "Room Service AI Agent": "/assets/images/AI Employees/Room Service AI Agent.png",
-  "Concierge AI Agent": "/assets/images/AI Employees/Concierge AI Agent.png",
-  "Customer Support AI Agent": "/assets/images/AI Employees/Customer Support AI Agent.png",
-  "Ecommerce Sales AI Agent": "/assets/images/AI Employees/Ecommerce Sales AI Agent.png",
-  "Sales AI Agent": "/assets/images/AI Employees/Sales AI Agent.png",
-  "HR/Training AI Agent": "/assets/images/AI Employees/HR:Training AI Agent.png",
-  "Marketing & Outreach AI Agent": "/assets/images/AI Employees/Marketing & Outreach AI Agent.png"
+  "Receptionist AI Agent": "/assets/images/agents/receptionist.png",
+  "Room Service AI Agent": "/assets/images/agents/room-service.png",
+  "Concierge AI Agent": "/assets/images/agents/concierge.png",
+  "Customer Support AI Agent": "/assets/images/agents/customer-support.png",
+  "Ecommerce Sales AI Agent": "/assets/images/agents/ecommerce-sales.png",
+  "Sales AI Agent": "/assets/images/agents/sales.png",
+  "HR/Training AI Agent": "/assets/images/agents/hr-training.png",
+  "Marketing & Outreach AI Agent": "/assets/images/agents/marketing.png"
 };
 
 // Use cases data
@@ -560,7 +560,7 @@ const UseCases = () => {
                       {/* Agent Image */}
                       <div className="relative h-48 w-full overflow-hidden">
                         <img 
-                          src={agentImages[useCase.title] || "/assets/images/AI Employees/Concierge AI Agent.png"} 
+                          src={agentImages[useCase.title] || "/assets/images/agents/concierge.png"} 
                           alt={useCase.title}
                           className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                         />
