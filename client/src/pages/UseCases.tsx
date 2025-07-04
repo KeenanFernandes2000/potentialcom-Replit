@@ -40,6 +40,15 @@ import visaLogo from "@assets/Customer Logos/Visa logo.png";
 import wfzoLogo from "@assets/Customer Logos/WFZO logo.png";
 import intelLogo from "@assets/Customer Logos/intel logo.png";
 
+// Import AI Agent images - using static URLs for deployment compatibility
+const receptionistAgentImg = "/assets/images/agents/receptionist.png";
+const roomServiceAgentImg = "/assets/images/agents/room-service.png";
+const conciergeAgentImg = "/assets/images/agents/concierge.png";
+const customerSupportAgentImg = "/assets/images/agents/customer-support.png";
+const ecommerceSalesAgentImg = "/assets/images/agents/ecommerce-sales.png";
+const salesAgentImg = "/assets/images/agents/sales.png";
+const hrTrainingAgentImg = "/assets/images/agents/hr-training.png";
+const marketingAgentImg = "/assets/images/agents/marketing.png";
 
 
 // Map of use case icons
@@ -74,16 +83,16 @@ const industryIcons = {
   "Marketing": "📣"
 };
 
-// Map agent titles to their respective images using clean file paths
+// Map agent titles to their respective imported images
 const agentImages: { [key: string]: string } = {
-  "Receptionist AI Agent": "/assets/images/agents/receptionist.png",
-  "Room Service AI Agent": "/assets/images/agents/room-service.png",
-  "Concierge AI Agent": "/assets/images/agents/concierge.png",
-  "Customer Support AI Agent": "/assets/images/agents/customer-support.png",
-  "Ecommerce Sales AI Agent": "/assets/images/agents/ecommerce-sales.png",
-  "Sales AI Agent": "/assets/images/agents/sales.png",
-  "HR/Training AI Agent": "/assets/images/agents/hr-training.png",
-  "Marketing & Outreach AI Agent": "/assets/images/agents/marketing.png"
+  "Receptionist AI Agent": receptionistAgentImg,
+  "Room Service AI Agent": roomServiceAgentImg,
+  "Concierge AI Agent": conciergeAgentImg,
+  "Customer Support AI Agent": customerSupportAgentImg,
+  "Ecommerce Sales AI Agent": ecommerceSalesAgentImg,
+  "Sales AI Agent": salesAgentImg,
+  "HR/Training AI Agent": hrTrainingAgentImg,
+  "Marketing & Outreach AI Agent": marketingAgentImg
 };
 
 // Use cases data
@@ -560,7 +569,7 @@ const UseCases = () => {
                       {/* Agent Image */}
                       <div className="relative h-48 w-full overflow-hidden">
                         <img 
-                          src={agentImages[useCase.title] || "/assets/images/agents/concierge.png"} 
+                          src={agentImages[useCase.title] || conciergeAgentImg} 
                           alt={useCase.title}
                           className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                         />

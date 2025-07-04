@@ -113,6 +113,8 @@ app.use((req, res, next) => {
     app.use('/assets', express.static('public/assets'));
     await setupVite(app, server);
   } else {
+    // Serve static assets in production mode 
+    app.use('/assets', express.static('public/assets'));
     serveStatic(app);
   }
 
