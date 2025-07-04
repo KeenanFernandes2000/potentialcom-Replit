@@ -54,14 +54,6 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="/"
-                  className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
-                >
-                  Home
-                </a>
-              </li>
-              <li>
-                <a
                   href="/solutions"
                   className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
                 >
@@ -70,10 +62,18 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="/vera"
+                  href="/usecases"
                   className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
                 >
-                  Talk to Vera
+                  Use Cases
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/resources"
+                  className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
+                >
+                  Resources
                 </a>
               </li>
               <li>
