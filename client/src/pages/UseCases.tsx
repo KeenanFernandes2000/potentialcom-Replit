@@ -51,6 +51,7 @@ const ecommerceSalesAgentImg = "/assets/images/agents/ecommerce-sales.png";
 const salesAgentImg = "/assets/images/agents/sales.png";
 const hrTrainingAgentImg = "/assets/images/agents/hr-training.png";
 const marketingAgentImg = "/assets/images/agents/marketing.png";
+const aisalesconsultantImg = "/assets/images/agents/aisalesconsultant.png";
 
 
 // Map of use case icons
@@ -82,7 +83,8 @@ const industryIcons = {
   "Ecommerce": "🛍️",
   "Sales": "🧑‍💼",
   "HR": "🧑‍🏫",
-  "Marketing": "📣"
+  "Marketing": "📣",
+  "Sales Consultant": "🧑‍💼"
 };
 
 // Map agent titles to their respective imported images
@@ -94,7 +96,8 @@ const agentImages: { [key: string]: string } = {
   "Ecommerce Sales AI Agent": ecommerceSalesAgentImg,
   "Sales AI Agent": salesAgentImg,
   "HR/Training AI Agent": hrTrainingAgentImg,
-  "Marketing & Outreach AI Agent": marketingAgentImg
+  "Marketing & Outreach AI Agent": marketingAgentImg,
+  "Sales Consultant AI Agent": aisalesconsultantImg
 };
 
 // Use cases data
@@ -186,6 +189,17 @@ const useCases = [
     interface: ["Voice", "Chat"],
     industry: "Marketing",
     videoUrl: "https://example.com/marketing-demo"
+  },
+  {
+    id: 9,
+    icon: "sales",
+    title: "Sales Consultant AI Agent",
+    description: "Displays product cards, provides personalized recommendations, and books human consultations.",
+    tasks: ["Display Products", "Recommend Solutions", "Book Consultations", "Follow Up"],
+    channels: ["Website", "Phone", "WhatsApp"],
+    interface: ["Voice", "Chat"],
+    industry: "Sales",
+    videoUrl: "https://example.com/sales-consultant-demo"
   }
 ];
 
@@ -255,6 +269,10 @@ const UseCases = () => {
     organizerName?: string;
   } | null>(null);
   
+  // Product display states
+  const [showProductDisplay, setShowProductDisplay] = useState(false);
+  const [products, setProducts] = useState<any[]>([]);
+  
   // User data for Vera (you can customize this or make it dynamic)
   const veraUser = {
     firstName: "Demo",
@@ -298,6 +316,12 @@ const UseCases = () => {
       transcriptContainerRef.current.scrollTop = transcriptContainerRef.current.scrollHeight;
     }
   }, [transcripts, currentPartial]);
+
+  // Debug product display state
+  useEffect(() => {
+    console.log('showProductDisplay changed to:', showProductDisplay);
+    console.log('products array:', products);
+  }, [showProductDisplay, products]);
 
   // Load HubSpot meetings script when booking form is shown
   useEffect(() => {
@@ -539,23 +563,54 @@ const UseCases = () => {
             setCurrentPartial(null);
           }
         }
-        // Handle tool-calls for agent creation and booking
+        // Handle tool-calls for agent creation, booking, and product display
         if (message.type === "tool-calls" && Array.isArray(message.toolCallList)) {
           for (const toolCall of message.toolCallList) {
             if (toolCall.type === "function" && toolCall.function?.name === "CreateChatbot") {
               setShowAgentCreation(true);
               setShowVoiceAgentCreation(false);
               setShowBookingForm(false);
+              setShowProductDisplay(false);
             }
             if (toolCall.type === "function" && toolCall.function?.name === "CreateVoiceAgent") {
               setShowAgentCreation(false);
               setShowVoiceAgentCreation(true);
               setShowBookingForm(false);
+              setShowProductDisplay(false);
             }
             if (toolCall.type === "function" && toolCall.function?.name === "showBookingForm") {
               setShowAgentCreation(false);
               setShowVoiceAgentCreation(false);
               setShowBookingForm(true);
+              setShowProductDisplay(false);
+            }
+            if (toolCall.type === "function" && toolCall.function?.name === "display_products") {
+              console.log('Display products tool call received:', toolCall);
+              try {
+                // Handle both string and object arguments
+                let productsData;
+                if (typeof toolCall.function?.arguments === 'string') {
+                  productsData = JSON.parse(toolCall.function.arguments);
+                } else if (typeof toolCall.function?.arguments === 'object') {
+                  productsData = toolCall.function.arguments;
+                } else {
+                  // If arguments is undefined or null, try to get from toolCall directly
+                  productsData = toolCall.arguments || toolCall.function?.arguments || [];
+                }
+                
+                // Convert single product object to array if needed
+                if (!Array.isArray(productsData)) {
+                  console.log('Converting single product to array:', productsData);
+                  productsData = [productsData];
+                }
+                
+                handleDisplayProducts(productsData);
+              } catch (error) {
+                console.error('Error parsing products data:', error);
+                console.log('Raw toolCall:', toolCall);
+                // Fallback to empty array
+                handleDisplayProducts([]);
+              }
             }
           }
         }
@@ -709,6 +764,18 @@ const UseCases = () => {
     navigator.clipboard.writeText(url);
     setVoiceAgentCopied(true);
     setTimeout(() => setVoiceAgentCopied(false), 1500);
+  };
+
+  // Handle display_products tool call
+  const handleDisplayProducts = (productsData: any[]) => {
+    console.log('handleDisplayProducts called with:', productsData);
+    setProducts(productsData);
+    setShowProductDisplay(true);
+    // Hide other forms when showing products
+    setShowAgentCreation(false);
+    setShowVoiceAgentCreation(false);
+    setShowBookingForm(false);
+    console.log('Product display state set to true');
   };
 
   // Logo grid for trusted companies with scrolling animation
@@ -1099,7 +1166,7 @@ const UseCases = () => {
                       <Dialog 
                         open={dialogOpen[useCase.id] || false}
                         onOpenChange={(open) => {
-                          const isAIAgent = useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent";
+                          const isAIAgent = useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent" || useCase.title === "Sales Consultant AI Agent";
                           const hasActiveOrConnectingCall = isCallActive || callStatus === 'connecting';
                           
                           // Prevent closing if there's an active/connecting call for AI agents
@@ -1154,6 +1221,12 @@ const UseCases = () => {
                                 setTimeout(() => {
                                   startInlineVera('f04e39ee-dc09-4032-a55c-b4eccbb85834');
                                 }, 500);
+                              } else if (useCase.title === "Sales Consultant AI Agent") {
+                                setCurrentUseCaseId(useCase.id);
+                                // Auto-start Andrea after modal opens
+                                setTimeout(() => {
+                                  startInlineVera('26231b01-b3fa-4f04-bd87-c74065dbf7a3');
+                                }, 500);
                               }
                             }}
                           >
@@ -1163,7 +1236,7 @@ const UseCases = () => {
                         <DialogContent 
                           className="max-w-4xl w-[95vw] max-h-[90vh] overflow-y-auto"
                           onInteractOutside={(e) => {
-                            const isAIAgent = useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent";
+                            const isAIAgent = useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent" || useCase.title === "Sales Consultant AI Agent";
                             const hasActiveOrConnectingCall = isCallActive || callStatus === 'connecting';
                             // Prevent dialog from closing when clicking outside if there's an active/connecting call
                             if (isAIAgent && hasActiveOrConnectingCall) {
@@ -1173,7 +1246,7 @@ const UseCases = () => {
                             }
                           }}
                           onEscapeKeyDown={(e) => {
-                            const isAIAgent = useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent";
+                            const isAIAgent = useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent" || useCase.title === "Sales Consultant AI Agent";
                             const hasActiveOrConnectingCall = isCallActive || callStatus === 'connecting';
                             // Prevent dialog from closing with escape key if there's an active/connecting call
                             if (isAIAgent && hasActiveOrConnectingCall) {
@@ -1240,11 +1313,11 @@ const UseCases = () => {
                             
                             {/* Video Demo or Vera/Nole/Tony/Zoya/Charlie Interface */}
                             <div className="aspect-video bg-muted rounded-lg mb-4 sm:mb-6 overflow-hidden">
-                              {(useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent") ? (
+                              {(useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent" || useCase.title === "Sales Consultant AI Agent") ? (
                                 showVeraInline ? (
                                   <div className="w-full h-full flex flex-col lg:flex-row bg-background border border-border">
                                     {/* Left: Forms Section */}
-                                    {(showAgentCreation || showVoiceAgentCreation || showBookingForm) && (
+                                    {(showAgentCreation || showVoiceAgentCreation || showBookingForm || showProductDisplay) && (
                                       <div className="flex-1 p-2 sm:p-4 border-b lg:border-b-0 lg:border-r border-border overflow-y-auto min-h-0">
                                         {showAgentCreation && (
                                           <div className="w-full bg-background/80 rounded-2xl shadow-lg p-4 lg:p-8 flex flex-col items-center">
@@ -1356,6 +1429,76 @@ const UseCases = () => {
                                           </div>
                                         )}
 
+                                        {showProductDisplay && (
+                                          <div className="w-full bg-background/80 rounded-2xl shadow-lg p-4 lg:p-6 flex flex-col items-center overflow-hidden">
+                                            <h2 className="text-lg lg:text-xl font-bold text-primary mb-2 text-center">Available Products</h2>
+                                            <p className="text-xs lg:text-sm text-muted-foreground mb-3 lg:mb-4 text-center">Here are the products I can help you with:</p>
+                                            <div className="w-full space-y-3 overflow-y-auto max-h-[60vh]">
+                                              {products.length > 0 ? (
+                                                products.map((product, index) => (
+                                                  <div key={index} className="bg-card border border-border rounded-lg p-3 lg:p-4 hover:shadow-md transition-all duration-200">
+                                                    <div className="flex flex-col gap-3 lg:gap-4">
+                                                      {product.Image && (
+                                                        <div className="flex-shrink-0 self-center lg:self-start">
+                                                          <img 
+                                                            src={product.Image} 
+                                                            alt={product.Name || 'Product'} 
+                                                            className="w-full max-w-[200px] lg:w-32 lg:h-32 object-cover rounded-lg shadow-sm"
+                                                          />
+                                                        </div>
+                                                      )}
+                                                      <div className="flex-1 space-y-3 min-w-0">
+                                                        <div className="flex flex-col gap-2">
+                                                          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+                                                            <h3 className="text-lg font-bold text-foreground break-words">
+                                                              {product.Name || 'Product Name'}
+                                                            </h3>
+                                                            {product.Price && (
+                                                              <div className="flex-shrink-0">
+                                                                <span className="inline-block bg-primary/10 text-primary font-bold text-sm lg:text-base px-3 py-1 rounded-md border border-primary/20 whitespace-nowrap">
+                                                                  {product.Price}
+                                                                </span>
+                                                              </div>
+                                                            )}
+                                                          </div>
+                                                        </div>
+                                                        {product.Highlight && (
+                                                          <div className="bg-muted/30 rounded-md p-2 border-l-3 border-primary/50">
+                                                            <p className="text-xs lg:text-sm text-muted-foreground font-medium leading-relaxed">
+                                                              {product.Highlight}
+                                                            </p>
+                                                          </div>
+                                                        )}
+                                                        {product.Feature && (
+                                                          <div className="space-y-1">
+                                                            <h4 className="text-xs font-semibold text-foreground uppercase tracking-wide">Key Features</h4>
+                                                            <p className="text-xs lg:text-sm text-foreground leading-relaxed break-words">
+                                                              {product.Feature}
+                                                            </p>
+                                                          </div>
+                                                        )}
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                ))
+                                              ) : (
+                                                <div className="text-center py-6">
+                                                  <div className="text-3xl mb-3">📦</div>
+                                                  <p className="text-sm text-muted-foreground">No products available at the moment.</p>
+                                                </div>
+                                              )}
+                                            </div>
+                                            <Button 
+                                              onClick={() => setShowProductDisplay(false)} 
+                                              className="w-full mt-4"
+                                              variant="outline"
+                                              size="sm"
+                                            >
+                                              Close Product Display
+                                            </Button>
+                                          </div>
+                                        )}
+
                                         {showBookingForm && (
                                           <div className="w-full bg-background/80 rounded-2xl shadow-lg p-4 lg:p-8 flex flex-col items-center">
                                             <h2 className="text-xl lg:text-2xl font-bold text-primary mb-2 text-center">Schedule a Consultation</h2>
@@ -1435,9 +1578,10 @@ const UseCases = () => {
                                     <div className="flex-1 p-2 sm:p-4 flex flex-col h-full min-h-[300px] lg:min-h-0">
                                       <h3 className="text-xl font-semibold text-center mb-2">
                                         {useCase.title === "HR/Training AI Agent" ? "Talk to Nole" : 
-                                         useCase.title === "Room Service AI Agent" ? "Talk to Tony" : 
+                                         useCase.title === "Room Service AI Agent" ? "Talk to Maya" : 
                                          useCase.title === "Receptionist AI Agent" ? "Talk to Zoya" :
                                          useCase.title === "Sales AI Agent" ? "Talk to Charlie" :
+                                         useCase.title === "Sales Consultant AI Agent" ? "Talk to Andrea" :
                                          "Talk to Vera"}
                                       </h3>
                                       <div className="w-full flex items-center justify-center mb-4">
@@ -1445,9 +1589,10 @@ const UseCases = () => {
                                           <span className="flex items-center gap-2 text-sm text-muted-foreground animate-pulse">
                                             <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" /></svg>
                                             {useCase.title === "HR/Training AI Agent" ? "Connecting to Nole..." : 
-                                             useCase.title === "Room Service AI Agent" ? "Connecting to Tony..." : 
+                                             useCase.title === "Room Service AI Agent" ? "Connecting to Maya..." : 
                                              useCase.title === "Receptionist AI Agent" ? "Connecting to Zoya..." :
                                              useCase.title === "Sales AI Agent" ? "Connecting to Charlie..." :
+                                             useCase.title === "Sales Consultant AI Agent" ? "Connecting to Andrea..." :
                                              "Connecting to Vera..."}
                                           </span>
                                         )}
@@ -1467,11 +1612,13 @@ const UseCases = () => {
                                                  useCase.title === "Room Service AI Agent" ? roomServiceAgentImg : 
                                                  useCase.title === "Receptionist AI Agent" ? receptionistAgentImg :
                                                  useCase.title === "Sales AI Agent" ? salesAgentImg :
+                                                 useCase.title === "Sales Consultant AI Agent" ? aisalesconsultantImg :
                                                  conciergeAgentImg}
                                             alt={useCase.title === "HR/Training AI Agent" ? "Nole" : 
-                                                 useCase.title === "Room Service AI Agent" ? "Tony" : 
+                                                 useCase.title === "Room Service AI Agent" ? "Maya" : 
                                                  useCase.title === "Receptionist AI Agent" ? "Zoya" :
                                                  useCase.title === "Sales AI Agent" ? "Charlie" :
+                                                 useCase.title === "Sales Consultant AI Agent" ? "Andrea" :
                                                  "Vera"}
                                             className={`w-full h-full object-cover ${isSpeaking ? 'animate-pulse' : ''}`}
                                           />
@@ -1531,9 +1678,10 @@ const UseCases = () => {
                                                       <span className="font-semibold text-primary">
                                                         {transcript.role === 'assistant' ? 
                                                           (useCase.title === "HR/Training AI Agent" ? 'Nole' : 
-                                                           useCase.title === "Room Service AI Agent" ? 'Tony' : 
+                                                           useCase.title === "Room Service AI Agent" ? 'Maya' : 
                                                            useCase.title === "Receptionist AI Agent" ? 'Zoya' :
                                                            useCase.title === "Sales AI Agent" ? 'Charlie' :
+                                                           useCase.title === "Sales Consultant AI Agent" ? 'Andrea' :
                                                            'Vera') : 'You'}:
                                                       </span>{' '}
                                                       {transcript.text}
@@ -1552,9 +1700,10 @@ const UseCases = () => {
                                                       <span className="font-semibold text-primary">
                                                         {currentPartial.role === 'assistant' ? 
                                                           (useCase.title === "HR/Training AI Agent" ? 'Nole' : 
-                                                           useCase.title === "Room Service AI Agent" ? 'Tony' : 
+                                                           useCase.title === "Room Service AI Agent" ? 'Maya' : 
                                                            useCase.title === "Receptionist AI Agent" ? 'Zoya' :
                                                            useCase.title === "Sales AI Agent" ? 'Charlie' :
+                                                           useCase.title === "Sales Consultant AI Agent" ? 'Andrea' :
                                                            'Vera') : 'You'}:
                                                       </span>{' '}
                                                       {currentPartial.text}
@@ -1596,9 +1745,10 @@ const UseCases = () => {
                                     <div className="text-3xl sm:text-4xl mb-4">🎯</div>
                                     <p className="text-muted-foreground text-sm sm:text-base mb-4">
                                       {useCase.title === "HR/Training AI Agent" ? "Nole will start automatically..." : 
-                                       useCase.title === "Room Service AI Agent" ? "Tony will start automatically..." : 
+                                       useCase.title === "Room Service AI Agent" ? "Maya will start automatically..." : 
                                        useCase.title === "Receptionist AI Agent" ? "Zoya will start automatically..." :
                                        useCase.title === "Sales AI Agent" ? "Charlie will start automatically..." :
+                                       useCase.title === "Sales Consultant AI Agent" ? "Andrea will start automatically..." :
                                        "Vera will start automatically..."}
                                     </p>
                                   </div>
@@ -1629,7 +1779,7 @@ const UseCases = () => {
                             <Button 
                               className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm sm:text-base py-2 sm:py-3"
                               onClick={() => {
-                                const isAIAgent = useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent";
+                                const isAIAgent = useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent" || useCase.title === "Sales Consultant AI Agent";
                                 const hasActiveOrConnectingCall = isCallActive || callStatus === 'connecting';
                                 
                                 // End Vapi call if it's active or connecting
@@ -1678,6 +1828,11 @@ const UseCases = () => {
                                 <>
                                   <span className="hidden sm:inline">Build Your Custom Sales Agent - starting from $500/month</span>
                                   <span className="sm:hidden">Build Custom Sales Agent - $500/month</span>
+                                </>
+                              ) : useCase.title === "Sales Consultant AI Agent" ? (
+                                <>
+                                  <span className="hidden sm:inline">Build Your Custom Sales Consultant Agent - starting from $500/month</span>
+                                  <span className="sm:hidden">Build Custom Sales Consultant Agent - $500/month</span>
                                 </>
                               ) : (
                                 <>
