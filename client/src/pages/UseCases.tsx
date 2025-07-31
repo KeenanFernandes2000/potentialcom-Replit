@@ -52,6 +52,7 @@ const salesAgentImg = "/assets/images/agents/sales.png";
 const hrTrainingAgentImg = "/assets/images/agents/hr-training.png";
 const marketingAgentImg = "/assets/images/agents/marketing.png";
 const aisalesconsultantImg = "/assets/images/agents/aisalesconsultant.png";
+const hotelAgentImg = "/assets/images/agents/hotelai.jpg";
 
 
 // Map of use case icons
@@ -84,7 +85,8 @@ const industryIcons = {
   "Sales": "🧑‍💼",
   "HR": "🧑‍🏫",
   "Marketing": "📣",
-  "Sales Consultant": "🧑‍💼"
+  "Sales Consultant": "🧑‍💼",
+  "Healthcare": "🏥"
 };
 
 // Map agent titles to their respective imported images
@@ -97,6 +99,7 @@ const agentImages: { [key: string]: string } = {
   "Sales AI Agent": salesAgentImg,
   "HR/Training AI Agent": hrTrainingAgentImg,
   "Marketing & Outreach AI Agent": marketingAgentImg,
+  "Hospital AI Concierge": hotelAgentImg,
   "Sales Consultant AI Agent": aisalesconsultantImg
 };
 
@@ -200,6 +203,17 @@ const useCases = [
     interface: ["Voice", "Chat"],
     industry: "Sales",
     videoUrl: "https://example.com/sales-consultant-demo"
+  },
+  {
+    id: 10,
+    icon: "healthcare",
+    title: "Hospital AI Concierge",
+    description: "Assists patients with appointments, doctor information, and hospital services.",
+    tasks: ["Display Doctor Info", "Book Appointments", "Answer Queries", "Route to Human"],
+    channels: ["Phone", "Website", "WhatsApp"],
+    interface: ["Voice", "Chat"],
+    industry: "Healthcare",
+    videoUrl: "https://example.com/hospital-concierge-demo"
   }
 ];
 
@@ -272,6 +286,10 @@ const UseCases = () => {
   // Product display states
   const [showProductDisplay, setShowProductDisplay] = useState(false);
   const [products, setProducts] = useState<any[]>([]);
+  
+  // Doctor display states
+  const [showDoctorDisplay, setShowDoctorDisplay] = useState(false);
+  const [doctors, setDoctors] = useState<any[]>([]);
   
   // User data for Vera (you can customize this or make it dynamic)
   const veraUser = {
@@ -571,18 +589,21 @@ const UseCases = () => {
               setShowVoiceAgentCreation(false);
               setShowBookingForm(false);
               setShowProductDisplay(false);
+              setShowDoctorDisplay(false);
             }
             if (toolCall.type === "function" && toolCall.function?.name === "CreateVoiceAgent") {
               setShowAgentCreation(false);
               setShowVoiceAgentCreation(true);
               setShowBookingForm(false);
               setShowProductDisplay(false);
+              setShowDoctorDisplay(false);
             }
             if (toolCall.type === "function" && toolCall.function?.name === "showBookingForm") {
               setShowAgentCreation(false);
               setShowVoiceAgentCreation(false);
               setShowBookingForm(true);
               setShowProductDisplay(false);
+              setShowDoctorDisplay(false);
             }
             if (toolCall.type === "function" && toolCall.function?.name === "display_products") {
               console.log('Display products tool call received:', toolCall);
@@ -610,6 +631,34 @@ const UseCases = () => {
                 console.log('Raw toolCall:', toolCall);
                 // Fallback to empty array
                 handleDisplayProducts([]);
+              }
+            }
+            if (toolCall.type === "function" && toolCall.function?.name === "display_doctor") {
+              console.log('Display doctor tool call received:', toolCall);
+              try {
+                // Handle both string and object arguments
+                let doctorsData;
+                if (typeof toolCall.function?.arguments === 'string') {
+                  doctorsData = JSON.parse(toolCall.function.arguments);
+                } else if (typeof toolCall.function?.arguments === 'object') {
+                  doctorsData = toolCall.function.arguments;
+                } else {
+                  // If arguments is undefined or null, try to get from toolCall directly
+                  doctorsData = toolCall.arguments || toolCall.function?.arguments || [];
+                }
+                
+                // Convert single doctor object to array if needed
+                if (!Array.isArray(doctorsData)) {
+                  console.log('Converting single doctor to array:', doctorsData);
+                  doctorsData = [doctorsData];
+                }
+                
+                handleDisplayDoctors(doctorsData);
+              } catch (error) {
+                console.error('Error parsing doctors data:', error);
+                console.log('Raw toolCall:', toolCall);
+                // Fallback to empty array
+                handleDisplayDoctors([]);
               }
             }
           }
@@ -775,7 +824,20 @@ const UseCases = () => {
     setShowAgentCreation(false);
     setShowVoiceAgentCreation(false);
     setShowBookingForm(false);
+    setShowDoctorDisplay(false);
     console.log('Product display state set to true');
+  };
+
+  const handleDisplayDoctors = (doctorsData: any[]) => {
+    console.log('handleDisplayDoctors called with:', doctorsData);
+    setDoctors(doctorsData);
+    setShowDoctorDisplay(true);
+    // Hide other forms when showing doctors
+    setShowAgentCreation(false);
+    setShowVoiceAgentCreation(false);
+    setShowBookingForm(false);
+    setShowProductDisplay(false);
+    console.log('Doctor display state set to true');
   };
 
   // Logo grid for trusted companies with scrolling animation
@@ -1227,6 +1289,12 @@ const UseCases = () => {
                                 setTimeout(() => {
                                   startInlineVera('26231b01-b3fa-4f04-bd87-c74065dbf7a3');
                                 }, 500);
+                              } else if (useCase.title === "Hospital AI Concierge") {
+                                setCurrentUseCaseId(useCase.id);
+                                // Auto-start Myra after modal opens
+                                setTimeout(() => {
+                                  startInlineVera('fa52cb50-bf1d-4ddd-9188-7bde67395d29');
+                                }, 500);
                               }
                             }}
                           >
@@ -1236,7 +1304,7 @@ const UseCases = () => {
                         <DialogContent 
                           className="max-w-4xl w-[95vw] max-h-[90vh] overflow-y-auto"
                           onInteractOutside={(e) => {
-                            const isAIAgent = useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent" || useCase.title === "Sales Consultant AI Agent";
+                            const isAIAgent = useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent" || useCase.title === "Sales Consultant AI Agent" || useCase.title === "Hospital AI Concierge";
                             const hasActiveOrConnectingCall = isCallActive || callStatus === 'connecting';
                             // Prevent dialog from closing when clicking outside if there's an active/connecting call
                             if (isAIAgent && hasActiveOrConnectingCall) {
@@ -1246,7 +1314,7 @@ const UseCases = () => {
                             }
                           }}
                           onEscapeKeyDown={(e) => {
-                            const isAIAgent = useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent" || useCase.title === "Sales Consultant AI Agent";
+                            const isAIAgent = useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent" || useCase.title === "Sales Consultant AI Agent" || useCase.title === "Hospital AI Concierge";
                             const hasActiveOrConnectingCall = isCallActive || callStatus === 'connecting';
                             // Prevent dialog from closing with escape key if there's an active/connecting call
                             if (isAIAgent && hasActiveOrConnectingCall) {
@@ -1313,11 +1381,11 @@ const UseCases = () => {
                             
                             {/* Video Demo or Vera/Nole/Tony/Zoya/Charlie Interface */}
                             <div className="aspect-video bg-muted rounded-lg mb-4 sm:mb-6 overflow-hidden">
-                              {(useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent" || useCase.title === "Sales Consultant AI Agent") ? (
+                              {(useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent" || useCase.title === "Sales Consultant AI Agent" || useCase.title === "Hospital AI Concierge") ? (
                                 showVeraInline ? (
                                   <div className="w-full h-full flex flex-col lg:flex-row bg-background border border-border">
                                     {/* Left: Forms Section */}
-                                    {(showAgentCreation || showVoiceAgentCreation || showBookingForm || showProductDisplay) && (
+                                                                            {(showAgentCreation || showVoiceAgentCreation || showBookingForm || showProductDisplay || showDoctorDisplay) && (
                                       <div className="flex-1 p-2 sm:p-4 border-b lg:border-b-0 lg:border-r border-border overflow-y-auto min-h-0">
                                         {showAgentCreation && (
                                           <div className="w-full bg-background/80 rounded-2xl shadow-lg p-4 lg:p-8 flex flex-col items-center">
@@ -1499,6 +1567,75 @@ const UseCases = () => {
                                           </div>
                                         )}
 
+                                        {showDoctorDisplay && (
+                                          <div className="w-full bg-background/80 rounded-2xl shadow-lg p-3 lg:p-4 flex flex-col items-center overflow-hidden">
+                                            <div className="flex items-center gap-2 mb-3 w-full">
+                                              <div className="p-1.5 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex-shrink-0">
+                                                <svg className="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                </svg>
+                                              </div>
+                                              <h2 className="text-base lg:text-lg font-bold text-primary text-center flex-1">Available Doctors</h2>
+                                            </div>
+                                            <p className="text-xs text-muted-foreground mb-3 text-center">Here are the doctors I can help you connect with:</p>
+                                            <div className="w-full space-y-3 overflow-y-auto max-h-[50vh]">
+                                              {doctors.length > 0 ? (
+                                                doctors.map((doctor, index) => (
+                                                  <div key={index} className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/50 dark:to-indigo-950/50 border border-blue-200 dark:border-blue-800 rounded-lg p-3 hover:shadow-md transition-all duration-200">
+                                                    <div className="flex items-start gap-3">
+                                                      {doctor.image ? (
+                                                        <div className="flex-shrink-0">
+                                                          <img 
+                                                            src={doctor.image} 
+                                                            alt={doctor.name || 'Doctor'} 
+                                                            className="w-16 h-16 object-cover rounded-full shadow-sm border-2 border-blue-200 dark:border-blue-700"
+                                                          />
+                                                        </div>
+                                                      ) : (
+                                                        <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-full shadow-sm border-2 border-blue-200 dark:border-blue-700 flex items-center justify-center">
+                                                          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                          </svg>
+                                                        </div>
+                                                      )}
+                                                      <div className="flex-1 min-w-0">
+                                                        <div className="flex flex-col gap-2">
+                                                          <h3 className="text-sm font-bold text-gray-900 dark:text-gray-100 break-words leading-tight">
+                                                            {doctor.name || 'Doctor Name'}
+                                                          </h3>
+                                                          {doctor.specialty && (
+                                                            <div className="flex-shrink-0">
+                                                              <span className="inline-block bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold text-xs px-2 py-1 rounded-full shadow-sm max-w-full truncate">
+                                                                {doctor.specialty}
+                                                              </span>
+                                                            </div>
+                                                          )}
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                ))
+                                              ) : (
+                                                <div className="text-center py-6">
+                                                  <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-indigo-100 dark:from-blue-900/30 dark:to-indigo-900/30 rounded-full flex items-center justify-center mx-auto mb-3">
+                                                    <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                                    </svg>
+                                                  </div>
+                                                  <p className="text-xs text-muted-foreground">No doctors available at the moment.</p>
+                                                </div>
+                                              )}
+                                            </div>
+                                            <Button 
+                                              onClick={() => setShowDoctorDisplay(false)} 
+                                              className="w-full mt-3 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white border-0 text-sm py-2"
+                                              size="sm"
+                                            >
+                                              Close Doctor Display
+                                            </Button>
+                                          </div>
+                                        )}
+
                                         {showBookingForm && (
                                           <div className="w-full bg-background/80 rounded-2xl shadow-lg p-4 lg:p-8 flex flex-col items-center">
                                             <h2 className="text-xl lg:text-2xl font-bold text-primary mb-2 text-center">Schedule a Consultation</h2>
@@ -1582,6 +1719,7 @@ const UseCases = () => {
                                          useCase.title === "Receptionist AI Agent" ? "Talk to Zoya" :
                                          useCase.title === "Sales AI Agent" ? "Talk to Charlie" :
                                          useCase.title === "Sales Consultant AI Agent" ? "Talk to Andrea" :
+                                         useCase.title === "Hospital AI Concierge" ? "Talk to Myra" :
                                          "Talk to Vera"}
                                       </h3>
                                       <div className="w-full flex items-center justify-center mb-4">
@@ -1593,6 +1731,7 @@ const UseCases = () => {
                                              useCase.title === "Receptionist AI Agent" ? "Connecting to Zoya..." :
                                              useCase.title === "Sales AI Agent" ? "Connecting to Charlie..." :
                                              useCase.title === "Sales Consultant AI Agent" ? "Connecting to Andrea..." :
+                                             useCase.title === "Hospital AI Concierge" ? "Connecting to Myra..." :
                                              "Connecting to Vera..."}
                                           </span>
                                         )}
@@ -1613,12 +1752,14 @@ const UseCases = () => {
                                                  useCase.title === "Receptionist AI Agent" ? receptionistAgentImg :
                                                  useCase.title === "Sales AI Agent" ? salesAgentImg :
                                                  useCase.title === "Sales Consultant AI Agent" ? aisalesconsultantImg :
+                                                 useCase.title === "Hospital AI Concierge" ? hotelAgentImg :
                                                  conciergeAgentImg}
                                             alt={useCase.title === "HR/Training AI Agent" ? "Nole" : 
                                                  useCase.title === "Room Service AI Agent" ? "Maya" : 
                                                  useCase.title === "Receptionist AI Agent" ? "Zoya" :
                                                  useCase.title === "Sales AI Agent" ? "Charlie" :
                                                  useCase.title === "Sales Consultant AI Agent" ? "Andrea" :
+                                                 useCase.title === "Hospital AI Concierge" ? "Myra" :
                                                  "Vera"}
                                             className={`w-full h-full object-cover ${isSpeaking ? 'animate-pulse' : ''}`}
                                           />
@@ -1682,6 +1823,7 @@ const UseCases = () => {
                                                            useCase.title === "Receptionist AI Agent" ? 'Zoya' :
                                                            useCase.title === "Sales AI Agent" ? 'Charlie' :
                                                            useCase.title === "Sales Consultant AI Agent" ? 'Andrea' :
+                                                           useCase.title === "Hospital AI Concierge" ? 'Myra' :
                                                            'Vera') : 'You'}:
                                                       </span>{' '}
                                                       {transcript.text}
@@ -1704,6 +1846,7 @@ const UseCases = () => {
                                                            useCase.title === "Receptionist AI Agent" ? 'Zoya' :
                                                            useCase.title === "Sales AI Agent" ? 'Charlie' :
                                                            useCase.title === "Sales Consultant AI Agent" ? 'Andrea' :
+                                                           useCase.title === "Hospital AI Concierge" ? 'Myra' :
                                                            'Vera') : 'You'}:
                                                       </span>{' '}
                                                       {currentPartial.text}
@@ -1833,6 +1976,11 @@ const UseCases = () => {
                                 <>
                                   <span className="hidden sm:inline">Build Your Custom Sales Consultant Agent - starting from $500/month</span>
                                   <span className="sm:hidden">Build Custom Sales Consultant Agent - $500/month</span>
+                                </>
+                              ) : useCase.title === "Hospital AI Concierge" ? (
+                                <>
+                                  <span className="hidden sm:inline">Build Your Custom Hospital AI Concierge - starting from $500/month</span>
+                                  <span className="sm:hidden">Build Custom Hospital Concierge - $500/month</span>
                                 </>
                               ) : (
                                 <>
