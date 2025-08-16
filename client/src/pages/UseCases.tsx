@@ -584,6 +584,8 @@ const UseCases = () => {
         // Handle tool-calls for agent creation, booking, and product display
         if (message.type === "tool-calls" && Array.isArray(message.toolCallList)) {
           for (const toolCall of message.toolCallList) {
+            // Handle async operations
+            (async () => {
             if (toolCall.type === "function" && toolCall.function?.name === "CreateChatbot") {
               setShowAgentCreation(true);
               setShowVoiceAgentCreation(false);
@@ -633,7 +635,63 @@ const UseCases = () => {
                 handleDisplayProducts([]);
               }
             }
-            if (toolCall.type === "function" && toolCall.function?.name === "display_doctor") {
+            if (toolCall.type === "function" && toolCall.function?.name === "search_shopify_products") {
+              console.log('Search Shopify products tool call received:', toolCall);
+              try {
+                let searchParams;
+                if (typeof toolCall.function?.arguments === 'string') {
+                  searchParams = JSON.parse(toolCall.function.arguments);
+                } else if (typeof toolCall.function?.arguments === 'object') {
+                  searchParams = toolCall.function.arguments;
+                } else {
+                  searchParams = toolCall.arguments || toolCall.function?.arguments || {};
+                }
+                
+                const { query, category, priceRange, sortBy, limit = 6 } = searchParams;
+                
+                if (!query) {
+                  console.error('No search query provided');
+                  handleDisplayProducts([]);
+                  return;
+                }
+                
+                console.log('Searching Shopify products with params:', searchParams);
+                
+                // Search Shopify products
+                const shopifyProducts = await searchShopifyProducts(query, category, priceRange, sortBy, limit);
+                
+                if (shopifyProducts.length > 0) {
+                  handleDisplayProducts(shopifyProducts);
+                  
+                  // Let Sofia know products were found
+                  if (vapiRef.current) {
+                    vapiRef.current.say(`Great! I found ${shopifyProducts.length} products for "${query}". Let me show them to you.`, false);
+                  }
+                } else {
+                  handleDisplayProducts([]);
+                  
+                  // Let Sofia know no products were found
+                  if (vapiRef.current) {
+                    vapiRef.current.say(`I'm sorry, I couldn't find any products matching "${query}". Would you like to try a different search term?`, false);
+                  }
+                }
+                
+              } catch (error) {
+                console.error('Error handling Shopify search:', error);
+                handleDisplayProducts([]);
+                
+                if (vapiRef.current) {
+                  vapiRef.current.say("I'm sorry, there was an error searching for products. Let me try a different approach.", false);
+                }
+              }
+            }
+          })();
+        }
+      }
+      
+      if (message.type === "tool-calls" && Array.isArray(message.toolCallList)) {
+        for (const toolCall of message.toolCallList) {
+          if (toolCall.type === "function" && toolCall.function?.name === "display_doctor") {
               console.log('Display doctor tool call received:', toolCall);
               try {
                 // Handle both string and object arguments
@@ -826,6 +884,115 @@ const UseCases = () => {
     setShowBookingForm(false);
     setShowDoctorDisplay(false);
     console.log('Product display state set to true');
+  };
+
+  // Shopify API integration
+  const searchShopifyProducts = async (query: string, category?: string, priceRange?: string, sortBy?: string, limit: number = 6) => {
+    try {
+      const shopifyDomain = 'shamelesssophie.myshopify.com';
+      const accessToken = '5dfcb8e99e6e365333db0faa49e3d388';
+      
+      // Build GraphQL query
+      let graphqlQuery = `
+        query searchProducts($query: String!, $first: Int!) {
+          products(first: $first, query: $query) {
+            edges {
+              node {
+                id
+                title
+                handle
+                description
+                vendor
+                productType
+                tags
+                priceRange {
+                  minVariantPrice {
+                    amount
+                    currencyCode
+                  }
+                }
+                images(first: 1) {
+                  edges {
+                    node {
+                      url
+                      altText
+                    }
+                  }
+                }
+                variants(first: 10) {
+                  edges {
+                    node {
+                      id
+                      title
+                      price {
+                        amount
+                        currencyCode
+                      }
+                      availableForSale
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      `;
+
+      const response = await fetch(`https://${shopifyDomain}/api/2025-07/graphql.json`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Shopify-Storefront-Access-Token': accessToken,
+        },
+        body: JSON.stringify({
+          query: graphqlQuery,
+          variables: {
+            query: query,
+            first: limit
+          }
+        })
+      });
+
+      const data = await response.json();
+      
+      if (data.errors) {
+        console.error('Shopify API errors:', data.errors);
+        return [];
+      }
+
+      // Transform Shopify data to match our product display format
+      const transformedProducts = data.data.products.edges.map((edge: any) => {
+        const product = edge.node;
+        const image = product.images.edges[0]?.node?.url || '';
+        const price = product.priceRange?.minVariantPrice?.amount 
+          ? `$${parseFloat(product.priceRange.minVariantPrice.amount).toFixed(2)}`
+          : 'Price not available';
+        
+        return {
+          id: product.id,
+          name: product.title,
+          price: price,
+          image: image,
+          description: product.description,
+          vendor: product.vendor,
+          productType: product.productType,
+          handle: product.handle,
+          variants: product.variants.edges.map((v: any) => ({
+            id: v.node.id,
+            title: v.node.title,
+            price: `$${parseFloat(v.node.price.amount).toFixed(2)}`,
+            available: v.node.availableForSale
+          }))
+        };
+      });
+
+      console.log('Transformed Shopify products:', transformedProducts);
+      return transformedProducts;
+      
+    } catch (error) {
+      console.error('Error fetching Shopify products:', error);
+      return [];
+    }
   };
 
   const handleDisplayDoctors = (doctorsData: any[]) => {
@@ -1295,6 +1462,12 @@ const UseCases = () => {
                                 setTimeout(() => {
                                   startInlineVera('fa52cb50-bf1d-4ddd-9188-7bde67395d29');
                                 }, 500);
+                              } else if (useCase.title === "Ecommerce Sales AI Agent") {
+                                setCurrentUseCaseId(useCase.id);
+                                // Auto-start Sofia after modal opens
+                                setTimeout(() => {
+                                  startInlineVera('b68afc2d-99ba-4131-95a1-ff0ed58290c2');
+                                }, 500);
                               }
                             }}
                           >
@@ -1302,9 +1475,9 @@ const UseCases = () => {
                           </Button>
                         </DialogTrigger>
                         <DialogContent 
-                          className="max-w-4xl w-[95vw] max-h-[90vh] overflow-y-auto"
+                          className="max-w-sm sm:max-w-2xl lg:max-w-3xl xl:max-w-4xl"
                           onInteractOutside={(e) => {
-                            const isAIAgent = useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent" || useCase.title === "Sales Consultant AI Agent" || useCase.title === "Hospital AI Concierge";
+                            const isAIAgent = useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent" || useCase.title === "Sales Consultant AI Agent" || useCase.title === "Hospital AI Concierge" || useCase.title === "Ecommerce Sales AI Agent";
                             const hasActiveOrConnectingCall = isCallActive || callStatus === 'connecting';
                             // Prevent dialog from closing when clicking outside if there's an active/connecting call
                             if (isAIAgent && hasActiveOrConnectingCall) {
@@ -1314,7 +1487,7 @@ const UseCases = () => {
                             }
                           }}
                           onEscapeKeyDown={(e) => {
-                            const isAIAgent = useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent" || useCase.title === "Sales Consultant AI Agent" || useCase.title === "Hospital AI Concierge";
+                            const isAIAgent = useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent" || useCase.title === "Sales Consultant AI Agent" || useCase.title === "Hospital AI Concierge" || useCase.title === "Ecommerce Sales AI Agent";
                             const hasActiveOrConnectingCall = isCallActive || callStatus === 'connecting';
                             // Prevent dialog from closing with escape key if there's an active/connecting call
                             if (isAIAgent && hasActiveOrConnectingCall) {
@@ -1325,8 +1498,8 @@ const UseCases = () => {
                           }}
                         >
                           <DialogTitle className="sr-only">{useCase.title}</DialogTitle>
-                          <div className="p-4 sm:p-6">
-                            <h3 className="text-xl sm:text-2xl font-bold mb-4 flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                          <div className="p-3 sm:p-6">
+                            <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-4 flex flex-col sm:flex-row items-start sm:items-center gap-3">
                               <div className="text-primary p-2 rounded-lg bg-primary/10 flex-shrink-0">
                                 {(() => {
                                   // Map icon keys to unique icon components
@@ -1375,13 +1548,13 @@ const UseCases = () => {
                               </div>
                               <span className="leading-tight">{useCase.title}</span>
                             </h3>
-                            <p className="text-muted-foreground mb-4 sm:mb-6 text-sm sm:text-base">
+                            <p className="text-muted-foreground mb-4 sm:mb-6 text-xs sm:text-sm lg:text-base">
                               {useCase.description}
                             </p>
                             
-                            {/* Video Demo or Vera/Nole/Tony/Zoya/Charlie Interface */}
+                            {/* Video Demo or Voice Agent Interface */}
                             <div className="aspect-video bg-muted rounded-lg mb-4 sm:mb-6 overflow-hidden">
-                              {(useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent" || useCase.title === "Sales Consultant AI Agent" || useCase.title === "Hospital AI Concierge") ? (
+                              {(useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent" || useCase.title === "Sales Consultant AI Agent" || useCase.title === "Hospital AI Concierge" || useCase.title === "Ecommerce Sales AI Agent") ? (
                                 showVeraInline ? (
                                   <div className="w-full h-full flex flex-col lg:flex-row bg-background border border-border">
                                     {/* Left: Forms Section */}
@@ -1506,12 +1679,15 @@ const UseCases = () => {
                                                 products.map((product, index) => (
                                                   <div key={index} className="bg-card border border-border rounded-lg p-3 lg:p-4 hover:shadow-md transition-all duration-200">
                                                     <div className="flex flex-col gap-3 lg:gap-4">
-                                                      {product.Image && (
+                                                      {(product.image || product.Image) && (
                                                         <div className="flex-shrink-0 self-center lg:self-start">
                                                           <img 
-                                                            src={product.Image} 
-                                                            alt={product.Name || 'Product'} 
+                                                            src={product.image || product.Image} 
+                                                            alt={product.name || product.Name || 'Product'} 
                                                             className="w-full max-w-[200px] lg:w-32 lg:h-32 object-cover rounded-lg shadow-sm"
+                                                            onError={(e) => {
+                                                              e.currentTarget.style.display = 'none';
+                                                            }}
                                                           />
                                                         </div>
                                                       )}
@@ -1519,29 +1695,31 @@ const UseCases = () => {
                                                         <div className="flex flex-col gap-2">
                                                           <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
                                                             <h3 className="text-lg font-bold text-foreground break-words">
-                                                              {product.Name || 'Product Name'}
+                                                              {product.name || product.Name || 'Product Name'}
                                                             </h3>
-                                                            {product.Price && (
+                                                            {(product.price || product.Price) && (
                                                               <div className="flex-shrink-0">
                                                                 <span className="inline-block bg-primary/10 text-primary font-bold text-sm lg:text-base px-3 py-1 rounded-md border border-primary/20 whitespace-nowrap">
-                                                                  {product.Price}
+                                                                  {product.price || product.Price}
                                                                 </span>
                                                               </div>
                                                             )}
                                                           </div>
                                                         </div>
-                                                        {product.Highlight && (
+                                                        {(product.description || product.Description || product.Highlight) && (
                                                           <div className="bg-muted/30 rounded-md p-2 border-l-3 border-primary/50">
                                                             <p className="text-xs lg:text-sm text-muted-foreground font-medium leading-relaxed">
-                                                              {product.Highlight}
+                                                              {product.description || product.Description || product.Highlight}
                                                             </p>
                                                           </div>
                                                         )}
-                                                        {product.Feature && (
+                                                        {(product.vendor || product.Vendor || product.Feature) && (
                                                           <div className="space-y-1">
-                                                            <h4 className="text-xs font-semibold text-foreground uppercase tracking-wide">Key Features</h4>
+                                                            <h4 className="text-xs font-semibold text-foreground uppercase tracking-wide">
+                                                              {product.vendor ? 'Brand' : 'Key Features'}
+                                                            </h4>
                                                             <p className="text-xs lg:text-sm text-foreground leading-relaxed break-words">
-                                                              {product.Feature}
+                                                              {product.vendor || product.Vendor || product.Feature}
                                                             </p>
                                                           </div>
                                                         )}
@@ -1720,6 +1898,7 @@ const UseCases = () => {
                                          useCase.title === "Sales AI Agent" ? "Talk to Charlie" :
                                          useCase.title === "Sales Consultant AI Agent" ? "Talk to Andrea" :
                                          useCase.title === "Hospital AI Concierge" ? "Talk to Myra" :
+                                         useCase.title === "Ecommerce Sales AI Agent" ? "Talk to Sofia" :
                                          "Talk to Vera"}
                                       </h3>
                                       <div className="w-full flex items-center justify-center mb-4">
@@ -1732,6 +1911,7 @@ const UseCases = () => {
                                              useCase.title === "Sales AI Agent" ? "Connecting to Charlie..." :
                                              useCase.title === "Sales Consultant AI Agent" ? "Connecting to Andrea..." :
                                              useCase.title === "Hospital AI Concierge" ? "Connecting to Myra..." :
+                                             useCase.title === "Ecommerce Sales AI Agent" ? "Connecting to Sofia..." :
                                              "Connecting to Vera..."}
                                           </span>
                                         )}
@@ -1753,6 +1933,7 @@ const UseCases = () => {
                                                  useCase.title === "Sales AI Agent" ? salesAgentImg :
                                                  useCase.title === "Sales Consultant AI Agent" ? aisalesconsultantImg :
                                                  useCase.title === "Hospital AI Concierge" ? hotelAgentImg :
+                                                 useCase.title === "Ecommerce Sales AI Agent" ? ecommerceSalesAgentImg :
                                                  conciergeAgentImg}
                                             alt={useCase.title === "HR/Training AI Agent" ? "Nole" : 
                                                  useCase.title === "Room Service AI Agent" ? "Maya" : 
@@ -1760,6 +1941,7 @@ const UseCases = () => {
                                                  useCase.title === "Sales AI Agent" ? "Charlie" :
                                                  useCase.title === "Sales Consultant AI Agent" ? "Andrea" :
                                                  useCase.title === "Hospital AI Concierge" ? "Myra" :
+                                                 useCase.title === "Ecommerce Sales AI Agent" ? "Sofia" :
                                                  "Vera"}
                                             className={`w-full h-full object-cover ${isSpeaking ? 'animate-pulse' : ''}`}
                                           />
@@ -1892,11 +2074,13 @@ const UseCases = () => {
                                        useCase.title === "Receptionist AI Agent" ? "Zoya will start automatically..." :
                                        useCase.title === "Sales AI Agent" ? "Charlie will start automatically..." :
                                        useCase.title === "Sales Consultant AI Agent" ? "Andrea will start automatically..." :
+                                       useCase.title === "Ecommerce Sales AI Agent" ? "Sofia will start automatically..." :
                                        "Vera will start automatically..."}
                                     </p>
                                   </div>
                                   </div>
                                 )
+
                               ) : useCase.title === "Banking: Customer Support Agent" && useCase.industry === "Banking" ? (
                                 <iframe
                                   src="https://www.youtube.com/embed/qW_nQ5kx8GY"
@@ -1922,7 +2106,7 @@ const UseCases = () => {
                             <Button 
                               className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm sm:text-base py-2 sm:py-3"
                               onClick={() => {
-                                const isAIAgent = useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent" || useCase.title === "Sales Consultant AI Agent";
+                                const isAIAgent = useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent" || useCase.title === "Sales Consultant AI Agent" || useCase.title === "Ecommerce Sales AI Agent";
                                 const hasActiveOrConnectingCall = isCallActive || callStatus === 'connecting';
                                 
                                 // End Vapi call if it's active or connecting
@@ -1955,37 +2139,42 @@ const UseCases = () => {
                               ) : useCase.title === "HR/Training AI Agent" ? (
                                 <>
                                   <span className="hidden sm:inline">Build Your Custom HR/Interview Agent - starting from $500/month</span>
-                                  <span className="sm:hidden">Build Custom HR Agent - $500/month</span>
+                                  <span className="sm:hidden">Build HR Agent - $500/mo</span>
                                 </>
                               ) : useCase.title === "Room Service AI Agent" ? (
                                 <>
                                   <span className="hidden sm:inline">Build Your Custom Room Service Agent - starting from $500/month</span>
-                                  <span className="sm:hidden">Build Custom Room Service Agent - $500/month</span>
+                                  <span className="sm:hidden">Build Room Service - $500/mo</span>
                                 </>
                               ) : useCase.title === "Receptionist AI Agent" ? (
                                 <>
                                   <span className="hidden sm:inline">Build Your Custom Receptionist Agent - starting from $500/month</span>
-                                  <span className="sm:hidden">Build Custom Receptionist Agent - $500/month</span>
+                                  <span className="sm:hidden">Build Receptionist - $500/mo</span>
                                 </>
                               ) : useCase.title === "Sales AI Agent" ? (
                                 <>
                                   <span className="hidden sm:inline">Build Your Custom Sales Agent - starting from $500/month</span>
-                                  <span className="sm:hidden">Build Custom Sales Agent - $500/month</span>
+                                  <span className="sm:hidden">Build Sales Agent - $500/mo</span>
                                 </>
                               ) : useCase.title === "Sales Consultant AI Agent" ? (
                                 <>
                                   <span className="hidden sm:inline">Build Your Custom Sales Consultant Agent - starting from $500/month</span>
-                                  <span className="sm:hidden">Build Custom Sales Consultant Agent - $500/month</span>
+                                  <span className="sm:hidden">Build Sales Consultant - $500/mo</span>
                                 </>
                               ) : useCase.title === "Hospital AI Concierge" ? (
                                 <>
                                   <span className="hidden sm:inline">Build Your Custom Hospital AI Concierge - starting from $500/month</span>
-                                  <span className="sm:hidden">Build Custom Hospital Concierge - $500/month</span>
+                                  <span className="sm:hidden">Build Hospital - $500/mo</span>
+                                </>
+                              ) : useCase.title === "Ecommerce Sales AI Agent" ? (
+                                <>
+                                  <span className="hidden sm:inline">Build Your Custom Ecommerce Sales Agent - starting from $500/month</span>
+                                  <span className="sm:hidden">Build Ecommerce Agent - $500/mo</span>
                                 </>
                               ) : (
                                 <>
                                   <span className="hidden sm:inline">Hire Your Next {useCase.title} starting from $500/month</span>
-                                  <span className="sm:hidden">Hire This Agent - $500/month</span>
+                                  <span className="sm:hidden">Hire Agent - $500/mo</span>
                                 </>
                               )}
                             </Button>
