@@ -1475,7 +1475,7 @@ const UseCases = () => {
                           </Button>
                         </DialogTrigger>
                         <DialogContent 
-                          className="max-w-sm sm:max-w-2xl lg:max-w-3xl xl:max-w-4xl"
+                          className="max-w-[95vw] sm:max-w-lg md:max-w-3xl lg:max-w-5xl xl:max-w-6xl h-[90vh] sm:h-auto"
                           onInteractOutside={(e) => {
                             const isAIAgent = useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent" || useCase.title === "Sales Consultant AI Agent" || useCase.title === "Hospital AI Concierge" || useCase.title === "Ecommerce Sales AI Agent";
                             const hasActiveOrConnectingCall = isCallActive || callStatus === 'connecting';
@@ -1498,7 +1498,7 @@ const UseCases = () => {
                           }}
                         >
                           <DialogTitle className="sr-only">{useCase.title}</DialogTitle>
-                          <div className="p-3 sm:p-6">
+                          <div className="p-2 sm:p-6 h-full overflow-hidden flex flex-col">
                             <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-4 flex flex-col sm:flex-row items-start sm:items-center gap-3">
                               <div className="text-primary p-2 rounded-lg bg-primary/10 flex-shrink-0">
                                 {(() => {
@@ -1548,17 +1548,17 @@ const UseCases = () => {
                               </div>
                               <span className="leading-tight">{useCase.title}</span>
                             </h3>
-                            <p className="text-muted-foreground mb-4 sm:mb-6 text-xs sm:text-sm lg:text-base">
+                            <p className="text-muted-foreground mb-2 sm:mb-4 text-xs sm:text-sm lg:text-base">
                               {useCase.description}
                             </p>
                             
                             {/* Video Demo or Voice Agent Interface */}
-                            <div className="aspect-video bg-muted rounded-lg mb-4 sm:mb-6 overflow-hidden">
+                            <div className="bg-muted rounded-lg mb-2 sm:mb-4 overflow-hidden flex-1">
                               {(useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent" || useCase.title === "Sales Consultant AI Agent" || useCase.title === "Hospital AI Concierge" || useCase.title === "Ecommerce Sales AI Agent") ? (
                                 showVeraInline ? (
                                   <div className="w-full h-full flex flex-col lg:flex-row bg-background border border-border">
-                                    {/* Left: Forms Section */}
-                                                                            {(showAgentCreation || showVoiceAgentCreation || showBookingForm || showProductDisplay || showDoctorDisplay) && (
+                                    {/* Left: Forms Section - Hidden on mobile when empty */}
+                                                                          {(showAgentCreation || showVoiceAgentCreation || showBookingForm || showProductDisplay || showDoctorDisplay) && (
                                       <div className="flex-1 p-2 sm:p-4 border-b lg:border-b-0 lg:border-r border-border overflow-y-auto min-h-0">
                                         {showAgentCreation && (
                                           <div className="w-full bg-background/80 rounded-2xl shadow-lg p-4 lg:p-8 flex flex-col items-center">
@@ -1890,8 +1890,8 @@ const UseCases = () => {
                                     )}
 
                                     {/* Right: Vera/Nole Interface */}
-                                    <div className="flex-1 p-2 sm:p-4 flex flex-col h-full min-h-[300px] lg:min-h-0">
-                                      <h3 className="text-xl font-semibold text-center mb-2">
+                                    <div className="flex-1 p-2 sm:p-4 flex flex-col h-full min-h-0">
+                                      <h3 className="text-lg sm:text-xl font-semibold text-center mb-2">
                                         {useCase.title === "HR/Training AI Agent" ? "Talk to Nole" : 
                                          useCase.title === "Room Service AI Agent" ? "Talk to Maya" : 
                                          useCase.title === "Receptionist AI Agent" ? "Talk to Zoya" :
@@ -1924,8 +1924,8 @@ const UseCases = () => {
                                       </div>
 
                                       {/* Avatar Section */}
-                                      <div className="flex flex-col items-center mb-4">
-                                        <div className="relative w-24 h-24 lg:w-32 lg:h-32 rounded-full overflow-hidden border-4 border-primary/20 shadow-lg">
+                                      <div className="flex flex-col items-center mb-3 sm:mb-4">
+                                        <div className="relative w-20 h-20 sm:w-24 sm:h-24 lg:w-32 lg:h-32 rounded-full overflow-hidden border-4 border-primary/20 shadow-lg">
                                           <img
                                             src={useCase.title === "HR/Training AI Agent" ? hrTrainingAgentImg : 
                                                  useCase.title === "Room Service AI Agent" ? roomServiceAgentImg : 
@@ -1957,11 +1957,11 @@ const UseCases = () => {
                                           <Button
                                             variant="outline"
                                             size="sm"
-                                            className="w-full flex items-center justify-between px-4 py-2 border-2 rounded-lg hover:bg-muted/50 transition-colors flex-shrink-0"
+                                            className="w-full flex items-center justify-between px-3 sm:px-4 py-2 border-2 rounded-lg hover:bg-primary/10 transition-colors flex-shrink-0 bg-primary/5"
                                             onClick={() => setIsTranscriptVisible(!isTranscriptVisible)}
                                           >
                                             <div className="flex items-center space-x-2">
-                                              <span className="text-sm font-medium">Conversation Transcript</span>
+                                              <span className="text-xs sm:text-sm font-medium">Conversation Transcript</span>
                                               <span className="text-xs text-muted-foreground">
                                                 ({transcripts.length} messages)
                                               </span>
@@ -1976,10 +1976,12 @@ const UseCases = () => {
                                           <div 
                                             ref={transcriptContainerRef}
                                             className={`w-full bg-muted/30 rounded-lg overflow-y-auto scroll-smooth transition-all duration-300 border ${
-                                              isTranscriptVisible ? 'flex-1 opacity-100 p-2 lg:p-4' : 'h-0 opacity-0 overflow-hidden p-0'
+                                              isTranscriptVisible ? 'opacity-100 p-2 sm:p-3 lg:p-4' : 'h-0 opacity-0 overflow-hidden p-0'
                                             }`}
                                             style={{
-                                              maxHeight: isTranscriptVisible ? 'calc(100% - 60px)' : '0px'
+                                              height: isTranscriptVisible ? '200px' : '0px',
+                                              maxHeight: isTranscriptVisible ? '200px' : '0px',
+                                              flexShrink: 0
                                             }}
                                           >
                                             {transcripts.length === 0 && !currentPartial ? (
@@ -2042,24 +2044,24 @@ const UseCases = () => {
                                       </div>
 
                                       {/* Control Buttons - Always at bottom */}
-                                      <div className="flex items-center justify-center space-x-4 pt-4 mt-4 border-t border-border/20 flex-shrink-0">
+                                      <div className="flex items-center justify-center space-x-3 sm:space-x-4 pt-3 sm:pt-4 mt-3 sm:mt-4 border-t border-border/20 flex-shrink-0">
                                         <Button
                                           variant="outline"
                                           size="icon"
                                           onClick={handleInlineMuteToggle}
-                                          className={`h-10 w-10 lg:h-12 lg:w-12 rounded-full ${
+                                          className={`h-12 w-12 sm:h-10 sm:w-10 lg:h-12 lg:w-12 rounded-full ${
                                             isMuted ? 'bg-destructive/10 text-destructive hover:bg-destructive/20' : ''
                                           }`}
                                         >
-                                          {isMuted ? <MicOff className="h-4 w-4 lg:h-5 lg:w-5" /> : <Mic className="h-4 w-4 lg:h-5 lg:w-5" />}
+                                          {isMuted ? <MicOff className="h-5 w-5 sm:h-4 sm:w-4 lg:h-5 lg:w-5" /> : <Mic className="h-5 w-5 sm:h-4 sm:w-4 lg:h-5 lg:w-5" />}
                                         </Button>
                                         <Button
                                           variant="destructive"
                                           size="icon"
                                           onClick={handleInlineEndCall}
-                                          className="h-10 w-10 lg:h-12 lg:w-12 rounded-full"
+                                          className="h-12 w-12 sm:h-10 sm:w-10 lg:h-12 lg:w-12 rounded-full"
                                         >
-                                          <PhoneOff className="h-4 w-4 lg:h-5 lg:w-5" />
+                                          <PhoneOff className="h-5 w-5 sm:h-4 sm:w-4 lg:h-5 lg:w-5" />
                                         </Button>
                                       </div>
                                     </div>
@@ -2082,16 +2084,18 @@ const UseCases = () => {
                                 )
 
                               ) : useCase.title === "Banking: Customer Support Agent" && useCase.industry === "Banking" ? (
-                                <iframe
-                                  src="https://www.youtube.com/embed/qW_nQ5kx8GY"
-                                  title="Banking Customer Service Agent Demo"
-                                  className="w-full h-full"
-                                  frameBorder="0"
-                                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                  allowFullScreen
-                                />
+                                <div className="w-full aspect-video">
+                                  <iframe
+                                    src="https://www.youtube.com/embed/qW_nQ5kx8GY"
+                                    title="Banking Customer Service Agent Demo"
+                                    className="w-full h-full"
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowFullScreen
+                                  />
+                                </div>
                               ) : (
-                                <div className="w-full h-full flex items-center justify-center p-4">
+                                <div className="w-full aspect-video flex items-center justify-center p-4">
                                   <div className="text-center">
                                     <div className="text-3xl sm:text-4xl mb-2">🎥</div>
                                     <p className="text-muted-foreground text-sm sm:text-base">Video demo coming soon</p>
@@ -2104,7 +2108,7 @@ const UseCases = () => {
                             </div>
 
                             <Button 
-                              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-sm sm:text-base py-2 sm:py-3"
+                              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-xs sm:text-sm lg:text-base py-3 sm:py-3 flex-shrink-0"
                               onClick={() => {
                                 const isAIAgent = useCase.title === "Concierge AI Agent" || useCase.title === "HR/Training AI Agent" || useCase.title === "Room Service AI Agent" || useCase.title === "Receptionist AI Agent" || useCase.title === "Sales AI Agent" || useCase.title === "Sales Consultant AI Agent" || useCase.title === "Ecommerce Sales AI Agent";
                                 const hasActiveOrConnectingCall = isCallActive || callStatus === 'connecting';
