@@ -291,6 +291,15 @@ const UseCases = () => {
   const [showDoctorDisplay, setShowDoctorDisplay] = useState(false);
   const [doctors, setDoctors] = useState<any[]>([]);
   
+  // Cart state for Sofia (Ecommerce Sales AI Agent)
+  const [cartItems, setCartItems] = useState<Array<{
+    variantId: string;
+    quantity: number;
+    product: any;
+  }>>([]);
+  const [showCart, setShowCart] = useState(false);
+  const [isCreatingCart, setIsCreatingCart] = useState(false);
+  
   // User data for Vera (you can customize this or make it dynamic)
   const veraUser = {
     firstName: "Demo",
@@ -661,11 +670,24 @@ const UseCases = () => {
                 const shopifyProducts = await searchShopifyProducts(query, category, priceRange, sortBy, limit);
                 
                 if (shopifyProducts.length > 0) {
-                  handleDisplayProducts(shopifyProducts);
+                  // Filter products to only show those with available variants
+                  const availableProducts = shopifyProducts.filter((product: any) => 
+                    product.variants && 
+                    product.variants.length > 0 && 
+                    product.variants.some((variant: any) => variant.available)
+                  );
+                  
+                  handleDisplayProducts(shopifyProducts); // Still store all products for internal use
                   
                   // Let Sofia know products were found
                   if (vapiRef.current) {
-                    vapiRef.current.say(`Great! I found ${shopifyProducts.length} products for "${query}". Let me show them to you.`, false);
+                    if (availableProducts.length === shopifyProducts.length) {
+                      vapiRef.current.say(`Great! I found ${availableProducts.length} products for "${query}". Let me show them to you.`, false);
+                    } else if (availableProducts.length > 0) {
+                      vapiRef.current.say(`I found ${shopifyProducts.length} products for "${query}", but only ${availableProducts.length} are currently in stock. Let me show you what's available.`, false);
+                    } else {
+                      vapiRef.current.say(`I found ${shopifyProducts.length} products for "${query}", but unfortunately none are currently in stock. Would you like to try a different search?`, false);
+                    }
                   }
                 } else {
                   handleDisplayProducts([]);
@@ -684,6 +706,120 @@ const UseCases = () => {
                   vapiRef.current.say("I'm sorry, there was an error searching for products. Let me try a different approach.", false);
                 }
               }
+            }
+
+            // Handle add_to_cart tool call
+            if (toolCall.type === "function" && toolCall.function?.name === "add_to_cart") {
+              console.log('Add to cart tool call received:', toolCall);
+              try {
+                let cartParams;
+                if (typeof toolCall.function?.arguments === 'string') {
+                  cartParams = JSON.parse(toolCall.function.arguments);
+                } else if (typeof toolCall.function?.arguments === 'object') {
+                  cartParams = toolCall.function.arguments;
+                } else {
+                  cartParams = toolCall.arguments || toolCall.function?.arguments || {};
+                }
+                
+                const { product_id, variant_id, quantity = 1 } = cartParams;
+                
+                if (!product_id) {
+                  console.error('No product ID provided for add to cart');
+                  if (vapiRef.current) {
+                    vapiRef.current.say("I need a product ID to add items to your cart. Could you tell me which specific product you'd like?", false);
+                  }
+                  return;
+                }
+                
+                // Find the product in current products array with improved matching
+                const foundProduct = products.find(p => {
+                  const productIdLower = product_id.toLowerCase();
+                  const productName = (p.name || p.title || '').toLowerCase();
+                  const productHandle = (p.handle || '').toLowerCase();
+                  const productType = (p.productType || '').toLowerCase();
+                  const productDescription = (p.description || '').toLowerCase();
+                  
+                  // Exact matches
+                  if (p.id === product_id || p.handle === product_id) {
+                    return true;
+                  }
+                  
+                  // Name/title contains the search term
+                  if (productName.includes(productIdLower) || productIdLower.includes(productName)) {
+                    return true;
+                  }
+                  
+                  // Handle specific keywords for better matching
+                  const keywords = productIdLower.split(/[_\s-]+/);
+                  const nameWords = productName.split(/\s+/);
+                  
+                  // Check if multiple keywords match
+                  const matchingKeywords = keywords.filter((keyword: string) => 
+                    keyword && (
+                      productName.includes(keyword) ||
+                      productType.includes(keyword) ||
+                      productDescription.includes(keyword) ||
+                      productHandle.includes(keyword)
+                    )
+                  );
+                  
+                  // Require at least 2 matching keywords for fuzzy matching
+                  if (matchingKeywords.length >= 2) {
+                    return true;
+                  }
+                  
+                  // Special case for biotin shampoo
+                  if (productIdLower.includes('biotin') && productIdLower.includes('shampoo')) {
+                    return productName.includes('biotin') && productName.includes('shampoo');
+                  }
+                  
+                  return false;
+                });
+                
+                if (foundProduct) {
+                  // Add to cart with the specified variant or default variant
+                  const selectedVariantId = variant_id || (foundProduct.variants && foundProduct.variants[0]?.id);
+                  addToCart(foundProduct, selectedVariantId, quantity);
+                  
+                  if (vapiRef.current) {
+                    vapiRef.current.say(`Perfect! I've added ${foundProduct.name || foundProduct.title} to your cart. You can view your cart anytime or continue shopping.`, false);
+                  }
+                } else {
+                  console.error('Product not found:', product_id);
+                  console.log('Available products:', products.map(p => ({ 
+                    id: p.id, 
+                    name: p.name || p.title, 
+                    handle: p.handle,
+                    type: p.productType 
+                  })));
+                  
+                  if (vapiRef.current) {
+                    const availableProducts = products.map(p => p.name || p.title).join(', ');
+                    vapiRef.current.say(`I couldn't find "${product_id}". Available products are: ${availableProducts}. Which one would you like to add to your cart?`, false);
+                  }
+                }
+                
+              } catch (error) {
+                console.error('Error handling add to cart:', error);
+                if (vapiRef.current) {
+                  vapiRef.current.say("I'm sorry, there was an error adding that item to your cart. Please try again.", false);
+                }
+              }
+            }
+
+            // Handle checkout tool call
+            if (toolCall.type === "function" && toolCall.function?.name === "checkout") {
+              console.log('Checkout tool call received:', toolCall);
+              
+              if (cartItems.length === 0) {
+                if (vapiRef.current) {
+                  vapiRef.current.say("Your cart is empty! Please add some products first, then I can help you checkout.", false);
+                }
+                return;
+              }
+              
+              // Trigger checkout process
+              handleCheckout();
             }
           })();
         }
@@ -965,7 +1101,7 @@ const UseCases = () => {
         const product = edge.node;
         const image = product.images.edges[0]?.node?.url || '';
         const price = product.priceRange?.minVariantPrice?.amount 
-          ? `$${parseFloat(product.priceRange.minVariantPrice.amount).toFixed(2)}`
+          ? `AED${parseFloat(product.priceRange.minVariantPrice.amount).toFixed(2)}`
           : 'Price not available';
         
         return {
@@ -980,7 +1116,7 @@ const UseCases = () => {
           variants: product.variants.edges.map((v: any) => ({
             id: v.node.id,
             title: v.node.title,
-            price: `$${parseFloat(v.node.price.amount).toFixed(2)}`,
+            price: `AED${parseFloat(v.node.price.amount).toFixed(2)}`,
             available: v.node.availableForSale
           }))
         };
@@ -992,6 +1128,249 @@ const UseCases = () => {
     } catch (error) {
       console.error('Error fetching Shopify products:', error);
       return [];
+    }
+  };
+
+  // Create Shopify cart and get checkout URL
+  const createShopifyCart = async (items: Array<{variantId: string; quantity: number}>, buyerEmail?: string) => {
+    try {
+      const shopifyDomain = 'shamelesssophie.myshopify.com';
+      const accessToken = '5dfcb8e99e6e365333db0faa49e3d388';
+      
+      // Build the cart input
+      const cartInput: any = {
+        lines: items.map(item => ({
+          quantity: item.quantity,
+          merchandiseId: item.variantId
+        }))
+      };
+
+      // Add buyer identity if email is provided
+      if (buyerEmail) {
+        cartInput.buyerIdentity = {
+          email: buyerEmail
+        };
+      }
+
+      const cartCreateMutation = `
+        mutation cartCreate($input: CartInput!) {
+          cartCreate(input: $input) {
+            cart {
+              id
+              checkoutUrl
+              lines(first: 10) {
+                edges {
+                  node {
+                    id
+                    quantity
+                    merchandise {
+                      ... on ProductVariant {
+                        id
+                        title
+                        price {
+                          amount
+                          currencyCode
+                        }
+                        product {
+                          title
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              cost {
+                totalAmount {
+                  amount
+                  currencyCode
+                }
+                subtotalAmount {
+                  amount
+                  currencyCode
+                }
+                totalTaxAmount {
+                  amount
+                  currencyCode
+                }
+              }
+            }
+            userErrors {
+              field
+              message
+            }
+          }
+        }
+      `;
+
+      const response = await fetch(`https://${shopifyDomain}/api/2025-07/graphql.json`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Shopify-Storefront-Access-Token': accessToken,
+        },
+        body: JSON.stringify({
+          query: cartCreateMutation,
+          variables: {
+            input: cartInput
+          }
+        })
+      });
+
+      const data = await response.json();
+      
+      if (data.errors) {
+        console.error('GraphQL errors:', data.errors);
+        throw new Error('Failed to create cart');
+      }
+
+      if (data.data.cartCreate.userErrors && data.data.cartCreate.userErrors.length > 0) {
+        console.error('Cart creation errors:', data.data.cartCreate.userErrors);
+        throw new Error(data.data.cartCreate.userErrors[0].message);
+      }
+
+      return {
+        success: true,
+        cart: data.data.cartCreate.cart,
+        checkoutUrl: data.data.cartCreate.cart.checkoutUrl
+      };
+      
+    } catch (error) {
+      console.error('Error creating Shopify cart:', error);
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to create cart'
+      };
+    }
+  };
+
+  // Cart management functions
+  const addToCart = (product: any, variantId?: string, quantity: number = 1, skipVoiceFeedback: boolean = false) => {
+    const selectedVariantId = variantId || (product.variants && product.variants[0]?.id);
+    
+    if (!selectedVariantId) {
+      console.error('No variant ID available for product:', product);
+      return;
+    }
+
+    let newTotalItems = 0;
+    let wasUpdated = false;
+    setCartItems(prevItems => {
+      const existingItemIndex = prevItems.findIndex(item => item.variantId === selectedVariantId);
+      
+      let updatedItems;
+      if (existingItemIndex !== -1) {
+        // Update quantity if item already exists
+        updatedItems = [...prevItems];
+        updatedItems[existingItemIndex].quantity += quantity;
+        wasUpdated = true;
+      } else {
+        // Add new item
+        updatedItems = [...prevItems, {
+          variantId: selectedVariantId,
+          quantity,
+          product
+        }];
+        wasUpdated = false;
+      }
+      
+      // Calculate total items for voice feedback
+      newTotalItems = updatedItems.reduce((total, item) => total + item.quantity, 0);
+      return updatedItems;
+    });
+
+    setShowCart(true);
+    
+    // Provide feedback based on the source
+    if (skipVoiceFeedback) {
+      // Visual feedback for button clicks (console for now, could be a toast notification)
+      console.log(`✅ Added ${product.name || product.title} to cart!`, { 
+        action: wasUpdated ? 'quantity updated' : 'item added',
+        totalItems: newTotalItems 
+      });
+    } else {
+      // Notify Sofia via voice for voice commands
+      if (vapiRef.current) {
+        vapiRef.current.say(`Great! I've added ${product.name || product.title} to your cart. You now have ${newTotalItems} items ready for checkout.`, false);
+      }
+    }
+  };
+
+  const removeFromCart = (variantId: string) => {
+    setCartItems(prevItems => prevItems.filter(item => item.variantId !== variantId));
+  };
+
+  const updateCartQuantity = (variantId: string, quantity: number) => {
+    if (quantity <= 0) {
+      removeFromCart(variantId);
+      return;
+    }
+
+    setCartItems(prevItems => 
+      prevItems.map(item => 
+        item.variantId === variantId 
+          ? { ...item, quantity }
+          : item
+      )
+    );
+  };
+
+  const clearCart = () => {
+    setCartItems([]);
+    setShowCart(false);
+  };
+
+  const getTotalCartItems = () => {
+    return cartItems.reduce((total, item) => total + item.quantity, 0);
+  };
+
+  const getTotalCartPrice = () => {
+    return cartItems.reduce((total, item) => {
+      const price = parseFloat(item.product.price?.replace('AED', '') || '0');
+      return total + (price * item.quantity);
+    }, 0);
+  };
+
+  const handleCheckout = async () => {
+    if (cartItems.length === 0) {
+      if (vapiRef.current) {
+        vapiRef.current.say("Your cart is empty. Please add some products first!", false);
+      }
+      return;
+    }
+
+    setIsCreatingCart(true);
+    
+    try {
+      // Prepare cart items for Shopify
+      const shopifyCartItems = cartItems.map(item => ({
+        variantId: item.variantId,
+        quantity: item.quantity
+      }));
+
+      // Create cart with optional email (you can add email input later)
+      const result = await createShopifyCart(shopifyCartItems, 'customer@example.com');
+      
+      if (result.success && result.checkoutUrl) {
+        // Notify Sofia
+        if (vapiRef.current) {
+          vapiRef.current.say(`Perfect! I've created your cart with ${cartItems.length} items totaling AED${getTotalCartPrice().toFixed(2)}. Opening checkout now!`, false);
+        }
+        
+        // Open checkout URL in new tab
+        window.open(result.checkoutUrl, '_blank');
+        
+        // Clear the cart after successful checkout creation
+        clearCart();
+      } else {
+        throw new Error(result.error || 'Failed to create checkout');
+      }
+    } catch (error) {
+      console.error('Checkout error:', error);
+      if (vapiRef.current) {
+        vapiRef.current.say("Sorry, there was an issue creating your checkout. Please try again.", false);
+      }
+    } finally {
+      setIsCreatingCart(false);
     }
   };
 
@@ -1676,7 +2055,14 @@ const UseCases = () => {
                                             <p className="text-xs lg:text-sm text-muted-foreground mb-3 lg:mb-4 text-center">Here are the products I can help you with:</p>
                                             <div className="w-full space-y-3 overflow-y-auto max-h-[60vh]">
                                               {products.length > 0 ? (
-                                                products.map((product, index) => (
+                                                products
+                                                  .filter(product => {
+                                                    // Only show products that have at least one available variant
+                                                    return product.variants && 
+                                                           product.variants.length > 0 && 
+                                                           product.variants.some((variant: any) => variant.available);
+                                                  })
+                                                  .map((product, index) => (
                                                   <div key={index} className="bg-card border border-border rounded-lg p-3 lg:p-4 hover:shadow-md transition-all duration-200">
                                                     <div className="flex flex-col gap-3 lg:gap-4">
                                                       {(product.image || product.Image) && (
@@ -1723,14 +2109,84 @@ const UseCases = () => {
                                                             </p>
                                                           </div>
                                                         )}
+                                                        
+                                                        {/* Cart Controls for Ecommerce Sales AI Agent */}
+                                                        {useCase.title === "Ecommerce Sales AI Agent" && product.variants && product.variants.length > 0 && (
+                                                          <div className="space-y-3 pt-3 border-t border-border">
+                                                            {/* Variant Selection */}
+                                                            {product.variants.filter((v: any) => v.available).length > 1 && (
+                                                              <div className="space-y-2">
+                                                                <h4 className="text-xs font-semibold text-foreground uppercase tracking-wide">
+                                                                  Choose Option
+                                                                </h4>
+                                                                <div className="flex flex-wrap gap-2">
+                                                                  {product.variants.filter((variant: any) => variant.available).map((variant: any, variantIndex: number) => {
+                                                                    console.log('Variant button for:', {
+                                                                      productName: product.name || product.title,
+                                                                      variantTitle: variant.title,
+                                                                      variantId: variant.id,
+                                                                      available: variant.available,
+                                                                      disabled: !variant.available
+                                                                    });
+                                                                    return (
+                                                                      <Button
+                                                                        key={variantIndex}
+                                                                        size="sm"
+                                                                        variant="outline"
+                                                                        className="h-8 px-3 text-xs"
+                                                                        onClick={() => addToCart(product, variant.id, 1, true)}
+                                                                        disabled={!variant.available}
+                                                                      >
+                                                                        {variant.title} - {variant.price}
+                                                                      </Button>
+                                                                    );
+                                                                  })}
+                                                                </div>
+                                                              </div>
+                                                            )}
+                                                            
+                                                            {/* Add to Cart Button for single variant or default */}
+                                                            <div className="flex gap-2 items-center">
+                                                              <Button
+                                                                size="sm"
+                                                                className="flex-1 h-9"
+                                                                onClick={() => {
+                                                                  const firstAvailableVariant = product.variants.find((v: any) => v.available);
+                                                                  console.log('Add to Cart clicked for product:', {
+                                                                    name: product.name || product.title,
+                                                                    variantId: firstAvailableVariant?.id,
+                                                                    available: firstAvailableVariant?.available,
+                                                                    variants: product.variants
+                                                                  });
+                                                                  addToCart(product, firstAvailableVariant?.id, 1, true);
+                                                                }}
+                                                                disabled={!product.variants.some((v: any) => v.available)}
+                                                              >
+                                                                <ShoppingCart className="h-4 w-4 mr-2" />
+                                                                Add to Cart
+                                                              </Button>
+                                                              {product.variants.filter((v: any) => v.available).length === 1 && (
+                                                                <div className="text-sm font-medium text-foreground">
+                                                                  {product.variants.find((v: any) => v.available)?.price}
+                                                                </div>
+                                                              )}
+                                                            </div>
+                                                          </div>
+                                                        )}
                                                       </div>
                                                     </div>
                                                   </div>
                                                 ))
+                                              ) : products.length > 0 ? (
+                                                <div className="text-center py-6">
+                                                  <div className="text-3xl mb-3">😔</div>
+                                                  <p className="text-sm text-muted-foreground">No products are currently in stock.</p>
+                                                  <p className="text-xs text-muted-foreground mt-2">Try searching for different products.</p>
+                                                </div>
                                               ) : (
                                                 <div className="text-center py-6">
                                                   <div className="text-3xl mb-3">📦</div>
-                                                  <p className="text-sm text-muted-foreground">No products available at the moment.</p>
+                                                  <p className="text-sm text-muted-foreground">No products found for your search.</p>
                                                 </div>
                                               )}
                                             </div>
@@ -1741,6 +2197,110 @@ const UseCases = () => {
                                               size="sm"
                                             >
                                               Close Product Display
+                                            </Button>
+                                          </div>
+                                        )}
+
+                                        {/* Cart Display for Ecommerce Sales AI Agent */}
+                                        {showCart && useCase.title === "Ecommerce Sales AI Agent" && (
+                                          <div className="w-full bg-background/80 rounded-2xl shadow-lg p-3 lg:p-4 flex flex-col items-center h-full overflow-hidden">
+                                            <h2 className="text-lg lg:text-xl font-bold text-primary mb-2 text-center">Shopping Cart</h2>
+                                            <p className="text-xs lg:text-sm text-muted-foreground mb-3 lg:mb-4 text-center">
+                                              {cartItems.length} {cartItems.length === 1 ? 'item' : 'items'} ready for checkout
+                                            </p>
+                                            
+                                            <div className="w-full space-y-2 overflow-y-auto flex-1 min-h-0">
+                                              {cartItems.length > 0 ? (
+                                                cartItems.map((item, index) => (
+                                                  <div key={index} className="bg-card border border-border rounded-lg p-2 flex items-center gap-2">
+                                                    {item.product.image && (
+                                                      <img 
+                                                        src={item.product.image} 
+                                                        alt={item.product.name || item.product.title} 
+                                                        className="w-10 h-10 object-cover rounded-md flex-shrink-0"
+                                                      />
+                                                    )}
+                                                    <div className="flex-1 min-w-0">
+                                                      <h4 className="font-medium text-xs text-foreground truncate">
+                                                        {item.product.name || item.product.title}
+                                                      </h4>
+                                                      <p className="text-xs text-muted-foreground">
+                                                        {item.product.price} × {item.quantity}
+                                                      </p>
+                                                    </div>
+                                                    <div className="flex items-center gap-2 flex-shrink-0">
+                                                      <Button
+                                                        size="sm"
+                                                        variant="outline"
+                                                        className="h-6 w-6 p-0 text-xs"
+                                                        onClick={() => updateCartQuantity(item.variantId, item.quantity - 1)}
+                                                      >
+                                                        -
+                                                      </Button>
+                                                      <span className="text-xs font-medium w-6 text-center">
+                                                        {item.quantity}
+                                                      </span>
+                                                      <Button
+                                                        size="sm"
+                                                        variant="outline"
+                                                        className="h-6 w-6 p-0 text-xs"
+                                                        onClick={() => updateCartQuantity(item.variantId, item.quantity + 1)}
+                                                      >
+                                                        +
+                                                      </Button>
+                                                      <Button
+                                                        size="sm"
+                                                        variant="outline"
+                                                        className="h-6 w-6 p-0 text-destructive hover:text-destructive"
+                                                        onClick={() => removeFromCart(item.variantId)}
+                                                      >
+                                                        <X className="h-3 w-3" />
+                                                      </Button>
+                                                    </div>
+                                                  </div>
+                                                ))
+                                              ) : (
+                                                <div className="text-center py-6">
+                                                  <div className="text-3xl mb-3">🛒</div>
+                                                  <p className="text-sm text-muted-foreground">Your cart is empty</p>
+                                                </div>
+                                              )}
+                                            </div>
+
+                                            {cartItems.length > 0 && (
+                                              <div className="w-full space-y-2 mt-3 pt-3 border-t border-border flex-shrink-0">
+                                                <div className="flex justify-between items-center">
+                                                  <span className="font-semibold text-foreground">Total:</span>
+                                                  <span className="font-bold text-lg text-primary">
+                                                    AED{getTotalCartPrice().toFixed(2)}
+                                                  </span>
+                                                </div>
+                                                <div className="flex gap-2">
+                                                  <Button 
+                                                    onClick={handleCheckout}
+                                                    className="flex-1"
+                                                    disabled={isCreatingCart}
+                                                  >
+                                                    {isCreatingCart ? 'Creating Cart...' : 'Checkout'}
+                                                  </Button>
+                                                  <Button 
+                                                    onClick={clearCart}
+                                                    variant="outline"
+                                                    size="sm"
+                                                  >
+                                                    Clear
+                                                  </Button>
+                                                </div>
+                                              </div>
+                                            )}
+
+                                            <Button 
+                                              onClick={() => setShowCart(false)} 
+                                              className="w-full mt-2 flex-shrink-0"
+                                              variant="outline"
+                                              size="sm"
+                                            >
+                                              Close Cart
                                             </Button>
                                           </div>
                                         )}
@@ -2063,6 +2623,23 @@ const UseCases = () => {
                                         >
                                           <PhoneOff className="h-5 w-5 sm:h-4 sm:w-4 lg:h-5 lg:w-5" />
                                         </Button>
+                                        
+                                        {/* Cart button for Ecommerce Sales AI Agent */}
+                                        {useCase.title === "Ecommerce Sales AI Agent" && (
+                                          <Button
+                                            variant="outline"
+                                            size="icon"
+                                            onClick={() => setShowCart(!showCart)}
+                                            className="h-12 w-12 sm:h-10 sm:w-10 lg:h-12 lg:w-12 rounded-full relative"
+                                          >
+                                            <ShoppingCart className="h-5 w-5 sm:h-4 sm:w-4 lg:h-5 lg:w-5" />
+                                            {cartItems.length > 0 && (
+                                              <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">
+                                                {getTotalCartItems()}
+                                              </span>
+                                            )}
+                                          </Button>
+                                        )}
                                       </div>
                                     </div>
                                   </div>
