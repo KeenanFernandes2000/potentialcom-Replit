@@ -639,6 +639,35 @@ const Voice = () => {
           </div>
         </div>
       </section>
+      {/* Setup Process Section */}
+      <section className="py-16 lg:py-20 bg-background">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Section Header */}
+          <div className="text-center mb-16" data-aos="fade-up">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
+              Get Your AI Voice Agents Live in Seconds
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+              As easy as it looks like! Launch your AI-powered voice automation—fast, seamless and free
+            </p>
+          </div>
+
+          {/* Setup Process Image */}
+          <div className="flex justify-center" data-aos="fade-up" data-aos-delay="200">
+            <div className="relative max-w-5xl w-full">
+              <img
+                src={Voicebot_setup}
+                alt="AI Voice Agent Setup Process - Step by step guide showing how to get your voice agents live in seconds"
+                className="w-full h-auto rounded-2xl shadow-2xl border border-border/20"
+                loading="lazy"
+              />
+              
+              {/* Optional overlay for better visual appeal */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-background/10 via-transparent to-transparent pointer-events-none"></div>
+            </div>
+          </div>
+        </div>
+      </section>
       {/* Statistics Section */}
       <section className="py-16 lg:py-20 bg-gradient-to-b from-background to-muted/20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -888,37 +917,6 @@ const Voice = () => {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-      {/* Setup Process Section */}
-      <section className="py-16 lg:py-20 bg-background">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Section Header */}
-          <div className="text-center mb-16" data-aos="fade-up">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-              Get Your AI Voice Agents Live in Seconds
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              As easy as it looks like! Launch your AI-powered voice automation—fast, seamless and free
-            </p>
-          </div>
-
-          {/* Setup Process Image */}
-          <div className="flex justify-center" data-aos="fade-up" data-aos-delay="200">
-            <div className="relative max-w-5xl w-full">
-              <img
-                src={Voicebot_setup}
-                alt="AI Voice Agent Setup Process - Step by step guide showing how to get your voice agents live in seconds"
-                className="w-full h-auto rounded-2xl shadow-2xl border border-border/20"
-                loading="lazy"
-              />
-              
-              {/* Optional overlay for better visual appeal */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-background/10 via-transparent to-transparent pointer-events-none"></div>
-            </div>
-          </div>
-
-
         </div>
       </section>
       {/* Final CTA Banner Section */}
