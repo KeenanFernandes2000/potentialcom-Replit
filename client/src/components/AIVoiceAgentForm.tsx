@@ -56,7 +56,7 @@ const formSchema = z
     {
       message: "Please enter a valid website URL",
       path: ["website"],
-    }
+    },
   );
 
 type FormData = z.infer<typeof formSchema>;
@@ -127,7 +127,7 @@ export function AIVoiceAgentForm({
       formData.append("email", values.email);
       formData.append("name", values.proposedAgentName);
       const utmMedium = new URLSearchParams(window.location.search).get(
-        "utm_medium"
+        "utm_medium",
       );
       if (utmMedium) {
         formData.append("medium", utmMedium);
@@ -146,7 +146,7 @@ export function AIVoiceAgentForm({
         {
           method: "POST",
           body: formData,
-        }
+        },
       );
 
       if (!response.ok) {
@@ -171,7 +171,7 @@ export function AIVoiceAgentForm({
     } catch (error) {
       console.error("Error creating AI voice agent:", error);
       setError(
-        "Sorry, we couldn't create your agent right now. Please try again later."
+        "Sorry, we couldn't create your agent right now. Please try again later.",
       );
 
       // GTM tracking for voice agent creation failure
@@ -209,7 +209,7 @@ export function AIVoiceAgentForm({
     if (agentData?.assistant?.id) {
       window.open(
         `${import.meta.env.VITE_BASE_URL}/voice/${agentData.assistant.id}`,
-        "_blank"
+        "_blank",
       );
     }
   };
@@ -397,8 +397,8 @@ export function AIVoiceAgentForm({
               disabled={!agentData?.assistant?.id}
               className="w-full gtm-voicebot-form-test-agent"
             >
+              Talk to your AI Agent Now
               <ExternalLink className="mr-2 h-4 w-4" />
-              Test Your Agent Now
             </Button>
           </div>
         )}

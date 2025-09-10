@@ -56,7 +56,7 @@ const formSchema = z
     {
       message: "Please enter a valid website URL",
       path: ["website"],
-    }
+    },
   );
 
 type FormData = z.infer<typeof formSchema>;
@@ -124,7 +124,7 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
       formData.append("email", values.email);
       formData.append("name", values.proposedAgentName);
       const utmMedium = new URLSearchParams(window.location.search).get(
-        "utm_medium"
+        "utm_medium",
       );
       if (utmMedium) {
         formData.append("medium", utmMedium);
@@ -142,7 +142,7 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
         {
           method: "POST",
           body: formData,
-        }
+        },
       );
 
       if (!response.ok) {
@@ -167,7 +167,7 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
     } catch (error) {
       console.error("Error creating AI chatbot:", error);
       setError(
-        "Sorry, we couldn't create your chatbot right now. Please try again later."
+        "Sorry, we couldn't create your chatbot right now. Please try again later.",
       );
 
       // GTM tracking for chatbot creation failure
@@ -205,7 +205,7 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
     if (agentData?.assistantData?._id) {
       window.open(
         `${import.meta.env.VITE_BASE_URL}/chat/${agentData.assistantData._id}`,
-        "_blank"
+        "_blank",
       );
     }
   };
@@ -393,8 +393,8 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
               disabled={!agentData?.assistantData?._id}
               className="w-full gtm-chatbot-form-test-agent"
             >
+              Chat with your AI Agent Now
               <ExternalLink className="mr-2 h-4 w-4" />
-              Test Your Chatbot Now
             </Button>
           </div>
         )}
