@@ -1,0 +1,243 @@
+Create a new webpage called “AI Agent Demo” that follows the same style, header, footer, color scheme, fonts, and animation style as the rest of the Potential.com website.
+
+The page should showcase an interactive AI Agent demo with multiple interfaces (Chat, Voice, Avatar).
+
+🔹 Section 1 — Hero & Agent Interface
+
+Place the Agent at the top of the page, centered in a modern animated container.
+
+The Agent should be named “Tahlia”, an engaging and friendly Australian woman’s name that sounds approachable and confident.
+
+Add a subtitle under her name:
+
+“Your All-in-One AI Assistant — Ready to Talk, Listen, and Act.”
+
+Below the Agent, include three switch buttons allowing users to toggle between interface modes:
+
+Chat 💬
+
+Voice 🎙️
+
+Avatar 🧑‍💻
+
+Each mode should have its own animated container that appears smoothly when clicked.
+
+Chat Interface: modern message bubble design (AI on left, user on right).
+
+Voice Interface: show a circular waveform animation or pulsing mic visual.
+
+Avatar Interface: display a talking 3D or video-style avatar (female, Australian accent theme, warm tone).
+
+First Message displayed automatically in all 3 interfaces:
+
+“Assume you are:”
+
+Under that message, display buttons for each use case, which when clicked, will send the corresponding prompt to the Agent and start the conversation.
+Use these buttons (from the document):
+
+🛍️ E-Commerce & Shopping Assistant
+
+💼 Sales & Marketing Agent
+
+🎓 Learning Concierge
+
+🏥 Clinic & Hospital Assistant
+
+👩‍💼 HR & People Assistant
+
+Make the buttons attractive (rounded, gradient hover, icon on left, micro animation on click).
+
+Ensure transitions between Chat / Voice / Avatar modes are smooth and use fade or slide animations.
+
+The background should feel futuristic yet minimal — use soft gradients or subtle particle animation.
+
+🔹 Section 2 — Use Cases & Agentic Actions
+
+Under the Agent, create a section titled “What Tahlia Can Do”.
+
+This section should present all the Use Cases, Agentic Actions, and Sample Prompts from the document in an interactive and visually engaging layout.
+
+Use accordion cards, flip cards, or tabbed panels for each use case.
+
+Each card should include:
+
+The use case title and icon
+
+A short tagline (as provided)
+
+A list of Agentic Actions (use the bullet points from the document)
+
+A small “🗣️ Try Asking” area with sample prompts in bubble-style tooltips or minimal chat boxes.
+
+Ensure icons and emojis are consistent with your brand style (modern, flat, and expressive).
+
+Here are the full contents for this section (copy directly from document):
+
+🛍️ E-Commerce & Shopping Assistant
+
+Your 24/7 virtual store expert — helping users discover, shop, and manage orders effortlessly.
+
+Recommend personalized products instantly
+
+Recognize and suggest products from uploaded or taken images
+
+Update or track orders in real-time
+
+Change shipping address before delivery
+
+Add items directly to cart or checkout
+
+Share exclusive offers and discount codes
+Try Asking:
+
+“Where is my order?”
+
+“Change my delivery address to Dubai Marina.”
+
+“Cancel order #4521.”
+
+“What foundation brands do you have?”
+
+“Find similar shoes to this photo.”
+
+💼 Sales & Marketing Agent
+
+Your AI-powered sales rep — closing deals, nurturing leads, and even creating new AI Agents on the fly.
+
+Build new AI Agents
+
+Book product demos or sales calls
+
+Send follow-up emails or marketing materials
+
+Add and update leads in CRM systems
+
+Share promotions, bundles, or limited offers
+
+Upsell and cross-sell smartly
+
+Handle client inquiries or FAQs with precision
+Try Asking:
+
+“Create an AI Chatbot for my restaurant.”
+
+“I want to build an AI Voice Agent for my business.”
+
+“Book a meeting with a human sales expert.”
+
+“What do you recommend for my company?”
+
+“Send me your company profile.”
+
+🎓 Learning Concierge
+
+A personal learning guide that tracks your progress and accelerates your growth.
+
+Check learner progress and completion rate
+
+Suggest the next best course or module
+
+Connect learners with mentors or coaches
+
+Share program milestones and certificates
+Try Asking:
+
+“What’s my progress in the AI Upskilling Program?”
+
+“Recommend the next course for me.”
+
+“Connect me to a mentor.”
+
+“When is my next workshop?”
+
+🏥 Clinic & Hospital Assistant
+
+Your AI receptionist — booking, guiding, and caring for patients anytime, anywhere.
+
+Book, reschedule, or cancel appointments instantly
+
+Suggest the right doctor based on symptoms
+
+Show service availability
+
+Share service options and prices
+
+Provide directions, contact info, and opening hours
+
+Send confirmations via WhatsApp or email
+Try Asking:
+
+“I feel sick and don’t know which doctor to see.”
+
+“Book a consultation with a doctor.”
+
+“Do you accept MetLife insurance?”
+
+“What are your opening hours?”
+
+👩‍💼 HR & People Assistant
+
+Your intelligent HR partner — helping you hire, onboard, and grow your team with ease.
+
+Conduct pre-screening interviews
+
+Score and summarize candidate responses automatically
+
+Guide new hires through onboarding and training
+
+Explain HR policies, benefits, and procedures
+
+Set individual and department KPIs
+
+Provide feedback and performance reviews
+
+Answer FAQs about leaves, payroll, or documents
+
+Display or send documents via email
+Try Asking:
+
+“I’m here for the Marketing Manager interview.”
+
+“Ask me 3 questions to test marketing skills.”
+
+“What’s our leave policy?”
+
+“Help me set my KPIs for this year.”
+
+Make the section interactive with hover animations, icons, and slight motion (fade-in or slide-up).
+
+🔹 Section 3 — Integrations
+
+Title: “Connected with Your Tools”
+
+Subtitle: Integrate once. Empower everywhere.
+
+Create a logo grid or carousel with light animation (hover glow or tilt).
+
+Use logos for:
+
+E-Commerce: Shopify, WooCommerce, Stripe, PayPal
+
+Sales & CRM: HubSpot, Salesforce, Calendly, Mailchimp, WhatsApp Business
+
+Clinic: Amwell, Doctolib, Twilio, Google Maps
+
+HR: BambooHR, Workday, Zoho People, Microsoft Teams, Slack
+
+Learning: Potential.com, Moodle, TalentLMS, Google Sheets, Airtable
+
+Automation: Zapier, Make (Integromat), Notion, AWS, Azure, Google Cloud
+
+Make this section visually unified with light gradients and subtle scrolling animation.
+
+🔹 Design Guidelines
+
+Maintain the same header, footer, and color scheme as the main site.
+
+Use soft animations: fade-ins, floating icons, button hover glow, avatar lip-sync for Voice/Avatar mode.
+
+Ensure the design is fully responsive for desktop and mobile.
+
+Include a subtle “scroll to next section” indicator under the Agent.
+
+Keep performance optimized (lazy load heavy assets like the Avatar).
