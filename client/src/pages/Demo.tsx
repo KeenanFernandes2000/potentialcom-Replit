@@ -426,30 +426,18 @@ const Demo = () => {
   ];
 
   const integrations = [
-    {
-      category: "E-Commerce",
-      logos: ["Shopify", "WooCommerce", "Stripe", "PayPal"],
-    },
-    {
-      category: "Sales & CRM",
-      logos: ["HubSpot", "Salesforce", "Calendly", "Mailchimp", "WhatsApp Business"],
-    },
-    {
-      category: "Clinic",
-      logos: ["Amwell", "Doctolib", "Twilio", "Google Maps"],
-    },
-    {
-      category: "HR",
-      logos: ["BambooHR", "Workday", "Zoho People", "Microsoft Teams", "Slack"],
-    },
-    {
-      category: "Learning",
-      logos: ["Potential.com", "Moodle", "TalentLMS", "Google Sheets", "Airtable"],
-    },
-    {
-      category: "Automation",
-      logos: ["Zapier", "Make", "Notion", "AWS", "Azure", "Google Cloud"],
-    },
+    "Shopify",
+    "Stripe",
+    "HubSpot",
+    "Salesforce",
+    "Calendly",
+    "Twilio",
+    "Slack",
+    "Microsoft Teams",
+    "Zapier",
+    "Make",
+    "AWS",
+    "Google Cloud",
   ];
 
   return (
@@ -611,25 +599,20 @@ const Demo = () => {
             </p>
           </div>
 
-          <div className="space-y-8" data-aos="fade-up" data-aos-delay="100">
-            {integrations.map((category, idx) => (
-              <div key={idx} className="bg-card border border-border rounded-xl p-6">
-                <h3 className="text-lg font-semibold mb-4 text-primary">
-                  {category.category}
-                </h3>
-                <div className="flex flex-wrap gap-4">
-                  {category.logos.map((logo, logoIdx) => (
-                    <div
-                      key={logoIdx}
-                      className="bg-muted/50 px-6 py-3 rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer group"
-                      data-testid={`integration-${category.category}-${logoIdx}`}
-                    >
-                      <span className="text-foreground/80 group-hover:text-foreground font-medium">
-                        {logo}
-                      </span>
-                    </div>
-                  ))}
-                </div>
+          <div 
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-4xl mx-auto" 
+            data-aos="fade-up" 
+            data-aos-delay="100"
+          >
+            {integrations.map((logo, idx) => (
+              <div
+                key={idx}
+                className="bg-card border border-border rounded-xl p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer group flex items-center justify-center"
+                data-testid={`integration-${idx}`}
+              >
+                <span className="text-foreground/80 group-hover:text-primary font-medium text-center">
+                  {logo}
+                </span>
               </div>
             ))}
           </div>
