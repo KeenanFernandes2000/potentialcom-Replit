@@ -97,6 +97,8 @@ This is a modern full-stack web application for Potential.com, an AI agents plat
 - CDN integration for static assets
 
 ## Changelog
+- October 27, 2025. Updated Demo page "What Ruby Can Do" section with beauty & cosmetics industry use cases focused on Alora Brands (Shopping, Booking Experts, Learning Courses, HR & Career, Customer Support, System Automation)
+- October 27, 2025. Replaced integrations text with actual brand logos using react-icons (Shopify, Stripe, HubSpot, Salesforce, Mailchimp, Twilio, Slack, Zapier, Notion, AWS, Google Cloud)
 - October 27, 2025. Created interactive AI Agent Demo page at /demo featuring Ruby with Chat, Voice, and Avatar interfaces, comprehensive use case showcases, and integrations display
 - July 4, 2025. Added hyperlink functionality to footer logo linking to home page across all website pages
 - July 4, 2025. Fixed AI agent images deployment issue with proper static file serving for production

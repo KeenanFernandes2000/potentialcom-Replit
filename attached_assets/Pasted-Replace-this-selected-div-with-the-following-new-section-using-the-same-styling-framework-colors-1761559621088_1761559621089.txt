@@ -1,0 +1,146 @@
+Replace this selected <div> with the following new section, using the same styling framework, colors, and animations as the rest of the page.
+
+The section title should be:
+“What Ruby Can Do”
+
+Subtitle:
+Your smart beauty companion connected to Alora Brands
+ — ready to help customers shop, learn, book, and grow.
+
+Use a clean responsive layout — ideally a 2-column grid or stacked cards on mobile, with icons and soft hover animations.
+
+Each category below should appear as a card or accordion with the category title, list of “Agentic Actions,” and sample prompts labeled “🗣️ Try Asking.”
+
+Make sure icons (like 🛍️, 💄, 🎓, 👩‍💼, 💌, ⚙️) appear beside each category title.
+
+Add subtle animations such as fade-in on scroll and hover elevation for cards.
+
+Use this exact content:
+
+🛍️ Shopping & Product Assistance
+
+Agentic Actions:
+
+Recommend personalized products instantly
+
+Recognize and suggest products from uploaded images
+
+Recognize and suggest products from taken pictures
+
+Add items to cart directly
+
+Track orders
+
+Update orders in real-time
+
+Change shipping address before delivery
+
+Cancel orders
+
+Share exclusive offers and discount codes
+
+🗣️ Try Asking:
+
+“I have oily skin, what products do you recommend?”
+
+“Here is a photo of my face, which foundation and shade do you recommend?”
+
+“Where is my order?”
+
+“What discounts are available today?”
+
+💄 Book Skincare Experts & Makeup Artists
+
+Agentic Actions:
+
+Show and recommend available experts (with images, names, and specialties)
+
+Book or reschedule appointments
+
+Send confirmation via email or WhatsApp
+
+Share consultation prices and service options
+
+🗣️ Try Asking:
+
+“I have a lot of black dots on my face and want to consult a skincare expert. Who do you recommend?”
+
+“Who’s available this weekend for bridal makeup?”
+
+“Show me your top skincare experts.”
+
+“How much is a full glam session?”
+
+“Send me the booking confirmation on WhatsApp.”
+
+🎓 Learning & Beauty Courses
+
+Agentic Actions:
+
+Share available makeup and skincare courses
+
+Track learner progress and completion
+
+Recommend the next lesson or topic
+
+Share certifications and event schedules
+
+🗣️ Try Asking:
+
+“What courses do you offer about skincare?”
+
+“What is my progress to get the Makeup Artist Certification?”
+
+“Recommend what I should learn next.”
+
+“Email me my course certificate.”
+
+👩‍💼 HR & Career at Alora
+
+Agentic Actions:
+
+Display open job positions
+
+Conduct pre-screening interview questions
+
+Evaluate candidate responses and provide a score
+
+Explain company culture and benefits
+
+🗣️ Try Asking:
+
+“Are there any open jobs at Alora?”
+
+“Interview me for the Marketing Manager role.”
+
+“Tell me about Alora’s work culture.”
+
+💌 Customer Support & Engagement
+
+Agentic Actions:
+
+Answer FAQs (returns, shipping, product ingredients)
+
+Handle returns and refund requests
+
+Connect to human support when needed
+
+🗣️ Try Asking:
+
+“I received the wrong shade — how do I return it?”
+
+“Do you test your products on animals?”
+
+“Can I return my order and get a refund?”
+
+⚙️ System & Automation
+
+Agentic Actions:
+
+Build new AI Agents
+
+🗣️ Try Asking:
+
+“I want to create an AI Chatbot for my business.”
+
+“I want to create an AI Voice Agent for my business.”
