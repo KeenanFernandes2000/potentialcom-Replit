@@ -47,6 +47,11 @@ const Demo = () => {
         text: "Assume you are:",
       },
     ]);
+
+    // Refresh AOS animations on page load
+    if (typeof window !== "undefined" && (window as any).AOS) {
+      (window as any).AOS.refresh();
+    }
   }, []);
 
   const handleUseCaseClick = (prompt: string, useCase: string) => {
