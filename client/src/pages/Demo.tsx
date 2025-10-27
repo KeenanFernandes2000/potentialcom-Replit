@@ -18,6 +18,19 @@ import {
   ChevronDown,
   Check
 } from "lucide-react";
+import {
+  SiShopify,
+  SiStripe,
+  SiHubspot,
+  SiSalesforce,
+  SiTwilio,
+  SiSlack,
+  SiZapier,
+  SiNotion,
+  SiAmazon,
+  SiGooglecloud,
+  SiMailchimp,
+} from "react-icons/si";
 import { 
   Accordion,
   AccordionContent,
@@ -426,18 +439,17 @@ const Demo = () => {
   ];
 
   const integrations = [
-    "Shopify",
-    "Stripe",
-    "HubSpot",
-    "Salesforce",
-    "Calendly",
-    "Twilio",
-    "Slack",
-    "Microsoft Teams",
-    "Zapier",
-    "Make",
-    "AWS",
-    "Google Cloud",
+    { name: "Shopify", icon: SiShopify },
+    { name: "Stripe", icon: SiStripe },
+    { name: "HubSpot", icon: SiHubspot },
+    { name: "Salesforce", icon: SiSalesforce },
+    { name: "Mailchimp", icon: SiMailchimp },
+    { name: "Twilio", icon: SiTwilio },
+    { name: "Slack", icon: SiSlack },
+    { name: "Zapier", icon: SiZapier },
+    { name: "Notion", icon: SiNotion },
+    { name: "AWS", icon: SiAmazon },
+    { name: "Google Cloud", icon: SiGooglecloud },
   ];
 
   return (
@@ -604,17 +616,21 @@ const Demo = () => {
             data-aos="fade-up" 
             data-aos-delay="100"
           >
-            {integrations.map((logo, idx) => (
-              <div
-                key={idx}
-                className="bg-card border border-border rounded-xl p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer group flex items-center justify-center"
-                data-testid={`integration-${idx}`}
-              >
-                <span className="text-foreground/80 group-hover:text-primary font-medium text-center">
-                  {logo}
-                </span>
-              </div>
-            ))}
+            {integrations.map((integration, idx) => {
+              const IconComponent = integration.icon;
+              return (
+                <div
+                  key={idx}
+                  className="bg-card border border-border rounded-xl p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group flex flex-col items-center justify-center gap-3"
+                  data-testid={`integration-${idx}`}
+                >
+                  <IconComponent className="text-4xl text-foreground/70 group-hover:text-primary transition-colors" />
+                  <span className="text-xs text-muted-foreground text-center">
+                    {integration.name}
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
