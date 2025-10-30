@@ -928,7 +928,7 @@ const UseCases = () => {
     formData.append("source", window.location.href);
     
     try {
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/bot/createsimplechatbot`, { 
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/bot/createsimplechatbot`, { 
         method: "POST", 
         body: formData 
       });
@@ -970,7 +970,7 @@ const UseCases = () => {
     formData.append("image", "potential-default-voice.png");
     
     try {
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/vapi/simpleassistant`, { 
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/vapi/simpleassistant`, { 
         method: "POST", 
         body: formData 
       });

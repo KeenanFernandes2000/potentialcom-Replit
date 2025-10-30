@@ -412,7 +412,7 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
     }
     formData.append("source", window.location.href);
     try {
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/bot/createsimplechatbot`, { method: "POST", body: formData });
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/bot/createsimplechatbot`, { method: "POST", body: formData });
       const data = await response.json();
       stopWaitingMessages();
       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -468,7 +468,7 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
     }
     formData.append("source", window.location.href);
     try {
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/vapi/simpleassistant`, { method: "POST", body: formData });
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/vapi/simpleassistant`, { method: "POST", body: formData });
       const data = await response.json();
       stopWaitingMessages();
       await new Promise(resolve => setTimeout(resolve, 1000));

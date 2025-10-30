@@ -142,7 +142,7 @@ export function AIVoiceAgentForm({
       formData.append("image", "potential-default-voice.png");
 
       const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/vapi/simpleassistant`,
+        `${import.meta.env.VITE_API_URL}/api/vapi/simpleassistant`,
         {
           method: "POST",
           body: formData,
