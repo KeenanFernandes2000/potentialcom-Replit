@@ -65,6 +65,52 @@ const Demo = () => {
     if (typeof window !== "undefined" && (window as any).AOS) {
       (window as any).AOS.refresh();
     }
+
+    // Load Ruby chat embed script only once on component mount
+    // Check if script is already loaded
+    const existingScript = document.querySelector('script[src="https://ai.potential.com/static/embed/ruby-section.js"]');
+    
+    if (!existingScript) {
+      console.log("Loading Ruby chat embed script...");
+      
+      // First script: Load the embed library
+      const embedScript = document.createElement('script');
+      embedScript.src = 'https://ai.potential.com/static/embed/ruby-section.js';
+      embedScript.charset = 'utf-8';
+      embedScript.type = 'text/javascript';
+      embedScript.crossOrigin = 'anonymous';
+      embedScript.id = 'ruby-embed-script';
+      
+      embedScript.onload = () => {
+        console.log("Ruby chat embed script loaded");
+        
+        // Second script: Initialize the chat
+        const initScript = document.createElement('script');
+        initScript.type = 'text/javascript';
+        initScript.id = 'ruby-embed-init';
+        initScript.text = `
+          chatembed({
+            botId: "69008a08a7cc3cda2022e07f",
+            botIcon: "https://api.potential.com/static/mentors/Ruby-1761643015937-WhatsAppImage2025-05-09at2.10.10PM.jpeg",
+            botColor: "#8b5cf6",
+            botName: "Ruby",
+            divPlacement: "potchat",
+            theme: "auto",
+          });
+        `;
+        
+        document.body.appendChild(initScript);
+        console.log("Chat embed initialization script added");
+      };
+      
+      embedScript.onerror = () => {
+        console.error("Failed to load Ruby chat embed script");
+      };
+      
+      document.body.appendChild(embedScript);
+    } else {
+      console.log("Ruby chat embed script already loaded");
+    }
   }, []);
 
   const handleUseCaseClick = (prompt: string, useCase: string) => {
@@ -144,78 +190,6 @@ const Demo = () => {
       prompt: "Let me help you with HR and people management!",
     },
   ];
-
-  const renderChatInterface = () => (
-    <div className="w-full max-w-3xl mx-auto bg-card border border-border rounded-2xl shadow-lg overflow-hidden">
-      {/* Chat header */}
-      <div className="bg-primary/10 border-b border-border px-6 py-4">
-        <h3 className="font-semibold text-foreground">Chat with Ruby</h3>
-      </div>
-
-      {/* Messages */}
-      <div className="h-96 overflow-y-auto p-6 space-y-4">
-        {messages.map((msg, idx) => (
-          <div
-            key={idx}
-            className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-          >
-            <div
-              className={`max-w-[70%] rounded-2xl px-4 py-3 ${
-                msg.role === "user"
-                  ? "bg-primary text-primary-foreground ml-auto"
-                  : "bg-muted text-foreground"
-              }`}
-            >
-              {msg.text}
-            </div>
-          </div>
-        ))}
-
-        {/* Use case buttons - shown after initial message */}
-        {messages.length === 1 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4">
-            {useCases.map((useCase, idx) => (
-              <Button
-                key={idx}
-                variant="outline"
-                className="justify-start h-auto py-3 px-4 hover:bg-primary/10 hover:border-primary transition-all duration-300 group"
-                onClick={() => handleUseCaseClick(useCase.prompt, useCase.label)}
-                data-testid={`button-usecase-${idx}`}
-              >
-                <span className="text-2xl mr-3 group-hover:scale-110 transition-transform">
-                  {useCase.emoji}
-                </span>
-                <span className="text-left text-sm font-medium">{useCase.label}</span>
-              </Button>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Input */}
-      <div className="border-t border-border p-4 bg-muted/30">
-        <div className="flex gap-2">
-          <input
-            type="text"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
-            placeholder="Type your message..."
-            className="flex-1 px-4 py-2 rounded-full border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
-            data-testid="input-chat-message"
-          />
-          <Button
-            onClick={handleSendMessage}
-            className="rounded-full bg-primary hover:bg-primary/90"
-            size="icon"
-            data-testid="button-send-message"
-          >
-            <Send className="h-4 w-4" />
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
 
   const renderVoiceInterface = () => (
     <div className="w-full max-w-3xl mx-auto">
@@ -512,9 +486,11 @@ const Demo = () => {
             </Button>
           </div>
 
+          {/* Chat embed - always rendered but hidden when not active */}
+          <div id="potchat" className="w-full min-h-[500px] max-w-3xl mx-auto" style={{ display: activeMode === "chat" ? "block" : "none" }} data-aos="fade-up" data-aos-delay="200"></div>
+          
           {/* Interface rendering */}
           <div data-aos="fade-up" data-aos-delay="200">
-            {activeMode === "chat" && renderChatInterface()}
             {activeMode === "voice" && renderVoiceInterface()}
             {activeMode === "avatar" && renderAvatarInterface()}
           </div>
