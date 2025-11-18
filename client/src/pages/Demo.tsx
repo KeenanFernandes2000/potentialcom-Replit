@@ -343,7 +343,7 @@ const Demo = () => {
         "Step 3 — Visual Product Suggestions",
         '"Ruby, can you recommend products similar to the one in this picture?"',
         "Step 5 — Track My Order",
-        '"Where is my order? I want to track its delivery status."',
+        '"Where is my order? I want to track the delivery status. My order number is #2099 and my email address is karen_3kl@outlook.com"',
         "Step 6 — Discounts",
         '"Are there any discount coupons available for me?"',
       ],
