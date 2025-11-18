@@ -4,20 +4,20 @@ import Footer from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { VoiceControlPanel } from "@/components/VoiceControlPanel";
-import { 
-  MessageCircle, 
-  Mic, 
-  User, 
-  ShoppingCart, 
-  Briefcase, 
-  GraduationCap, 
-  Hospital, 
+import {
+  MessageCircle,
+  Mic,
+  User,
+  ShoppingCart,
+  Briefcase,
+  GraduationCap,
+  Hospital,
   Users,
   Send,
   Play,
   Pause,
   ChevronDown,
-  Check
+  Check,
 } from "lucide-react";
 import {
   SiShopify,
@@ -32,7 +32,7 @@ import {
   SiGooglecloud,
   SiMailchimp,
 } from "react-icons/si";
-import { 
+import {
   Accordion,
   AccordionContent,
   AccordionItem,
@@ -88,26 +88,28 @@ const Demo = () => {
 
     // Load Ruby chat embed script only once on component mount
     // Check if script is already loaded
-    const existingScript = document.querySelector('script[src="https://ai.potential.com/static/embed/ruby-section.js"]');
-    
+    const existingScript = document.querySelector(
+      'script[src="https://ai.potential.com/static/embed/ruby-section.js"]',
+    );
+
     if (!existingScript) {
       console.log("Loading Ruby chat embed script...");
-      
+
       // First script: Load the embed library
-      const embedScript = document.createElement('script');
-      embedScript.src = 'https://ai.potential.com/static/embed/ruby-section.js';
-      embedScript.charset = 'utf-8';
-      embedScript.type = 'text/javascript';
-      embedScript.crossOrigin = 'anonymous';
-      embedScript.id = 'ruby-embed-script';
-      
+      const embedScript = document.createElement("script");
+      embedScript.src = "https://ai.potential.com/static/embed/ruby-section.js";
+      embedScript.charset = "utf-8";
+      embedScript.type = "text/javascript";
+      embedScript.crossOrigin = "anonymous";
+      embedScript.id = "ruby-embed-script";
+
       embedScript.onload = () => {
         console.log("Ruby chat embed script loaded");
-        
+
         // Second script: Initialize the chat
-        const initScript = document.createElement('script');
-        initScript.type = 'text/javascript';
-        initScript.id = 'ruby-embed-init';
+        const initScript = document.createElement("script");
+        initScript.type = "text/javascript";
+        initScript.id = "ruby-embed-init";
         initScript.text = `
           chatembed({
             botId: "69008a08a7cc3cda2022e07f",
@@ -118,15 +120,15 @@ const Demo = () => {
             theme: "auto",
           });
         `;
-        
+
         document.body.appendChild(initScript);
         console.log("Chat embed initialization script added");
       };
-      
+
       embedScript.onerror = () => {
         console.error("Failed to load Ruby chat embed script");
       };
-      
+
       document.body.appendChild(embedScript);
     } else {
       console.log("Ruby chat embed script already loaded");
@@ -136,14 +138,14 @@ const Demo = () => {
   const handleUseCaseClick = (prompt: string, useCase: string) => {
     // Add user message
     setMessages((prev) => [...prev, { role: "user", text: useCase }]);
-    
+
     // Simulate agent response after a delay
     setTimeout(() => {
       setMessages((prev) => [
         ...prev,
-        { 
-          role: "agent", 
-          text: `Great! I'm now acting as your ${useCase}. ${prompt}` 
+        {
+          role: "agent",
+          text: `Great! I'm now acting as your ${useCase}. ${prompt}`,
         },
       ]);
     }, 1000);
@@ -151,17 +153,17 @@ const Demo = () => {
 
   const handleSendMessage = () => {
     if (!inputValue.trim()) return;
-    
+
     setMessages((prev) => [...prev, { role: "user", text: inputValue }]);
     setInputValue("");
-    
+
     // Simulate agent response
     setTimeout(() => {
       setMessages((prev) => [
         ...prev,
-        { 
-          role: "agent", 
-          text: "I understand! Let me help you with that." 
+        {
+          role: "agent",
+          text: "I understand! Let me help you with that.",
         },
       ]);
     }, 1000);
@@ -331,33 +333,35 @@ const Demo = () => {
       id: "shopping",
       emoji: "🛍️",
       title: "Shopping & Product Assistance",
-      tagline: "Personalized product discovery, image recognition, and seamless order management.",
+      tagline:
+        "Personalized product discovery, image recognition, and seamless order management.",
       actions: [
         "Step 1 — Discover Products",
-        "\"Hey Ruby, can you show me some great lipsticks I can buy?\"",
+        '"Hey Ruby, can you show me some great lipsticks I can buy?"',
         "Step 2 — Add to Cart",
-        "\"I love the [product name] you suggested. Please add it to my cart.\"",
+        '"I love the [product name] you suggested. Please add it to my cart."',
         "Step 3 — Visual Product Suggestions",
-        "\"Ruby, can you recommend products similar to the one in this picture?\"",
+        '"Ruby, can you recommend products similar to the one in this picture?"',
         "Step 5 — Track My Order",
-        "\"Where is my order? I want to track its delivery status.\"",
+        '"Where is my order? I want to track its delivery status."',
         "Step 6 — Discounts",
-        "\"Are there any discount coupons available for me?\"",
+        '"Are there any discount coupons available for me?"',
       ],
     },
     {
       id: "booking",
       emoji: "💄",
       title: "Book Skincare Experts & Makeup Artists",
-      tagline: "Connect with beauty professionals and schedule consultations effortlessly.",
+      tagline:
+        "Connect with beauty professionals and schedule consultations effortlessly.",
       actions: [
         "Step 1: Discover Experts",
-        "\"I have an upcoming event and need a makeup expert.\"",
-        "\"Can you show me some skilled skincare experts?\"",
+        '"I have an upcoming event and need a makeup expert."',
+        '"Can you show me some skilled skincare experts?"',
         "Step 2: Check Consultation Prices",
-        "\"How much does [Expert Name] charge?\"",
+        '"How much does [Expert Name] charge?"',
         "Step 3: Book an Appointment",
-        "\"I'd like to book an appointment with [Expert Name].\"",
+        '"I\'d like to book an appointment with [Expert Name]."',
       ],
     },
     // {
@@ -399,10 +403,11 @@ const Demo = () => {
       id: "support",
       emoji: "💌",
       title: "Customer Support & Engagement",
-      tagline: "Quick answers to FAQs, hassle-free returns, and seamless escalation to human support.",
+      tagline:
+        "Quick answers to FAQs, hassle-free returns, and seamless escalation to human support.",
       actions: [
-        "\"I received the wrong shade — how do I return it?\"",
-        "\"Do you test your products on animals?\"",
+        '"I received the wrong shade — how do I return it?"',
+        '"Do you test your products on animals?"',
       ],
     },
     // {
@@ -461,7 +466,11 @@ const Demo = () => {
           </div>
 
           {/* Mode toggles */}
-          <div className="flex justify-center gap-4 mb-12" data-aos="fade-up" data-aos-delay="100">
+          <div
+            className="flex justify-center gap-4 mb-12"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
             <Button
               variant={activeMode === "chat" ? "default" : "outline"}
               onClick={() => setActiveMode("chat")}
@@ -492,8 +501,14 @@ const Demo = () => {
           </div>
 
           {/* Chat embed - always rendered but hidden when not active */}
-          <div id="potchat" className="w-full min-h-[500px] max-w-3xl mx-auto" style={{ display: activeMode === "chat" ? "block" : "none" }} data-aos="fade-up" data-aos-delay="200"></div>
-          
+          <div
+            id="potchat"
+            className="w-full min-h-[500px] max-w-3xl mx-auto"
+            style={{ display: activeMode === "chat" ? "block" : "none" }}
+            data-aos="fade-up"
+            data-aos-delay="200"
+          ></div>
+
           {/* Interface rendering */}
           <div data-aos="fade-up" data-aos-delay="200">
             {activeMode === "voice" && renderVoiceInterface()}
@@ -515,11 +530,16 @@ const Demo = () => {
               What <span className="gradient-text">Ruby</span> Can Do
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Your smart beauty companion connected to Alora Brands — ready to help customers shop, learn, book, and grow.
+              Your smart beauty companion connected to Alora Brands — ready to
+              help customers shop, learn, book, and grow.
             </p>
           </div>
 
-          <div className="max-w-5xl mx-auto space-y-4" data-aos="fade-up" data-aos-delay="100">
+          <div
+            className="max-w-5xl mx-auto space-y-4"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
             <Accordion type="single" collapsible className="space-y-4">
               {detailedUseCases.map((useCase, idx) => (
                 <AccordionItem
@@ -531,7 +551,9 @@ const Demo = () => {
                     <div className="flex items-center gap-4 text-left">
                       <span className="text-4xl">{useCase.emoji}</span>
                       <div>
-                        <h3 className="text-xl font-semibold">{useCase.title}</h3>
+                        <h3 className="text-xl font-semibold">
+                          {useCase.title}
+                        </h3>
                         <p className="text-sm text-muted-foreground mt-1">
                           {useCase.tagline}
                         </p>
@@ -544,31 +566,50 @@ const Demo = () => {
                       <div>
                         <h4 className="font-semibold mb-3 flex items-center gap-2">
                           <Check className="h-5 w-5 text-primary" />
-                          {useCase.id === "shopping" || useCase.id === "booking" || useCase.id === "support" ? "Quick Action Guide" : "Agentic Actions"}
+                          {useCase.id === "shopping" ||
+                          useCase.id === "booking" ||
+                          useCase.id === "support"
+                            ? "Quick Action Guide"
+                            : "Agentic Actions"}
                         </h4>
-                        {useCase.id === "shopping" || useCase.id === "booking" || useCase.id === "support" ? (
+                        {useCase.id === "shopping" ||
+                        useCase.id === "booking" ||
+                        useCase.id === "support" ? (
                           <div className="space-y-2 ml-7">
                             {useCase.actions.map((action, actionIdx) => {
                               // Check if this is a step header (starts with "Step")
                               const isStepHeader = action.startsWith("Step");
                               // Check if this is a quoted prompt (starts with quote)
-                              const isQuotedPrompt = action.startsWith("\"") || action.startsWith("'");
+                              const isQuotedPrompt =
+                                action.startsWith('"') ||
+                                action.startsWith("'");
                               // Check if this is a prompt with prefix (Prompt A:, Prompt B:, Prompt:)
-                              const isPromptWithPrefix = /^(Prompt [A-Z]:|Prompt:)/.test(action);
-                              
+                              const isPromptWithPrefix =
+                                /^(Prompt [A-Z]:|Prompt:)/.test(action);
+
                               if (isStepHeader) {
                                 return (
-                                  <div key={actionIdx} className="mt-4 first:mt-0">
-                                    <span className="font-bold text-foreground">{action}</span>
+                                  <div
+                                    key={actionIdx}
+                                    className="mt-4 first:mt-0"
+                                  >
+                                    <span className="font-bold text-foreground">
+                                      {action}
+                                    </span>
                                   </div>
                                 );
                               } else if (isQuotedPrompt) {
                                 // Remove quotes for display and copy
-                                const textWithoutQuotes = action.replace(/^["']|["']$/g, '');
+                                const textWithoutQuotes = action.replace(
+                                  /^["']|["']$/g,
+                                  "",
+                                );
                                 return (
                                   <div
                                     key={actionIdx}
-                                    onClick={() => copyToClipboard(textWithoutQuotes)}
+                                    onClick={() =>
+                                      copyToClipboard(textWithoutQuotes)
+                                    }
                                     className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm border border-primary/20 hover:bg-primary/20 transition-colors cursor-pointer inline-block ml-4"
                                   >
                                     {action}
@@ -576,8 +617,11 @@ const Demo = () => {
                                 );
                               } else if (isPromptWithPrefix) {
                                 // Extract the quoted text for copying (remove prefix and quotes)
-                                const quotedMatch = action.match(/["']([^"']+)["']/);
-                                const textToCopy = quotedMatch ? quotedMatch[1] : action;
+                                const quotedMatch =
+                                  action.match(/["']([^"']+)["']/);
+                                const textToCopy = quotedMatch
+                                  ? quotedMatch[1]
+                                  : action;
                                 return (
                                   <div
                                     key={actionIdx}
@@ -589,7 +633,10 @@ const Demo = () => {
                                 );
                               } else {
                                 return (
-                                  <div key={actionIdx} className="text-muted-foreground ml-4">
+                                  <div
+                                    key={actionIdx}
+                                    className="text-muted-foreground ml-4"
+                                  >
                                     {action}
                                   </div>
                                 );
@@ -612,23 +659,31 @@ const Demo = () => {
                       </div>
 
                       {/* Sample Prompts */}
-                      {useCase.id !== "shopping" && useCase.id !== "booking" && useCase.id !== "support" && (useCase as any).prompts && (useCase as any).prompts.length > 0 && (
-                        <div>
-                          <h4 className="font-semibold mb-3">🗣️ Try Asking:</h4>
-                          <div className="flex flex-wrap gap-2">
-                            {(useCase as any).prompts.map((prompt: string, promptIdx: number) => (
-                              <div
-                                key={promptIdx}
-                                onClick={() => copyToClipboard(prompt)}
-                                className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm border border-primary/20 hover:bg-primary/20 transition-colors cursor-pointer"
-                                data-testid={`prompt-${useCase.id}-${promptIdx}`}
-                              >
-                                {prompt}
-                              </div>
-                            ))}
+                      {useCase.id !== "shopping" &&
+                        useCase.id !== "booking" &&
+                        useCase.id !== "support" &&
+                        (useCase as any).prompts &&
+                        (useCase as any).prompts.length > 0 && (
+                          <div>
+                            <h4 className="font-semibold mb-3">
+                              🗣️ Try Asking:
+                            </h4>
+                            <div className="flex flex-wrap gap-2">
+                              {(useCase as any).prompts.map(
+                                (prompt: string, promptIdx: number) => (
+                                  <div
+                                    key={promptIdx}
+                                    onClick={() => copyToClipboard(prompt)}
+                                    className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm border border-primary/20 hover:bg-primary/20 transition-colors cursor-pointer"
+                                    data-testid={`prompt-${useCase.id}-${promptIdx}`}
+                                  >
+                                    {prompt}
+                                  </div>
+                                ),
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      )}
+                        )}
                     </div>
                   </AccordionContent>
                 </AccordionItem>
@@ -650,9 +705,9 @@ const Demo = () => {
             </p>
           </div>
 
-          <div 
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-4xl mx-auto" 
-            data-aos="fade-up" 
+          <div
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-4xl mx-auto"
+            data-aos="fade-up"
             data-aos-delay="100"
           >
             {integrations.map((integration, idx) => {
