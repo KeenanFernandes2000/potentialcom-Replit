@@ -38,6 +38,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useToast } from "@/hooks/use-toast";
+import { Toaster } from "@/components/ui/toaster";
 
 type InterfaceMode = "chat" | "voice" | "avatar";
 
@@ -52,6 +54,23 @@ const Demo = () => {
   const [inputValue, setInputValue] = useState("");
   const [isVoiceActive, setIsVoiceActive] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const { toast } = useToast();
+
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast({
+        title: "Copied!",
+        description: "Text copied to clipboard",
+      });
+    } catch (err) {
+      toast({
+        title: "Failed to copy",
+        description: "Please try again",
+        variant: "destructive",
+      });
+    }
+  };
 
   useEffect(() => {
     // Show initial message when component mounts
@@ -65,6 +84,52 @@ const Demo = () => {
     // Refresh AOS animations on page load
     if (typeof window !== "undefined" && (window as any).AOS) {
       (window as any).AOS.refresh();
+    }
+
+    // Load Ruby chat embed script only once on component mount
+    // Check if script is already loaded
+    const existingScript = document.querySelector('script[src="https://ai.potential.com/static/embed/ruby-section.js"]');
+    
+    if (!existingScript) {
+      console.log("Loading Ruby chat embed script...");
+      
+      // First script: Load the embed library
+      const embedScript = document.createElement('script');
+      embedScript.src = 'https://ai.potential.com/static/embed/ruby-section.js';
+      embedScript.charset = 'utf-8';
+      embedScript.type = 'text/javascript';
+      embedScript.crossOrigin = 'anonymous';
+      embedScript.id = 'ruby-embed-script';
+      
+      embedScript.onload = () => {
+        console.log("Ruby chat embed script loaded");
+        
+        // Second script: Initialize the chat
+        const initScript = document.createElement('script');
+        initScript.type = 'text/javascript';
+        initScript.id = 'ruby-embed-init';
+        initScript.text = `
+          chatembed({
+            botId: "69008a08a7cc3cda2022e07f",
+            botIcon: "https://api.potential.com/static/mentors/Ruby-1761643015937-WhatsAppImage2025-05-09at2.10.10PM.jpeg",
+            botColor: "#8b5cf6",
+            botName: "Ruby",
+            divPlacement: "potchat",
+            theme: "auto",
+          });
+        `;
+        
+        document.body.appendChild(initScript);
+        console.log("Chat embed initialization script added");
+      };
+      
+      embedScript.onerror = () => {
+        console.error("Failed to load Ruby chat embed script");
+      };
+      
+      document.body.appendChild(embedScript);
+    } else {
+      console.log("Ruby chat embed script already loaded");
     }
   }, []);
 
@@ -145,87 +210,6 @@ const Demo = () => {
       prompt: "Let me help you with HR and people management!",
     },
   ];
-
-  const renderChatInterface = () => (
-    <div className="w-full max-w-3xl mx-auto bg-card border border-border rounded-2xl shadow-lg overflow-hidden">
-      {/* Chat header */}
-      <div className="bg-primary/10 border-b border-border px-6 py-4">
-        <h3 className="font-semibold text-foreground">Chat with Ruby</h3>
-      </div>
-
-      {/* Messages */}
-      <div className="h-96 overflow-y-auto p-6 space-y-4">
-        {messages.map((msg, idx) => (
-          <div
-            key={idx}
-            className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-          >
-            <div
-              className={`max-w-[70%] rounded-2xl px-4 py-3 ${
-                msg.role === "user"
-                  ? "bg-primary text-primary-foreground ml-auto"
-                  : "bg-muted text-foreground"
-              }`}
-            >
-              {msg.text}
-            </div>
-          </div>
-        ))}
-
-        {/* Use case buttons - shown after initial message */}
-        {messages.length === 1 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4">
-            {useCases.map((useCase, idx) => (
-              <Button
-                key={idx}
-                variant="outline"
-                className="justify-start h-auto py-3 px-4 hover:bg-primary/10 hover:border-primary transition-all duration-300 group"
-                onClick={() => handleUseCaseClick(useCase.prompt, useCase.label)}
-                data-testid={`button-usecase-${idx}`}
-              >
-                <span className="text-2xl mr-3 group-hover:scale-110 transition-transform">
-                  {useCase.emoji}
-                </span>
-                <span className="text-left text-sm font-medium">{useCase.label}</span>
-              </Button>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Input */}
-      {activeMode === "chat" ? (
-        <div className="border-t border-border p-4 bg-muted/30">
-          <div className="flex gap-2">
-            <input
-              type="text"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
-              placeholder="Type your message..."
-              className="flex-1 px-4 py-2 rounded-full border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
-              data-testid="input-chat-message"
-            />
-            <Button
-              onClick={handleSendMessage}
-              className="rounded-full bg-primary hover:bg-primary/90"
-              size="icon"
-              data-testid="button-send-message"
-            >
-              <Send className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      ) : (
-        <div className="border-t border-border p-4 bg-muted/30">
-          <VoiceControlPanel onDisconnect={() => {
-            setActiveMode("chat");
-            setIsVoiceActive(false);
-          }} />
-        </div>
-      )}
-    </div>
-  );
 
   const renderVoiceInterface = () => (
     <div className="w-full max-w-3xl mx-auto">
@@ -349,21 +333,16 @@ const Demo = () => {
       title: "Shopping & Product Assistance",
       tagline: "Personalized product discovery, image recognition, and seamless order management.",
       actions: [
-        "Recommend personalized products instantly",
-        "Recognize and suggest products from uploaded images",
-        "Recognize and suggest products from taken pictures",
-        "Add items to cart directly",
-        "Track orders",
-        "Update orders in real-time",
-        "Change shipping address before delivery",
-        "Cancel orders",
-        "Share exclusive offers and discount codes",
-      ],
-      prompts: [
-        "I have oily skin, what products do you recommend?",
-        "Here is a photo of my face, which foundation and shade do you recommend?",
-        "Where is my order?",
-        "What discounts are available today?",
+        "Step 1 — Discover Products",
+        "\"Hey Ruby, can you show me some great lipsticks I can buy?\"",
+        "Step 2 — Add to Cart",
+        "\"I love the [product name] you suggested. Please add it to my cart.\"",
+        "Step 3 — Visual Product Suggestions",
+        "\"Ruby, can you recommend products similar to the one in this picture?\"",
+        "Step 5 — Track My Order",
+        "\"Where is my order? I want to track its delivery status.\"",
+        "Step 6 — Discounts",
+        "\"Are there any discount coupons available for me?\"",
       ],
     },
     {
@@ -372,83 +351,73 @@ const Demo = () => {
       title: "Book Skincare Experts & Makeup Artists",
       tagline: "Connect with beauty professionals and schedule consultations effortlessly.",
       actions: [
-        "Show and recommend available experts (with images, names, and specialties)",
-        "Book or reschedule appointments",
-        "Send confirmation via email or WhatsApp",
-        "Share consultation prices and service options",
-      ],
-      prompts: [
-        "I have a lot of black dots on my face and want to consult a skincare expert. Who do you recommend?",
-        "Who's available this weekend for bridal makeup?",
-        "Show me your top skincare experts.",
-        "How much is a full glam session?",
-        "Send me the booking confirmation on WhatsApp.",
+        "Step 1: Discover Experts",
+        "\"I have an upcoming event and need a makeup expert.\"",
+        "\"Can you show me some skilled skincare experts?\"",
+        "Step 2: Check Consultation Prices",
+        "\"How much does [Expert Name] charge?\"",
+        "Step 3: Book an Appointment",
+        "\"I'd like to book an appointment with [Expert Name].\"",
       ],
     },
-    {
-      id: "learning",
-      emoji: "🎓",
-      title: "Learning & Beauty Courses",
-      tagline: "Master beauty skills with guided courses and track your certification progress.",
-      actions: [
-        "Share available makeup and skincare courses",
-        "Track learner progress and completion",
-        "Recommend the next lesson or topic",
-        "Share certifications and event schedules",
-      ],
-      prompts: [
-        "What courses do you offer about skincare?",
-        "What is my progress to get the Makeup Artist Certification?",
-        "Recommend what I should learn next.",
-        "Email me my course certificate.",
-      ],
-    },
-    {
-      id: "hr",
-      emoji: "👩‍💼",
-      title: "HR & Career at Alora",
-      tagline: "Explore career opportunities and experience AI-powered interview assistance.",
-      actions: [
-        "Display open job positions",
-        "Conduct pre-screening interview questions",
-        "Evaluate candidate responses and provide a score",
-        "Explain company culture and benefits",
-      ],
-      prompts: [
-        "Are there any open jobs at Alora?",
-        "Interview me for the Marketing Manager role.",
-        "Tell me about Alora's work culture.",
-      ],
-    },
+    // {
+    //   id: "learning",
+    //   emoji: "🎓",
+    //   title: "Learning & Beauty Courses",
+    //   tagline: "Master beauty skills with guided courses and track your certification progress.",
+    //   actions: [
+    //     "Share available makeup and skincare courses",
+    //     "Track learner progress and completion",
+    //     "Recommend the next lesson or topic",
+    //     "Share certifications and event schedules",
+    //   ],
+    //   prompts: [
+    //     "What courses do you offer about skincare?",
+    //     "What is my progress to get the Makeup Artist Certification?",
+    //     "Recommend what I should learn next.",
+    //     "Email me my course certificate.",
+    //   ],
+    // },
+    // {
+    //   id: "hr",
+    //   emoji: "👩‍💼",
+    //   title: "HR & Career at Alora",
+    //   tagline: "Explore career opportunities and experience AI-powered interview assistance.",
+    //   actions: [
+    //     "Display open job positions",
+    //     "Conduct pre-screening interview questions",
+    //     "Evaluate candidate responses and provide a score",
+    //     "Explain company culture and benefits",
+    //   ],
+    //   prompts: [
+    //     "Are there any open jobs at Alora?",
+    //     "Interview me for the Marketing Manager role.",
+    //     "Tell me about Alora's work culture.",
+    //   ],
+    // },
     {
       id: "support",
       emoji: "💌",
       title: "Customer Support & Engagement",
       tagline: "Quick answers to FAQs, hassle-free returns, and seamless escalation to human support.",
       actions: [
-        "Answer FAQs (returns, shipping, product ingredients)",
-        "Handle returns and refund requests",
-        "Connect to human support when needed",
-      ],
-      prompts: [
-        "I received the wrong shade — how do I return it?",
-        "Do you test your products on animals?",
-        "Can I return my order and get a refund?",
+        "\"I received the wrong shade — how do I return it?\"",
+        "\"Do you test your products on animals?\"",
       ],
     },
-    {
-      id: "automation",
-      emoji: "⚙️",
-      title: "System & Automation",
-      tagline: "Build custom AI agents tailored to your business needs.",
-      actions: [
-        "Build new AI Agents",
-      ],
-      prompts: [
-        "I want to create an AI Chatbot for my business.",
-        "I want to create an AI Voice Agent for my business.",
-      ],
-    },
+    // {
+    //   id: "automation",
+    //   emoji: "⚙️",
+    //   title: "System & Automation",
+    //   tagline: "Build custom AI agents tailored to your business needs.",
+    //   actions: [
+    //     "Build new AI Agents",
+    //   ],
+    //   prompts: [
+    //     "I want to create an AI Chatbot for my business.",
+    //     "I want to create an AI Voice Agent for my business.",
+    //   ],
+    // },
   ];
 
   const integrations = [
@@ -502,7 +471,7 @@ const Demo = () => {
               <MessageCircle className="mr-2 h-4 w-4" />
               Chat 💬
             </Button>
-            <Button
+            {/* <Button
               variant={activeMode === "voice" ? "default" : "outline"}
               onClick={() => setActiveMode("voice")}
               className="rounded-full"
@@ -519,12 +488,15 @@ const Demo = () => {
             >
               <User className="mr-2 h-4 w-4" />
               Avatar 🧑‍💻
-            </Button>
+            </Button> */}
           </div>
 
+          {/* Chat embed - always rendered but hidden when not active */}
+          <div id="potchat" className="w-full min-h-[500px] max-w-3xl mx-auto" style={{ display: activeMode === "chat" ? "block" : "none" }} data-aos="fade-up" data-aos-delay="200"></div>
+          
           {/* Interface rendering */}
           <div data-aos="fade-up" data-aos-delay="200">
-            {(activeMode === "chat" || activeMode === "voice") && renderChatInterface()}
+            {activeMode === "voice" && renderVoiceInterface()}
             {activeMode === "avatar" && renderAvatarInterface()}
           </div>
 
@@ -568,40 +540,95 @@ const Demo = () => {
                   </AccordionTrigger>
                   <AccordionContent className="pb-6">
                     <div className="space-y-6 pt-4">
-                      {/* Agentic Actions */}
+                      {/* Agentic Actions / Quick Action Guide */}
                       <div>
                         <h4 className="font-semibold mb-3 flex items-center gap-2">
                           <Check className="h-5 w-5 text-primary" />
-                          Agentic Actions
+                          {useCase.id === "shopping" || useCase.id === "booking" || useCase.id === "support" ? "Quick Action Guide" : "Agentic Actions"}
                         </h4>
-                        <ul className="space-y-2 ml-7">
-                          {useCase.actions.map((action, actionIdx) => (
-                            <li
-                              key={actionIdx}
-                              className="text-muted-foreground flex items-start gap-2"
-                            >
-                              <span className="text-primary mt-1">•</span>
-                              <span>{action}</span>
-                            </li>
-                          ))}
-                        </ul>
+                        {useCase.id === "shopping" || useCase.id === "booking" || useCase.id === "support" ? (
+                          <div className="space-y-2 ml-7">
+                            {useCase.actions.map((action, actionIdx) => {
+                              // Check if this is a step header (starts with "Step")
+                              const isStepHeader = action.startsWith("Step");
+                              // Check if this is a quoted prompt (starts with quote)
+                              const isQuotedPrompt = action.startsWith("\"") || action.startsWith("'");
+                              // Check if this is a prompt with prefix (Prompt A:, Prompt B:, Prompt:)
+                              const isPromptWithPrefix = /^(Prompt [A-Z]:|Prompt:)/.test(action);
+                              
+                              if (isStepHeader) {
+                                return (
+                                  <div key={actionIdx} className="mt-4 first:mt-0">
+                                    <span className="font-bold text-foreground">{action}</span>
+                                  </div>
+                                );
+                              } else if (isQuotedPrompt) {
+                                // Remove quotes for display and copy
+                                const textWithoutQuotes = action.replace(/^["']|["']$/g, '');
+                                return (
+                                  <div
+                                    key={actionIdx}
+                                    onClick={() => copyToClipboard(textWithoutQuotes)}
+                                    className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm border border-primary/20 hover:bg-primary/20 transition-colors cursor-pointer inline-block ml-4"
+                                  >
+                                    {action}
+                                  </div>
+                                );
+                              } else if (isPromptWithPrefix) {
+                                // Extract the quoted text for copying (remove prefix and quotes)
+                                const quotedMatch = action.match(/["']([^"']+)["']/);
+                                const textToCopy = quotedMatch ? quotedMatch[1] : action;
+                                return (
+                                  <div
+                                    key={actionIdx}
+                                    onClick={() => copyToClipboard(textToCopy)}
+                                    className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm border border-primary/20 hover:bg-primary/20 transition-colors cursor-pointer inline-block ml-4"
+                                  >
+                                    {action}
+                                  </div>
+                                );
+                              } else {
+                                return (
+                                  <div key={actionIdx} className="text-muted-foreground ml-4">
+                                    {action}
+                                  </div>
+                                );
+                              }
+                            })}
+                          </div>
+                        ) : (
+                          <ul className="space-y-2 ml-7">
+                            {useCase.actions.map((action, actionIdx) => (
+                              <li
+                                key={actionIdx}
+                                className="text-muted-foreground flex items-start gap-2"
+                              >
+                                <span className="text-primary mt-1">•</span>
+                                <span>{action}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
                       </div>
 
                       {/* Sample Prompts */}
-                      <div>
-                        <h4 className="font-semibold mb-3">🗣️ Try Asking:</h4>
-                        <div className="flex flex-wrap gap-2">
-                          {useCase.prompts.map((prompt, promptIdx) => (
-                            <div
-                              key={promptIdx}
-                              className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm border border-primary/20 hover:bg-primary/20 transition-colors cursor-pointer"
-                              data-testid={`prompt-${useCase.id}-${promptIdx}`}
-                            >
-                              {prompt}
-                            </div>
-                          ))}
+                      {useCase.id !== "shopping" && useCase.id !== "booking" && useCase.id !== "support" && (useCase as any).prompts && (useCase as any).prompts.length > 0 && (
+                        <div>
+                          <h4 className="font-semibold mb-3">🗣️ Try Asking:</h4>
+                          <div className="flex flex-wrap gap-2">
+                            {(useCase as any).prompts.map((prompt: string, promptIdx: number) => (
+                              <div
+                                key={promptIdx}
+                                onClick={() => copyToClipboard(prompt)}
+                                className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm border border-primary/20 hover:bg-primary/20 transition-colors cursor-pointer"
+                                data-testid={`prompt-${useCase.id}-${promptIdx}`}
+                              >
+                                {prompt}
+                              </div>
+                            ))}
+                          </div>
                         </div>
-                      </div>
+                      )}
                     </div>
                   </AccordionContent>
                 </AccordionItem>
@@ -648,6 +675,7 @@ const Demo = () => {
       </section>
 
       <Footer />
+      <Toaster />
     </div>
   );
 };

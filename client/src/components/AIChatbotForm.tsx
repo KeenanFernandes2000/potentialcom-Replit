@@ -138,7 +138,7 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
       formData.append("url", websiteUrl);
 
       const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}/api/bot/createsimplechatbot`,
+        `${import.meta.env.VITE_API_URL}/api/bot/createsimplechatbot`,
         {
           method: "POST",
           body: formData,
