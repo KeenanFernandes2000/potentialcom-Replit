@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
+import { VoiceControlPanel } from "@/components/VoiceControlPanel";
 import { 
   MessageCircle, 
   Mic, 
@@ -193,27 +194,36 @@ const Demo = () => {
       </div>
 
       {/* Input */}
-      <div className="border-t border-border p-4 bg-muted/30">
-        <div className="flex gap-2">
-          <input
-            type="text"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
-            placeholder="Type your message..."
-            className="flex-1 px-4 py-2 rounded-full border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
-            data-testid="input-chat-message"
-          />
-          <Button
-            onClick={handleSendMessage}
-            className="rounded-full bg-primary hover:bg-primary/90"
-            size="icon"
-            data-testid="button-send-message"
-          >
-            <Send className="h-4 w-4" />
-          </Button>
+      {activeMode === "chat" ? (
+        <div className="border-t border-border p-4 bg-muted/30">
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
+              placeholder="Type your message..."
+              className="flex-1 px-4 py-2 rounded-full border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+              data-testid="input-chat-message"
+            />
+            <Button
+              onClick={handleSendMessage}
+              className="rounded-full bg-primary hover:bg-primary/90"
+              size="icon"
+              data-testid="button-send-message"
+            >
+              <Send className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="border-t border-border p-4 bg-muted/30">
+          <VoiceControlPanel onDisconnect={() => {
+            setActiveMode("chat");
+            setIsVoiceActive(false);
+          }} />
+        </div>
+      )}
     </div>
   );
 
@@ -514,8 +524,7 @@ const Demo = () => {
 
           {/* Interface rendering */}
           <div data-aos="fade-up" data-aos-delay="200">
-            {activeMode === "chat" && renderChatInterface()}
-            {activeMode === "voice" && renderVoiceInterface()}
+            {(activeMode === "chat" || activeMode === "voice") && renderChatInterface()}
             {activeMode === "avatar" && renderAvatarInterface()}
           </div>
 
