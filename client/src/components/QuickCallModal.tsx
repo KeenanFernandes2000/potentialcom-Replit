@@ -170,9 +170,35 @@ export function QuickCallModal({ isOpen, onClose, assistantId }: QuickCallModalP
     setIsTranscriptVisible(!isTranscriptVisible);
   };
 
+  const handleClose = () => {
+    // End the call if it's active before closing
+    if (vapiRef.current && isCallActive) {
+      vapiRef.current.stop();
+      vapiRef.current = null;
+    }
+    setIsCallActive(false);
+    setCallStatus('idle');
+    onClose();
+  };
+
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px] p-0 overflow-hidden bg-background">
+    <Dialog open={isOpen} onOpenChange={(open) => {
+      // When user clicks X button or tries to close
+      if (!open) {
+        handleClose();
+      }
+    }}>
+      <DialogContent 
+        className="sm:max-w-[500px] p-0 overflow-hidden bg-background"
+        onInteractOutside={(e) => {
+          // Prevent closing when clicking outside
+          e.preventDefault();
+        }}
+        onEscapeKeyDown={(e) => {
+          // Prevent closing with Escape key
+          e.preventDefault();
+        }}
+      >
         <DialogTitle className="sr-only">Voice Call with Vera</DialogTitle>
         
         <div className="relative">
