@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Facebook,
   Linkedin,
@@ -13,9 +14,11 @@ import { ThemeToggle } from "./ThemeToggle";
 import { FooterLogo } from "./FooterLogo";
 import { useToast } from "@/hooks/use-toast";
 import { SiX, SiWhatsapp } from "react-icons/si";
+import { QuickCallModal } from "./QuickCallModal";
 
 const Footer = () => {
   const { toast } = useToast();
+  const [showCallModal, setShowCallModal] = useState(false);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -135,6 +138,38 @@ const Footer = () => {
                 >
                   +971 4 369 3663
                 </a>
+              </li>
+              {/* Interactive Web Call Card */}
+              <li className="mt-4 -ml-2">
+                <div
+                  onClick={() => setShowCallModal(true)}
+                  className="group relative cursor-pointer rounded-lg bg-gradient-to-r from-primary/10 to-primary/5 hover:from-primary/20 hover:to-primary/10 p-4 transition-all duration-300 border border-primary/20 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/20 gtm-footer-webcall-vera"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-primary/20 rounded-full blur-md group-hover:blur-lg transition-all"></div>
+                      <div className="relative bg-primary rounded-full p-2.5 group-hover:scale-110 transition-transform">
+                        <MessageCircle className="h-5 w-5 text-primary-foreground" />
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2">
+                        <span className="font-semibold text-sm">Talk to Vera AI</span>
+                        <div className="flex gap-1">
+                          <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
+                          <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse delay-75"></span>
+                          <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse delay-150"></span>
+                        </div>
+                      </div>
+                      <p className="text-xs opacity-70 mt-0.5">Start a voice conversation now</p>
+                    </div>
+                    <div className="opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
               </li>
             </ul>
           </div>
@@ -289,6 +324,13 @@ const Footer = () => {
           </div>
         </div>
       </div>
+
+      {/* Quick Call Modal */}
+      <QuickCallModal
+        isOpen={showCallModal}
+        onClose={() => setShowCallModal(false)}
+        assistantId="af52610d-420e-4700-b2cb-f007d3436370"
+      />
     </footer>
   );
 };
