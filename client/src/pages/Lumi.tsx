@@ -112,8 +112,8 @@ const Lumi = () => {
         initScript.id = "lumi-embed-init";
         initScript.text = `
           chatembed({
-            botId: "693aa4e59fd1f887775819d9",
-            botIcon: "https://api.potential.com/static/mentors/Lumi-1765450980989-lumi.png",
+            botId: "6943c5c495178663826edccc",
+            botIcon: "https://api.potential.com/static/mentors/Lumi-1766049219677-lumi.png",
             botColor: "#8b5cf6",
             botName: "Lumi",
             divPlacement: "potchat",
