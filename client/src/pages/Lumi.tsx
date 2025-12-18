@@ -1,0 +1,800 @@
+import { useState, useEffect } from "react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { SEO } from "@/components/SEO";
+import { Button } from "@/components/ui/button";
+import { VoiceControlPanel } from "@/components/VoiceControlPanel";
+import {
+  MessageCircle,
+  Mic,
+  User,
+  ShoppingCart,
+  Briefcase,
+  GraduationCap,
+  Hospital,
+  Users,
+  Send,
+  Play,
+  Pause,
+  ChevronDown,
+  Check,
+} from "lucide-react";
+import {
+  SiShopify,
+  SiStripe,
+  SiHubspot,
+  SiSalesforce,
+  SiTwilio,
+  SiSlack,
+  SiZapier,
+  SiNotion,
+  SiAmazon,
+  SiGooglecloud,
+  SiMailchimp,
+} from "react-icons/si";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { useToast } from "@/hooks/use-toast";
+import { Toaster } from "@/components/ui/toaster";
+
+type InterfaceMode = "chat" | "voice" | "avatar";
+
+interface Message {
+  role: "user" | "agent";
+  text: string;
+}
+
+const Lumi = () => {
+  const [activeMode, setActiveMode] = useState<InterfaceMode>("chat");
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [inputValue, setInputValue] = useState("");
+  const [isVoiceActive, setIsVoiceActive] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const { toast } = useToast();
+
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast({
+        title: "Copied!",
+        description: "Text copied to clipboard",
+      });
+    } catch (err) {
+      toast({
+        title: "Failed to copy",
+        description: "Please try again",
+        variant: "destructive",
+      });
+    }
+  };
+
+  useEffect(() => {
+    // Show initial message when component mounts
+    setMessages([
+      {
+        role: "agent",
+        text: "Assume you are:",
+      },
+    ]);
+
+    // Refresh AOS animations on page load
+    if (typeof window !== "undefined" && (window as any).AOS) {
+      (window as any).AOS.refresh();
+    }
+
+    // Load Lumi chat embed script only once on component mount
+    // Check if script is already loaded
+    const existingScript = document.querySelector(
+      'script[src="https://ai.potential.com/static/embed/lumi-section.js"]',
+    );
+
+    if (!existingScript) {
+      console.log("Loading Lumi chat embed script...");
+
+      // First script: Load the embed library
+      const embedScript = document.createElement("script");
+      embedScript.src = "https://ai.potential.com/static/embed/lumi-section.js";
+      embedScript.charset = "utf-8";
+      embedScript.type = "text/javascript";
+      embedScript.crossOrigin = "anonymous";
+      embedScript.id = "lumi-embed-script";
+
+      embedScript.onload = () => {
+        console.log("Lumi chat embed script loaded");
+
+        // Second script: Initialize the chat
+        const initScript = document.createElement("script");
+        initScript.type = "text/javascript";
+        initScript.id = "lumi-embed-init";
+        initScript.text = `
+          chatembed({
+            botId: "693aa4e59fd1f887775819d9",
+            botIcon: "https://api.potential.com/static/mentors/Lumi-1765450980989-lumi.png",
+            botColor: "#8b5cf6",
+            botName: "Lumi",
+            divPlacement: "potchat",
+            theme: "auto",
+          });
+        `;
+
+        document.body.appendChild(initScript);
+        console.log("Chat embed initialization script added");
+      };
+
+      embedScript.onerror = () => {
+        console.error("Failed to load Lumi chat embed script");
+      };
+
+      document.body.appendChild(embedScript);
+    } else {
+      console.log("Lumi chat embed script already loaded");
+    }
+  }, []);
+
+  const handleUseCaseClick = (prompt: string, useCase: string) => {
+    // Add user message
+    setMessages((prev) => [...prev, { role: "user", text: useCase }]);
+
+    // Simulate agent response after a delay
+    setTimeout(() => {
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "agent",
+          text: `Great! I'm now acting as your ${useCase}. ${prompt}`,
+        },
+      ]);
+    }, 1000);
+  };
+
+  const handleSendMessage = () => {
+    if (!inputValue.trim()) return;
+
+    setMessages((prev) => [...prev, { role: "user", text: inputValue }]);
+    setInputValue("");
+
+    // Simulate agent response
+    setTimeout(() => {
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "agent",
+          text: "I understand! Let me help you with that.",
+        },
+      ]);
+    }, 1000);
+  };
+
+  const toggleVoice = () => {
+    setIsVoiceActive(!isVoiceActive);
+    if (!isVoiceActive) {
+      // Simulate speaking animation
+      setIsSpeaking(true);
+      setTimeout(() => setIsSpeaking(false), 3000);
+    } else {
+      setIsSpeaking(false);
+    }
+  };
+
+  const useCases = [
+    {
+      icon: <ShoppingCart className="h-5 w-5" />,
+      emoji: "🛍️",
+      label: "E-Commerce & Shopping Assistant",
+      prompt: "How can I help you shop today?",
+    },
+    {
+      icon: <Briefcase className="h-5 w-5" />,
+      emoji: "💼",
+      label: "Sales & Marketing Agent",
+      prompt: "Let me help you grow your business!",
+    },
+    {
+      icon: <GraduationCap className="h-5 w-5" />,
+      emoji: "🎓",
+      label: "Learning Concierge",
+      prompt: "Ready to accelerate your learning journey?",
+    },
+    {
+      icon: <Hospital className="h-5 w-5" />,
+      emoji: "🏥",
+      label: "Clinic & Hospital Assistant",
+      prompt: "How can I assist with your healthcare needs?",
+    },
+    {
+      icon: <Users className="h-5 w-5" />,
+      emoji: "👩‍💼",
+      label: "HR & People Assistant",
+      prompt: "Let me help you with HR and people management!",
+    },
+  ];
+
+  const renderVoiceInterface = () => (
+    <div className="w-full max-w-3xl mx-auto">
+      <div className="bg-card border border-border rounded-2xl shadow-lg p-12">
+        <div className="flex flex-col items-center justify-center space-y-8">
+          {/* Pulsing microphone animation */}
+          <div className="relative">
+            <div
+              className={`absolute inset-0 rounded-full bg-primary/30 ${
+                isSpeaking ? "animate-ping" : ""
+              }`}
+            />
+            <div
+              className={`relative w-32 h-32 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center ${
+                isSpeaking ? "animate-pulse" : ""
+              }`}
+            >
+              <Mic className="h-16 w-16 text-white" />
+            </div>
+          </div>
+
+          <div className="text-center">
+            <h3 className="text-2xl font-semibold mb-2">
+              {isVoiceActive ? "Listening..." : "Tap to speak with Lumi"}
+            </h3>
+            <p className="text-muted-foreground">
+              {isVoiceActive
+                ? "I'm here to help! What would you like to know?"
+                : "Start a voice conversation"}
+            </p>
+          </div>
+
+          <Button
+            size="lg"
+            onClick={toggleVoice}
+            className={`rounded-full px-8 ${
+              isVoiceActive
+                ? "bg-destructive hover:bg-destructive/90"
+                : "bg-primary hover:bg-primary/90"
+            }`}
+            data-testid="button-toggle-voice"
+          >
+            {isVoiceActive ? (
+              <>
+                <Pause className="mr-2 h-5 w-5" />
+                End Call
+              </>
+            ) : (
+              <>
+                <Play className="mr-2 h-5 w-5" />
+                Start Voice Chat
+              </>
+            )}
+          </Button>
+
+          {/* Waveform visualization when speaking */}
+          {isSpeaking && (
+            <div className="flex items-center justify-center gap-1 h-16">
+              {[...Array(5)].map((_, i) => (
+                <div
+                  key={i}
+                  className="w-2 bg-primary rounded-full animate-pulse"
+                  style={{
+                    height: `${Math.random() * 60 + 20}px`,
+                    animationDelay: `${i * 0.1}s`,
+                  }}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+
+  const renderAvatarInterface = () => (
+    <div className="w-full max-w-3xl mx-auto">
+      <div className="bg-card border border-border rounded-2xl shadow-lg overflow-hidden">
+        {/* Avatar video area */}
+        <div className="aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 relative">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-center">
+              <div className="w-48 h-48 rounded-full bg-gradient-to-br from-primary to-primary/70 mx-auto mb-4 flex items-center justify-center">
+                <User className="h-24 w-24 text-white" />
+              </div>
+              <h3 className="text-2xl font-semibold mb-2">Lumi</h3>
+              <p className="text-muted-foreground">Your AI Assistant</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Avatar controls */}
+        <div className="p-6 space-y-4">
+          <div className="text-center">
+            <p className="text-sm text-muted-foreground mb-4">
+              Interactive avatar mode - Coming soon
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {useCases.map((useCase, idx) => (
+                <Button
+                  key={idx}
+                  variant="outline"
+                  size="sm"
+                  className="text-xs"
+                  data-testid={`button-avatar-usecase-${idx}`}
+                >
+                  {useCase.emoji} {useCase.label.split(" ")[0]}
+                </Button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const detailedUseCases = [
+    {
+      id: "recommendations",
+      emoji: "👨‍⚕️",
+      title: "Recommends doctors and services",
+      tagline:
+        "Get personalized recommendations for doctors, specialists, and medical services based on your needs.",
+      actions: [
+        "Recommend Doctors",
+        "Find All Doctors",
+        '"Show me all doctors in the clinic."',
+        "Find Doctor by Concern",
+        '"Who is the best doctor for pigmentation treatment?"',
+        '"Who do you recommend for teeth whitening?"',
+        "Recommend Services",
+        "Find All Services",
+        '"What services are available at the clinic?"',
+        "Find Service by Request",
+        '"Do you have any facials which includes collagen?"',
+        '"Do you offer laser hair removal services?"',
+      ],
+    },
+    {
+      id: "appointments",
+      emoji: "📅",
+      title: "Book doctor appointments",
+      tagline:
+        "Schedule appointments with doctors and specialists seamlessly through our booking system.",
+      actions: [
+        "Step 1: Select Doctor",
+        '"I\'d like to book an appointment with Dr. [Doctor Name]."',
+        "Step 2: Choose Date & Time",
+        '"What available slots does Dr. [Doctor Name] have next week?"',
+        "Step 3: Confirm Appointment",
+        '"Please book me for [date] at [time] with Dr. [Doctor Name]."',
+      ],
+    },
+    {
+      id: "offers",
+      emoji: "🏷️",
+      title: "Share offers",
+      tagline:
+        "Discover special promotions, discounts, and exclusive offers available at the clinic.",
+      actions: [
+        '"What all offers you have in your clinic?"',
+        '"What is included in the Summer Glow Laser Package offer?"'
+      ],
+    },
+    {
+      id: "support",
+      emoji: "💌",
+      title: "Customer Support & Engagement",
+      tagline:
+        "Quick answers to FAQs, hassle-free assistance, and seamless escalation to human support.",
+      faqCategories: [
+        {
+          category: "General FAQs",
+          prompts: [
+            '"Do you accept walk-ins?"',
+            '"Do you offer free consultations?"',
+          ],
+        },
+        {
+          category: "Laser FAQs",
+          prompts: [
+            '"Is laser hair removal painful?"',
+            '"How many sessions do I need?"',
+          ],
+        },
+        {
+          category: "Facials & Skin FAQs",
+          prompts: [
+            '"Which facial is best for acne-prone skin?"',
+            '"How often can I do facials?"',
+          ],
+        },
+        {
+          category: "Dental FAQs",
+          prompts: [
+            '"Are veneers permanent?"',
+            '"How long does Zoom Whitening take?"',
+          ],
+        },
+      ],
+    },
+  ];
+
+  const integrations = [
+    { name: "Shopify", icon: SiShopify },
+    { name: "Stripe", icon: SiStripe },
+    { name: "HubSpot", icon: SiHubspot },
+    { name: "Salesforce", icon: SiSalesforce },
+    { name: "Mailchimp", icon: SiMailchimp },
+    { name: "Twilio", icon: SiTwilio },
+    { name: "Slack", icon: SiSlack },
+    { name: "Zapier", icon: SiZapier },
+    { name: "Notion", icon: SiNotion },
+    { name: "AWS", icon: SiAmazon },
+    { name: "Google Cloud", icon: SiGooglecloud },
+  ];
+
+  return (
+    <div className="min-h-screen bg-background">
+      <SEO
+        title="AI Agent Demo - Lumi | Potential.com"
+        description="Experience Lumi, our interactive AI agent demo. Try Chat, Voice, and Avatar interfaces for E-Commerce, Sales, Learning, Healthcare, and HR use cases."
+      />
+      <Header />
+
+      {/* Hero Section */}
+      <section className="pt-32 pb-20 relative overflow-hidden">
+        {/* Background decoration */}
+        <div className="absolute inset-0 bg-grid-pattern opacity-5" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl opacity-20" />
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-secondary/20 rounded-full blur-3xl opacity-20" />
+
+        <div className="container relative z-10">
+          {/* Title and subtitle */}
+          <div className="text-center mb-12" data-aos="fade-up">
+            <h1 className="text-5xl md:text-6xl font-bold mb-4">
+              Meet <span className="gradient-text">Lumi</span>
+            </h1>
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto">
+              Your AI Clinic Receptionist — Ready to Talk, Listen, and Act.
+            </p>
+          </div>
+
+          {/* Mode toggles */}
+          <div
+            className="flex justify-center gap-4 mb-12"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            <Button
+              variant={activeMode === "chat" ? "default" : "outline"}
+              onClick={() => setActiveMode("chat")}
+              className="rounded-full"
+              data-testid="button-mode-chat"
+            >
+              <MessageCircle className="mr-2 h-4 w-4" />
+              Chat 💬
+            </Button>
+            {/* <Button
+              variant={activeMode === "voice" ? "default" : "outline"}
+              onClick={() => setActiveMode("voice")}
+              className="rounded-full"
+              data-testid="button-mode-voice"
+            >
+              <Mic className="mr-2 h-4 w-4" />
+              Voice 🎙️
+            </Button>
+            <Button
+              variant={activeMode === "avatar" ? "default" : "outline"}
+              onClick={() => setActiveMode("avatar")}
+              className="rounded-full"
+              data-testid="button-mode-avatar"
+            >
+              <User className="mr-2 h-4 w-4" />
+              Avatar 🧑‍💻
+            </Button> */}
+          </div>
+
+          {/* Chat embed - always rendered but hidden when not active */}
+          <div
+            id="potchat"
+            className="w-full min-h-[500px] max-w-3xl mx-auto"
+            style={{ display: activeMode === "chat" ? "block" : "none" }}
+            data-aos="fade-up"
+            data-aos-delay="200"
+          ></div>
+
+          {/* Interface rendering */}
+          <div data-aos="fade-up" data-aos-delay="200">
+            {activeMode === "voice" && renderVoiceInterface()}
+            {activeMode === "avatar" && renderAvatarInterface()}
+          </div>
+
+          {/* Scroll indicator */}
+          <div className="flex justify-center mt-16 animate-bounce">
+            <ChevronDown className="h-8 w-8 text-muted-foreground" />
+          </div>
+        </div>
+      </section>
+
+      {/* Section 2: What Lumi Can Do */}
+      <section className="py-20 bg-muted/30">
+        <div className="container">
+          <div className="text-center mb-12" data-aos="fade-up">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              What <span className="gradient-text">Lumi</span> Can Do
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Your AI clinic receptionist — ready to recommend, book appointments, share offers, and more.
+            </p>
+          </div>
+
+          <div
+            className="max-w-5xl mx-auto space-y-4"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            <Accordion type="single" collapsible className="space-y-4">
+              {detailedUseCases.map((useCase, idx) => (
+                <AccordionItem
+                  key={useCase.id}
+                  value={useCase.id}
+                  className="bg-card border border-border rounded-xl px-6 data-[state=open]:shadow-lg transition-all"
+                >
+                  <AccordionTrigger className="hover:no-underline py-6">
+                    <div className="flex items-center gap-4 text-left">
+                      <span className="text-4xl">{useCase.emoji}</span>
+                      <div>
+                        <h3 className="text-xl font-semibold">
+                          {useCase.title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          {useCase.tagline}
+                        </p>
+                      </div>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-6">
+                    <div className="space-y-6 pt-4">
+                      {/* Agentic Actions / Quick Action Guide */}
+                      <div>
+                        <h4 className="font-semibold mb-3 flex items-center gap-2">
+                          <Check className="h-5 w-5 text-primary" />
+                          {useCase.id === "recommendations" ||
+                          useCase.id === "appointments" ||
+                          useCase.id === "offers" ||
+                          useCase.id === "support"
+                            ? "Quick Action Guide"
+                            : "Agentic Actions"}
+                        </h4>
+                        {useCase.id === "support" &&
+                        (useCase as any).faqCategories ? (
+                          <div className="space-y-6 ml-7">
+                            {(useCase as any).faqCategories.map(
+                              (faqCategory: any, categoryIdx: number) => (
+                                <div key={categoryIdx} className="space-y-3">
+                                  <h5 className="font-semibold text-foreground text-sm">
+                                    {faqCategory.category}
+                                  </h5>
+                                  <div className="flex flex-wrap gap-2 ml-4">
+                                    {faqCategory.prompts.map(
+                                      (prompt: string, promptIdx: number) => {
+                                        const textWithoutQuotes = prompt.replace(
+                                          /^["']|["']$/g,
+                                          "",
+                                        );
+                                        return (
+                                          <div
+                                            key={promptIdx}
+                                            onClick={() =>
+                                              copyToClipboard(textWithoutQuotes)
+                                            }
+                                            className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm border border-primary/20 hover:bg-primary/20 transition-colors cursor-pointer"
+                                          >
+                                            {prompt}
+                                          </div>
+                                        );
+                                      },
+                                    )}
+                                  </div>
+                                </div>
+                              ),
+                            )}
+                          </div>
+                        ) : useCase.id === "recommendations" ||
+                          useCase.id === "appointments" ||
+                          useCase.id === "offers" ? (
+                          <div className="space-y-2 ml-7">
+                            {(useCase.actions || []).map((action, actionIdx) => {
+                              // Check if this is a main section header (Recommend Doctors, Recommend Services)
+                              const isMainSectionHeader = 
+                                action === "Recommend Doctors" || 
+                                action === "Recommend Services";
+                              // Check if this is a step header (starts with "Step")
+                              const isStepHeader = action.startsWith("Step");
+                              // Check if this is a prompt header (Find All Doctors, Find Doctor by Concern, etc.)
+                              const isPromptHeader = 
+                                action.startsWith("Find All") ||
+                                action.startsWith("Find Doctor") ||
+                                action.startsWith("Find Service");
+                              // Check if this is a section header (Doctors, Services)
+                              const isSectionHeader = 
+                                action === "Doctors" || 
+                                action === "Services";
+                              // Check if this is a quoted prompt (starts with quote)
+                              const isQuotedPrompt =
+                                action.startsWith('"') ||
+                                action.startsWith("'");
+                              // Check if this is a prompt with prefix (Prompt A:, Prompt B:, Prompt:)
+                              const isPromptWithPrefix =
+                                /^(Prompt [A-Z]:|Prompt:)/.test(action);
+
+                              if (isMainSectionHeader) {
+                                return (
+                                  <div
+                                    key={actionIdx}
+                                    className="mt-4 first:mt-0 flex items-center gap-2"
+                                  >
+                                    <span className="text-primary font-bold">•</span>
+                                    <span className="font-bold text-foreground">
+                                      {action}
+                                    </span>
+                                  </div>
+                                );
+                              } else if (isPromptHeader) {
+                                return (
+                                  <div
+                                    key={actionIdx}
+                                    className="mt-4 first:mt-0"
+                                  >
+                                    <span className="text-muted-foreground text-xs">
+                                      {action}
+                                    </span>
+                                  </div>
+                                );
+                              } else if (isStepHeader || isSectionHeader) {
+                                return (
+                                  <div
+                                    key={actionIdx}
+                                    className="mt-4 first:mt-0"
+                                  >
+                                    <span className="font-bold text-foreground">
+                                      {action}
+                                    </span>
+                                  </div>
+                                );
+                              } else if (isQuotedPrompt) {
+                                // Remove quotes for display and copy
+                                const textWithoutQuotes = action.replace(
+                                  /^["']|["']$/g,
+                                  "",
+                                );
+                                return (
+                                  <div
+                                    key={actionIdx}
+                                    onClick={() =>
+                                      copyToClipboard(textWithoutQuotes)
+                                    }
+                                    className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm border border-primary/20 hover:bg-primary/20 transition-colors cursor-pointer inline-block ml-4"
+                                  >
+                                    {action}
+                                  </div>
+                                );
+                              } else if (isPromptWithPrefix) {
+                                // Extract the quoted text for copying (remove prefix and quotes)
+                                const quotedMatch =
+                                  action.match(/["']([^"']+)["']/);
+                                const textToCopy = quotedMatch
+                                  ? quotedMatch[1]
+                                  : action;
+                                return (
+                                  <div
+                                    key={actionIdx}
+                                    onClick={() => copyToClipboard(textToCopy)}
+                                    className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm border border-primary/20 hover:bg-primary/20 transition-colors cursor-pointer inline-block ml-4"
+                                  >
+                                    {action}
+                                  </div>
+                                );
+                              } else {
+                                return (
+                                  <div
+                                    key={actionIdx}
+                                    className="text-muted-foreground ml-4"
+                                  >
+                                    {action}
+                                  </div>
+                                );
+                              }
+                            })}
+                          </div>
+                        ) : (
+                          <ul className="space-y-2 ml-7">
+                            {(useCase.actions || []).map((action, actionIdx) => (
+                              <li
+                                key={actionIdx}
+                                className="text-muted-foreground flex items-start gap-2"
+                              >
+                                <span className="text-primary mt-1">•</span>
+                                <span>{action}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+
+                      {/* Sample Prompts */}
+                      {useCase.id !== "recommendations" &&
+                        useCase.id !== "appointments" &&
+                        useCase.id !== "offers" &&
+                        useCase.id !== "support" &&
+                        (useCase as any).prompts &&
+                        (useCase as any).prompts.length > 0 && (
+                          <div>
+                            <h4 className="font-semibold mb-3">
+                              🗣️ Try Asking:
+                            </h4>
+                            <div className="flex flex-wrap gap-2">
+                              {(useCase as any).prompts.map(
+                                (prompt: string, promptIdx: number) => (
+                                  <div
+                                    key={promptIdx}
+                                    onClick={() => copyToClipboard(prompt)}
+                                    className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm border border-primary/20 hover:bg-primary/20 transition-colors cursor-pointer"
+                                    data-testid={`prompt-${useCase.id}-${promptIdx}`}
+                                  >
+                                    {prompt}
+                                  </div>
+                                ),
+                              )}
+                            </div>
+                          </div>
+                        )}
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 3: Integrations */}
+      <section className="py-20">
+        <div className="container">
+          <div className="text-center mb-12" data-aos="fade-up">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              Connected with <span className="gradient-text">Your Tools</span>
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              Integrate once. Empower everywhere.
+            </p>
+          </div>
+
+          <div
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-4xl mx-auto"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            {integrations.map((integration, idx) => {
+              const IconComponent = integration.icon;
+              return (
+                <div
+                  key={idx}
+                  className="bg-card border border-border rounded-xl p-6 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group flex flex-col items-center justify-center gap-3"
+                  data-testid={`integration-${idx}`}
+                >
+                  <IconComponent className="text-4xl text-foreground/70 group-hover:text-primary transition-colors" />
+                  <span className="text-xs text-muted-foreground text-center">
+                    {integration.name}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <Footer />
+      <Toaster />
+    </div>
+  );
+};
+
+export default Lumi;
+
