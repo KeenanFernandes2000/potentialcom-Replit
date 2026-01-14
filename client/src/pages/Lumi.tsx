@@ -97,7 +97,7 @@ const Lumi = () => {
 
       // First script: Load the embed library
       const embedScript = document.createElement("script");
-      embedScript.src = "https://ai.potential.com/static/embed/lumi-section.js";
+      embedScript.src = "http://localhost:3000/static/embed/lumi-section.js";
       embedScript.charset = "utf-8";
       embedScript.type = "text/javascript";
       embedScript.crossOrigin = "anonymous";
@@ -112,8 +112,8 @@ const Lumi = () => {
         initScript.id = "lumi-embed-init";
         initScript.text = `
           chatembed({
-            botId: "6943c5c495178663826edccc",
-            botIcon: "https://api.potential.com/static/mentors/Lumi-1766049219677-lumi.png",
+            botId: "693aa4e59fd1f887775819d9",
+            botIcon: "http://localhost:3000/static/mentors/Lumi-1766049219677-lumi.png",
             botColor: "#8b5cf6",
             botName: "Lumi",
             divPlacement: "potchat",

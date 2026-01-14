@@ -119,6 +119,59 @@ body {
   ::-webkit-scrollbar-thumb {
     @apply bg-primary/50 rounded-full hover:bg-primary;
   }
+
+  /* Modern scrollbar for code blocks - only visible on hover */
+  .code-block-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+
+  .group:hover .code-block-scrollbar,
+  .code-block-scrollbar:hover {
+    scrollbar-color: hsl(var(--muted-foreground) / 0.4) hsl(var(--muted) / 0.5);
+  }
+
+  .code-block-scrollbar::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+
+  .code-block-scrollbar::-webkit-scrollbar-track {
+    @apply bg-transparent rounded;
+  }
+
+  .group:hover .code-block-scrollbar::-webkit-scrollbar-track,
+  .code-block-scrollbar:hover::-webkit-scrollbar-track {
+    @apply bg-muted/50 rounded;
+  }
+
+  .code-block-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-transparent rounded-full;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  .group:hover .code-block-scrollbar::-webkit-scrollbar-thumb,
+  .code-block-scrollbar:hover::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/40 rounded-full;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  .group:hover .code-block-scrollbar::-webkit-scrollbar-thumb:hover,
+  .code-block-scrollbar:hover::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/60;
+  }
+
+  /* Hide scrollbar but keep scrolling functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
 }
 
 @layer components {

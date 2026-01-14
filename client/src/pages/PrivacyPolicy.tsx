@@ -18,10 +18,10 @@ const PrivacyPolicy = () => {
       <Header />
       <main className="pt-32 pb-20">
         <div className="container max-w-4xl">
-          <h1 className="text-4xl font-bold mb-8">Privacy Policy</h1>
+          <h1 className="text-4xl font-bold mb-8 text-foreground">Privacy Policy</h1>
 
-          <div className="prose prose-lg max-w-none">
-            <p className="lead text-xl mb-8">
+          <div className="prose prose-lg max-w-none dark:prose-invert prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-li:text-foreground">
+            <p className="lead text-xl mb-8 text-foreground">
               At Potential.com, we take the privacy, security, and data
               protection of our users and clients seriously. This Privacy Policy
               describes how we collect, use, store, and protect information

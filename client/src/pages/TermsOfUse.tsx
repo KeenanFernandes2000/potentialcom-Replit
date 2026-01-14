@@ -18,12 +18,12 @@ const TermsOfUse = () => {
       <Header />
       <main className="pt-32 pb-20">
         <div className="container max-w-4xl">
-          <h1 className="text-4xl font-bold mb-8">Terms of Use</h1>
+          <h1 className="text-4xl font-bold mb-8 text-foreground">Terms of Use</h1>
 
-          <div className="prose prose-lg max-w-none">
+          <div className="prose prose-lg max-w-none dark:prose-invert prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-li:text-foreground">
             <div className="bg-primary/5 p-6 rounded-lg border border-primary/20 mb-8">
-              <p className="font-semibold text-xl mb-2">ATTENTION:</p>
-              <p>
+              <p className="font-semibold text-xl mb-2 text-foreground">ATTENTION:</p>
+              <p className="text-foreground">
                 BY USING THIS WEBSITE ("SITE"), YOU AGREE AND AFFIRM THAT YOU
                 HAVE READ AND ACCEPT THESE TERMS OF USE. IF YOU DO NOT ACCEPT
                 THESE TERMS OF USE, YOU ARE NOT AUTHORIZED TO USE THIS SITE.
@@ -36,7 +36,7 @@ const TermsOfUse = () => {
               </p>
             </div>
 
-            <p className="lead">
+            <p className="lead text-foreground">
               Your use of the "Potential FZ-LLC" Website forms a legal agreement
               between you and "Potential FZ-LLC" and is subject to the terms of
               that agreement as stated in these Terms of Use. You acknowledge

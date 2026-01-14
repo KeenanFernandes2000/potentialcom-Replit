@@ -17,6 +17,7 @@ import Profile from "@/pages/Profile";
 import ForgotPassword from "@/pages/ForgotPassword";
 import TermsOfUse from "@/pages/TermsOfUse";
 import PrivacyPolicy from "@/pages/PrivacyPolicy";
+import PromptingGuide from "@/pages/PromptingGuide";
 import Blog from "@/pages/Blog";
 import BlogCategory from "@/pages/BlogCategory";
 import BlogPost from "@/pages/BlogPost";
@@ -50,6 +51,7 @@ function Router() {
       <Route path="/forgot-password" component={ForgotPassword} />
       <Route path="/terms" component={TermsOfUse} />
       <Route path="/privacy" component={PrivacyPolicy} />
+      <Route path="/promptingguide" component={PromptingGuide} />
       <Route path="/blog" component={Blog} />
       <Route path="/blog/category/:slug" component={BlogCategory} />
       <Route path="/articles/:slug" component={BlogPost} />
