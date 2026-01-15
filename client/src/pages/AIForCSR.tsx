@@ -176,7 +176,6 @@ const AIForCSR = () => {
         keywords="CSR technology, corporate social responsibility, AI for sustainability, impact measurement, ESG reporting, stakeholder engagement, social impact"
       />
       <Header />
-
       <main className="pt-20">
         {/* Hero Section */}
         <section className="relative py-20 md:py-28 overflow-hidden">
@@ -235,9 +234,7 @@ const AIForCSR = () => {
                     </div>
                     <div>
                       <p className="text-2xl font-bold text-foreground">10x</p>
-                      <p className="text-sm text-muted-foreground">
-                        More Efficiency
-                      </p>
+                      <p className="text-sm text-muted-foreground">More Impact</p>
                     </div>
                   </div>
                 </div>
@@ -628,7 +625,6 @@ const AIForCSR = () => {
           </div>
         </section>
       </main>
-
       <Footer />
     </div>
   );
