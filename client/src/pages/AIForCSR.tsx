@@ -556,7 +556,7 @@ const AIForCSR = () => {
         </section>
 
         {/* Trusted By Section */}
-        <section className="py-16 md:py-24">
+        <section className="py-16 md:py-24 pt-[0px] pb-[0px]">
           <div className="container">
             <div className="client-logos py-8" data-aos="fade-up" data-aos-delay="100">
               <h3 className="text-center text-muted-foreground uppercase text-sm tracking-wider mb-6">
