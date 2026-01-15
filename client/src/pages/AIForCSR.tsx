@@ -29,16 +29,40 @@ import philosophyImage from "@assets/stock_images/diverse_team_busines_988fa644.
 import dashboardImage from "@assets/stock_images/ai_technology_digita_e018282c.jpg";
 import teamImage from "@assets/stock_images/diverse_team_busines_ad90320d.jpg";
 
-import hsbcLogo from "@assets/Customer Logos/HSBC logo.png";
-import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
-import dctLogo from "@assets/Customer Logos/DCT Logo.png";
 import infographicImage from "@assets/Gemini_Generated_Image_puapbnpuapbnpuap_1768466195548.png";
+
+import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
+import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
+import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
+import cartierLogo from "@assets/Customer Logos/Cartier logo.png";
+import ciscoLogo from "@assets/Customer Logos/Cisco Logo.png";
+import dctLogo from "@assets/Customer Logos/DCT Logo.png";
+import dldLogo from "@assets/Customer Logos/DLD Logo.png";
+import dellLogo from "@assets/Customer Logos/Dell logo.png";
+import edbLogo from "@assets/Customer Logos/EDB logo.png";
+import fordLogo from "@assets/Customer Logos/Ford logo.png";
+import googleLogo from "@assets/Customer Logos/Google logo.png";
+import govAbuDhabiLogo from "@assets/Customer Logos/Government of Abu Dhabi logo.png";
+import govDubaiLogo from "@assets/Customer Logos/Government of Dubai logo.png";
+import hsbcLogo from "@assets/Customer Logos/HSBC logo.png";
+import inditexLogo from "@assets/Customer Logos/Inditex logo.png";
+import khalifaFundLogo from "@assets/Customer Logos/Khalifa Fund logo.png";
+import mbcLogo from "@assets/Customer Logos/MBC logo.png";
+import microsoftLogo from "@assets/Customer Logos/Microsoft logo.png";
+import nestleLogo from "@assets/Customer Logos/Nestle Logo.png";
+import pepsicoLogo from "@assets/Customer Logos/Pepsico logo.png";
+import unWomenLogo from "@assets/Customer Logos/UN Women logo.png";
+import unLogo from "@assets/Customer Logos/UN logo.png";
+import visaLogo from "@assets/Customer Logos/Visa logo.png";
+import wfzoLogo from "@assets/Customer Logos/WFZO logo.png";
+import intelLogo from "@assets/Customer Logos/intel logo.png";
 
 const AIForCSR = () => {
   const [showLeadForm, setShowLeadForm] = useState(false);
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -46,6 +70,34 @@ const AIForCSR = () => {
   });
 
   const downloadUrl = "/assets/downloads/AI-Powered-CSR-Infographic.png";
+
+  const clientLogos = [
+    { name: "ADGM", logo: adgmLogo },
+    { name: "Airbus", logo: airbusLogo },
+    { name: "Bank Muscat", logo: bankMuscatLogo },
+    { name: "Cartier", logo: cartierLogo },
+    { name: "Cisco", logo: ciscoLogo },
+    { name: "DCT", logo: dctLogo },
+    { name: "DLD", logo: dldLogo },
+    { name: "Dell", logo: dellLogo },
+    { name: "EDB", logo: edbLogo },
+    { name: "Ford", logo: fordLogo },
+    { name: "Google", logo: googleLogo },
+    { name: "Government of Abu Dhabi", logo: govAbuDhabiLogo },
+    { name: "Government of Dubai", logo: govDubaiLogo },
+    { name: "HSBC", logo: hsbcLogo },
+    { name: "Inditex", logo: inditexLogo },
+    { name: "Intel", logo: intelLogo },
+    { name: "Khalifa Fund", logo: khalifaFundLogo },
+    { name: "MBC", logo: mbcLogo },
+    { name: "Microsoft", logo: microsoftLogo },
+    { name: "Nestle", logo: nestleLogo },
+    { name: "PepsiCo", logo: pepsicoLogo },
+    { name: "UN Women", logo: unWomenLogo },
+    { name: "United Nations", logo: unLogo },
+    { name: "Visa", logo: visaLogo },
+    { name: "WFZO", logo: wfzoLogo },
+  ];
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -94,6 +146,23 @@ const AIForCSR = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const checkDarkMode = () => {
+      const isDark = document.documentElement.classList.contains("dark");
+      setIsDarkMode(isDark);
+    };
+    checkDarkMode();
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === "attributes" && mutation.attributeName === "class") {
+          checkDarkMode();
+        }
+      });
+    });
+    observer.observe(document.documentElement, { attributes: true });
+    return () => observer.disconnect();
+  }, []);
+
   const modules = [
     {
       icon: Brain,
@@ -118,27 +187,6 @@ const AIForCSR = () => {
       title: "Custom Environments",
       description:
         "Branded, multi-language digital ecosystems that align perfectly with your corporate identity.",
-    },
-  ];
-
-  const caseStudies = [
-    {
-      logo: hsbcLogo,
-      name: "HSBC Tatawwar",
-      description:
-        "Complemented sustainability goals by engaging tens of thousands of youth in climate action innovation.",
-    },
-    {
-      logo: bankMuscatLogo,
-      name: "Bank Muscat",
-      description:
-        "Enhanced financial literacy efforts by providing citizens with AI-powered tools for budgeting and planning.",
-    },
-    {
-      logo: dctLogo,
-      name: "Abu Dhabi Culture & Tourism",
-      description:
-        "Empowered frontline workers by ensuring consistent knowledge delivery at a massive scale.",
     },
   ];
 
@@ -507,36 +555,46 @@ const AIForCSR = () => {
           </div>
         </section>
 
-        {/* Case Studies Section */}
+        {/* Trusted By Section */}
         <section className="py-16 md:py-24">
           <div className="container">
-            <div className="text-center mb-12">
-              <span className="inline-block px-3 py-1 mb-4 text-sm font-medium text-primary bg-primary/10 rounded-full">
-                Proven Impact
-              </span>
-              <h2 className="section-title">Global Success Stories</h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                See how leading organizations have enhanced their CSR initiatives
-                with our AI-powered platform.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {caseStudies.map((study, index) => (
+            <div className="client-logos py-8" data-aos="fade-up" data-aos-delay="100">
+              <h3 className="text-center text-muted-foreground uppercase text-sm tracking-wider mb-6">
+                Trusted for over 20 years by leading organizations around the world
+              </h3>
+              <div className="relative overflow-hidden">
                 <div
-                  key={index}
-                  className="p-8 rounded-2xl border border-border bg-card card-hover text-center"
+                  className="flex animate-scroll hover:pause-animation"
+                  style={{ width: `${clientLogos.length * 2 * 120}px` }}
                 >
-                  <div className="h-16 flex items-center justify-center mb-6">
-                    <img
-                      src={study.logo}
-                      alt={study.name}
-                      className="max-h-16 max-w-[180px] object-contain dark:brightness-0 dark:invert"
-                    />
-                  </div>
-                  <h3 className="text-xl font-semibold mb-3">{study.name}</h3>
-                  <p className="text-muted-foreground">{study.description}</p>
+                  {clientLogos.map((client, i) => (
+                    <div
+                      key={`first-${i}`}
+                      className="flex-shrink-0 w-32 h-16 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity mx-4"
+                    >
+                      <img
+                        src={client.logo}
+                        alt={`${client.name} logo`}
+                        className="max-h-12 max-w-full object-contain"
+                        style={{ filter: isDarkMode ? "brightness(0) invert(1)" : "none" }}
+                      />
+                    </div>
+                  ))}
+                  {clientLogos.map((client, i) => (
+                    <div
+                      key={`second-${i}`}
+                      className="flex-shrink-0 w-32 h-16 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity mx-4"
+                    >
+                      <img
+                        src={client.logo}
+                        alt={`${client.name} logo`}
+                        className="max-h-12 max-w-full object-contain"
+                        style={{ filter: isDarkMode ? "brightness(0) invert(1)" : "none" }}
+                      />
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         </section>
