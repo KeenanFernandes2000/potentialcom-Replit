@@ -492,6 +492,16 @@ const AIForCSR = () => {
                 </div>
               ))}
             </div>
+            <div className="mt-12 text-center">
+              <Button
+                size="lg"
+                className="text-lg px-8 py-6 group"
+                onClick={() => setShowBookingModal(true)}
+              >
+                Book Free 2026 Strategy Consultation
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </div>
           </div>
         </section>
 
