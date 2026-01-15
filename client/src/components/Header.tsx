@@ -86,6 +86,12 @@ const Header = () => {
                       AI Chatbot
                     </UTMLink>
                     <UTMLink
+                      href="/ai-for-csr"
+                      className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
+                    >
+                      AI for CSR
+                    </UTMLink>
+                    <UTMLink
                       href="/solutions"
                       className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
                     >
@@ -161,6 +167,13 @@ const Header = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 AI Chatbot
+              </UTMLink>
+              <UTMLink
+                href="/ai-for-csr"
+                className="block py-2 text-foreground/80 hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                AI for CSR
               </UTMLink>
               <UTMLink
                 href="/solutions"
