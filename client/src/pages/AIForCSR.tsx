@@ -285,53 +285,47 @@ const AIForCSR = () => {
           </div>
 
           {showLeadForm && (
-            <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-              <div className="bg-card rounded-2xl border border-border p-8 max-w-lg w-full relative">
-                <button
-                  onClick={() => setShowLeadForm(false)}
-                  className="absolute top-4 right-4 text-muted-foreground hover:text-foreground"
-                >
-                  <span className="sr-only">Close</span>
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+            <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+              <div className="bg-card rounded-2xl border border-border overflow-hidden max-w-2xl w-full relative shadow-2xl">
+                <div className="bg-gradient-to-r from-primary/10 to-accent/10 px-6 py-4 border-b border-border flex items-center justify-between">
+                  <div>
+                    <h3 className="text-xl font-bold text-foreground">
+                      Get Your Free Infographic
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      Fill out the form to download instantly
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setShowLeadForm(false)}
+                    className="w-10 h-10 rounded-full bg-background/80 hover:bg-background flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
-                <h3 className="text-2xl font-bold mb-4">
-                  Get Your Free Infographic
-                </h3>
-                <p className="text-muted-foreground mb-6">
-                  Enter your details below to download the AI Impact Lifecycle
-                  infographic.
-                </p>
-                <div className="space-y-4">
-                  <input
-                    type="text"
-                    placeholder="Full Name"
-                    className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                    <span className="sr-only">Close</span>
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <div className="bg-white">
+                  <iframe
+                    width="100%"
+                    height="480"
+                    src="https://forms.office.com/Pages/ResponsePage.aspx?id=R7UL46aeKUK_It9JVKF1M0qx1r7FJBpGtbyoXdWe2tRUQVBDRkg1WFhZRDEwR0hUMDdFNzlGWjZWUC4u&embed=true"
+                    frameBorder="0"
+                    style={{ border: "none", maxWidth: "100%" }}
+                    allowFullScreen
+                    title="Download Infographic Form"
                   />
-                  <input
-                    type="email"
-                    placeholder="Work Email"
-                    className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Company Name"
-                    className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
-                  />
-                  <Button size="lg" className="w-full">
-                    Download Infographic
-                  </Button>
                 </div>
               </div>
             </div>
