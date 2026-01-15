@@ -269,7 +269,7 @@ const AIForCSR = () => {
                   onClick={() => setShowLeadForm(true)}
                 >
                   <Download className="mr-2 h-5 w-5" />
-                  Download Free Infographic
+                  Download a Detailed Infographic for Free
                 </Button>
               </div>
               <div className="lg:col-span-2">
