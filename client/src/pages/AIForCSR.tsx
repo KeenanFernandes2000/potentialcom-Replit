@@ -32,6 +32,7 @@ import teamImage from "@assets/stock_images/diverse_team_busines_ad90320d.jpg";
 import hsbcLogo from "@assets/Customer Logos/HSBC logo.png";
 import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
 import dctLogo from "@assets/Customer Logos/DCT Logo.png";
+import infographicImage from "@assets/Gemini_Generated_Image_puapbnpuapbnpuap_1768466195548.png";
 
 const AIForCSR = () => {
   const [showLeadForm, setShowLeadForm] = useState(false);
@@ -248,27 +249,38 @@ const AIForCSR = () => {
         {/* Lead Magnet Section */}
         <section className="py-16 md:py-24 bg-gradient-to-r from-primary/10 via-accent/20 to-primary/10">
           <div className="container">
-            <div className="max-w-4xl mx-auto text-center">
-              <span className="inline-block px-3 py-1 mb-4 text-sm font-medium text-primary bg-primary/10 rounded-full">
-                Efficiency at Scale
-              </span>
-              <h2 className="section-title">
-                How AI Streamlines the Impact Lifecycle
-              </h2>
-              <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Discover the blueprint for the next generation of CSR. Our
-                downloadable infographic reveals how we use AI to streamline the
-                planning, setup, and deployment of impact programs—allowing you to
-                measure and scale with 10x more efficiency.
-              </p>
-              <Button
-                size="lg"
-                className="text-lg px-8 py-6 group"
-                onClick={() => setShowLeadForm(true)}
-              >
-                <Download className="mr-2 h-5 w-5" />
-                Download Free Infographic
-              </Button>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div className="order-2 lg:order-1">
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border">
+                  <img
+                    src={infographicImage}
+                    alt="AI-Powered CSR: Vision to Impact Infographic"
+                    className="w-full h-auto"
+                  />
+                </div>
+              </div>
+              <div className="order-1 lg:order-2">
+                <span className="inline-block px-3 py-1 mb-4 text-sm font-medium text-primary bg-primary/10 rounded-full">
+                  Efficiency at Scale
+                </span>
+                <h2 className="section-title">
+                  How AI Streamlines the Impact Lifecycle
+                </h2>
+                <p className="text-lg text-muted-foreground mb-8">
+                  Discover the blueprint for the next generation of CSR. Our
+                  downloadable infographic reveals how we use AI to streamline the
+                  planning, setup, and deployment of impact programs—allowing you to
+                  measure and scale with 10x more efficiency.
+                </p>
+                <Button
+                  size="lg"
+                  className="text-lg px-8 py-6 group"
+                  onClick={() => setShowLeadForm(true)}
+                >
+                  <Download className="mr-2 h-5 w-5" />
+                  Download Free Infographic
+                </Button>
+              </div>
             </div>
           </div>
 
