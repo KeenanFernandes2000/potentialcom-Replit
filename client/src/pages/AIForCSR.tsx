@@ -297,12 +297,7 @@ const AIForCSR = () => {
                 <h2 className="section-title">
                   How AI Streamlines the Impact Lifecycle
                 </h2>
-                <p className="text-lg text-muted-foreground mb-8">
-                  Discover the blueprint for the next generation of CSR. Our
-                  downloadable infographic reveals how we use AI to streamline the
-                  planning, setup, and deployment of impact programs—allowing you to
-                  measure and scale with 10x more efficiency.
-                </p>
+                <p className="text-lg text-muted-foreground mb-8">Discover Potential.com's blueprint for the next generation of CSR. Our downloadable infographic reveals how we use AI to streamline the planning, setup, and deployment of impact programs—allowing you to measure and scale with 10x more efficiency.</p>
                 <Button
                   size="lg"
                   className="text-lg px-8 py-6 group"
