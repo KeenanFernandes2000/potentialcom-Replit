@@ -580,12 +580,6 @@ const AIForCSR = () => {
                 </div>
               ))}
             </div>
-            <div className="mt-12 text-center">
-              <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary/10 text-primary font-medium">
-                <Clock className="h-5 w-5" />
-                Deployment in as little as 24 hours
-              </div>
-            </div>
           </div>
         </section>
 
