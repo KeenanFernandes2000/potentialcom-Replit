@@ -3,6 +3,7 @@ import {
   newsletterSubscribers, 
   resourceDownloads,
   veraConsultations,
+  csrInfographicLeads,
   type User, 
   type RegisterUserInput,
   type UpdateProfileInput,
@@ -12,7 +13,9 @@ import {
   type ResourceDownloadInput,
   type PartnerApplicationInput,
   type VeraConsultation,
-  type VeraConsultationInput
+  type VeraConsultationInput,
+  type CsrInfographicLead,
+  type CsrInfographicLeadInput
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, and } from "drizzle-orm";
@@ -44,6 +47,9 @@ export interface IStorage {
   // Vera consultations
   submitVeraConsultation(consultationData: VeraConsultationInput): Promise<VeraConsultation>;
   getVeraConsultationsByEmail(email: string): Promise<VeraConsultation[]>;
+  
+  // CSR Infographic leads
+  submitCsrInfographicLead(leadData: CsrInfographicLeadInput): Promise<CsrInfographicLead>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -308,6 +314,15 @@ export class DatabaseStorage implements IStorage {
     return await db.select()
       .from(veraConsultations)
       .where(eq(veraConsultations.email, email));
+  }
+  
+  // CSR Infographic leads
+  async submitCsrInfographicLead(leadData: CsrInfographicLeadInput): Promise<CsrInfographicLead> {
+    const [lead] = await db.insert(csrInfographicLeads)
+      .values(leadData)
+      .returning();
+    
+    return lead;
   }
 }
 

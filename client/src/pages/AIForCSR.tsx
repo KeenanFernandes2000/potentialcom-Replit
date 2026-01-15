@@ -36,6 +36,56 @@ import infographicImage from "@assets/Gemini_Generated_Image_puapbnpuapbnpuap_17
 
 const AIForCSR = () => {
   const [showLeadForm, setShowLeadForm] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    companyName: "",
+  });
+
+  const downloadUrl = "/assets/downloads/AI-Powered-CSR-Infographic.png";
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.fullName || !formData.email || !formData.companyName) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+    try {
+      const response = await fetch("/api/csr-infographic/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setFormSubmitted(true);
+        
+        const link = document.createElement("a");
+        link.href = downloadUrl;
+        link.download = "AI-Powered-CSR-Infographic.png";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const closeModal = () => {
+    setShowLeadForm(false);
+    setFormSubmitted(false);
+    setFormData({ fullName: "", email: "", companyName: "" });
+  };
 
   useEffect(() => {
     if (typeof window !== "undefined" && (window as any).AOS) {
@@ -288,7 +338,7 @@ const AIForCSR = () => {
             <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
               <div className="bg-card rounded-2xl border border-border p-8 max-w-lg w-full relative">
                 <button
-                  onClick={() => setShowLeadForm(false)}
+                  onClick={closeModal}
                   className="absolute top-4 right-4 text-muted-foreground hover:text-foreground"
                 >
                   <span className="sr-only">Close</span>
@@ -306,33 +356,74 @@ const AIForCSR = () => {
                     />
                   </svg>
                 </button>
-                <h3 className="text-2xl font-bold mb-4">
-                  Get Your Free Infographic
-                </h3>
-                <p className="text-muted-foreground mb-6">
-                  Enter your details below to download the AI Impact Lifecycle
-                  infographic.
-                </p>
-                <div className="space-y-4">
-                  <input
-                    type="text"
-                    placeholder="Full Name"
-                    className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
-                  />
-                  <input
-                    type="email"
-                    placeholder="Work Email"
-                    className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Company Name"
-                    className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
-                  />
-                  <Button size="lg" className="w-full">
-                    Download Infographic
-                  </Button>
-                </div>
+                
+                {!formSubmitted ? (
+                  <>
+                    <h3 className="text-2xl font-bold mb-4">
+                      Get Your Free Infographic
+                    </h3>
+                    <p className="text-muted-foreground mb-6">
+                      Enter your details below to download the AI Impact Lifecycle
+                      infographic.
+                    </p>
+                    <form onSubmit={handleFormSubmit} className="space-y-4">
+                      <input
+                        type="text"
+                        placeholder="Full Name"
+                        value={formData.fullName}
+                        onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                        required
+                        className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                      />
+                      <input
+                        type="email"
+                        placeholder="Work Email"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        required
+                        className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Company Name"
+                        value={formData.companyName}
+                        onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+                        required
+                        className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:outline-none focus:ring-2 focus:ring-primary"
+                      />
+                      <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
+                        {isSubmitting ? "Submitting..." : "Download Infographic"}
+                      </Button>
+                    </form>
+                  </>
+                ) : (
+                  <div className="text-center py-6">
+                    <div className="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mx-auto mb-4">
+                      <svg className="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <h3 className="text-2xl font-bold mb-2">
+                      Thank You!
+                    </h3>
+                    <p className="text-muted-foreground mb-6">
+                      Your download should start automatically. If it doesn't, click the link below.
+                    </p>
+                    <a
+                      href={downloadUrl}
+                      download="AI-Powered-CSR-Infographic.png"
+                      className="inline-flex items-center gap-2 text-primary hover:underline font-medium"
+                    >
+                      <Download className="h-5 w-5" />
+                      Download Infographic
+                    </a>
+                    <div className="mt-6">
+                      <Button variant="outline" onClick={closeModal}>
+                        Close
+                      </Button>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           )}

@@ -40,6 +40,15 @@ export const resourceDownloads = pgTable("resource_downloads", {
   downloadedAt: timestamp("downloaded_at").defaultNow(),
 });
 
+// CSR Infographic download leads
+export const csrInfographicLeads = pgTable("csr_infographic_leads", {
+  id: serial("id").primaryKey(),
+  fullName: varchar("full_name", { length: 255 }).notNull(),
+  email: varchar("email", { length: 255 }).notNull(),
+  companyName: varchar("company_name", { length: 255 }).notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 // Vera consultation form submissions
 export const veraConsultations = pgTable("vera_consultations", {
   id: serial("id").primaryKey(),
@@ -108,6 +117,12 @@ export const veraConsultationSchema = createInsertSchema(veraConsultations).pick
   companyWebsite: true,
 });
 
+export const csrInfographicLeadSchema = createInsertSchema(csrInfographicLeads).pick({
+  fullName: true,
+  email: true,
+  companyName: true,
+});
+
 // Types
 export type RegisterUserInput = z.infer<typeof registerUserSchema>;
 export type LoginUserInput = z.infer<typeof loginUserSchema>;
@@ -121,3 +136,5 @@ export type User = typeof users.$inferSelect;
 export type NewsletterSubscriber = typeof newsletterSubscribers.$inferSelect;
 export type ResourceDownload = typeof resourceDownloads.$inferSelect;
 export type VeraConsultation = typeof veraConsultations.$inferSelect;
+export type CsrInfographicLead = typeof csrInfographicLeads.$inferSelect;
+export type CsrInfographicLeadInput = z.infer<typeof csrInfographicLeadSchema>;

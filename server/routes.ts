@@ -10,6 +10,7 @@ import {
   resourceDownloadSchema,
   partnerApplicationSchema,
   veraConsultationSchema,
+  csrInfographicLeadSchema,
 } from "@shared/schema";
 import { proxyWordPressRequest } from "./wp-proxy";
 
@@ -320,6 +321,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
         error: error instanceof Error ? error.message : String(error),
       });
     }
+  });
+
+  // CSR Infographic lead capture
+  app.post("/api/csr-infographic/submit", async (req, res) => {
+    try {
+      const validatedData = csrInfographicLeadSchema.parse(req.body);
+
+      const lead = await storage.submitCsrInfographicLead(validatedData);
+
+      res.status(201).json({
+        message: "Thank you! Your infographic is ready to download.",
+        lead,
+        downloadUrl: "/assets/downloads/AI-Powered-CSR-Infographic.png",
+      });
+    } catch (error) {
+      console.error("CSR infographic lead submission error:", error);
+      res.status(400).json({
+        message: "Invalid submission data",
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
+  });
+
+  // Serve CSR infographic download
+  app.get("/assets/downloads/AI-Powered-CSR-Infographic.png", (req, res) => {
+    const filePath = path.resolve(
+      process.cwd(),
+      "public/assets/downloads",
+      "AI-Powered-CSR-Infographic.png"
+    );
+    res.setHeader("Content-Type", "image/png");
+    res.setHeader(
+      "Content-Disposition",
+      "attachment; filename=AI-Powered-CSR-Infographic.png"
+    );
+    res.sendFile(filePath);
   });
 
   // Resource download tracking
