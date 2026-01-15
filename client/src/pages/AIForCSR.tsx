@@ -36,6 +36,7 @@ import infographicImage from "@assets/Gemini_Generated_Image_puapbnpuapbnpuap_17
 
 const AIForCSR = () => {
   const [showLeadForm, setShowLeadForm] = useState(false);
+  const [showBookingModal, setShowBookingModal] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -203,9 +204,7 @@ const AIForCSR = () => {
                   <Button
                     size="lg"
                     className="text-lg px-8 py-6 group"
-                    onClick={() =>
-                      window.open("https://potential.com/demo", "_blank")
-                    }
+                    onClick={() => setShowBookingModal(true)}
                   >
                     Book Free 2026 Strategy Consultation
                     <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -607,9 +606,7 @@ const AIForCSR = () => {
                 <Button
                   size="lg"
                   className="text-lg px-8 py-6 group"
-                  onClick={() =>
-                    window.open("https://potential.com/demo", "_blank")
-                  }
+                  onClick={() => setShowBookingModal(true)}
                 >
                   Book Free 2026 Strategy Consultation
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -618,6 +615,52 @@ const AIForCSR = () => {
             </div>
           </div>
         </section>
+
+        {showBookingModal && (
+          <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+            <div className="bg-card rounded-2xl border border-border shadow-2xl w-full max-w-4xl h-[85vh] relative flex flex-col overflow-hidden">
+              <div className="flex items-center justify-between p-6 border-b border-border">
+                <div>
+                  <h3 className="text-2xl font-bold text-foreground">
+                    Book Your Free Strategy Consultation
+                  </h3>
+                  <p className="text-muted-foreground mt-1">
+                    Select a time that works best for you
+                  </p>
+                </div>
+                <button
+                  onClick={() => setShowBookingModal(false)}
+                  className="w-10 h-10 rounded-full bg-muted/50 hover:bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <span className="sr-only">Close</span>
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div className="flex-1 bg-white">
+                <iframe
+                  src="https://outlook.office.com/book/LetsDiscussYourCSRStrategy@potential.com/?ismsaljsauthenabled"
+                  width="100%"
+                  height="100%"
+                  scrolling="yes"
+                  style={{ border: 0 }}
+                  title="Book a consultation"
+                />
+              </div>
+            </div>
+          </div>
+        )}
       </main>
       <Footer />
     </div>
