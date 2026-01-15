@@ -198,11 +198,7 @@ const AIForCSR = () => {
                     From Passive CSR to Active Empowerment.
                   </span>
                 </h1>
-                <p className="text-lg md:text-xl text-muted-foreground mb-8">
-                  Don't replace your CSR vision—amplify it. Add a modular layer of
-                  AI-driven tools to your existing initiatives to turn community
-                  challenges into measurable innovation opportunities.
-                </p>
+                <p className="text-lg md:text-xl text-muted-foreground mb-8">Amplify your CSR vision today. Add a modular layer of AI-driven tools to your existing initiatives to turn community challenges into measurable innovation opportunities.</p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button
                     size="lg"
