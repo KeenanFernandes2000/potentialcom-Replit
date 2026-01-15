@@ -193,9 +193,9 @@ const AIForCSR = () => {
               <div>
                 <span className="inline-block px-4 py-2 mb-6 text-sm font-medium text-primary bg-primary/10 rounded-full">AI for CSR</span>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-                  Supercharge Your Social Impact:{" "}
+                  Scale Your Social Impact:{" "}
                   <span className="gradient-text">
-                    The AI-Powered Empowerment Ecosystem
+                    From Passive CSR to Active Empowerment.
                   </span>
                 </h1>
                 <p className="text-lg md:text-xl text-muted-foreground mb-8">
