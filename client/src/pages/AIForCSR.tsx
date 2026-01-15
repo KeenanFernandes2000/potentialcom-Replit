@@ -249,17 +249,8 @@ const AIForCSR = () => {
         {/* Lead Magnet Section */}
         <section className="py-16 md:py-24 bg-gradient-to-r from-primary/10 via-accent/20 to-primary/10">
           <div className="container">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div className="order-2 lg:order-1">
-                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border">
-                  <img
-                    src={infographicImage}
-                    alt="AI-Powered CSR: Vision to Impact Infographic"
-                    className="w-full h-auto"
-                  />
-                </div>
-              </div>
-              <div className="order-1 lg:order-2">
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
+              <div className="lg:col-span-3">
                 <span className="inline-block px-3 py-1 mb-4 text-sm font-medium text-primary bg-primary/10 rounded-full">
                   Efficiency at Scale
                 </span>
@@ -280,6 +271,15 @@ const AIForCSR = () => {
                   <Download className="mr-2 h-5 w-5" />
                   Download Free Infographic
                 </Button>
+              </div>
+              <div className="lg:col-span-2">
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border max-w-sm ml-auto">
+                  <img
+                    src={infographicImage}
+                    alt="AI-Powered CSR: Vision to Impact Infographic"
+                    className="w-full h-auto"
+                  />
+                </div>
               </div>
             </div>
           </div>
