@@ -56,6 +56,7 @@ import visaLogo from "@assets/Customer Logos/Visa logo.png";
 import wfzoLogo from "@assets/Customer Logos/WFZO logo.png";
 import intelLogo from "@assets/Customer Logos/intel logo.png";
 import pitchInfographic from "@assets/Pitch_Infographic_1_1770792455350.png";
+import pitchInfographic2 from "@assets/Pitch_Infographic_2_1770795115206.png";
 
 const clientLogos = [
   { name: "ADGM", logo: adgmLogo },
@@ -513,38 +514,53 @@ const Home = () => {
         {/* Who It's For */}
         <section className="py-24 bg-background">
           <div className="container">
-            <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-16" data-aos="fade-up">
-                <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-                  Who It's For
-                </div>
-                <h2 className="section-title text-center mb-6">
-                  Designed for Organizations That Need{" "}
-                  <span className="text-primary">Measurable Impact at Scale</span>
-                </h2>
+            <div className="mb-10" data-aos="fade-up">
+              <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+                Who It's For
               </div>
+              <h2 className="section-title">
+                Designed for Organizations That Need{" "}
+                <span className="text-primary">Measurable Impact at Scale</span>
+              </h2>
+            </div>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                {audiences.map((item, index) => (
-                  <div
-                    key={index}
-                    className="glass-effect border border-border p-8 rounded-xl card-hover text-center"
-                    data-aos="fade-up"
-                    data-aos-delay={index * 80}
-                  >
-                    <div className="inline-flex items-center justify-center h-14 w-14 rounded-xl bg-primary/10 text-primary mb-4">
-                      <item.icon className="h-7 w-7" />
+            <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start">
+              <div className="lg:w-5/12" data-aos="fade-right">
+                <div className="grid grid-cols-2 gap-4 mb-8">
+                  {audiences.map((item, index) => (
+                    <div
+                      key={index}
+                      className="glass-effect border border-border p-5 rounded-xl card-hover text-center"
+                      data-aos="fade-up"
+                      data-aos-delay={index * 80}
+                    >
+                      <div className="inline-flex items-center justify-center h-12 w-12 rounded-xl bg-primary/10 text-primary mb-3">
+                        <item.icon className="h-6 w-6" />
+                      </div>
+                      <p className="text-foreground font-semibold text-sm">{item.label}</p>
                     </div>
-                    <p className="text-foreground font-semibold">{item.label}</p>
-                  </div>
-                ))}
+                  ))}
+                </div>
+
+                <div className="rounded-xl border-l-4 border-primary bg-primary/5 p-5">
+                  <p className="text-lg font-semibold text-primary">
+                    If your objective is structured, scalable empowerment — this platform was built for you.
+                  </p>
+                </div>
               </div>
 
-              <div className="text-center" data-aos="fade-up">
-                <p className="text-lg text-muted-foreground">
-                  If your objective is structured, scalable empowerment — this platform
-                  was built for you.
-                </p>
+              <div className="lg:w-7/12 relative" data-aos="fade-up" data-aos-delay="200">
+                <div className="relative mx-auto">
+                  <div className="absolute -top-5 -left-5 w-20 h-20 bg-primary/30 rounded-full blur-xl"></div>
+                  <div className="absolute -bottom-8 -right-8 w-28 h-28 bg-secondary/30 rounded-full blur-xl"></div>
+                  <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border border-border">
+                    <img
+                      src={pitchInfographic2}
+                      alt="Potential.com - Empowering People and Organizations at Scale"
+                      className="w-full h-auto"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
