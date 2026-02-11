@@ -1,0 +1,425 @@
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { SEO } from "@/components/SEO";
+import { Button } from "@/components/ui/button";
+import { useEffect, useState, useRef } from "react";
+import {
+  CheckCircle,
+  ArrowRight,
+  Rocket,
+  BarChart3,
+  Users,
+  Globe,
+  Trophy,
+  Heart,
+  Shield,
+  TrendingUp,
+  Sparkles,
+} from "lucide-react";
+
+import heroImage from "@assets/year-of-family/hero-family-uae.png";
+import opportunityImage from "@assets/year-of-family/opportunity-puzzle.png";
+import solutionImage from "@assets/year-of-family/solution-dashboard.png";
+import impactImage from "@assets/year-of-family/impact-uae-map.png";
+import strategicImage from "@assets/year-of-family/strategic-families.png";
+
+const useInView = (options?: IntersectionObserverInit) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true);
+        observer.disconnect();
+      }
+    }, { threshold: 0.15, ...options });
+
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return { ref, isVisible };
+};
+
+const FadeInSection = ({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) => {
+  const { ref, isVisible } = useInView();
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"} ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+};
+
+const YearOfFamily = () => {
+  const [showBookingModal, setShowBookingModal] = useState(false);
+
+  const solutionFeatures = [
+    { icon: Rocket, text: "Launch a fully branded Year of Family platform" },
+    { icon: Sparkles, text: "Provide AI-powered family empowerment tools" },
+    { icon: Heart, text: "Offer structured tracks: Financial Stability, Wellbeing, Parenting, Entrepreneurship" },
+    { icon: Trophy, text: "Run competitions & recognition programs" },
+    { icon: BarChart3, text: "Track participation and engagement in real time" },
+  ];
+
+  const impactPoints = [
+    { icon: Users, text: "Engage thousands of families" },
+    { icon: BarChart3, text: "Track behavioral participation" },
+    { icon: Globe, text: "Align with national priorities" },
+    { icon: Shield, text: "Strengthen ESG reporting" },
+    { icon: TrendingUp, text: "Build a long-term digital legacy" },
+  ];
+
+  return (
+    <div className="min-h-screen bg-background">
+      <SEO
+        title="Year of Family | Launch a National Digital Empowerment Initiative | Potential.com"
+        description="Lead the Year of Family with a measurable, AI-powered digital initiative that empowers UAE families at national scale. Launch your branded platform or sponsor the national digital ecosystem."
+        keywords="Year of Family UAE, family empowerment, national initiative, AI platform, digital infrastructure, ESG, UAE families, community impact"
+      />
+      <Header />
+      <main className="pt-20">
+
+        {/* 1 - HERO SECTION */}
+        <section className="relative py-24 md:py-36 overflow-hidden">
+          <div className="absolute inset-0">
+            <img
+              src={heroImage}
+              alt="UAE families at golden hour"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
+          </div>
+          <div className="container relative z-10">
+            <div className="max-w-3xl">
+              <FadeInSection>
+                <span className="inline-block px-4 py-2 mb-6 text-sm font-semibold text-amber-300 bg-amber-500/15 rounded-full border border-amber-400/30">
+                  Year of Family 2025
+                </span>
+              </FadeInSection>
+              <FadeInSection delay={100}>
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+                  Lead the Year of Family.{" "}
+                  <span className="text-amber-300">
+                    Don't Just Participate in It.
+                  </span>
+                </h1>
+              </FadeInSection>
+              <FadeInSection delay={200}>
+                <p className="text-lg md:text-xl text-gray-200 mb-8 leading-relaxed max-w-2xl">
+                  Launch or sponsor a measurable, AI-powered digital initiative that empowers UAE families at national scale — fully aligned with the Year of Family priorities.
+                </p>
+              </FadeInSection>
+              <FadeInSection delay={300}>
+                <div className="flex flex-col sm:flex-row gap-3 mb-8">
+                  <div className="flex items-center gap-2 text-gray-200">
+                    <CheckCircle className="h-5 w-5 text-amber-400 flex-shrink-0" />
+                    <span>Launch your own branded initiative</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-gray-200">
+                    <CheckCircle className="h-5 w-5 text-amber-400 flex-shrink-0" />
+                    <span>Engage families across the UAE</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-gray-200">
+                    <CheckCircle className="h-5 w-5 text-amber-400 flex-shrink-0" />
+                    <span>Track real, measurable impact</span>
+                  </div>
+                </div>
+              </FadeInSection>
+              <FadeInSection delay={400}>
+                <Button
+                  size="lg"
+                  className="text-lg px-8 py-6 bg-amber-500 hover:bg-amber-600 text-black font-semibold group"
+                  onClick={() => setShowBookingModal(true)}
+                >
+                  Book Your Free Strategy Demo
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+                <p className="text-sm text-gray-400 mt-3">
+                  15-minute executive walkthrough. No obligation.
+                </p>
+                <p className="text-sm text-amber-400/80 mt-1 font-medium">
+                  Limited founding partner slots available.
+                </p>
+              </FadeInSection>
+            </div>
+          </div>
+        </section>
+
+        {/* 2 - THE OPPORTUNITY */}
+        <section className="py-20 md:py-28 bg-background">
+          <div className="container">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <FadeInSection>
+                <div>
+                  <span className="inline-block px-4 py-2 mb-6 text-sm font-medium text-primary bg-primary/10 rounded-full">
+                    The Opportunity
+                  </span>
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6 leading-tight">
+                    The Year of Family Is a{" "}
+                    <span className="gradient-text">National Moment of Action</span>
+                  </h2>
+                  <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
+                    Many organizations want to contribute meaningfully — but most initiatives remain events, campaigns, or workshops without measurable long-term impact.
+                  </p>
+                  <div className="p-6 rounded-2xl bg-primary/5 border border-primary/10">
+                    <p className="text-lg font-semibold text-foreground">
+                      The missing piece is structured digital infrastructure.
+                    </p>
+                  </div>
+                </div>
+              </FadeInSection>
+              <FadeInSection delay={200}>
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border">
+                  <img
+                    src={opportunityImage}
+                    alt="From fragmented initiatives to unified digital platform"
+                    className="w-full h-auto"
+                  />
+                </div>
+              </FadeInSection>
+            </div>
+          </div>
+        </section>
+
+        {/* 3 - THE SOLUTION */}
+        <section className="py-20 md:py-28 bg-secondary/5">
+          <div className="container">
+            <FadeInSection>
+              <div className="text-center mb-16">
+                <span className="inline-block px-4 py-2 mb-6 text-sm font-medium text-primary bg-primary/10 rounded-full">
+                  The Solution
+                </span>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
+                  The Digital Infrastructure Behind the{" "}
+                  <span className="gradient-text">Year of Family</span>
+                </h2>
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                  Potential.com enables your organization to drive measurable family empowerment at scale.
+                </p>
+              </div>
+            </FadeInSection>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-16">
+              <FadeInSection>
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border">
+                  <img
+                    src={solutionImage}
+                    alt="Digital dashboard with engagement analytics"
+                    className="w-full h-auto"
+                  />
+                </div>
+              </FadeInSection>
+              <FadeInSection delay={150}>
+                <div className="space-y-5">
+                  {solutionFeatures.map((feature, index) => (
+                    <div key={index} className="flex items-start gap-4 p-4 rounded-xl bg-card border border-border hover:shadow-md transition-shadow">
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <feature.icon className="h-5 w-5 text-primary" />
+                      </div>
+                      <p className="text-foreground font-medium pt-1.5">{feature.text}</p>
+                    </div>
+                  ))}
+                </div>
+              </FadeInSection>
+            </div>
+
+            <FadeInSection>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div className="p-8 rounded-2xl bg-card border-2 border-primary/20 hover:border-primary/40 transition-colors text-center">
+                  <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                    <Rocket className="h-7 w-7 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-bold text-foreground mb-2">Option A</h3>
+                  <p className="text-lg font-semibold text-primary mb-2">Launch Your Own Branded Platform</p>
+                  <p className="text-muted-foreground text-sm">Custom-branded digital ecosystem under your organization's identity</p>
+                </div>
+                <div className="p-8 rounded-2xl bg-card border-2 border-amber-500/20 hover:border-amber-500/40 transition-colors text-center">
+                  <div className="w-14 h-14 rounded-xl bg-amber-500/10 flex items-center justify-center mx-auto mb-4">
+                    <Globe className="h-7 w-7 text-amber-500" />
+                  </div>
+                  <h3 className="text-xl font-bold text-foreground mb-2">Option B</h3>
+                  <p className="text-lg font-semibold text-amber-500 mb-2">Sponsor the National Digital Ecosystem</p>
+                  <p className="text-muted-foreground text-sm">Contribute to the national platform and gain visibility at scale</p>
+                </div>
+              </div>
+            </FadeInSection>
+
+            {/* Mid-page CTA */}
+            <FadeInSection>
+              <div className="text-center mt-16">
+                <Button
+                  size="lg"
+                  className="text-lg px-8 py-6 group"
+                  onClick={() => setShowBookingModal(true)}
+                >
+                  Book Your Free Strategy Demo
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </div>
+            </FadeInSection>
+          </div>
+        </section>
+
+        {/* 4 - THE IMPACT */}
+        <section className="py-20 md:py-28 bg-background">
+          <div className="container">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              <FadeInSection>
+                <div>
+                  <span className="inline-block px-4 py-2 mb-6 text-sm font-medium text-primary bg-primary/10 rounded-full">
+                    The Impact
+                  </span>
+                  <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-8 leading-tight">
+                    From Awareness to{" "}
+                    <span className="gradient-text">Measurable Empowerment</span>
+                  </h2>
+                  <div className="space-y-4 mb-10">
+                    {impactPoints.map((point, index) => (
+                      <div key={index} className="flex items-center gap-4">
+                        <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                          <point.icon className="h-5 w-5 text-primary" />
+                        </div>
+                        <p className="text-lg text-foreground font-medium">{point.text}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="p-6 rounded-2xl bg-gradient-to-r from-primary/5 to-amber-500/5 border border-primary/10">
+                    <p className="text-lg font-bold text-foreground mb-1">This is not an event.</p>
+                    <p className="text-lg font-bold text-primary">It is national infrastructure.</p>
+                  </div>
+                </div>
+              </FadeInSection>
+              <FadeInSection delay={200}>
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border">
+                  <img
+                    src={impactImage}
+                    alt="Impact visualization across UAE emirates"
+                    className="w-full h-auto"
+                  />
+                </div>
+              </FadeInSection>
+            </div>
+          </div>
+        </section>
+
+        {/* 5 - STRATEGIC POSITIONING */}
+        <section className="relative py-24 md:py-32 overflow-hidden">
+          <div className="absolute inset-0">
+            <img
+              src={strategicImage}
+              alt="UAE families standing confidently"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/65 to-black/50"></div>
+          </div>
+          <div className="container relative z-10">
+            <FadeInSection>
+              <div className="max-w-3xl mx-auto text-center">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-8 leading-tight">
+                  How Will Your Organization Be Remembered in the{" "}
+                  <span className="text-amber-300">Year of Family?</span>
+                </h2>
+                <p className="text-xl text-gray-200 mb-4">
+                  Move from participation to leadership.
+                </p>
+                <p className="text-lg text-gray-300 mb-10 max-w-xl mx-auto">
+                  Empower families. Strengthen communities. Support national stability.
+                </p>
+                <Button
+                  size="lg"
+                  className="text-lg px-8 py-6 bg-amber-500 hover:bg-amber-600 text-black font-semibold group"
+                  onClick={() => setShowBookingModal(true)}
+                >
+                  Book Your Free Strategy Demo
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </div>
+            </FadeInSection>
+          </div>
+        </section>
+
+        {/* 6 - FINAL CTA */}
+        <section className="py-20 md:py-28 bg-gradient-to-br from-primary/5 via-background to-amber-500/5">
+          <div className="container">
+            <FadeInSection>
+              <div className="max-w-4xl mx-auto text-center">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
+                  Let's Design Your{" "}
+                  <span className="gradient-text">Year of Family Initiative</span>
+                </h2>
+                <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto">
+                  Book a free strategy session to explore how your organization can launch or sponsor a measurable national empowerment program.
+                </p>
+                <Button
+                  size="lg"
+                  className="text-lg px-10 py-7 bg-amber-500 hover:bg-amber-600 text-black font-semibold group shadow-lg shadow-amber-500/20"
+                  onClick={() => setShowBookingModal(true)}
+                >
+                  Book Free Strategy Demo
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+                <p className="text-sm text-muted-foreground mt-4">
+                  Executive-level consultation. Customized to your entity.
+                </p>
+              </div>
+            </FadeInSection>
+          </div>
+        </section>
+
+        {showBookingModal && (
+          <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+            <div className="bg-card rounded-2xl border border-border shadow-2xl w-full max-w-4xl h-[85vh] relative flex flex-col overflow-hidden">
+              <div className="flex items-center justify-between p-6 border-b border-border">
+                <div>
+                  <h3 className="text-2xl font-bold text-foreground">
+                    Book Your Free Strategy Demo
+                  </h3>
+                  <p className="text-muted-foreground mt-1">
+                    Select a time that works best for you
+                  </p>
+                </div>
+                <button
+                  onClick={() => setShowBookingModal(false)}
+                  className="w-10 h-10 rounded-full bg-muted/50 hover:bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <span className="sr-only">Close</span>
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div className="flex-1 bg-white">
+                <iframe
+                  src="https://outlook.office.com/book/LetsDiscussYourCSRStrategy@potential.com/?ismsaljsauthenabled"
+                  width="100%"
+                  height="100%"
+                  scrolling="yes"
+                  style={{ border: 0 }}
+                  title="Book a strategy demo"
+                />
+              </div>
+            </div>
+          </div>
+        )}
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
+export default YearOfFamily;

@@ -31,6 +31,7 @@ import Demo from "@/pages/Demo";
 import Lumi from "@/pages/Lumi";
 import AIForCSR from "@/pages/AIForCSR";
 import AIAgents from "@/pages/AIAgents";
+import YearOfFamily from "@/pages/YearOfFamily";
 
 function Router() {
   return (
@@ -49,6 +50,7 @@ function Router() {
       <Route path="/lumi" component={Lumi} />
       <Route path="/ai-for-csr" component={AIForCSR} />
       <Route path="/ai-agents" component={AIAgents} />
+      <Route path="/year-of-family" component={YearOfFamily} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
       <Route path="/profile" component={Profile} />
