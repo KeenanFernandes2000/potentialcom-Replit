@@ -136,7 +136,7 @@ const YearOfFamily = () => {
                   className="text-lg px-8 py-6 bg-amber-500 hover:bg-amber-600 text-black font-semibold group"
                   onClick={() => setShowBookingModal(true)}
                 >
-                  Book Your Free Strategy Demo
+                  Book Free Demo
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
                 <p className="text-sm text-gray-400 mt-3">
@@ -257,7 +257,7 @@ const YearOfFamily = () => {
                   className="text-lg px-8 py-6 group"
                   onClick={() => setShowBookingModal(true)}
                 >
-                  Book Your Free Strategy Demo
+                  Book Free Demo
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </div>
@@ -335,7 +335,7 @@ const YearOfFamily = () => {
                   className="text-lg px-8 py-6 bg-amber-500 hover:bg-amber-600 text-black font-semibold group"
                   onClick={() => setShowBookingModal(true)}
                 >
-                  Book Your Free Strategy Demo
+                  Book Free Demo
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </div>
@@ -360,7 +360,7 @@ const YearOfFamily = () => {
                   className="text-lg px-10 py-7 bg-amber-500 hover:bg-amber-600 text-black font-semibold group shadow-lg shadow-amber-500/20"
                   onClick={() => setShowBookingModal(true)}
                 >
-                  Book Free Strategy Demo
+                  Book Free Demo
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
                 <p className="text-sm text-muted-foreground mt-4">
@@ -377,7 +377,7 @@ const YearOfFamily = () => {
               <div className="flex items-center justify-between p-6 border-b border-border">
                 <div>
                   <h3 className="text-2xl font-bold text-foreground">
-                    Book Your Free Strategy Demo
+                    Book Free Demo
                   </h3>
                   <p className="text-muted-foreground mt-1">
                     Select a time that works best for you
