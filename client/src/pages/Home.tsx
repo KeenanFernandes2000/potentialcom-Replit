@@ -121,7 +121,7 @@ const audiences = [
   { icon: Briefcase, label: "Large Enterprises" },
 ];
 
-const CTABanner = ({ message }: { message: string }) => (
+const CTABanner = ({ message, onBookDemo }: { message: string; onBookDemo: () => void }) => (
   <section className="py-16 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #0B1846 0%, #1a2a6c 40%, #8844DD 100%)" }}>
     <div className="container relative z-10">
       <div className="max-w-3xl mx-auto text-center" data-aos="fade-up">
@@ -131,17 +131,57 @@ const CTABanner = ({ message }: { message: string }) => (
         <Button
           size="lg"
           className="rounded-full bg-white text-[#0B1846] hover:bg-white/90 font-semibold px-10 py-6 text-lg shadow-lg"
-          onClick={() => navigateWithUTM("/demo")}
+          onClick={onBookDemo}
         >
-          Book Free Demo <ArrowRight className="ml-2 h-5 w-5" />
+          Request Free Demo <ArrowRight className="ml-2 h-5 w-5" />
         </Button>
       </div>
     </div>
   </section>
 );
 
+const BookingModal = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
+  if (!open) return null;
+  return (
+    <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+      <div className="bg-card rounded-2xl border border-border shadow-2xl w-full max-w-4xl h-[85vh] relative flex flex-col overflow-hidden">
+        <div className="flex items-center justify-between p-6 border-b border-border">
+          <div>
+            <h3 className="text-2xl font-bold text-foreground">
+              Book Your Free Strategy Consultation
+            </h3>
+            <p className="text-muted-foreground mt-1">
+              Select a time that works best for you
+            </p>
+          </div>
+          <button
+            onClick={onClose}
+            className="w-10 h-10 rounded-full bg-muted/50 hover:bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <span className="sr-only">Close</span>
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div className="flex-1 bg-white">
+          <iframe
+            src="https://outlook.office.com/book/LetsDiscussYourCSRStrategy@potential.com/?ismsaljsauthenabled"
+            width="100%"
+            height="100%"
+            scrolling="yes"
+            style={{ border: 0 }}
+            title="Book a consultation"
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Home = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [showBookingModal, setShowBookingModal] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined" && (window as any).AOS) {
@@ -218,7 +258,7 @@ const Home = () => {
                   <Button
                     size="lg"
                     className="rounded-full bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg"
-                    onClick={() => navigateWithUTM("/demo")}
+                    onClick={() => setShowBookingModal(true)}
                   >
                     Request Free Demo <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
@@ -421,7 +461,7 @@ const Home = () => {
           </div>
         </section>
 
-        <CTABanner message="We unify education, engagement, AI guidance, performance tracking, and ecosystem collaboration into one intelligent platform." />
+        <CTABanner message="We unify education, engagement, AI guidance, performance tracking, and ecosystem collaboration into one intelligent platform." onBookDemo={() => setShowBookingModal(true)} />
 
         {/* AI at the Core */}
         <section className="py-24 bg-background">
@@ -460,7 +500,7 @@ const Home = () => {
           </div>
         </section>
 
-        <CTABanner message="Run national or enterprise-scale initiatives with lean teams — without sacrificing quality." />
+        <CTABanner message="Run national or enterprise-scale initiatives with lean teams — without sacrificing quality." onBookDemo={() => setShowBookingModal(true)} />
 
         {/* Built for Scale & Speed */}
         <section className="py-24 bg-muted/50 dark:bg-secondary/10">
@@ -566,7 +606,7 @@ const Home = () => {
           </div>
         </section>
 
-        <CTABanner message="LMS platforms teach. CRMs manage. Potential.com builds AI-powered empowerment ecosystems." />
+        <CTABanner message="LMS platforms teach. CRMs manage. Potential.com builds AI-powered empowerment ecosystems." onBookDemo={() => setShowBookingModal(true)} />
 
         {/* Final CTA */}
         <section className="py-24 bg-gradient-to-br from-primary/5 via-background to-accent/10">
@@ -584,14 +624,15 @@ const Home = () => {
                 <Button
                   size="lg"
                   className="rounded-full bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg"
-                  onClick={() => navigateWithUTM("/demo")}
+                  onClick={() => setShowBookingModal(true)}
                 >
-                  Request a Demo <ArrowRight className="ml-2 h-5 w-5" />
+                  Request Free Demo <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </div>
             </div>
           </div>
         </section>
+        <BookingModal open={showBookingModal} onClose={() => setShowBookingModal(false)} />
       </main>
       <Footer />
     </div>
