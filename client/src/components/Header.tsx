@@ -92,6 +92,12 @@ const Header = () => {
                       AI for CSR
                     </UTMLink>
                     <UTMLink
+                      href="/ai-agents"
+                      className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
+                    >
+                      AI Agents
+                    </UTMLink>
+                    <UTMLink
                       href="/solutions"
                       className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
                     >
@@ -174,6 +180,13 @@ const Header = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 AI for CSR
+              </UTMLink>
+              <UTMLink
+                href="/ai-agents"
+                className="block py-2 text-foreground/80 hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                AI Agents
               </UTMLink>
               <UTMLink
                 href="/solutions"

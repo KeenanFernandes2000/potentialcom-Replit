@@ -30,6 +30,7 @@ import UseCases from "@/pages/UseCases";
 import Demo from "@/pages/Demo";
 import Lumi from "@/pages/Lumi";
 import AIForCSR from "@/pages/AIForCSR";
+import AIAgents from "@/pages/AIAgents";
 
 function Router() {
   return (
@@ -47,6 +48,7 @@ function Router() {
       <Route path="/demo" component={Demo} />
       <Route path="/lumi" component={Lumi} />
       <Route path="/ai-for-csr" component={AIForCSR} />
+      <Route path="/ai-agents" component={AIAgents} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
       <Route path="/profile" component={Profile} />

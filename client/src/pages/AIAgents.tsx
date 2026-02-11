@@ -1,0 +1,80 @@
+import Header from "@/components/Header";
+import Hero from "@/components/sections/Hero";
+import Benefits from "@/components/sections/Benefits";
+import Agents from "@/components/sections/Agents";
+import Start from "@/components/sections/Start";
+import Vera from "@/components/sections/Vera";
+import Whitepaper from "@/components/sections/Whitepaper";
+import Footer from "@/components/Footer";
+import { SEO } from "@/components/SEO";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Rocket } from "lucide-react";
+import { scrollToSection } from "@/lib/animations";
+
+const AIAgents = () => {
+  const [showMobileCTA, setShowMobileCTA] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && (window as any).AOS) {
+      (window as any).AOS.refresh();
+    }
+
+    const handleHashScroll = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const sectionId = hash.replace("#", "");
+        const element = document.getElementById(sectionId);
+        if (element) {
+          setTimeout(() => {
+            const offsetTop =
+              element.getBoundingClientRect().top + window.scrollY - 80;
+            window.scrollTo({
+              top: offsetTop,
+              behavior: "smooth",
+            });
+          }, 100);
+        }
+      }
+    };
+
+    handleHashScroll();
+
+    const handleScroll = () => {
+      setShowMobileCTA(window.scrollY > 300);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <div className="font-inter min-h-screen">
+      <SEO />
+      <Header />
+      <main>
+        <Hero />
+        <Benefits />
+        <Agents />
+        <Vera />
+        <Whitepaper />
+        <Start />
+      </main>
+      <Footer />
+
+      {showMobileCTA && (
+        <div className="fixed bottom-6 right-6 z-40 md:hidden hidden">
+          <Button
+            className="rounded-full bg-primary hover:bg-primary/90 text-white font-semibold px-4 py-6 shadow-lg gtm-mobile-sticky-try-agent"
+            size="lg"
+            onClick={() => scrollToSection("agents")}
+          >
+            <Rocket className="mr-2 h-4 w-4" /> Try Free AI Agent
+          </Button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default AIAgents;
