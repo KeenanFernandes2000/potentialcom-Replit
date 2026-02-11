@@ -361,14 +361,18 @@ const Home = () => {
               ))}
             </div>
 
-            <div className="max-w-3xl mx-auto text-center" data-aos="fade-up">
-              <div className="glass-effect border border-primary/20 rounded-2xl p-8">
-                <p className="text-muted-foreground text-lg mb-2">
-                  This is not just software access.
-                </p>
-                <p className="text-foreground font-semibold text-xl">
-                  It is a fully built, AI-powered program aligned to your objectives.
-                </p>
+            <div className="max-w-3xl mx-auto text-center mt-4" data-aos="fade-up">
+              <div className="relative rounded-2xl p-10 overflow-hidden" style={{ background: "linear-gradient(135deg, #0B1846 0%, #1a2a6c 40%, #8844DD 100%)" }}>
+                <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full blur-2xl -mr-20 -mt-20" />
+                <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -ml-16 -mb-16" />
+                <div className="relative z-10">
+                  <p className="text-white/70 text-lg mb-2">
+                    This is not just software access.
+                  </p>
+                  <p className="text-white font-bold text-2xl md:text-3xl">
+                    It is a fully built, AI-powered program aligned to your objectives.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
