@@ -404,9 +404,11 @@ const Home = () => {
                   </div>
                 </div>
 
-                <p className="text-lg text-muted-foreground">
-                  Real impact requires more than isolated tools.
-                </p>
+                <div className="rounded-xl border-l-4 border-primary bg-primary/5 p-5 mt-2">
+                  <p className="text-lg font-semibold text-primary">
+                    Real impact requires more than isolated tools.
+                  </p>
+                </div>
               </div>
 
               <div className="lg:w-7/12 relative" data-aos="fade-up" data-aos-delay="200">
