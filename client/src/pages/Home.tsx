@@ -180,38 +180,60 @@ const Home = () => {
           </div>
 
           <div className="container relative z-10">
-            <div className="max-w-4xl mx-auto text-center mb-16" data-aos="fade-up">
-              <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-                <Sparkles className="h-4 w-4 mr-2" /> AI-Powered Empowerment Platform
+            <div className="flex flex-col md:flex-row gap-12 lg:gap-16 items-center mb-16">
+              <div className="md:w-1/2" data-aos="fade-right">
+                <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
+                  <Sparkles className="h-4 w-4 mr-2" /> AI-Powered Empowerment Platform
+                </div>
+
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                  Deliver Measurable Impact at Scale —{" "}
+                  <span className="text-primary">Without the Operational Burden</span>
+                </h1>
+
+                <p className="text-xl text-muted-foreground mb-10">
+                  We help governments, enterprises, and CSR leaders transform large-scale
+                  initiatives into AI-powered digital ecosystems that drive real engagement,
+                  learning, and outcomes.
+                </p>
+
+                <div className="flex flex-wrap gap-4">
+                  <Button
+                    size="lg"
+                    className="rounded-full bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg"
+                    onClick={() => navigateWithUTM("/demo")}
+                  >
+                    Request a Demo <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="rounded-full border-primary text-primary hover:bg-primary/10 px-8 py-6 text-lg"
+                    onClick={() => navigateWithUTM("/vera")}
+                  >
+                    Book a Strategy Call
+                  </Button>
+                </div>
               </div>
 
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                Deliver Measurable Impact at Scale —{" "}
-                <span className="text-primary">Without the Operational Burden</span>
-              </h1>
-
-              <p className="text-xl text-muted-foreground mb-10 max-w-3xl mx-auto">
-                We help governments, enterprises, and CSR leaders transform large-scale
-                initiatives into AI-powered digital ecosystems that drive real engagement,
-                learning, and outcomes.
-              </p>
-
-              <div className="flex flex-wrap gap-4 justify-center">
-                <Button
-                  size="lg"
-                  className="rounded-full bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg"
-                  onClick={() => navigateWithUTM("/demo")}
-                >
-                  Request a Demo <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="rounded-full border-primary text-primary hover:bg-primary/10 px-8 py-6 text-lg"
-                  onClick={() => navigateWithUTM("/vera")}
-                >
-                  Book a Strategy Call
-                </Button>
+              <div className="md:w-1/2 relative" data-aos="fade-up" data-aos-delay="200">
+                <div className="relative mx-auto max-w-[560px]">
+                  <div className="absolute -top-5 -left-5 w-20 h-20 bg-primary/30 rounded-full blur-xl"></div>
+                  <div className="absolute -bottom-8 -right-8 w-28 h-28 bg-secondary/30 rounded-full blur-xl"></div>
+                  <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border border-border">
+                    <div className="aspect-video w-full">
+                      <iframe
+                        src="https://www.youtube.com/embed/y3Bmn0XLfyk?si=wBq5XyLXq4Mymioa"
+                        title="YouTube video player"
+                        className="w-full h-full"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                        style={{ border: 0 }}
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
