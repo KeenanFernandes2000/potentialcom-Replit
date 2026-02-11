@@ -219,9 +219,8 @@ const Home = () => {
                     className="rounded-full bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg"
                     onClick={() => navigateWithUTM("/demo")}
                   >
-                    Request a Demo <ArrowRight className="ml-2 h-5 w-5" />
+                    Request Free Demo <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
-
                 </div>
               </div>
 
