@@ -120,6 +120,29 @@ const audiences = [
   { icon: Briefcase, label: "Large Enterprises" },
 ];
 
+const CTABanner = ({ message }: { message: string }) => (
+  <section className="py-16 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #0B1846 0%, #1a2a6c 40%, #8844DD 100%)" }}>
+    <div className="absolute inset-0 opacity-10">
+      <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -mr-48 -mt-48" />
+      <div className="absolute bottom-0 left-0 w-72 h-72 bg-white/10 rounded-full blur-3xl -ml-36 -mb-36" />
+    </div>
+    <div className="container relative z-10">
+      <div className="max-w-3xl mx-auto text-center" data-aos="fade-up">
+        <p className="text-xl md:text-2xl font-semibold text-white mb-8">
+          {message}
+        </p>
+        <Button
+          size="lg"
+          className="rounded-full bg-white text-[#0B1846] hover:bg-white/90 font-semibold px-10 py-6 text-lg shadow-lg"
+          onClick={() => navigateWithUTM("/demo")}
+        >
+          Book Free Demo <ArrowRight className="ml-2 h-5 w-5" />
+        </Button>
+      </div>
+    </div>
+  </section>
+);
+
 const Home = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -385,15 +408,9 @@ const Home = () => {
                   </div>
                 </div>
 
-                <p className="text-lg text-muted-foreground mb-6">
+                <p className="text-lg text-muted-foreground">
                   Real impact requires more than isolated tools.
                 </p>
-                <div className="glass-effect border border-primary/20 rounded-2xl p-6">
-                  <p className="text-foreground font-semibold text-lg">
-                    We unify education, engagement, AI guidance, performance tracking,
-                    and ecosystem collaboration into one intelligent platform.
-                  </p>
-                </div>
               </div>
 
               <div className="lg:w-7/12 relative" data-aos="fade-up" data-aos-delay="200">
@@ -412,6 +429,8 @@ const Home = () => {
             </div>
           </div>
         </section>
+
+        <CTABanner message="We unify education, engagement, AI guidance, performance tracking, and ecosystem collaboration into one intelligent platform." />
 
         {/* AI at the Core */}
         <section className="py-24 bg-background">
@@ -446,17 +465,11 @@ const Home = () => {
                 ))}
               </div>
 
-              <div className="text-center" data-aos="fade-up">
-                <div className="glass-effect border border-primary/20 rounded-2xl p-8">
-                  <p className="text-foreground font-semibold text-lg">
-                    Run national or enterprise-scale initiatives with lean teams —
-                    without sacrificing quality.
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
         </section>
+
+        <CTABanner message="Run national or enterprise-scale initiatives with lean teams — without sacrificing quality." />
 
         {/* Built for Scale & Speed */}
         <section className="py-24 bg-muted/50 dark:bg-secondary/10">
@@ -541,27 +554,7 @@ const Home = () => {
           </div>
         </section>
 
-        {/* Simple Positioning */}
-        <section className="py-24 bg-muted/50 dark:bg-secondary/10">
-          <div className="container">
-            <div className="max-w-3xl mx-auto text-center" data-aos="fade-up">
-              <div className="space-y-4 mb-8">
-                <p className="text-xl text-muted-foreground">
-                  LMS platforms teach.
-                </p>
-                <p className="text-xl text-muted-foreground">
-                  CRMs manage.
-                </p>
-              </div>
-              <div className="glass-effect border border-primary/20 rounded-2xl p-10">
-                <p className="text-2xl md:text-3xl font-bold text-foreground">
-                  Potential.com builds{" "}
-                  <span className="text-primary">AI-powered empowerment ecosystems.</span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+        <CTABanner message="LMS platforms teach. CRMs manage. Potential.com builds AI-powered empowerment ecosystems." />
 
         {/* Final CTA */}
         <section className="py-24 bg-gradient-to-br from-primary/5 via-background to-accent/10">
