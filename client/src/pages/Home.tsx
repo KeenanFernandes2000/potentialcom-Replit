@@ -195,7 +195,7 @@ const Home = () => {
               <div className="w-full h-full rounded-full bg-primary" />
             </div>
             <div className="absolute bottom-0 left-0 -mb-24 -ml-24 w-80 h-80 opacity-20 dark:opacity-10 blur-3xl">
-              <div className="w-full h-full rounded-full bg-secondary" />
+              <div className="w-full h-full rounded-full bg-primary" />
             </div>
             <div className="absolute top-1/3 -right-20 w-72 h-72 opacity-30 dark:opacity-5 blur-2xl">
               <div className="w-full h-full rounded-full bg-accent" />
