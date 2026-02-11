@@ -9,6 +9,8 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSolutionsDropdownOpen, setIsSolutionsDropdownOpen] = useState(false);
+  const [isAgentsSubOpen, setIsAgentsSubOpen] = useState(false);
+  const [isMobileAgentsOpen, setIsMobileAgentsOpen] = useState(false);
 
   // Handle scroll to update header styling
   useEffect(() => {
@@ -74,35 +76,48 @@ const Header = () => {
                 <div className="bg-background/95 backdrop-blur-sm border border-border rounded-lg shadow-lg">
                   <div className="py-2">
                     <UTMLink
-                      href="/voice"
-                      className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
-                    >
-                      AI Voice Agent
-                    </UTMLink>
-                    <UTMLink
-                      href="/chatbot"
-                      className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
-                    >
-                      AI Chatbot
-                    </UTMLink>
-                    <UTMLink
                       href="/ai-for-csr"
                       className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
                     >
                       AI for CSR
                     </UTMLink>
-                    <UTMLink
-                      href="/ai-agents"
-                      className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
+                    <div
+                      className="relative"
+                      onMouseEnter={() => setIsAgentsSubOpen(true)}
+                      onMouseLeave={() => setIsAgentsSubOpen(false)}
                     >
-                      AI Agents
-                    </UTMLink>
-                    <UTMLink
-                      href="/solutions"
-                      className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
-                    >
-                      All Solutions
-                    </UTMLink>
+                      <UTMLink
+                        href="/ai-agents"
+                        className="flex items-center justify-between px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
+                      >
+                        AI Agents
+                        <ChevronDown className="h-3 w-3 -rotate-90" />
+                      </UTMLink>
+                      {isAgentsSubOpen && (
+                        <div className="absolute left-full top-0 pl-2 w-48 z-50">
+                          <div className="bg-background/95 backdrop-blur-sm border border-border rounded-lg shadow-lg py-2">
+                            <UTMLink
+                              href="/voice"
+                              className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
+                            >
+                              AI Voice Agents
+                            </UTMLink>
+                            <UTMLink
+                              href="/chatbot"
+                              className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
+                            >
+                              AI Chatbot
+                            </UTMLink>
+                            <UTMLink
+                              href="/solutions"
+                              className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
+                            >
+                              All AI Solutions
+                            </UTMLink>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -161,40 +176,48 @@ const Header = () => {
             <div className="py-3 text-foreground font-medium">Solutions</div>
             <div className="ml-4 space-y-2">
               <UTMLink
-                href="/voice"
-                className="block py-2 text-foreground/80 hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                AI Voice Agent
-              </UTMLink>
-              <UTMLink
-                href="/chatbot"
-                className="block py-2 text-foreground/80 hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                AI Chatbot
-              </UTMLink>
-              <UTMLink
                 href="/ai-for-csr"
                 className="block py-2 text-foreground/80 hover:text-primary transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 AI for CSR
               </UTMLink>
-              <UTMLink
-                href="/ai-agents"
-                className="block py-2 text-foreground/80 hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                AI Agents
-              </UTMLink>
-              <UTMLink
-                href="/solutions"
-                className="block py-2 text-foreground/80 hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                All Solutions
-              </UTMLink>
+              <div>
+                <button
+                  className="flex items-center justify-between w-full py-2 text-foreground/80 hover:text-primary transition-colors"
+                  onClick={() => setIsMobileAgentsOpen(!isMobileAgentsOpen)}
+                >
+                  AI Agents
+                  <ChevronDown
+                    className={`h-3 w-3 transition-transform ${isMobileAgentsOpen ? "rotate-180" : ""}`}
+                  />
+                </button>
+                {isMobileAgentsOpen && (
+                  <div className="ml-4 space-y-2">
+                    <UTMLink
+                      href="/voice"
+                      className="block py-2 text-foreground/80 hover:text-primary transition-colors"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      AI Voice Agents
+                    </UTMLink>
+                    <UTMLink
+                      href="/chatbot"
+                      className="block py-2 text-foreground/80 hover:text-primary transition-colors"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      AI Chatbot
+                    </UTMLink>
+                    <UTMLink
+                      href="/solutions"
+                      className="block py-2 text-foreground/80 hover:text-primary transition-colors"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      All AI Solutions
+                    </UTMLink>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
           <UTMLink
