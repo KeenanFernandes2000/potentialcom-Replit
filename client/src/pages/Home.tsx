@@ -358,16 +358,18 @@ const Home = () => {
         {/* Why It's Different */}
         <section className="py-24 bg-muted/50 dark:bg-secondary/10">
           <div className="container">
-            <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
-              <div className="lg:w-1/2" data-aos="fade-right">
-                <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-                  Why It's Different
-                </div>
-                <h2 className="section-title mb-6">
-                  Most Platforms Manage.{" "}
-                  <span className="text-primary">We Empower.</span>
-                </h2>
+            <div className="mb-10" data-aos="fade-up">
+              <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+                Why It's Different
+              </div>
+              <h2 className="section-title whitespace-nowrap">
+                Most Platforms Manage.{" "}
+                <span className="text-primary">We Empower.</span>
+              </h2>
+            </div>
 
+            <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start">
+              <div className="lg:w-5/12" data-aos="fade-right">
                 <div className="space-y-4 mb-8">
                   <div className="glass-effect border border-border rounded-xl p-5">
                     <div className="text-muted-foreground text-xs uppercase tracking-wider mb-1">Traditional</div>
@@ -394,7 +396,7 @@ const Home = () => {
                 </div>
               </div>
 
-              <div className="lg:w-1/2 relative" data-aos="fade-up" data-aos-delay="200">
+              <div className="lg:w-7/12 relative" data-aos="fade-up" data-aos-delay="200">
                 <div className="relative mx-auto">
                   <div className="absolute -top-5 -left-5 w-20 h-20 bg-primary/30 rounded-full blur-xl"></div>
                   <div className="absolute -bottom-8 -right-8 w-28 h-28 bg-secondary/30 rounded-full blur-xl"></div>
