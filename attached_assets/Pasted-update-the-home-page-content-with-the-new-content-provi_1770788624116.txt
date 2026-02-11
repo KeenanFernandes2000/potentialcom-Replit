@@ -1,0 +1,171 @@
+update the home page content with the new content provided below.
+
+Important instructions:
+
+Keep the existing design system, layout structure, fonts, spacing, and animations.
+
+Improve section positioning where needed for stronger visual hierarchy and conversion flow.
+
+Keep the homepage clean, premium, and not text-heavy.
+
+Use strong headings, short paragraphs, and balanced whitespace.
+
+Avoid long blocks of text.
+
+Structure it for clarity, authority, and executive-level positioning.
+
+Very Important:
+
+Directly under the hero section, keep and display the existing:
+
+“Trusted for over 20 years by leading organizations around the world”
+
+Include the logos exactly as they are currently implemented.
+Do not redesign or remove this section — just position it immediately under the hero.
+
+The homepage must clearly communicate:
+
+The problem we solve
+
+The outcomes clients achieve
+
+Who it’s for
+
+Why it’s different
+
+That this is a fully customized AI-powered empowerment ecosystem
+
+Below is the new homepage content to implement:
+
+NEW HOMEPAGE CONTENT
+HERO SECTION
+Headline:
+
+Deliver Measurable Impact at Scale — Without the Operational Burden
+
+Subheadline:
+
+We help governments, enterprises, and CSR leaders transform large-scale initiatives into AI-powered digital ecosystems that drive real engagement, learning, and outcomes.
+
+CTA Buttons:
+
+Request a Demo
+Book a Strategy Call
+
+(Immediately Below Hero)
+
+Trusted for over 20 years by leading organizations around the world
+[Keep existing logo section exactly as implemented]
+
+SECTION — WHAT WE DO
+We Turn Programs Into Scalable Impact Infrastructure
+
+Potential.com is an AI-powered empowerment platform that enables organizations to design, launch, and manage large-scale initiatives — efficiently and at scale.
+
+From entrepreneurship and financial literacy to innovation, workforce development, and CSR programs — we provide the digital ecosystem that turns strategy into measurable results.
+
+Fully branded. Fully customized. Ready in weeks.
+
+SECTION — WHAT YOU GET
+
+A Complete Digital Empowerment Ecosystem
+
+Your customized platform can include:
+
+Structured learning journeys & certifications
+
+Applications, challenges & innovation programs
+
+Mentorship & expert engagement
+
+AI coaches & practical AI tools
+
+Gamification & performance tracking
+
+Real-time dashboards & impact analytics
+
+Multi-language and audience segmentation
+
+This is not just software access.
+
+It is a fully built, AI-powered program aligned to your objectives.
+
+SECTION — WHY IT’S DIFFERENT
+Most Platforms Manage. We Empower.
+
+Traditional systems focus on one function.
+
+Learning platforms deliver courses.
+CRMs manage contacts.
+Competition tools select winners.
+
+Real impact requires more than isolated tools.
+
+We unify education, engagement, AI guidance, performance tracking, and ecosystem collaboration into one intelligent platform.
+
+SECTION — AI AT THE CORE
+Intelligence Embedded Across the Entire Journey
+
+AI is integrated throughout the platform to:
+
+Personalize learning and engagement paths
+
+Guide participants from awareness to execution
+
+Provide AI coaches and smart tools
+
+Analyze engagement and predict outcomes
+
+Reduce operational complexity
+
+Run national or enterprise-scale initiatives with lean teams — without sacrificing quality.
+
+SECTION — BUILT FOR SCALE & SPEED
+Launch in Weeks, Not Months
+
+We handle:
+
+Full branding & customization
+
+Program architecture & workflows
+
+AI configuration aligned to your goals
+
+KPIs & reporting frameworks
+
+Localization & segmentation
+
+You focus on impact.
+We handle the infrastructure.
+
+SECTION — WHO IT’S FOR
+
+Designed for organizations that need measurable impact at scale:
+
+Governments
+
+CSR & Sustainability Leaders
+
+Banks & Financial Institutions
+
+National Innovation Programs
+
+Economic Development Authorities
+
+Large Enterprises
+
+If your objective is structured, scalable empowerment — this platform was built for you.
+
+SIMPLE POSITIONING
+
+LMS platforms teach.
+CRMs manage.
+
+Potential.com builds AI-powered empowerment ecosystems.
+
+FINAL CTA
+Ready to Transform Your Programs Into Measurable Impact?
+
+Let’s design a fully customized AI-powered platform aligned with your strategic goals.
+
+Request a Demo
