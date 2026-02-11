@@ -498,13 +498,19 @@ const Home = () => {
                 ))}
               </div>
 
-              <div className="text-center" data-aos="fade-up">
-                <p className="text-xl text-foreground font-semibold mb-2">
-                  You focus on impact.
-                </p>
-                <p className="text-lg text-muted-foreground">
-                  We handle the infrastructure.
-                </p>
+              <div className="relative text-center mt-16" data-aos="fade-up">
+                <div className="relative inline-block rounded-2xl p-10 overflow-hidden" style={{ background: "linear-gradient(135deg, #0B1846 0%, #1a2a6c 40%, #8844DD 100%)" }}>
+                  <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full blur-2xl -mr-20 -mt-20" />
+                  <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -ml-16 -mb-16" />
+                  <div className="relative z-10">
+                    <p className="text-2xl md:text-3xl font-bold text-white mb-2">
+                      You focus on impact.
+                    </p>
+                    <p className="text-xl md:text-2xl text-white/70 font-medium">
+                      We handle the infrastructure.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
