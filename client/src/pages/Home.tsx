@@ -237,7 +237,9 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Trusted By Logos */}
+          </div>
+
+          <div className="relative z-10 w-full">
             <div className="client-logos py-8" data-aos="fade-up" data-aos-delay="100">
               <h3 className="text-center text-muted-foreground uppercase text-sm tracking-wider mb-6">
                 Trusted for over 20 years by leading organizations around the world
