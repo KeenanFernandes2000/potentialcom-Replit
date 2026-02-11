@@ -215,11 +215,7 @@ const Home = () => {
                   <span className="text-primary">Without the Operational Burden</span>
                 </h1>
 
-                <p className="text-xl text-muted-foreground mb-10">
-                  We help governments, enterprises, and CSR leaders transform large-scale
-                  initiatives into AI-powered digital ecosystems that drive real engagement,
-                  learning, and outcomes.
-                </p>
+                <p className="text-xl text-muted-foreground mb-10">We help governments, enterprises, and CSR leaders build scalable empowerment platform to run their programs and drives measurable social, economic, and workforce impact.</p>
 
                 <div className="flex flex-wrap gap-4">
                   <Button
