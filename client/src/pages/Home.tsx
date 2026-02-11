@@ -122,10 +122,6 @@ const audiences = [
 
 const CTABanner = ({ message }: { message: string }) => (
   <section className="py-16 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #0B1846 0%, #1a2a6c 40%, #8844DD 100%)" }}>
-    <div className="absolute inset-0 opacity-10">
-      <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -mr-48 -mt-48" />
-      <div className="absolute bottom-0 left-0 w-72 h-72 bg-white/10 rounded-full blur-3xl -ml-36 -mb-36" />
-    </div>
     <div className="container relative z-10">
       <div className="max-w-3xl mx-auto text-center" data-aos="fade-up">
         <p className="text-xl md:text-2xl font-semibold text-white mb-8">
