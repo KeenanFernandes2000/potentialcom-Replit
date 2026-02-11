@@ -55,6 +55,7 @@ import unLogo from "@assets/Customer Logos/UN logo.png";
 import visaLogo from "@assets/Customer Logos/Visa logo.png";
 import wfzoLogo from "@assets/Customer Logos/WFZO logo.png";
 import intelLogo from "@assets/Customer Logos/intel logo.png";
+import pitchInfographic from "@assets/Pitch_Infographic_1_1770792455350.png";
 
 const clientLogos = [
   { name: "ADGM", logo: adgmLogo },
@@ -357,41 +358,53 @@ const Home = () => {
         {/* Why It's Different */}
         <section className="py-24 bg-muted/50 dark:bg-secondary/10">
           <div className="container">
-            <div className="max-w-4xl mx-auto" data-aos="fade-up">
-              <div className="text-center mb-12">
+            <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-center">
+              <div className="lg:w-1/2" data-aos="fade-right">
                 <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
                   Why It's Different
                 </div>
-                <h2 className="section-title text-center mb-6">
+                <h2 className="section-title mb-6">
                   Most Platforms Manage.{" "}
                   <span className="text-primary">We Empower.</span>
                 </h2>
-              </div>
 
-              <div className="grid md:grid-cols-3 gap-6 mb-12">
-                <div className="glass-effect border border-border rounded-xl p-6 text-center" data-aos="fade-up" data-aos-delay="0">
-                  <div className="text-muted-foreground text-sm uppercase tracking-wider mb-2">Traditional</div>
-                  <p className="text-foreground font-medium">Learning platforms deliver courses.</p>
+                <div className="space-y-4 mb-8">
+                  <div className="glass-effect border border-border rounded-xl p-5">
+                    <div className="text-muted-foreground text-xs uppercase tracking-wider mb-1">Traditional</div>
+                    <p className="text-foreground font-medium">Learning platforms deliver courses.</p>
+                  </div>
+                  <div className="glass-effect border border-border rounded-xl p-5">
+                    <div className="text-muted-foreground text-xs uppercase tracking-wider mb-1">Traditional</div>
+                    <p className="text-foreground font-medium">CRMs manage contacts.</p>
+                  </div>
+                  <div className="glass-effect border border-border rounded-xl p-5">
+                    <div className="text-muted-foreground text-xs uppercase tracking-wider mb-1">Traditional</div>
+                    <p className="text-foreground font-medium">Competition tools select winners.</p>
+                  </div>
                 </div>
-                <div className="glass-effect border border-border rounded-xl p-6 text-center" data-aos="fade-up" data-aos-delay="100">
-                  <div className="text-muted-foreground text-sm uppercase tracking-wider mb-2">Traditional</div>
-                  <p className="text-foreground font-medium">CRMs manage contacts.</p>
-                </div>
-                <div className="glass-effect border border-border rounded-xl p-6 text-center" data-aos="fade-up" data-aos-delay="200">
-                  <div className="text-muted-foreground text-sm uppercase tracking-wider mb-2">Traditional</div>
-                  <p className="text-foreground font-medium">Competition tools select winners.</p>
-                </div>
-              </div>
 
-              <div className="text-center" data-aos="fade-up">
                 <p className="text-lg text-muted-foreground mb-6">
                   Real impact requires more than isolated tools.
                 </p>
-                <div className="glass-effect border border-primary/20 rounded-2xl p-8">
-                  <p className="text-foreground font-semibold text-xl">
+                <div className="glass-effect border border-primary/20 rounded-2xl p-6">
+                  <p className="text-foreground font-semibold text-lg">
                     We unify education, engagement, AI guidance, performance tracking,
                     and ecosystem collaboration into one intelligent platform.
                   </p>
+                </div>
+              </div>
+
+              <div className="lg:w-1/2 relative" data-aos="fade-up" data-aos-delay="200">
+                <div className="relative mx-auto">
+                  <div className="absolute -top-5 -left-5 w-20 h-20 bg-primary/30 rounded-full blur-xl"></div>
+                  <div className="absolute -bottom-8 -right-8 w-28 h-28 bg-secondary/30 rounded-full blur-xl"></div>
+                  <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border border-border">
+                    <img
+                      src={pitchInfographic}
+                      alt="Potential.com - The AI-Powered Empowerment Revolution"
+                      className="w-full h-auto"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
