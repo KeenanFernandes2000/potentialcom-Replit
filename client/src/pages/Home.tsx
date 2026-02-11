@@ -221,14 +221,7 @@ const Home = () => {
                   >
                     Request a Demo <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="rounded-full border-primary text-primary hover:bg-primary/10 px-8 py-6 text-lg"
-                    onClick={() => navigateWithUTM("/vera")}
-                  >
-                    Book a Strategy Call
-                  </Button>
+
                 </div>
               </div>
 
