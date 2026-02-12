@@ -205,7 +205,7 @@ const YearOfFamily = () => {
                     <Rocket className="h-7 w-7 text-primary" />
                   </div>
                   <h3 className="text-xl font-bold text-foreground mb-2">Option 1</h3>
-                  <p className="text-lg font-semibold text-primary mb-2">Launch Your Own Branded Platform</p>
+                  <p className="text-lg font-semibold text-primary mb-2">Launch Your Own Branded Initiative</p>
                   <p className="text-muted-foreground text-sm">Custom-branded digital ecosystem under your organization's identity</p>
                 </div>
                 <div className="p-8 rounded-2xl bg-card border-2 border-amber-500/20 hover:border-amber-500/40 transition-colors text-center">
@@ -213,7 +213,7 @@ const YearOfFamily = () => {
                     <Globe className="h-7 w-7 text-amber-500" />
                   </div>
                   <h3 className="text-xl font-bold text-foreground mb-2">Option 2</h3>
-                  <p className="text-lg font-semibold text-amber-500 mb-2">Sponsor the National Digital Ecosystem</p>
+                  <p className="text-lg font-semibold text-amber-500 mb-2">Sponsor the National Program</p>
                   <p className="text-muted-foreground text-sm">Contribute to the national platform and gain visibility at scale</p>
                 </div>
               </div>
