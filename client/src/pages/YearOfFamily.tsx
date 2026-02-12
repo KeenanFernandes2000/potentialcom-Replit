@@ -198,6 +198,27 @@ const YearOfFamily = () => {
               </div>
             </FadeInSection>
 
+            <FadeInSection>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16">
+                <div className="p-8 rounded-2xl bg-card border-2 border-primary/20 hover:border-primary/40 transition-colors text-center">
+                  <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                    <Rocket className="h-7 w-7 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-bold text-foreground mb-2">Option A</h3>
+                  <p className="text-lg font-semibold text-primary mb-2">Launch Your Own Branded Platform</p>
+                  <p className="text-muted-foreground text-sm">Custom-branded digital ecosystem under your organization's identity</p>
+                </div>
+                <div className="p-8 rounded-2xl bg-card border-2 border-amber-500/20 hover:border-amber-500/40 transition-colors text-center">
+                  <div className="w-14 h-14 rounded-xl bg-amber-500/10 flex items-center justify-center mx-auto mb-4">
+                    <Globe className="h-7 w-7 text-amber-500" />
+                  </div>
+                  <h3 className="text-xl font-bold text-foreground mb-2">Option B</h3>
+                  <p className="text-lg font-semibold text-amber-500 mb-2">Sponsor the National Digital Ecosystem</p>
+                  <p className="text-muted-foreground text-sm">Contribute to the national platform and gain visibility at scale</p>
+                </div>
+              </div>
+            </FadeInSection>
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-16">
               <FadeInSection>
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border">
@@ -221,27 +242,6 @@ const YearOfFamily = () => {
                 </div>
               </FadeInSection>
             </div>
-
-            <FadeInSection>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <div className="p-8 rounded-2xl bg-card border-2 border-primary/20 hover:border-primary/40 transition-colors text-center">
-                  <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                    <Rocket className="h-7 w-7 text-primary" />
-                  </div>
-                  <h3 className="text-xl font-bold text-foreground mb-2">Option A</h3>
-                  <p className="text-lg font-semibold text-primary mb-2">Launch Your Own Branded Platform</p>
-                  <p className="text-muted-foreground text-sm">Custom-branded digital ecosystem under your organization's identity</p>
-                </div>
-                <div className="p-8 rounded-2xl bg-card border-2 border-amber-500/20 hover:border-amber-500/40 transition-colors text-center">
-                  <div className="w-14 h-14 rounded-xl bg-amber-500/10 flex items-center justify-center mx-auto mb-4">
-                    <Globe className="h-7 w-7 text-amber-500" />
-                  </div>
-                  <h3 className="text-xl font-bold text-foreground mb-2">Option B</h3>
-                  <p className="text-lg font-semibold text-amber-500 mb-2">Sponsor the National Digital Ecosystem</p>
-                  <p className="text-muted-foreground text-sm">Contribute to the national platform and gain visibility at scale</p>
-                </div>
-              </div>
-            </FadeInSection>
 
             {/* Mid-page CTA */}
             <FadeInSection>
