@@ -63,7 +63,7 @@ const YearOfFamily = () => {
     { icon: Sparkles, text: "Provide AI-powered family empowerment tools" },
     { icon: Heart, text: "Offer structured tracks: Financial Stability, Wellbeing, Parenting, Entrepreneurship" },
     { icon: Trophy, text: "Run competitions & recognition programs" },
-    { icon: BarChart3, text: "Track participation and engagement in real time" },
+    { icon: BarChart3, text: "Track participation and manage your impact" },
   ];
 
   const impactPoints = [
