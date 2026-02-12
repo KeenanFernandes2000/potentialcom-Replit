@@ -324,7 +324,7 @@ const YearOfFamily = () => {
                 </p>
                 <Button
                   size="lg"
-                  className="text-lg px-8 py-6 bg-amber-500 hover:bg-amber-600 text-black font-semibold group"
+                  className="text-lg px-8 py-6 hover:bg-amber-600 text-black font-semibold group bg-[#8f40dd]"
                   onClick={() => setShowBookingModal(true)}
                 >
                   Book Free Demo
