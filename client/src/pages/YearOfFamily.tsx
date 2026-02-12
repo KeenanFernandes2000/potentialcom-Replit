@@ -142,9 +142,6 @@ const YearOfFamily = () => {
                 <p className="text-sm text-gray-400 mt-3">
                   15-minute executive walkthrough. No obligation.
                 </p>
-                <p className="text-sm text-primary/80 mt-1 font-medium">
-                  Limited founding partner slots available.
-                </p>
               </FadeInSection>
             </div>
           </div>
