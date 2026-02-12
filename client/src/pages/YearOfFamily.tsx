@@ -102,7 +102,7 @@ const YearOfFamily = () => {
               </FadeInSection>
               <FadeInSection delay={100}>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-                  Lead the <span className="text-[#8f40dd]">Year of Family</span>.{" "}
+                  Lead the <span className="text-[#ffffff]">Year of Family</span>.{" "}
                   <span className="gradient-text text-[#ffffff]">
                     Don't Just Participate in It.
                   </span>
