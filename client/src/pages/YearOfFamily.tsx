@@ -17,11 +17,11 @@ import {
   Sparkles,
 } from "lucide-react";
 
-import heroImage from "@assets/UAEYEAROF_FAMILY_PHOTO_10_1770872254453.jpg";
-import opportunityImage from "@assets/UAEYEAROF_FAMILY_PHOTO_3_1770873115460.jpg";
-import solutionImage from "@assets/UAEYEAROF_FAMILY_PHOTO_4_1770873246026.jpg";
-import impactImage from "@assets/year-of-family/impact-uae-map.png";
-import strategicImage from "@assets/year-of-family/strategic-families.png";
+import heroImage from "@assets/year-of-family-hero.jpg";
+import opportunityImage from "@assets/year-of-family-opportunity.jpg";
+import solutionImage from "@assets/year-of-family-solution.jpg";
+import impactImage from "@assets/year-of-family-impact.jpg";
+import strategicImage from "@assets/year-of-family-strategic.jpg";
 
 const useInView = (options?: IntersectionObserverInit) => {
   const ref = useRef<HTMLDivElement>(null);
