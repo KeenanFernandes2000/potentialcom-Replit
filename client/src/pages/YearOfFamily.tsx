@@ -202,7 +202,7 @@ const YearOfFamily = () => {
                     <img src={optionLogosImage} alt="Your Organization's Logo x Year of Family" className="w-full max-w-xs mx-auto h-auto" />
                   </div>
                   <h3 className="text-xl font-bold text-foreground mb-2">Option 1</h3>
-                  <p className="text-lg font-semibold text-primary mb-2">Launch Your Own Branded Initiative</p>
+                  <p className="text-lg text-primary mb-2 font-bold">Launch Your Own Branded Initiative</p>
                   <p className="text-muted-foreground text-sm">Deploy our ready-to-launch custom-branded digital program under your organization's identity</p>
                 </div>
                 <div className="p-8 rounded-2xl bg-card border-2 border-amber-500/20 hover:border-amber-500/40 transition-colors text-center">
