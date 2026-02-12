@@ -139,9 +139,7 @@ const YearOfFamily = () => {
                   Book Free Demo
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
-                <p className="text-sm text-gray-400 mt-3">
-                  15-minute executive walkthrough. No obligation.
-                </p>
+                <p className="text-sm text-gray-400 mt-3">30-minute executive walkthrough. No obligation.</p>
               </FadeInSection>
             </div>
           </div>
