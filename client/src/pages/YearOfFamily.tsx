@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 
 import heroImage from "@assets/year-of-family-hero.jpg";
+import optionLogosImage from "@assets/Your_logo_x_Year_of_Family_1770878897089.png";
 import opportunityImage from "@assets/year-of-family-opportunity.jpg";
 import solutionImage from "@assets/year-of-family-solution.jpg";
 import impactImage from "@assets/year-of-family-impact.jpg";
@@ -196,8 +197,8 @@ const YearOfFamily = () => {
             <FadeInSection>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16">
                 <div className="p-8 rounded-2xl bg-card border-2 border-primary/20 hover:border-primary/40 transition-colors text-center">
-                  <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                    <Rocket className="h-7 w-7 text-primary" />
+                  <div className="mb-4">
+                    <img src={optionLogosImage} alt="Your Organization's Logo x Year of Family" className="w-full max-w-xs mx-auto h-auto" />
                   </div>
                   <h3 className="text-xl font-bold text-foreground mb-2">Option 1</h3>
                   <p className="text-lg font-semibold text-primary mb-2">Launch Your Own Branded Initiative</p>
