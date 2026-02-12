@@ -122,7 +122,7 @@ const YearOfFamily = () => {
                   </div>
                   <div className="flex items-center gap-2 text-gray-200">
                     <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                    <span>Engage and empower families across the UAE</span>
+                    <span>Sponsor our national Year of Family program</span>
                   </div>
                   <div className="flex items-center gap-2 text-gray-200">
                     <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
