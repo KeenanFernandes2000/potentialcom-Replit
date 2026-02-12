@@ -19,6 +19,7 @@ import {
 
 import heroImage from "@assets/year-of-family-hero.jpg";
 import optionLogosImage from "@assets/Your_logo_x_Year_of_Family_1770878897089.png";
+import option2LogosImage from "@assets/Potential.org_x_Year_of_Family_1770878941343.png";
 import opportunityImage from "@assets/year-of-family-opportunity.jpg";
 import solutionImage from "@assets/year-of-family-solution.jpg";
 import impactImage from "@assets/year-of-family-impact.jpg";
@@ -205,8 +206,8 @@ const YearOfFamily = () => {
                   <p className="text-muted-foreground text-sm">Deploy our ready-to-launch custom-branded digital program under your organization's identity</p>
                 </div>
                 <div className="p-8 rounded-2xl bg-card border-2 border-amber-500/20 hover:border-amber-500/40 transition-colors text-center">
-                  <div className="w-14 h-14 rounded-xl bg-amber-500/10 flex items-center justify-center mx-auto mb-4">
-                    <Globe className="h-7 w-7 text-amber-500" />
+                  <div className="mb-4">
+                    <img src={option2LogosImage} alt="Potential.org x Year of Family" className="w-full max-w-xs mx-auto h-auto" />
                   </div>
                   <h3 className="text-xl font-bold text-foreground mb-2">Option 2</h3>
                   <p className="text-lg font-semibold text-amber-500 mb-2">Sponsor the National Program</p>
