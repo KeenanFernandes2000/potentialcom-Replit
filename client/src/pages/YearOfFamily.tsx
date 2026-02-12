@@ -189,8 +189,8 @@ const YearOfFamily = () => {
                   The Solution
                 </span>
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-                  The Digital Infrastructure Behind the{" "}
-                  <span className="gradient-text">Year of Family</span>
+                  Your Ready-to-Launch Platform for the{" "}
+                  <span className="gradient-text">2026 Year of Family</span>
                 </h2>
                 <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                   Potential.com enables your organization to drive measurable family empowerment at scale.
