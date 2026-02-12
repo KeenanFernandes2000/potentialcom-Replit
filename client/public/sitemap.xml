@@ -47,6 +47,36 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://potential.com/usecases</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://potential.com/demo</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://potential.com/lumi</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://potential.com/ai-for-csr</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://potential.com/ai-agents</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://potential.com/year-of-family</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://potential.com/login</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
@@ -200,6 +230,41 @@
     <loc>https://potential.com/#email</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://potential.com/articles/ai-vs-agi-vs-asi</loc>    <lastmod>2025-11-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://potential.com/articles/the-silent-brand-killer-outdated-customer-support-in-the-age-of-ai</loc>    <lastmod>2025-09-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://potential.com/articles/the-invisible-ai-in-every-day-life</loc>    <lastmod>2025-08-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://potential.com/articles/what-a-modern-customer-journey-looks-like-with-ai</loc>    <lastmod>2025-08-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://potential.com/articles/ai-voice-agents-are-revolutionizing-healthcare</loc>    <lastmod>2025-08-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://potential.com/articles/chatbot-or-voice-agent</loc>    <lastmod>2025-07-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://potential.com/articles/why-every-business-needs-an-ai-consultant-in-2025</loc>    <lastmod>2025-07-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://potential.com/articles/the-hidden-cost-of-not-using-ai-voice-agents</loc>    <lastmod>2025-06-26</lastmod>
@@ -372,7 +437,7 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://potential.com/articles/ai-in-healthcare-future-of-medicine</loc>    <lastmod>2025-02-17</lastmod>
+    <loc>https://potential.com/articles/ai-in-healthcare-future-of-medicine</loc>    <lastmod>2025-08-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -977,7 +1042,7 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://potential.com/articles/why-sustainability-is-now-the-key-driver-of-innovation</loc>    <lastmod>2023-09-11</lastmod>
+    <loc>https://potential.com/articles/why-sustainability-is-now-the-key-driver-of-innovation</loc>    <lastmod>2025-07-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -1782,7 +1847,7 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://potential.com/articles/importance-of-project-management</loc>    <lastmod>2023-03-20</lastmod>
+    <loc>https://potential.com/articles/importance-of-project-management</loc>    <lastmod>2023-03-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2102,7 +2167,7 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://potential.com/articles/5-tips-reduce-manage-employees-emotions-pressure</loc>    <lastmod>2023-03-20</lastmod>
+    <loc>https://potential.com/articles/5-tips-reduce-manage-employees-emotions-pressure</loc>    <lastmod>2023-03-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -2557,197 +2622,197 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/articles</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/articles</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/brandingandmarketing</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/brandingandmarketing</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/business-skills</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/business-skills</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/careers</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/careers</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/csr</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/csr</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/customer-service</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/customer-service</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/e-commerce</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/e-commerce</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/educate</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/educate</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/empower</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/empower</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/engage</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/engage</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/entrepreneurship</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/entrepreneurship</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/expansion</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/expansion</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/finance-accounting</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/finance-accounting</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/human-resources</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/human-resources</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/innovation-topics</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/innovation-topics</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/it-technology</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/it-technology</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/leadership-management-interpersonal-skills</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/leadership-management-interpersonal-skills</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/message-from-ceo</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/message-from-ceo</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/news</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/news</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/archive</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/archive</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/project-management</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/project-management</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/sales</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/sales</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/strategy</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/strategy</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/talent-development-and-teamwork</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/talent-development-and-teamwork</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/time-management</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/time-management</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/tips</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/tips</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/wellbeing</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/wellbeing</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/%d8%a5%d8%af%d8%a7%d8%b1%d8%a9-%d8%a7%d9%84%d9%85%d8%b4%d8%a7%d8%b1%d9%8a%d8%b9</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/%d8%a5%d8%af%d8%a7%d8%b1%d8%a9-%d8%a7%d9%84%d9%85%d8%b4%d8%a7%d8%b1%d9%8a%d8%b9</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/%d8%a7%d9%84%d8%aa%d8%b3%d9%88%d9%8a%d9%82</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/%d8%a7%d9%84%d8%aa%d8%b3%d9%88%d9%8a%d9%82</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/%d8%a7%d9%84%d8%aa%d8%b9%d9%84%d9%8a%d9%85</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/%d8%a7%d9%84%d8%aa%d8%b9%d9%84%d9%8a%d9%85</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/%d8%a7%d9%84%d9%82%d9%8a%d8%a7%d8%af%d8%a9</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/%d8%a7%d9%84%d9%82%d9%8a%d8%a7%d8%af%d8%a9</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/%d8%a7%d9%84%d9%85%d8%a8%d9%8a%d8%b9%d8%a7%d8%aa</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/%d8%a7%d9%84%d9%85%d8%a8%d9%8a%d8%b9%d8%a7%d8%aa</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/%d8%a7%d9%84%d9%85%d8%ad%d8%a7%d8%b3%d8%a8%d8%a9-%d9%88%d8%a7%d9%84%d8%aa%d9%85%d9%88%d9%8a%d9%84</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/%d8%a7%d9%84%d9%85%d8%ad%d8%a7%d8%b3%d8%a8%d8%a9-%d9%88%d8%a7%d9%84%d8%aa%d9%85%d9%88%d9%8a%d9%84</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/%d8%a7%d9%84%d9%85%d8%b3%d8%a4%d9%88%d9%84%d9%8a%d8%a9-%d8%a7%d9%84%d8%a7%d8%ac%d8%aa%d9%85%d8%a7%d8%b9%d9%8a%d8%a9-%d9%84%d9%84%d8%b4%d8%b1%d9%83%d8%a7%d8%aa</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/%d8%a7%d9%84%d9%85%d8%b3%d8%a4%d9%88%d9%84%d9%8a%d8%a9-%d8%a7%d9%84%d8%a7%d8%ac%d8%aa%d9%85%d8%a7%d8%b9%d9%8a%d8%a9-%d9%84%d9%84%d8%b4%d8%b1%d9%83%d8%a7%d8%aa</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/%d8%a7%d9%84%d9%85%d9%87%d8%a7%d8%b1%d8%a7%d8%aa-%d8%a7%d9%84%d8%b4%d8%ae%d8%b5%d9%8a%d8%a9</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/%d8%a7%d9%84%d9%85%d9%87%d8%a7%d8%b1%d8%a7%d8%aa-%d8%a7%d9%84%d8%b4%d8%ae%d8%b5%d9%8a%d8%a9</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/%d8%a7%d9%84%d9%85%d9%88%d8%a7%d8%b1%d8%af-%d8%a7%d9%84%d8%a8%d8%b4%d8%b1%d9%8a%d8%a9</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/%d8%a7%d9%84%d9%85%d9%88%d8%a7%d8%b1%d8%af-%d8%a7%d9%84%d8%a8%d8%b4%d8%b1%d9%8a%d8%a9</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/%d8%aa%d9%83%d9%86%d9%88%d9%84%d9%88%d8%ac%d9%8a%d8%a7-%d8%a7%d9%84%d9%85%d8%b9%d9%84%d9%88%d9%85%d8%a7%d8%aa-%d9%88%d8%a7%d9%84%d8%aa%d9%82%d9%86%d9%8a%d8%a9</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/%d8%aa%d9%83%d9%86%d9%88%d9%84%d9%88%d8%ac%d9%8a%d8%a7-%d8%a7%d9%84%d9%85%d8%b9%d9%84%d9%88%d9%85%d8%a7%d8%aa-%d9%88%d8%a7%d9%84%d8%aa%d9%82%d9%86%d9%8a%d8%a9</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/%d8%ba%d9%8a%d8%b1-%d9%85%d8%b5%d9%86%d9%81</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/%d8%ba%d9%8a%d8%b1-%d9%85%d8%b5%d9%86%d9%81</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://potential.com/blog/category/%d9%85%d9%82%d8%a7%d9%84%d8%a7%d8%aa</loc>    <lastmod>2025-07-02</lastmod>
+    <loc>https://potential.com/blog/category/%d9%85%d9%82%d8%a7%d9%84%d8%a7%d8%aa</loc>    <lastmod>2026-02-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
