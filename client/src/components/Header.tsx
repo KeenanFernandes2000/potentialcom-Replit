@@ -124,12 +124,6 @@ const Header = () => {
             )}
           </div>
           <UTMLink
-            href="/pricing"
-            className="text-foreground/80 hover:text-primary font-medium transition-colors"
-          >
-            Pricing
-          </UTMLink>
-          <UTMLink
             href="/usecases"
             className="text-foreground/80 hover:text-primary font-medium transition-colors"
           >
@@ -220,13 +214,6 @@ const Header = () => {
               </div>
             </div>
           </div>
-          <UTMLink
-            href="/pricing"
-            className="py-3 text-foreground hover:text-primary font-medium transition-colors"
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Pricing
-          </UTMLink>
           <UTMLink
             href="/usecases"
             className="py-3 text-foreground hover:text-primary font-medium transition-colors"
