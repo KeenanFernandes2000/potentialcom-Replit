@@ -279,9 +279,10 @@ const YearOfFamily = () => {
                       </div>
                     ))}
                   </div>
-                  <div className="p-6 rounded-2xl bg-gradient-to-r from-primary/5 to-amber-500/5 border border-primary/10">
-                    <p className="text-lg font-bold text-foreground mb-1">This is not an event.</p>
-                    <p className="text-lg font-bold text-primary">It is a large-scale Family Empowerment Initiative.</p>
+                  <div className="p-8 rounded-2xl bg-gradient-to-r from-primary/10 to-[#8f40dd]/10 border-2 border-primary/30 shadow-lg shadow-primary/5 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-primary to-[#8f40dd]"></div>
+                    <p className="text-xl font-bold text-foreground mb-2 pl-4">This is not an event.</p>
+                    <p className="text-xl font-bold text-primary pl-4">It is a large-scale Family Empowerment Initiative.</p>
                   </div>
                 </div>
               </FadeInSection>
