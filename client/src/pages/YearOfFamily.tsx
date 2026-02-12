@@ -313,7 +313,7 @@ const YearOfFamily = () => {
             <FadeInSection>
               <div className="max-w-3xl mx-auto text-center">
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-8 leading-tight">
-                  How Will Your Organization Be Remembered in the{" "}
+                  How Will Your Organization Be Remembered in the<br />
                   <span className="text-amber-300">Year of Family?</span>
                 </h2>
                 <p className="text-xl text-gray-200 mb-4">
