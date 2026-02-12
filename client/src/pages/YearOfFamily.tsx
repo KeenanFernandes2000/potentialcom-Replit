@@ -212,7 +212,7 @@ const YearOfFamily = () => {
                   <div className="w-14 h-14 rounded-xl bg-amber-500/10 flex items-center justify-center mx-auto mb-4">
                     <Globe className="h-7 w-7 text-amber-500" />
                   </div>
-                  <h3 className="text-xl font-bold text-foreground mb-2">Option B</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-2">Option 2</h3>
                   <p className="text-lg font-semibold text-amber-500 mb-2">Sponsor the National Digital Ecosystem</p>
                   <p className="text-muted-foreground text-sm">Contribute to the national platform and gain visibility at scale</p>
                 </div>
