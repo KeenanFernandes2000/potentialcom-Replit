@@ -162,6 +162,7 @@ const YearOfFamily = () => {
                     Many organizations want to contribute meaningfully — but most initiatives remain events, campaigns, or workshops without measurable long-term impact.
                   </p>
                   <div className="p-6 rounded-2xl bg-primary/5 border border-primary/10">
+                    <p className="text-sm font-medium text-muted-foreground mb-1">What's missing?</p>
                     <p className="text-lg font-semibold text-foreground">A ready-to-launch, branded initiative you can lead.</p>
                   </div>
                 </div>
