@@ -57,34 +57,6 @@ const FadeInSection = ({ children, className = "", delay = 0 }: { children: Reac
   );
 };
 
-const HubSpotBooking = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const scriptId = "hubspot-meetings-embed";
-    if (!document.getElementById(scriptId)) {
-      const script = document.createElement("script");
-      script.id = scriptId;
-      script.src = "https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js";
-      script.async = true;
-      document.body.appendChild(script);
-    } else {
-      if ((window as any).HubSpotMeetings) {
-        (window as any).HubSpotMeetings.refresh();
-      }
-    }
-  }, []);
-
-  return (
-    <div
-      ref={containerRef}
-      className="meetings-iframe-container"
-      data-src="https://meetings-eu1.hubspot.com/rawzaba?embed=true"
-      style={{ minHeight: "680px", height: "100%" }}
-    />
-  );
-};
-
 const YearOfFamily = () => {
   const [showBookingModal, setShowBookingModal] = useState(false);
 
@@ -390,23 +362,20 @@ const YearOfFamily = () => {
         </section>
 
         {showBookingModal && (
-          <div
-            className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4"
-            onClick={(e) => { if (e.target === e.currentTarget) setShowBookingModal(false); }}
-          >
-            <div className="bg-card rounded-2xl border border-border shadow-2xl w-full max-w-3xl h-[90vh] relative flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-              <div className="flex items-center justify-between p-5 border-b border-border">
+          <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+            <div className="bg-card rounded-2xl border border-border shadow-2xl w-full max-w-4xl h-[85vh] relative flex flex-col overflow-hidden">
+              <div className="flex items-center justify-between p-6 border-b border-border">
                 <div>
-                  <h3 className="text-xl font-bold text-foreground">
+                  <h3 className="text-2xl font-bold text-foreground">
                     Book Free Demo
                   </h3>
-                  <p className="text-sm text-muted-foreground mt-0.5">
+                  <p className="text-muted-foreground mt-1">
                     Select a time that works best for you
                   </p>
                 </div>
                 <button
                   onClick={() => setShowBookingModal(false)}
-                  className="w-9 h-9 rounded-full bg-muted/50 hover:bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+                  className="w-10 h-10 rounded-full bg-muted/50 hover:bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
                 >
                   <span className="sr-only">Close</span>
                   <svg
@@ -424,8 +393,15 @@ const YearOfFamily = () => {
                   </svg>
                 </button>
               </div>
-              <div className="flex-1 overflow-y-auto bg-white">
-                <HubSpotBooking />
+              <div className="flex-1 bg-white">
+                <iframe
+                  src="https://outlook.office.com/book/LetsDiscussYourCSRStrategy@potential.com/?ismsaljsauthenabled"
+                  width="100%"
+                  height="100%"
+                  scrolling="yes"
+                  style={{ border: 0 }}
+                  title="Book a strategy demo"
+                />
               </div>
             </div>
           </div>
