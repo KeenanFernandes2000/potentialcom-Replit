@@ -118,7 +118,7 @@ const YearOfFamily = () => {
                 <div className="flex flex-col sm:flex-row gap-3 mb-8">
                   <div className="flex items-center gap-2 text-gray-200">
                     <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                    <span>Launch your own branded initiative or sponsor the national program</span>
+                    <span>Launch your own branded initiative in a week</span>
                   </div>
                   <div className="flex items-center gap-2 text-gray-200">
                     <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
