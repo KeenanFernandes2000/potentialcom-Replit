@@ -281,7 +281,7 @@ const YearOfFamily = () => {
                   </div>
                   <div className="p-6 rounded-2xl bg-gradient-to-r from-primary/5 to-amber-500/5 border border-primary/10">
                     <p className="text-lg font-bold text-foreground mb-1">This is not an event.</p>
-                    <p className="text-lg font-bold text-primary">It is national infrastructure.</p>
+                    <p className="text-lg font-bold text-primary">It is a large-scale Family Empowerment Initiative</p>
                   </div>
                 </div>
               </FadeInSection>
