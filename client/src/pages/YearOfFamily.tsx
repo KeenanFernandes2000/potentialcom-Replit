@@ -19,7 +19,7 @@ import {
 
 import heroImage from "@assets/UAEYEAROF_FAMILY_PHOTO_10_1770872254453.jpg";
 import opportunityImage from "@assets/UAEYEAROF_FAMILY_PHOTO_3_1770873115460.jpg";
-import solutionImage from "@assets/year-of-family/solution-dashboard.png";
+import solutionImage from "@assets/UAEYEAROF_FAMILY_PHOTO_4_1770873246026.jpg";
 import impactImage from "@assets/year-of-family/impact-uae-map.png";
 import strategicImage from "@assets/year-of-family/strategic-families.png";
 
