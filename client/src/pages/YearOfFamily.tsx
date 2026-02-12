@@ -97,14 +97,14 @@ const YearOfFamily = () => {
           <div className="container relative z-10">
             <div className="max-w-3xl">
               <FadeInSection>
-                <span className="inline-block px-4 py-2 mb-6 text-sm font-semibold text-amber-300 bg-amber-500/15 rounded-full border border-amber-400/30">
+                <span className="inline-block px-4 py-2 mb-6 text-sm font-semibold text-primary bg-primary/10 rounded-full">
                   Year of Family 2025
                 </span>
               </FadeInSection>
               <FadeInSection delay={100}>
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
                   Lead the Year of Family.{" "}
-                  <span className="text-amber-300">
+                  <span className="gradient-text">
                     Don't Just Participate in It.
                   </span>
                 </h1>
@@ -117,15 +117,15 @@ const YearOfFamily = () => {
               <FadeInSection delay={300}>
                 <div className="flex flex-col sm:flex-row gap-3 mb-8">
                   <div className="flex items-center gap-2 text-gray-200">
-                    <CheckCircle className="h-5 w-5 text-amber-400 flex-shrink-0" />
+                    <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
                     <span>Launch your own branded initiative</span>
                   </div>
                   <div className="flex items-center gap-2 text-gray-200">
-                    <CheckCircle className="h-5 w-5 text-amber-400 flex-shrink-0" />
+                    <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
                     <span>Engage families across the UAE</span>
                   </div>
                   <div className="flex items-center gap-2 text-gray-200">
-                    <CheckCircle className="h-5 w-5 text-amber-400 flex-shrink-0" />
+                    <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
                     <span>Track real, measurable impact</span>
                   </div>
                 </div>
@@ -133,7 +133,7 @@ const YearOfFamily = () => {
               <FadeInSection delay={400}>
                 <Button
                   size="lg"
-                  className="text-lg px-8 py-6 bg-amber-500 hover:bg-amber-600 text-black font-semibold group"
+                  className="text-lg px-8 py-6 group"
                   onClick={() => setShowBookingModal(true)}
                 >
                   Book Free Demo
@@ -142,7 +142,7 @@ const YearOfFamily = () => {
                 <p className="text-sm text-gray-400 mt-3">
                   15-minute executive walkthrough. No obligation.
                 </p>
-                <p className="text-sm text-amber-400/80 mt-1 font-medium">
+                <p className="text-sm text-primary/80 mt-1 font-medium">
                   Limited founding partner slots available.
                 </p>
               </FadeInSection>
