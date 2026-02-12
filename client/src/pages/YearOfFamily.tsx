@@ -126,7 +126,7 @@ const YearOfFamily = () => {
                   </div>
                   <div className="flex items-center gap-2 text-gray-200">
                     <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                    <span>Track and measure real impact</span>
+                    <span>Empower families across UAE & measure real impact</span>
                   </div>
                 </div>
               </FadeInSection>
