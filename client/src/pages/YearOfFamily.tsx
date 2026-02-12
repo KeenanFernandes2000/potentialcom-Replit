@@ -61,7 +61,7 @@ const YearOfFamily = () => {
   const solutionFeatures = [
     { icon: Rocket, text: "Launch a fully branded Year of Family platform" },
     { icon: Sparkles, text: "Provide AI-powered family empowerment tools" },
-    { icon: Heart, text: "Offer structured tracks: Financial Stability, Wellbeing, Parenting, Entrepreneurship" },
+    { icon: Heart, text: "Structured tracks: Financial Stability, Wellbeing & Parenting, Entrepreneurship & Family Business" },
     { icon: BarChart3, text: "Track participation and manage your impact" },
   ];
 
