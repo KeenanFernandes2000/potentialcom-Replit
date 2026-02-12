@@ -192,9 +192,7 @@ const YearOfFamily = () => {
                   Your Ready-to-Launch Platform for the{" "}
                   <span className="gradient-text">Year of Family</span>
                 </h2>
-                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                  Potential.com enables your organization to drive measurable family empowerment at scale.
-                </p>
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Empower the UAE families at scale through a structured, measurable initiative aligned with national priorities.</p>
               </div>
             </FadeInSection>
 
