@@ -210,7 +210,7 @@ const YearOfFamily = () => {
                     <img src={option2LogosImage} alt="Potential.org x Year of Family" className="w-full max-w-xs mx-auto h-auto" />
                   </div>
                   <h3 className="text-xl font-bold text-foreground mb-2">Option 2</h3>
-                  <p className="text-lg font-semibold text-amber-500 mb-2">Sponsor the National Program</p>
+                  <p className="text-lg font-semibold mb-2 text-[#4f9f5a]">Sponsor the National Program</p>
                   <p className="text-muted-foreground text-sm">Contribute to the Potential.org national program and gain visibility at scale</p>
                 </div>
               </div>
