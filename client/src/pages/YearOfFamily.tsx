@@ -17,7 +17,7 @@ import {
   Sparkles,
 } from "lucide-react";
 
-import heroImage from "@assets/year-of-family/hero-family-uae.png";
+import heroImage from "@assets/UAEYEAROF_FAMILY_PHOTO_10_1770872254453.jpg";
 import opportunityImage from "@assets/year-of-family/opportunity-puzzle.png";
 import solutionImage from "@assets/year-of-family/solution-dashboard.png";
 import impactImage from "@assets/year-of-family/impact-uae-map.png";
