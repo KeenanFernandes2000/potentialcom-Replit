@@ -20,7 +20,7 @@ import {
 import heroImage from "@assets/year-of-family-hero.jpg";
 import optionLogosImage from "@assets/Your_logo_x_Year_of_Family_1770878897089.png";
 import option2LogosImage from "@assets/Potential.org_x_Year_of_Family_1770878941343.png";
-import opportunityImage from "@assets/year-of-family-opportunity.jpg";
+import opportunityImage from "@assets/Infographic_1770879638386.png";
 import solutionImage from "@assets/year-of-family-solution.jpg";
 import impactImage from "@assets/year-of-family-impact.jpg";
 import strategicImage from "@assets/year-of-family-strategic.jpg";
