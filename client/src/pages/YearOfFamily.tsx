@@ -201,7 +201,7 @@ const YearOfFamily = () => {
                   <div className="mb-4">
                     <img src={optionLogosImage} alt="Your Organization's Logo x Year of Family" className="w-full max-w-xs mx-auto h-auto" />
                   </div>
-                  <h3 className="text-xl font-bold text-foreground mb-2">Option 1</h3>
+                  <h3 className="text-xl text-foreground mb-2 font-semibold">Option 1</h3>
                   <p className="text-lg text-primary mb-2 font-bold">Launch Your Own Branded Initiative</p>
                   <p className="text-muted-foreground text-sm">Deploy our ready-to-launch custom-branded digital program under your organization's identity</p>
                 </div>
@@ -209,7 +209,7 @@ const YearOfFamily = () => {
                   <div className="mb-4">
                     <img src={option2LogosImage} alt="Potential.org x Year of Family" className="w-full max-w-xs mx-auto h-auto" />
                   </div>
-                  <h3 className="text-xl font-bold text-foreground mb-2">Option 2</h3>
+                  <h3 className="text-xl text-foreground mb-2 font-semibold">Option 2</h3>
                   <p className="text-lg font-semibold mb-2 text-[#4f9f5a]">Sponsor the National Program</p>
                   <p className="text-muted-foreground text-sm">Contribute to the Potential.org national program and gain visibility at scale</p>
                 </div>
