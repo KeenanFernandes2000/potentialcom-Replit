@@ -204,7 +204,7 @@ const YearOfFamily = () => {
                   <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
                     <Rocket className="h-7 w-7 text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold text-foreground mb-2">Option A</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-2">Option 1</h3>
                   <p className="text-lg font-semibold text-primary mb-2">Launch Your Own Branded Platform</p>
                   <p className="text-muted-foreground text-sm">Custom-branded digital ecosystem under your organization's identity</p>
                 </div>
