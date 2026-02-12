@@ -314,7 +314,7 @@ const YearOfFamily = () => {
               <div className="max-w-3xl mx-auto text-center">
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-8 leading-tight">
                   How Will Your Organization Be Remembered in the<br />
-                  <span className="text-[#8f40dd] bg-[#ffffff7d] pt-[0px] pb-[0px] mt-[0px] mb-[0px] ml-[1px] mr-[1px]">Year of Family?</span>
+                  <span className="text-[#8f40dd] bg-[#ffffff7d] inline-block mt-3 px-4 py-1 rounded-lg">Year of Family?</span>
                 </h2>
                 <p className="text-xl text-gray-200 mb-4">
                   Move from participation to leadership.
