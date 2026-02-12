@@ -316,9 +316,7 @@ const YearOfFamily = () => {
                   How Will Your Organization Be Remembered in the<br />
                   <span className="pt-[0px] pb-[0px] mt-[0px] mb-[0px] ml-[1px] mr-[1px] bg-[#f1f1f200] text-[#ffffff]">Year of Family?</span>
                 </h2>
-                <p className="text-xl text-gray-200 mb-4">
-                  Move from participation to leadership.
-                </p>
+                <p className="text-xl text-gray-200 mb-4 font-bold">Move from participating to leadership & impact!</p>
                 <p className="text-lg text-gray-300 mb-10 max-w-xl mx-auto">
                   Empower families. Strengthen communities. Support national stability.
                 </p>
