@@ -232,9 +232,7 @@ export default function Ayla() {
                 <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
                   Get Started Now
                 </h2>
-                <p className="text-lg text-muted-foreground">
-                  Fill out the form and start chatting with me instantly!
-                </p>
+                <p className="text-lg text-muted-foreground">Fill out the form and start a conversation with Ayla instantly!</p>
               </div>
 
               <div className="bg-card rounded-xl shadow-lg p-8 border">
