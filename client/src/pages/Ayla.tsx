@@ -524,9 +524,11 @@ export default function Ayla() {
 
                 <div className="space-y-4">
                   {[
-                    "Automate your customer support with AI solutions",
-                    "Boost your sales with intelligent chatbots",
-                    "Optimize your business processes with AI",
+                    "Design and launch impactful programs",
+                    "Support and engage your target audience at scale",
+                    "Improve participation, outcomes, and impact",
+                    "Bring everything into one unified platform",
+                    "Move from ideas to execution faster",
                   ].map((benefit, index) => (
                     <div key={index} className="flex items-center space-x-3">
                       <div className="flex-shrink-0 w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center">
