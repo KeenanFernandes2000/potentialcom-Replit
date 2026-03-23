@@ -430,7 +430,7 @@ export default function Ayla() {
                   icon: Search,
                   title: "Understand Your Needs",
                   description:
-                    "I'll help you identify the best AI tools tailored to your needs.",
+                    "I'll help you clarify what you're trying to achieve and what you need.",
                 },
                 {
                   icon: Users,
