@@ -30,6 +30,8 @@ import { Check, Search, Users, Calendar, MessageSquare } from "lucide-react";
 import { AutoSEO } from "@/components/SEO";
 import { VeraCallModal } from "@/components/VeraCallModal";
 
+import _1 from "@assets/1.png";
+
 const formSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
@@ -198,7 +200,7 @@ export default function Ayla() {
               <div className="flex justify-center lg:justify-end">
                 <div className="relative w-full max-w-lg">
                   <img
-                    src={veraAvatarCentered}
+                    src={_1}
                     alt="Vera AI Business Consultant"
                     className="w-full h-auto"
                   />
