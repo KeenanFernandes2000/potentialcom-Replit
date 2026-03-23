@@ -10,10 +10,16 @@ const PgSession = connectPgSimple(session);
 
 const app = express();
 
+// Health check endpoint - must respond before any redirects or heavy middleware
+app.get("/health", (_req, res) => {
+  res.status(200).send("ok");
+});
+
 // Force HTTPS in production
 if (process.env.NODE_ENV === "production") {
   app.use((req, res, next) => {
-    if (req.header("x-forwarded-proto") !== "https") {
+    const proto = req.header("x-forwarded-proto");
+    if (proto && proto !== "https") {
       res.redirect(`https://${req.header("host")}${req.url}`);
     } else {
       next();
