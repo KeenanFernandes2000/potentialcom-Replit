@@ -434,7 +434,7 @@ export default function Ayla() {
                 },
                 {
                   icon: Users,
-                  title: "Set up Your Chatbot and Voice Agents",
+                  title: "Explore the Right Approach",
                   description:
                     "I'll automatically set up your chatbot or voice agents while we speak.",
                 },
