@@ -24,6 +24,7 @@ import BlogPost from "@/pages/BlogPost";
 import Partner from "@/pages/Partner";
 import About from "@/pages/About";
 import Vera from "@/pages/Vera";
+import Ayla from "@/pages/Ayla";
 import Voice from "@/pages/Voice";
 import Chatbot from "@/pages/Chatbot";
 import UseCases from "@/pages/UseCases";
@@ -43,6 +44,7 @@ function Router() {
       <Route path="/partner" component={Partner} />
       <Route path="/about" component={About} />
       <Route path="/vera" component={Vera} />
+      <Route path="/ayla" component={Ayla} />
       <Route path="/voice" component={Voice} />
       <Route path="/chatbot" component={Chatbot} />
       <Route path="/usecases" component={UseCases} />
