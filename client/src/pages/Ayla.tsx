@@ -428,7 +428,7 @@ export default function Ayla() {
               {[
                 {
                   icon: Search,
-                  title: "Find the Right AI Solutions",
+                  title: "Understand Your Needs",
                   description:
                     "I'll help you identify the best AI tools tailored to your needs.",
                 },
