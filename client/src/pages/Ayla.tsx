@@ -227,7 +227,7 @@ export default function Ayla() {
         </section>
 
         {/* Form Section */}
-        <section id="vera-form" className="py-20 bg-muted/5">
+        <section id="vera-form" className="py-12 bg-muted/5">
           <div className="container mx-auto px-4">
             <div className="max-w-2xl mx-auto">
               <div className="text-center space-y-4 mb-12">
