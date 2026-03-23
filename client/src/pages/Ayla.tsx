@@ -34,6 +34,8 @@ import _1 from "@assets/1.png";
 
 import _2 from "@assets/2.png";
 
+import _9 from "@assets/9.png";
+
 const formSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
@@ -504,7 +506,7 @@ export default function Ayla() {
                   {/* Vera's image */}
                   <div className="relative w-80 h-80 bg-gradient-to-br from-purple-100 to-purple-50 rounded-lg overflow-hidden flex items-center justify-center ml-[25px] mr-[25px]">
                     <img
-                      src={veraAvatarCentered}
+                      src={_9}
                       alt="Vera AI Business Consultant"
                       className="w-64 h-64 object-contain"
                     />
