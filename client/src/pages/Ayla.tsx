@@ -517,7 +517,7 @@ export default function Ayla() {
                 <div className="space-y-6">
                   <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
                     Meet Ayla:{" "}
-                    <span className="text-primary">Your AI Guide</span>
+                    <span className="text-primary">Your Empowerment Advisor</span>
                   </h2>
                   <p className="text-lg text-muted-foreground leading-relaxed">
                     I'm Ayla, your AI-powered consultant, here to guide you
