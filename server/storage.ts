@@ -3,6 +3,7 @@ import {
   newsletterSubscribers, 
   resourceDownloads,
   veraConsultations,
+  aylaConsultations,
   csrInfographicLeads,
   type User, 
   type RegisterUserInput,
@@ -14,6 +15,8 @@ import {
   type PartnerApplicationInput,
   type VeraConsultation,
   type VeraConsultationInput,
+  type AylaConsultation,
+  type AylaConsultationInput,
   type CsrInfographicLead,
   type CsrInfographicLeadInput
 } from "@shared/schema";
@@ -47,6 +50,10 @@ export interface IStorage {
   // Vera consultations
   submitVeraConsultation(consultationData: VeraConsultationInput): Promise<VeraConsultation>;
   getVeraConsultationsByEmail(email: string): Promise<VeraConsultation[]>;
+  
+  // Ayla consultations
+  submitAylaConsultation(consultationData: AylaConsultationInput): Promise<AylaConsultation>;
+  getAylaConsultationsByEmail(email: string): Promise<AylaConsultation[]>;
   
   // CSR Infographic leads
   submitCsrInfographicLead(leadData: CsrInfographicLeadInput): Promise<CsrInfographicLead>;
@@ -314,6 +321,21 @@ export class DatabaseStorage implements IStorage {
     return await db.select()
       .from(veraConsultations)
       .where(eq(veraConsultations.email, email));
+  }
+  
+  // Ayla consultations
+  async submitAylaConsultation(consultationData: AylaConsultationInput): Promise<AylaConsultation> {
+    const [consultation] = await db.insert(aylaConsultations)
+      .values(consultationData)
+      .returning();
+    
+    return consultation;
+  }
+  
+  async getAylaConsultationsByEmail(email: string): Promise<AylaConsultation[]> {
+    return await db.select()
+      .from(aylaConsultations)
+      .where(eq(aylaConsultations.email, email));
   }
   
   // CSR Infographic leads

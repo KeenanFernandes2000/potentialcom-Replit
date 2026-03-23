@@ -10,6 +10,7 @@ import {
   resourceDownloadSchema,
   partnerApplicationSchema,
   veraConsultationSchema,
+  aylaConsultationSchema,
   csrInfographicLeadSchema,
 } from "@shared/schema";
 import { proxyWordPressRequest } from "./wp-proxy";
@@ -420,6 +421,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error) {
       console.error("Vera consultation submission error:", error);
+      res.status(400).json({
+        message: "Invalid consultation data",
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
+  });
+
+  // Ayla consultation form submission
+  app.post("/api/ayla/consultation", async (req, res) => {
+    try {
+      const validatedData = aylaConsultationSchema.parse(req.body);
+
+      const consultation = await storage.submitAylaConsultation(validatedData);
+
+      res.status(201).json({
+        message: "Consultation request submitted successfully",
+        consultation,
+      });
+    } catch (error) {
+      console.error("Ayla consultation submission error:", error);
       res.status(400).json({
         message: "Invalid consultation data",
         error: error instanceof Error ? error.message : String(error),

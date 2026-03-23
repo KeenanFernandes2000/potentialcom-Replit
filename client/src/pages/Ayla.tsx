@@ -56,6 +56,7 @@ const formSchema = z.object({
     }, "Please enter a valid website URL")
     .optional()
     .or(z.literal("")),
+  role: z.string().min(1, "Role is required"),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -89,6 +90,7 @@ export default function Ayla() {
       countryCode: "",
       companyName: "",
       companyWebsite: "https://",
+      role: "",
     },
   });
 
@@ -118,7 +120,7 @@ export default function Ayla() {
     setIsSubmitting(true);
     try {
       // Submit to database
-      await apiRequest("/api/vera/consultation", {
+      await apiRequest("/api/ayla/consultation", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -377,6 +379,23 @@ export default function Ayla() {
                               onChange={(e) => {
                                 handleWebsiteChange(e.target.value);
                               }}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="role"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Role</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Enter your role (e.g., Manager, Director, Executive)"
+                              {...field}
                             />
                           </FormControl>
                           <FormMessage />

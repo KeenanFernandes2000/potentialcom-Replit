@@ -62,6 +62,20 @@ export const veraConsultations = pgTable("vera_consultations", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// Ayla consultation form submissions
+export const aylaConsultations = pgTable("ayla_consultations", {
+  id: serial("id").primaryKey(),
+  firstName: varchar("first_name", { length: 100 }).notNull(),
+  lastName: varchar("last_name", { length: 100 }).notNull(),
+  email: varchar("email", { length: 255 }).notNull(),
+  phoneNumber: varchar("phone_number", { length: 20 }).notNull(),
+  countryCode: varchar("country_code", { length: 10 }).notNull(),
+  companyName: varchar("company_name", { length: 255 }).notNull(),
+  companyWebsite: varchar("company_website", { length: 255 }),
+  role: varchar("role", { length: 100 }).notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 // Authentication schemas
 export const registerUserSchema = createInsertSchema(users).pick({
   email: true,
@@ -117,6 +131,17 @@ export const veraConsultationSchema = createInsertSchema(veraConsultations).pick
   companyWebsite: true,
 });
 
+export const aylaConsultationSchema = createInsertSchema(aylaConsultations).pick({
+  firstName: true,
+  lastName: true,
+  email: true,
+  phoneNumber: true,
+  countryCode: true,
+  companyName: true,
+  companyWebsite: true,
+  role: true,
+});
+
 export const csrInfographicLeadSchema = createInsertSchema(csrInfographicLeads).pick({
   fullName: true,
   email: true,
@@ -131,10 +156,12 @@ export type PartnerApplicationInput = z.infer<typeof partnerApplicationSchema>;
 export type NewsletterSubscriberInput = z.infer<typeof newsletterSubscriberSchema>;
 export type ResourceDownloadInput = z.infer<typeof resourceDownloadSchema>;
 export type VeraConsultationInput = z.infer<typeof veraConsultationSchema>;
+export type AylaConsultationInput = z.infer<typeof aylaConsultationSchema>;
 
 export type User = typeof users.$inferSelect;
 export type NewsletterSubscriber = typeof newsletterSubscribers.$inferSelect;
 export type ResourceDownload = typeof resourceDownloads.$inferSelect;
 export type VeraConsultation = typeof veraConsultations.$inferSelect;
+export type AylaConsultation = typeof aylaConsultations.$inferSelect;
 export type CsrInfographicLead = typeof csrInfographicLeads.$inferSelect;
 export type CsrInfographicLeadInput = z.infer<typeof csrInfographicLeadSchema>;
