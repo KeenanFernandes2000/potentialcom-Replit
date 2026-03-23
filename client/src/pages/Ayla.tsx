@@ -504,11 +504,11 @@ export default function Ayla() {
                   <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-purple-300 rounded-full opacity-40"></div>
 
                   {/* Vera's image */}
-                  <div className="relative w-80 h-80 bg-gradient-to-br from-purple-100 to-purple-50 rounded-lg overflow-hidden flex items-center justify-center ml-[25px] mr-[25px]">
+                  <div className="relative w-full max-w-lg bg-gradient-to-br from-purple-100 to-purple-50 rounded-lg overflow-hidden flex items-center justify-center ml-[25px] mr-[25px]">
                     <img
                       src={_9}
                       alt="Vera AI Business Consultant"
-                      className="w-64 h-64 object-contain"
+                      className="w-full h-auto object-contain"
                     />
                   </div>
                 </div>
