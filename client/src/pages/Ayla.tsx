@@ -180,9 +180,7 @@ export default function Ayla() {
                   <h1 className="text-4xl lg:text-6xl font-bold text-foreground leading-tight">
                     Hello, I'm Vera,
                     <br />
-                    <span className="text-primary">
-                      Your AI Business Consultant
-                    </span>
+                    <span className="text-primary">Your AI Empowerment Advisor</span>
                   </h1>
                   <p className="text-xl text-muted-foreground leading-relaxed max-w-lg">
                     Chat or talk to me, and I'll help you explore AI solutions
