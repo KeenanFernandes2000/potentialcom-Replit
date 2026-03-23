@@ -182,10 +182,7 @@ export default function Ayla() {
                     <br />
                     <span className="text-primary">Your AI Empowerment Advisor</span>
                   </h1>
-                  <p className="text-xl text-muted-foreground leading-relaxed max-w-lg">
-                    Chat or talk to me, and I'll help you explore AI solutions
-                    for your business—completely free!
-                  </p>
+                  <p className="text-xl text-muted-foreground leading-relaxed max-w-lg">Talk to me and I’ll help you explore how to launch, scale, or improve your programs and initiatives—completely free!</p>
                 </div>
 
                 <Button
