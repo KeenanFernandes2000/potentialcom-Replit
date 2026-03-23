@@ -178,7 +178,7 @@ export default function Ayla() {
               <div className="space-y-8">
                 <div className="space-y-6">
                   <h1 className="text-4xl lg:text-6xl font-bold text-foreground leading-tight">
-                    Hello, I'm Vera,
+                    Hello, I'm Ayla,
                     <br />
                     <span className="text-primary">Your AI Empowerment Advisor</span>
                   </h1>
@@ -193,7 +193,7 @@ export default function Ayla() {
                   size="lg"
                   className="bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-6 text-lg gtm-vera-get-started"
                 >
-                  Get Started with Vera
+                  Get Started with Ayla
                 </Button>
               </div>
 
@@ -388,7 +388,7 @@ export default function Ayla() {
                       className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-6 text-lg gtm-vera-form-submit"
                       disabled={isSubmitting}
                     >
-                      {isSubmitting ? "Connecting to Vera..." : "Talk to Vera"}
+                      {isSubmitting ? "Connecting to Ayla..." : "Talk to Ayla"}
                     </Button>
                   </form>
                 </Form>
@@ -498,11 +498,11 @@ export default function Ayla() {
               <div className="space-y-8">
                 <div className="space-y-6">
                   <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
-                    Meet Vera:{" "}
+                    Meet Ayla:{" "}
                     <span className="text-primary">Your AI Guide</span>
                   </h2>
                   <p className="text-lg text-muted-foreground leading-relaxed">
-                    I'm Vera, your AI-powered consultant, here to guide you
+                    I'm Ayla, your AI-powered consultant, here to guide you
                     through the world of AI adoption. With my expertise, I can
                     help you:
                   </p>
