@@ -519,11 +519,7 @@ export default function Ayla() {
                     Meet Ayla:{" "}
                     <span className="text-primary">Your Empowerment Advisor</span>
                   </h2>
-                  <p className="text-lg text-muted-foreground leading-relaxed">
-                    I'm Ayla, your AI-powered consultant, here to guide you
-                    through the world of AI adoption. With my expertise, I can
-                    help you:
-                  </p>
+                  <p className="text-lg text-muted-foreground leading-relaxed">I’m Ayla, your AI-powered advisor here to help you explore how to design, launch, and scale impactful initiatives and programs.</p>
                 </div>
 
                 <div className="space-y-4">
