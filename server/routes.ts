@@ -1,6 +1,7 @@
 import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import path from "path";
+import sgMail from "@sendgrid/mail";
 import { storage } from "./storage";
 import {
   registerUserSchema,
@@ -14,6 +15,98 @@ import {
   csrInfographicLeadSchema,
 } from "@shared/schema";
 import { proxyWordPressRequest } from "./wp-proxy";
+
+const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
+const FORM_NOTIFICATION_TO =
+  process.env.FORM_NOTIFICATION_TO || "rawzaba@potential.com";
+const FORM_NOTIFICATION_FROM =
+  process.env.FORM_NOTIFICATION_FROM ||
+  process.env.SENDGRID_FROM_EMAIL ||
+  "no-reply@ai.potential.com";
+
+if (SENDGRID_API_KEY) {
+  sgMail.setApiKey(SENDGRID_API_KEY);
+}
+
+async function sendFormNotificationEmail(
+  subject: string,
+  lines: string[],
+): Promise<void> {
+  if (!SENDGRID_API_KEY) {
+    console.warn(
+      "SENDGRID_API_KEY is not set; skipping form notification email.",
+    );
+    return;
+  }
+
+  try {
+    const text = lines.join("\n");
+    const escapeHtml = (value: string) =>
+      value
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
+    const intro = lines.find((line) => line.trim().length > 0) || subject;
+    const fieldRows = lines
+      .filter((line) => line.includes(":"))
+      .map((line) => {
+        const separatorIndex = line.indexOf(":");
+        const label = escapeHtml(line.slice(0, separatorIndex).trim());
+        const value = escapeHtml(line.slice(separatorIndex + 1).trim() || "N/A");
+
+        return `<tr>
+          <td style="padding: 12px 14px; font-weight: 600; color: #374151; border-bottom: 1px solid #e5e7eb; width: 38%;">${label}</td>
+          <td style="padding: 12px 14px; color: #111827; border-bottom: 1px solid #e5e7eb;">${value}</td>
+        </tr>`;
+      })
+      .join("");
+
+    const html = `
+      <div style="background: #f3f4f6; padding: 24px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #111827;">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width: 680px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e5e7eb;">
+          <tr>
+            <td style="padding: 20px 24px; background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #ffffff;">
+              <h1 style="margin: 0; font-size: 20px; line-height: 1.3;">${escapeHtml(subject)}</h1>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 20px 24px 8px 24px;">
+              <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #374151;">${escapeHtml(intro)}</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 24px 20px 24px;">
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="border-collapse: collapse; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
+                ${fieldRows}
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 12px 24px 20px 24px; font-size: 12px; color: #6b7280;">
+              Sent from Potential website forms.
+            </td>
+          </tr>
+        </table>
+      </div>
+    `;
+
+    const [response] = await sgMail.send({
+      to: FORM_NOTIFICATION_TO,
+      from: FORM_NOTIFICATION_FROM,
+      subject,
+      text,
+      html,
+    });
+    console.log(
+      `[email] sent subject="${subject}" to="${FORM_NOTIFICATION_TO}" from="${FORM_NOTIFICATION_FROM}" status=${response.statusCode}`,
+    );
+  } catch (error) {
+    console.error("Failed to send form notification email:", error);
+  }
+}
 
 // Add userId to Express.Session interface
 declare module "express-session" {
@@ -414,6 +507,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const validatedData = veraConsultationSchema.parse(req.body);
 
       const consultation = await storage.submitVeraConsultation(validatedData);
+      await sendFormNotificationEmail("New Submission: Vera Booking Form", [
+        "New submission received from the Vera booking form on ai.potential.com.",
+        "Source: Vera booking form",
+        "",
+        `First Name: ${validatedData.firstName}`,
+        `Last Name: ${validatedData.lastName}`,
+        `Email: ${validatedData.email}`,
+        `Phone Number: ${validatedData.countryCode} ${validatedData.phoneNumber}`,
+        `Company Name: ${validatedData.companyName}`,
+        `Company Website: ${validatedData.companyWebsite || "N/A"}`,
+      ]);
 
       res.status(201).json({
         message: "Consultation request submitted successfully",
@@ -434,6 +538,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const validatedData = aylaConsultationSchema.parse(req.body);
 
       const consultation = await storage.submitAylaConsultation(validatedData);
+      await sendFormNotificationEmail("New Submission: Ayla Booking Form", [
+        "New submission received from the Ayla booking form on ai.potential.com.",
+        "Source: Ayla booking form",
+        "",
+        `First Name: ${validatedData.firstName}`,
+        `Last Name: ${validatedData.lastName}`,
+        `Email: ${validatedData.email}`,
+        `Phone Number: ${validatedData.countryCode} ${validatedData.phoneNumber}`,
+        `Company Name: ${validatedData.companyName}`,
+        `Company Website: ${validatedData.companyWebsite || "N/A"}`,
+        `Role: ${validatedData.role}`,
+      ]);
 
       res.status(201).json({
         message: "Consultation request submitted successfully",
@@ -460,7 +576,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const user = await storage.getUserById(req.session.userId);
 
       if (!user) {
-        req.session.destroy(() => {});
+        req.session.destroy(() => { });
         return res.status(404).json({ message: "User not found" });
       }
 

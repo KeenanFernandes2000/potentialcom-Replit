@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Mic, MicOff, PhoneOff, ChevronDown, ChevronUp } from "lucide-react";
-import veraAvatarCentered from "@assets/Vera Avatar Centered.png";
 import Vapi from '@vapi-ai/web';
 
 interface QuickCallModalProps {
@@ -199,7 +198,7 @@ export function QuickCallModal({ isOpen, onClose, assistantId }: QuickCallModalP
           e.preventDefault();
         }}
       >
-        <DialogTitle className="sr-only">Voice Call with Vera</DialogTitle>
+        <DialogTitle className="sr-only">Voice Call with Ayla</DialogTitle>
         
         <div className="relative">
           {/* Avatar Section */}
@@ -217,8 +216,8 @@ export function QuickCallModal({ isOpen, onClose, assistantId }: QuickCallModalP
                 {/* Avatar */}
                 <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-primary/30 shadow-xl bg-white dark:bg-gray-800">
                   <img 
-                    src={veraAvatarCentered} 
-                    alt="Vera" 
+                    src="/assets/images/agents/AylaAvatarCentered.png"
+                    alt="Ayla" 
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -226,7 +225,7 @@ export function QuickCallModal({ isOpen, onClose, assistantId }: QuickCallModalP
 
               {/* Status */}
               <div className="text-center">
-                <h3 className="text-xl font-semibold mb-1 text-foreground">Vera</h3>
+                <h3 className="text-xl font-semibold mb-1 text-foreground">Ayla</h3>
                 <div className="flex items-center justify-center gap-2">
                   {callStatus === 'connecting' && (
                     <>
@@ -330,7 +329,7 @@ export function QuickCallModal({ isOpen, onClose, assistantId }: QuickCallModalP
                     }`}
                   >
                     <span className="font-semibold text-xs uppercase text-gray-600 dark:text-gray-400">
-                      {transcript.role === 'user' ? 'You' : 'Vera'}:
+                      {transcript.role === 'user' ? 'You' : 'Ayla'}:
                     </span>
                     <p className="mt-1 text-gray-900 dark:text-gray-100">{transcript.text}</p>
                   </div>
@@ -345,7 +344,7 @@ export function QuickCallModal({ isOpen, onClose, assistantId }: QuickCallModalP
                     }`}
                   >
                     <span className="font-semibold text-xs uppercase text-gray-600 dark:text-gray-400">
-                      {currentPartial.role === 'user' ? 'You' : 'Vera'}:
+                      {currentPartial.role === 'user' ? 'You' : 'Ayla'}:
                     </span>
                     <p className="mt-1 text-gray-900 dark:text-gray-100">{currentPartial.text}</p>
                   </div>

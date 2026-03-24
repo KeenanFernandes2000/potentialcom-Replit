@@ -28,7 +28,7 @@ import veraGif from "@assets/Vera Gif Final.gif";
 import veraAvatarCentered from "@assets/Vera Avatar Centered.png";
 import { Check, Search, Users, Calendar, MessageSquare } from "lucide-react";
 import { AutoSEO } from "@/components/SEO";
-import { VeraCallModal } from "@/components/VeraCallModal";
+import { AylaCallModal } from "@/components/AylaCallModal";
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
 import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
 import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
@@ -172,6 +172,7 @@ export default function Ayla() {
     companyName: "",
     website: "",
     companyWebsite: "",
+    role: "",
   });
 
   const handleWebsiteChange = (value: string) => {
@@ -199,9 +200,9 @@ export default function Ayla() {
       });
 
       toast({
-        title: "Welcome to Vera!",
+        title: "Welcome to Ayla!",
         description:
-          "Your request has been submitted. Starting your call with Vera...",
+          "Your request has been submitted. Starting your call with Ayla...",
       });
 
       // Capture user info BEFORE resetting the form
@@ -213,6 +214,7 @@ export default function Ayla() {
         companyName: values.companyName,
         website: values.companyWebsite || "",
         companyWebsite: values.companyWebsite || "",
+        role: values.role,
       });
 
       setShowCallModal(true);
@@ -275,7 +277,7 @@ export default function Ayla() {
                 <div className="relative w-full max-w-lg">
                   <img
                     src={_2}
-                    alt="Vera AI Business Consultant"
+                    alt="Ayla AI Empowerment Advisor"
                     className="w-full h-auto"
                   />
                 </div>
@@ -672,7 +674,7 @@ export default function Ayla() {
         </section>
       </main>
       <Footer />
-      <VeraCallModal
+      <AylaCallModal
         key={callModalKey}
         isOpen={showCallModal}
         onClose={() => setShowCallModal(false)}

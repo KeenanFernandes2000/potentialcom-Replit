@@ -162,7 +162,7 @@ const Footer = () => {
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-sm">Talk to Vera AI</span>
+                        <span className="font-semibold text-sm">Talk to Ayla</span>
                         <div className="flex gap-1">
                           <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
                           <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse delay-75"></span>
@@ -337,7 +337,7 @@ const Footer = () => {
       <QuickCallModal
         isOpen={showCallModal}
         onClose={() => setShowCallModal(false)}
-        assistantId="af52610d-420e-4700-b2cb-f007d3436370"
+        assistantId="32d7022b-8c96-4498-bd94-60dfd4171e4f"
       />
     </footer>
   );
