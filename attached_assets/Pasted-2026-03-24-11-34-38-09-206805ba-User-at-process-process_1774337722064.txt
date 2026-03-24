@@ -1,0 +1,116 @@
+2026-03-24 11:34:38.09
+206805ba
+User
+at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+2026-03-24 11:34:38.09
+206805ba
+User
+headers: Object [AxiosHeaders] {
+2026-03-24 11:34:38.09
+206805ba
+User
+'content-length': '97',
+2026-03-24 11:34:38.09
+206805ba
+User
+server: 'nginx',
+2026-03-24 11:34:38.09
+206805ba
+User
+connection: 'keep-alive',
+2026-03-24 11:34:38.09
+206805ba
+User
+'access-control-allow-origin': 'https://sendgrid.api-docs.io',
+2026-03-24 11:34:38.09
+206805ba
+User
+response: {
+2026-03-24 11:34:38.09
+206805ba
+User
+at node_modules/@sendgrid/client/src/classes/client.js:167:29
+2026-03-24 11:34:38.09
+206805ba
+User
+'access-control-allow-methods': 'POST',
+2026-03-24 11:34:38.09
+206805ba
+User
+date: 'Tue, 24 Mar 2026 07:34:38 GMT',
+2026-03-24 11:34:38.09
+206805ba
+User
+code: 401,
+2026-03-24 11:34:38.09
+206805ba
+User
+'content-type': 'application/json',
+2026-03-24 11:34:38.09
+206805ba
+User
+Failed to send form notification email: ResponseError: Unauthorized
+2026-03-24 11:34:38.09
+206805ba
+User
+at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+2026-03-24 11:34:38.09
+206805ba
+User
+headers: Object [AxiosHeaders] {
+2026-03-24 11:34:38.09
+206805ba
+User
+Failed to send form notification email: ResponseError: Unauthorized
+2026-03-24 11:34:38.09
+206805ba
+User
+at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+2026-03-24 11:34:38.09
+206805ba
+User
+headers: Object [AxiosHeaders] {
+2026-03-24 11:34:38.09
+206805ba
+User
+'content-length': '97',
+2026-03-24 11:34:38.09
+206805ba
+User
+Failed to send form notification email: ResponseError: Unauthorized
+2026-03-24 11:34:38.09
+206805ba
+User
+at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+2026-03-24 11:34:38.09
+206805ba
+User
+headers: Object [AxiosHeaders] {
+2026-03-24 11:34:38.09
+206805ba
+User
+Failed to send form notification email: ResponseError: Unauthorized
+2026-03-24 11:34:38.09
+206805ba
+User
+at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+2026-03-24 11:34:38.09
+206805ba
+User
+headers: Object [AxiosHeaders] {
+2026-03-24 11:34:38.09
+206805ba
+User
+'content-length': '97',
+2026-03-24 11:34:38.09
+206805ba
+User
+server: 'nginx',
+2026-03-24 11:34:38.09
+206805ba
+User
+Failed to send form notification email: ResponseError: Unauthorized
+2026-03-24 11:34:38.09
+206805ba
+User
+at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
