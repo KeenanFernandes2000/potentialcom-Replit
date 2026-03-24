@@ -1,0 +1,160 @@
+2026-03-24 11:26:13.96
+dfb459e1
+User
+at file:///home/runner/workspace/node_modules/@neondatabase/serverless/index.mjs:1345:74
+2026-03-24 11:26:13.96
+dfb459e1
+User
+at async DatabaseStorage.submitAylaConsultation (file:///home/runner/workspace/dist/index.js:351:28)
+2026-03-24 11:26:13.96
+dfb459e1
+User
+internalQuery: undefined,
+2026-03-24 11:26:13.96
+dfb459e1
+User
+table: undefined,
+2026-03-24 11:26:13.96
+dfb459e1
+User
+where: undefined,
+2026-03-24 11:26:13.96
+dfb459e1
+User
+column: undefined,
+2026-03-24 11:26:13.96
+dfb459e1
+User
+at async file:///home/runner/workspace/dist/index.js:802:28 {
+2026-03-24 11:26:13.96
+dfb459e1
+User
+code: '42P01',
+2026-03-24 11:26:13.96
+dfb459e1
+User
+hint: undefined,
+2026-03-24 11:26:13.96
+dfb459e1
+User
+severity: 'ERROR',
+2026-03-24 11:26:13.96
+dfb459e1
+User
+constraint: undefined,
+2026-03-24 11:26:13.96
+dfb459e1
+User
+Ayla consultation submission error: error: relation "ayla_consultations" does not exist
+2026-03-24 11:26:13.96
+dfb459e1
+User
+internalPosition: undefined,
+2026-03-24 11:26:13.96
+dfb459e1
+User
+position: '13',
+2026-03-24 11:26:13.96
+dfb459e1
+User
+detail: undefined,
+2026-03-24 11:26:13.96
+dfb459e1
+User
+schema: undefined,
+2026-03-24 11:26:13.96
+dfb459e1
+User
+at async NeonPreparedQuery.execute (file:///home/runner/workspace/node_modules/drizzle-orm/neon-serverless/session.js:76:20)
+2026-03-24 11:26:13.96
+dfb459e1
+User
+dataType: undefined,
+2026-03-24 11:26:13.96
+dfb459e1
+User
+at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-03-24 11:26:13.96
+dfb459e1
+User
+length: 117,
+2026-03-24 11:26:13.96
+dfb459e1
+User
+at file:///home/runner/workspace/node_modules/@neondatabase/serverless/index.mjs:1345:74
+2026-03-24 11:26:13.96
+dfb459e1
+User
+at async DatabaseStorage.submitAylaConsultation (file:///home/runner/workspace/dist/index.js:351:28)
+2026-03-24 11:26:13.96
+dfb459e1
+User
+internalQuery: undefined,
+2026-03-24 11:26:13.96
+dfb459e1
+User
+table: undefined,
+2026-03-24 11:26:13.96
+dfb459e1
+User
+where: undefined,
+2026-03-24 11:26:13.96
+dfb459e1
+User
+column: undefined,
+2026-03-24 11:26:13.96
+dfb459e1
+User
+at async file:///home/runner/workspace/dist/index.js:802:28 {
+2026-03-24 11:26:13.96
+dfb459e1
+User
+code: '42P01',
+2026-03-24 11:26:13.96
+dfb459e1
+User
+hint: undefined,
+2026-03-24 11:26:13.96
+dfb459e1
+User
+severity: 'ERROR',
+2026-03-24 11:26:13.96
+dfb459e1
+User
+at file:///home/runner/workspace/node_modules/@neondatabase/serverless/index.mjs:1345:74
+2026-03-24 11:26:13.96
+dfb459e1
+User
+at async DatabaseStorage.submitAylaConsultation (file:///home/runner/workspace/dist/index.js:351:28)
+2026-03-24 11:26:13.96
+dfb459e1
+User
+internalQuery: undefined,
+2026-03-24 11:26:13.96
+dfb459e1
+User
+table: undefined,
+2026-03-24 11:26:13.96
+dfb459e1
+User
+where: undefined,
+2026-03-24 11:26:13.96
+dfb459e1
+User
+column: undefined,
+2026-03-24 11:26:13.96
+dfb459e1
+User
+at async file:///home/runner/workspace/dist/index.js:802:28 {
+2026-03-24 11:26:13.96
+dfb459e1
+User
+code: '42P01',
+2026-03-24 11:26:13.96
+dfb459e1
+User
+hint: undefined,
+2026-03-24 11:26:13.96
+dfb459e1
+User
+severity: 'ERROR',
