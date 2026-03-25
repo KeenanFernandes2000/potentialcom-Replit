@@ -136,10 +136,10 @@ const Header = () => {
             About Us
           </UTMLink>
           <UTMLink
-            href="/vera"
+            href="/ayla"
             className="text-foreground/80 hover:text-primary font-medium transition-colors"
           >
-            Talk to Vera
+            Talk to Ayla
           </UTMLink>
 
           <div className="pl-4">
@@ -229,11 +229,11 @@ const Header = () => {
             About Us
           </UTMLink>
           <UTMLink
-            href="/vera"
+            href="/ayla"
             className="py-3 text-foreground hover:text-primary font-medium transition-colors"
             onClick={() => setIsMenuOpen(false)}
           >
-            Talk to Vera
+            Talk to Ayla
           </UTMLink>
         </div>
       )}
