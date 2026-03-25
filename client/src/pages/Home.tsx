@@ -144,51 +144,43 @@ const CTABanner = ({ message, onBookDemo }: { message: string; onBookDemo: () =>
 
 const BookingModal = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
   return (
-    <>
-      <iframe
-        src="https://meetings-eu1.hubspot.com/rawzaba?embed=true"
-        title="Book a consultation"
-        allow="microphone; camera"
-        style={{ position: 'fixed', width: 0, height: 0, border: 'none', opacity: 0, pointerEvents: 'none' }}
-        aria-hidden={!open}
-      />
-      {open && (
-        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
-          <div className="bg-card rounded-2xl border border-border shadow-2xl w-full max-w-4xl h-[85vh] relative flex flex-col overflow-hidden">
-            <div className="flex items-center justify-between p-6 border-b border-border">
-              <div>
-                <h3 className="text-2xl font-bold text-foreground">
-                  Book Your Free Strategy Consultation
-                </h3>
-                <p className="text-muted-foreground mt-1">
-                  Select a time that works best for you
-                </p>
-              </div>
-              <button
-                onClick={onClose}
-                className="w-10 h-10 rounded-full bg-muted/50 hover:bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <span className="sr-only">Close</span>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <div className="flex-1 bg-white overflow-hidden">
-              <iframe
-                src="https://meetings-eu1.hubspot.com/rawzaba?embed=true"
-                width="100%"
-                height="100%"
-                frameBorder="0"
-                style={{ border: 0, minHeight: '100%' }}
-                title="Book a consultation"
-                allow="microphone; camera"
-              />
-            </div>
+    <div
+      className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-opacity duration-200 ${open ? 'bg-black/60 opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+      style={{ visibility: open ? 'visible' : 'hidden' }}
+    >
+      <div className="bg-card rounded-2xl border border-border shadow-2xl w-full max-w-4xl h-[85vh] relative flex flex-col overflow-hidden">
+        <div className="flex items-center justify-between p-6 border-b border-border">
+          <div>
+            <h3 className="text-2xl font-bold text-foreground">
+              Book Your Free Strategy Consultation
+            </h3>
+            <p className="text-muted-foreground mt-1">
+              Select a time that works best for you
+            </p>
           </div>
+          <button
+            onClick={onClose}
+            className="w-10 h-10 rounded-full bg-muted/50 hover:bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <span className="sr-only">Close</span>
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
-      )}
-    </>
+        <div className="flex-1 bg-white overflow-hidden">
+          <iframe
+            src="https://meetings-eu1.hubspot.com/rawzaba?embed=true"
+            width="100%"
+            height="100%"
+            frameBorder="0"
+            style={{ border: 0, minHeight: '100%' }}
+            title="Book a consultation"
+            allow="microphone; camera"
+          />
+        </div>
+      </div>
+    </div>
   );
 };
 
