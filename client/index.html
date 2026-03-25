@@ -46,13 +46,19 @@
 
   <!-- Chatbot Embed -->
   <script charset="utf-8" type="text/javascript" src="https://ai.potential.com/static/embed/chat.js"
-    crossorigin="anonymous"></script>
+    crossorigin="anonymous" onerror="console.warn('Chatbot script failed to load')"></script>
   <script>
-    chatbotembed({
-      botId: "69c0f093722094a7385a86ed",
-      botIcon: "https://api.potential.com/static/mentors/Ayla-EmpowermentAdvisor-1774255220386-1.png",
-      botColor: "#5e0b9e",
-    });
+    try {
+      if (typeof chatbotembed === 'function') {
+        chatbotembed({
+          botId: "69c0f093722094a7385a86ed",
+          botIcon: "https://api.potential.com/static/mentors/Ayla-EmpowermentAdvisor-1774255220386-1.png",
+          botColor: "#5e0b9e",
+        });
+      }
+    } catch (e) {
+      console.warn('Chatbot embed error:', e);
+    }
   </script>
 </body>
 
