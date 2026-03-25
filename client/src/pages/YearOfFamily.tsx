@@ -59,27 +59,22 @@ const FadeInSection = ({ children, className = "", delay = 0 }: { children: Reac
 
 const YearOfFamily = () => {
   const [showBookingModal, setShowBookingModal] = useState(false);
-  const bookingContainerRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     if (!showBookingModal) return;
-    const initMeetings = () => {
-      if (bookingContainerRef.current && (window as any).hbspt?.meetings) {
-        (window as any).hbspt.meetings.create(bookingContainerRef.current);
+    const loadHubSpotScript = () => {
+      const existingScript = document.getElementById('hubspot-meetings-script');
+      if (existingScript) {
+        existingScript.remove();
       }
-    };
-    const existingScript = document.getElementById('hubspot-meetings-script');
-    if (!existingScript) {
       const script = document.createElement('script');
       script.id = 'hubspot-meetings-script';
       script.type = 'text/javascript';
       script.src = 'https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js';
       script.async = true;
-      script.onload = () => initMeetings();
       document.head.appendChild(script);
-    } else {
-      initMeetings();
-    }
+    };
+    const timer = setTimeout(loadHubSpotScript, 100);
+    return () => clearTimeout(timer);
   }, [showBookingModal]);
 
   const solutionFeatures = [
@@ -417,7 +412,6 @@ const YearOfFamily = () => {
               </div>
               <div className="flex-1 bg-white overflow-y-auto">
                 <div 
-                  ref={bookingContainerRef}
                   className="meetings-iframe-container" 
                   data-src="https://meetings-eu1.hubspot.com/rawzaba?embed=true"
                   style={{ minHeight: '100%' }}
