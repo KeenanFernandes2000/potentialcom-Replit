@@ -674,6 +674,13 @@ const AIForCSR = () => {
           </div>
         </section>
 
+        <iframe
+          src="https://meetings-eu1.hubspot.com/rawzaba?embed=true"
+          title="Book a consultation"
+          allow="microphone; camera"
+          style={{ position: 'fixed', width: 0, height: 0, border: 'none', opacity: 0, pointerEvents: 'none' }}
+          aria-hidden={!showBookingModal}
+        />
         {showBookingModal && (
           <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
             <div className="bg-card rounded-2xl border border-border shadow-2xl w-full max-w-4xl h-[85vh] relative flex flex-col overflow-hidden">
