@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   Brain,
   Layers,
@@ -60,6 +60,29 @@ import intelLogo from "@assets/Customer Logos/intel logo.png";
 const AIForCSR = () => {
   const [showLeadForm, setShowLeadForm] = useState(false);
   const [showBookingModal, setShowBookingModal] = useState(false);
+  const bookingContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!showBookingModal) return;
+    const initMeetings = () => {
+      if (bookingContainerRef.current && (window as any).hbspt?.meetings) {
+        (window as any).hbspt.meetings.create(bookingContainerRef.current);
+      }
+    };
+    const existingScript = document.getElementById('hubspot-meetings-script');
+    if (!existingScript) {
+      const script = document.createElement('script');
+      script.id = 'hubspot-meetings-script';
+      script.type = 'text/javascript';
+      script.src = 'https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js';
+      script.async = true;
+      script.onload = () => initMeetings();
+      document.head.appendChild(script);
+    } else {
+      initMeetings();
+    }
+  }, [showBookingModal]);
+
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -705,15 +728,13 @@ const AIForCSR = () => {
                   </svg>
                 </button>
               </div>
-              <div className="flex-1 bg-white">
-                <iframe
-                  src="https://outlook.office.com/book/LetsDiscussYourCSRStrategy@potential.com/?ismsaljsauthenabled"
-                  width="100%"
-                  height="100%"
-                  scrolling="yes"
-                  style={{ border: 0 }}
-                  title="Book a consultation"
-                />
+              <div className="flex-1 bg-white overflow-y-auto">
+                <div 
+                  ref={bookingContainerRef}
+                  className="meetings-iframe-container" 
+                  data-src="https://meetings-eu1.hubspot.com/rawzaba?embed=true"
+                  style={{ minHeight: '100%' }}
+                ></div>
               </div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { SEO } from "@/components/SEO";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import {
   ArrowRight,
@@ -143,6 +143,29 @@ const CTABanner = ({ message, onBookDemo }: { message: string; onBookDemo: () =>
 );
 
 const BookingModal = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const initMeetings = () => {
+      if (containerRef.current && (window as any).hbspt?.meetings) {
+        (window as any).hbspt.meetings.create(containerRef.current);
+      }
+    };
+    const existingScript = document.getElementById('hubspot-meetings-script');
+    if (!existingScript) {
+      const script = document.createElement('script');
+      script.id = 'hubspot-meetings-script';
+      script.type = 'text/javascript';
+      script.src = 'https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js';
+      script.async = true;
+      script.onload = () => initMeetings();
+      document.head.appendChild(script);
+    } else {
+      initMeetings();
+    }
+  }, [open]);
+
   if (!open) return null;
   return (
     <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
@@ -166,15 +189,13 @@ const BookingModal = ({ open, onClose }: { open: boolean; onClose: () => void })
             </svg>
           </button>
         </div>
-        <div className="flex-1 bg-white">
-          <iframe
-            src="https://outlook.office.com/book/LetsDiscussYourCSRStrategy@potential.com/?ismsaljsauthenabled"
-            width="100%"
-            height="100%"
-            scrolling="yes"
-            style={{ border: 0 }}
-            title="Book a consultation"
-          />
+        <div className="flex-1 bg-white overflow-y-auto">
+          <div 
+            ref={containerRef}
+            className="meetings-iframe-container" 
+            data-src="https://meetings-eu1.hubspot.com/rawzaba?embed=true"
+            style={{ minHeight: '100%' }}
+          ></div>
         </div>
       </div>
     </div>

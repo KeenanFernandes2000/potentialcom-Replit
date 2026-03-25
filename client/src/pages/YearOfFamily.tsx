@@ -59,6 +59,28 @@ const FadeInSection = ({ children, className = "", delay = 0 }: { children: Reac
 
 const YearOfFamily = () => {
   const [showBookingModal, setShowBookingModal] = useState(false);
+  const bookingContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!showBookingModal) return;
+    const initMeetings = () => {
+      if (bookingContainerRef.current && (window as any).hbspt?.meetings) {
+        (window as any).hbspt.meetings.create(bookingContainerRef.current);
+      }
+    };
+    const existingScript = document.getElementById('hubspot-meetings-script');
+    if (!existingScript) {
+      const script = document.createElement('script');
+      script.id = 'hubspot-meetings-script';
+      script.type = 'text/javascript';
+      script.src = 'https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js';
+      script.async = true;
+      script.onload = () => initMeetings();
+      document.head.appendChild(script);
+    } else {
+      initMeetings();
+    }
+  }, [showBookingModal]);
 
   const solutionFeatures = [
     { icon: Rocket, text: "Launch a fully branded Year of Family platform" },
@@ -393,15 +415,13 @@ const YearOfFamily = () => {
                   </svg>
                 </button>
               </div>
-              <div className="flex-1 bg-white">
-                <iframe
-                  src="https://outlook.office.com/book/LetsDiscussYourCSRStrategy@potential.com/?ismsaljsauthenabled"
-                  width="100%"
-                  height="100%"
-                  scrolling="yes"
-                  style={{ border: 0 }}
-                  title="Book a strategy demo"
-                />
+              <div className="flex-1 bg-white overflow-y-auto">
+                <div 
+                  ref={bookingContainerRef}
+                  className="meetings-iframe-container" 
+                  data-src="https://meetings-eu1.hubspot.com/rawzaba?embed=true"
+                  style={{ minHeight: '100%' }}
+                ></div>
               </div>
             </div>
           </div>
