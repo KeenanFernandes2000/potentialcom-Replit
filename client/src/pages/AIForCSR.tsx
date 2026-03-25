@@ -60,23 +60,6 @@ import intelLogo from "@assets/Customer Logos/intel logo.png";
 const AIForCSR = () => {
   const [showLeadForm, setShowLeadForm] = useState(false);
   const [showBookingModal, setShowBookingModal] = useState(false);
-  useEffect(() => {
-    if (!showBookingModal) return;
-    const loadHubSpotScript = () => {
-      const existingScript = document.getElementById('hubspot-meetings-script');
-      if (existingScript) {
-        existingScript.remove();
-      }
-      const script = document.createElement('script');
-      script.id = 'hubspot-meetings-script';
-      script.type = 'text/javascript';
-      script.src = 'https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js';
-      script.async = true;
-      document.head.appendChild(script);
-    };
-    const timer = setTimeout(loadHubSpotScript, 100);
-    return () => clearTimeout(timer);
-  }, [showBookingModal]);
 
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -723,12 +706,16 @@ const AIForCSR = () => {
                   </svg>
                 </button>
               </div>
-              <div className="flex-1 bg-white overflow-y-auto">
-                <div 
-                  className="meetings-iframe-container" 
-                  data-src="https://meetings-eu1.hubspot.com/rawzaba?embed=true"
-                  style={{ minHeight: '100%' }}
-                ></div>
+              <div className="flex-1 bg-white overflow-hidden">
+                <iframe
+                  src="https://meetings-eu1.hubspot.com/rawzaba?embed=true"
+                  width="100%"
+                  height="100%"
+                  frameBorder="0"
+                  style={{ border: 0, minHeight: '100%' }}
+                  title="Book a consultation"
+                  allow="microphone; camera"
+                />
               </div>
             </div>
           </div>
