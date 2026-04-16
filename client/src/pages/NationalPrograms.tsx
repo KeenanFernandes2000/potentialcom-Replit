@@ -18,6 +18,7 @@ import {
   Sparkles,
   Heart,
   TrendingUp,
+  Zap,
   Target,
   Building2,
   X,
@@ -332,82 +333,102 @@ const NationalPrograms = () => {
       <main className="pt-20">
 
         {/* SECTION 1 — HERO */}
-        <section className="relative py-20 md:py-28 overflow-hidden bg-gradient-to-br from-background via-background to-primary/5">
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] opacity-30" />
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[100px] opacity-20" />
+        <section className="relative py-24 md:py-32 lg:py-36 overflow-hidden bg-[#1a0a2e]">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#1a0a2e] via-[#2d1154] to-[#0f1642]" />
+          <div className="absolute top-[-200px] right-[-100px] w-[700px] h-[700px] bg-purple-600/20 rounded-full blur-[150px]" />
+          <div className="absolute bottom-[-150px] left-[-100px] w-[500px] h-[500px] bg-blue-600/15 rounded-full blur-[130px]" />
+          <div className="absolute top-[20%] left-[50%] w-[300px] h-[300px] bg-pink-500/10 rounded-full blur-[100px]" />
+          <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)", backgroundSize: "40px 40px" }} />
+
           <div className="container relative z-10">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               <div>
                 <SlideIn direction="left">
-                  <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-bold leading-tight mb-6">
-                    Launch Workforce, Entrepreneurship or CSR Programs{" "}
-                    <span className="gradient-text">in Weeks</span>
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/10 text-purple-200 text-sm font-medium mb-6">
+                    <Sparkles className="h-4 w-4" />
+                    AI-Powered National Programs
+                  </div>
+                </SlideIn>
+                <SlideIn direction="left" delay={100}>
+                  <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.05] mb-6 tracking-tight">
+                    <span className="text-white">Launch Workforce, Entrepreneurship or CSR Programs </span>
+                    <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-orange-300 bg-clip-text text-transparent">in Weeks</span>
                   </h1>
                 </SlideIn>
-                <SlideIn direction="left" delay={150}>
-                  <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                <SlideIn direction="left" delay={200}>
+                  <p className="text-lg md:text-xl text-purple-100/70 mb-10 leading-relaxed max-w-xl">
                     We help governments, enterprises, and financial institutions design and launch AI-powered national programs for workforce development, entrepreneurship, and economic resilience.
                   </p>
                 </SlideIn>
-                <div className="space-y-3 mb-8">
+                <div className="grid grid-cols-2 gap-x-6 gap-y-4 mb-10">
                   {[
-                    "Fully designed program in 1–2 weeks",
-                    "Launch-ready platform in 3–4 weeks",
-                    "Engage 1,000–100,000+ participants",
-                    "Real-time dashboards for impact reporting",
+                    { text: "Fully designed program in 1–2 weeks", icon: Rocket },
+                    { text: "Launch-ready platform in 3–4 weeks", icon: Zap },
+                    { text: "Engage 1,000–100,000+ participants", icon: Users },
+                    { text: "Real-time dashboards for impact reporting", icon: BarChart3 },
                   ].map((item, i) => (
-                    <SlideIn key={i} direction="up" delay={250 + i * 100}>
-                      <div className="flex items-center gap-3">
-                        <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
-                        <span className="text-foreground font-medium">{item}</span>
+                    <SlideIn key={i} direction="up" delay={300 + i * 100}>
+                      <div className="flex items-start gap-3 group">
+                        <div className="mt-0.5 w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500/30 to-pink-500/20 border border-purple-400/20 flex items-center justify-center flex-shrink-0 group-hover:from-purple-500/50 group-hover:to-pink-500/40 transition-all">
+                          <item.icon className="h-4 w-4 text-purple-300" />
+                        </div>
+                        <span className="text-white/90 text-sm font-medium leading-snug">{item.text}</span>
                       </div>
                     </SlideIn>
                   ))}
                 </div>
-                <SlideIn direction="up" delay={650}>
-                  <Button size="lg" className="text-base px-8 py-6 rounded-xl" onClick={openDemo}>
-                    Request Free Demo <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
+                <SlideIn direction="up" delay={700}>
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Button size="lg" className="text-base px-8 py-6 rounded-xl bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-500 hover:to-pink-400 border-0 shadow-lg shadow-purple-500/25 text-white" onClick={openDemo}>
+                      Request Free Demo <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                    <Button size="lg" variant="outline" className="text-base px-8 py-6 rounded-xl border-white/20 text-white hover:bg-white/10 hover:text-white bg-transparent" onClick={() => navigate("/book")}>
+                      Book a Strategy Call
+                    </Button>
+                  </div>
                 </SlideIn>
               </div>
-              <SlideIn direction="right" delay={300}>
+
+              <SlideIn direction="right" delay={400}>
                 <div className="relative">
-                  <div className="bg-card border border-border rounded-2xl p-6 shadow-xl">
-                    <div className="flex items-center gap-2 mb-4">
-                      <div className="w-3 h-3 rounded-full bg-red-400" />
-                      <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                      <div className="w-3 h-3 rounded-full bg-green-400" />
-                      <span className="text-xs text-muted-foreground ml-2">Impact Dashboard</span>
+                  <div className="absolute -inset-4 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-blue-500/20 rounded-3xl blur-xl" />
+                  <div className="relative bg-white/[0.07] backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-2xl">
+                    <div className="flex items-center gap-2 mb-5">
+                      <div className="w-3 h-3 rounded-full bg-red-400/80" />
+                      <div className="w-3 h-3 rounded-full bg-yellow-400/80" />
+                      <div className="w-3 h-3 rounded-full bg-green-400/80" />
+                      <span className="text-xs text-purple-200/60 ml-2 font-medium">Impact Dashboard</span>
                     </div>
                     <div className="grid grid-cols-2 gap-3 mb-4">
-                      <div className="bg-primary/10 rounded-xl p-4 text-center">
-                        <div className="text-2xl font-bold text-primary">12,450</div>
-                        <div className="text-xs text-muted-foreground">Active Participants</div>
+                      <div className="bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-400/10 rounded-xl p-4 text-center">
+                        <div className="text-2xl font-bold text-purple-300">12,450</div>
+                        <div className="text-xs text-purple-200/50 mt-1">Active Participants</div>
                       </div>
-                      <div className="bg-green-500/10 rounded-xl p-4 text-center">
-                        <div className="text-2xl font-bold text-green-600 dark:text-green-400">94%</div>
-                        <div className="text-xs text-muted-foreground">Completion Rate</div>
+                      <div className="bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-400/10 rounded-xl p-4 text-center">
+                        <div className="text-2xl font-bold text-green-300">94%</div>
+                        <div className="text-xs text-green-200/50 mt-1">Completion Rate</div>
                       </div>
-                      <div className="bg-blue-500/10 rounded-xl p-4 text-center">
-                        <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">847</div>
-                        <div className="text-xs text-muted-foreground">New Businesses</div>
+                      <div className="bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-400/10 rounded-xl p-4 text-center">
+                        <div className="text-2xl font-bold text-blue-300">847</div>
+                        <div className="text-xs text-blue-200/50 mt-1">New Businesses</div>
                       </div>
-                      <div className="bg-purple-500/10 rounded-xl p-4 text-center">
-                        <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">4.8</div>
-                        <div className="text-xs text-muted-foreground">Avg. Rating</div>
+                      <div className="bg-gradient-to-br from-pink-500/20 to-pink-500/5 border border-pink-400/10 rounded-xl p-4 text-center">
+                        <div className="text-2xl font-bold text-pink-300">4.8</div>
+                        <div className="text-xs text-pink-200/50 mt-1">Avg. Rating</div>
                       </div>
                     </div>
-                    <div className="bg-muted/50 rounded-xl p-4">
-                      <div className="flex justify-between items-center mb-2">
-                        <span className="text-sm font-medium">Program Progress</span>
-                        <span className="text-sm text-primary font-semibold">78%</span>
+                    <div className="bg-white/5 border border-white/5 rounded-xl p-4">
+                      <div className="flex justify-between items-center mb-3">
+                        <span className="text-sm font-medium text-purple-100/80">Program Progress</span>
+                        <span className="text-sm text-purple-300 font-bold">78%</span>
                       </div>
-                      <div className="w-full bg-muted rounded-full h-2.5">
-                        <div className="bg-primary h-2.5 rounded-full" style={{ width: "78%" }} />
+                      <div className="w-full bg-white/10 rounded-full h-2.5">
+                        <div className="bg-gradient-to-r from-purple-500 to-pink-500 h-2.5 rounded-full shadow-sm shadow-purple-500/50" style={{ width: "78%" }} />
                       </div>
                     </div>
                   </div>
-                  <div className="absolute -top-4 -right-4 bg-primary text-primary-foreground rounded-xl px-4 py-2 text-sm font-semibold shadow-lg">
+                  <div className="absolute -top-3 -right-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl px-4 py-2 text-sm font-bold shadow-lg shadow-purple-500/30 flex items-center gap-1.5">
+                    <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                     Live Data
                   </div>
                 </div>
