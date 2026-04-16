@@ -183,12 +183,22 @@ const useLoopingCounter = (target: number, duration = 3000, pauseDuration = 2000
 };
 
 const regionDots = [
-  { top: "18%", left: "48%", label: "Europe", delay: 0 },
-  { top: "32%", left: "55%", label: "Middle East", delay: 400 },
-  { top: "45%", left: "42%", label: "Africa", delay: 800 },
-  { top: "28%", left: "68%", label: "South Asia", delay: 1200 },
-  { top: "38%", left: "78%", label: "Southeast Asia", delay: 1600 },
-  { top: "22%", left: "25%", label: "Americas", delay: 600 },
+  { top: "38%", left: "55%", label: "UAE", delay: 0 },
+  { top: "32%", left: "50%", label: "Saudi Arabia", delay: 300 },
+  { top: "42%", left: "48%", label: "Oman", delay: 600 },
+  { top: "30%", left: "44%", label: "Egypt", delay: 900 },
+  { top: "28%", left: "52%", label: "Jordan", delay: 1200 },
+  { top: "34%", left: "46%", label: "Bahrain", delay: 1500 },
+  { top: "22%", left: "40%", label: "Tunisia", delay: 1800 },
+  { top: "24%", left: "36%", label: "Morocco", delay: 2100 },
+  { top: "18%", left: "48%", label: "Turkey", delay: 2400 },
+  { top: "36%", left: "42%", label: "Libya", delay: 2700 },
+  { top: "26%", left: "38%", label: "Algeria", delay: 3000 },
+  { top: "34%", left: "56%", label: "Kuwait", delay: 3300 },
+  { top: "36%", left: "54%", label: "Qatar", delay: 3600 },
+  { top: "46%", left: "44%", label: "Sudan", delay: 3900 },
+  { top: "26%", left: "50%", label: "Lebanon", delay: 4200 },
+  { top: "20%", left: "46%", label: "Iraq", delay: 4500 },
 ];
 
 const AnimatedDashboard = () => {
@@ -280,38 +290,29 @@ const AnimatedDashboard = () => {
           </div>
 
           <div className="relative bg-white/[0.03] border border-white/5 rounded-lg p-3 mb-3">
-            <div className="flex items-center gap-1.5 mb-2">
-              <Globe className="w-3 h-3 text-purple-300/60" />
-              <span className="text-[10px] text-purple-200/50 font-medium">Global Reach</span>
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-1.5">
+                <MapPin className="w-3 h-3 text-purple-300/60" />
+                <span className="text-[10px] text-purple-200/50 font-medium">Regional Reach — MENA & Turkey</span>
+              </div>
+              <span className="text-[9px] text-purple-300/50 font-medium">{regionDots.length} countries</span>
             </div>
-            <div className="relative h-16">
+            <div className="relative h-20">
               {regionDots.map((dot, i) => (
                 <div key={i} className="absolute transition-all duration-700" style={{ top: dot.top, left: dot.left }}>
-                  <div className={`relative ${i === activeDot ? "scale-150" : "scale-100"} transition-transform duration-500`}>
-                    <div className={`w-2 h-2 rounded-full ${i === activeDot ? "bg-purple-400 shadow-lg shadow-purple-400/50" : "bg-purple-400/40"} transition-all duration-500`} />
+                  <div className={`relative ${i === activeDot ? "scale-[1.8]" : "scale-100"} transition-transform duration-500`}>
+                    <div className={`w-1.5 h-1.5 rounded-full ${i === activeDot ? "bg-purple-400 shadow-lg shadow-purple-400/50" : "bg-purple-400/30"} transition-all duration-500`} />
                     {i === activeDot && (
-                      <div className="absolute -inset-1 rounded-full bg-purple-400/20 animate-ping" />
+                      <div className="absolute -inset-1.5 rounded-full bg-purple-400/20 animate-ping" />
                     )}
                   </div>
                   {i === activeDot && (
-                    <div className="absolute -top-5 left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] text-purple-300/80 font-medium bg-purple-500/20 px-1.5 py-0.5 rounded">
+                    <div className="absolute -top-5 left-1/2 -translate-x-1/2 whitespace-nowrap text-[8px] text-purple-300/90 font-semibold bg-purple-500/25 px-1.5 py-0.5 rounded border border-purple-400/15">
                       {dot.label}
                     </div>
                   )}
                 </div>
               ))}
-              {regionDots.map((dot, i) => {
-                const next = regionDots[(i + 1) % regionDots.length];
-                return (
-                  <svg key={`line-${i}`} className="absolute inset-0 w-full h-full" style={{ overflow: "visible" }}>
-                    <line
-                      x1={dot.left} y1={dot.top} x2={next.left} y2={next.top}
-                      stroke="rgba(168,130,255,0.08)"
-                      strokeWidth="1"
-                    />
-                  </svg>
-                );
-              })}
             </div>
           </div>
 
