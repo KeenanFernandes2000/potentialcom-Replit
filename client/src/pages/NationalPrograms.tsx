@@ -31,6 +31,10 @@ import {
   Briefcase,
 } from "lucide-react";
 
+import whyNowImg1 from "@assets/1_1776339706269.png";
+import whyNowImg2 from "@assets/2_1776339706277.png";
+import whyNowImg3 from "@assets/3_1776339706282.png";
+
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
 import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
 import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
@@ -437,16 +441,19 @@ const NationalPrograms = () => {
       icon: Brain,
       title: "AI Disruption",
       description: "AI is replacing jobs faster than systems can adapt. Organizations need large-scale reskilling programs now.",
+      image: whyNowImg1,
     },
     {
       icon: TrendingUp,
       title: "Economic Shift",
       description: "New industries are emerging. Economies must adapt quickly through workforce and entrepreneurship programs.",
+      image: whyNowImg2,
     },
     {
       icon: Users,
       title: "Social Pressure",
       description: "Stakeholders expect real, measurable impact. Programs must deliver visible results at scale.",
+      image: whyNowImg3,
     },
   ];
 
@@ -650,12 +657,21 @@ const NationalPrograms = () => {
             <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {whyNowCards.map((card, i) => (
                 <SlideIn key={i} direction="up" delay={i * 150}>
-                  <div className="group bg-card border border-border rounded-2xl p-8 hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
-                    <div className="bg-primary/10 w-14 h-14 rounded-xl flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors">
-                      <card.icon className="h-7 w-7 text-primary" />
+                  <div className="group [perspective:1000px] h-[320px]">
+                    <div className="relative w-full h-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                      <div className="absolute inset-0 [backface-visibility:hidden] rounded-2xl overflow-hidden shadow-lg">
+                        <img src={card.image} alt={card.title} className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                        <div className="absolute bottom-0 left-0 right-0 p-6">
+                          <h3 className="text-xl font-bold text-white">{card.title}</h3>
+                        </div>
+                      </div>
+                      <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-2xl overflow-hidden shadow-lg bg-gradient-to-br from-primary/90 to-primary flex flex-col items-center justify-center p-8 text-center">
+                        <card.icon className="h-10 w-10 text-white mb-4" />
+                        <h3 className="text-xl font-bold text-white mb-3">{card.title}</h3>
+                        <p className="text-white/90 leading-relaxed">{card.description}</p>
+                      </div>
                     </div>
-                    <h3 className="text-xl font-bold mb-3">{card.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed">{card.description}</p>
                   </div>
                 </SlideIn>
               ))}
