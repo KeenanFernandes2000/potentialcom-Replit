@@ -55,7 +55,7 @@ function Router() {
       <Route path="/ai-for-csr" component={AIForCSR} />
       <Route path="/ai-agents" component={AIAgents} />
       <Route path="/year-of-family" component={YearOfFamily} />
-      <Route path="/national-programs" component={NationalPrograms} />
+      <Route path="/launch-programs" component={NationalPrograms} />
       <Route path="/book" component={Book} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
