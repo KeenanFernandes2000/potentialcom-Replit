@@ -725,7 +725,7 @@ const NationalPrograms = () => {
         </section>
 
         {/* SECTION 5 — WHO IT'S FOR */}
-        <section className="py-20 md:py-28 bg-muted/50">
+        <section className="py-20 md:py-28 bg-[#dfd8ed80]">
           <div className="container">
             <SlideIn direction="up">
               <div className="text-center mb-14">
@@ -892,7 +892,6 @@ const NationalPrograms = () => {
 
       </main>
       <Footer />
-
       {/* DEMO MODAL */}
       {showDemoModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="demo-modal-title">
