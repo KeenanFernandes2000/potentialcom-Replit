@@ -824,7 +824,7 @@ const NationalPrograms = () => {
                   Proven Results
                 </div>
                 <h2 className="text-3xl md:text-4xl font-bold">
-                  Programs That Ran at <span className="gradient-text">National Scale</span>
+                  Sample Programs That We Ran at <span className="gradient-text">National Scale</span>
                 </h2>
               </div>
             </SlideIn>
