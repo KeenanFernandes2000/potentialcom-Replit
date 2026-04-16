@@ -231,8 +231,9 @@ const AnimatedDashboard = () => {
 
   return (
     <div className="relative">
-      <div className="absolute -inset-4 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-blue-500/20 rounded-3xl blur-xl" />
-      <div className="relative bg-white/[0.07] backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
+      <div className="absolute -inset-6 bg-gradient-to-r from-purple-500/30 via-pink-500/25 to-blue-500/30 rounded-3xl blur-2xl" />
+      <div className="absolute -inset-2 bg-gradient-to-br from-purple-400/10 to-pink-400/10 rounded-2xl blur-md" />
+      <div className="relative bg-gradient-to-br from-[#1e1040]/95 via-[#18082e]/95 to-[#0d0a2a]/95 backdrop-blur-xl border border-white/15 rounded-2xl overflow-hidden shadow-2xl shadow-purple-900/40">
 
         <div className="flex items-center gap-2 px-5 py-3 border-b border-white/5">
           <div className="w-3 h-3 rounded-full bg-red-400/80" />
@@ -265,8 +266,8 @@ const AnimatedDashboard = () => {
           <div className="grid grid-cols-4 gap-2 mb-3">
             {[
               { label: "Participants", value: participants.toLocaleString(), suffix: "+", color: "text-purple-300", bg: "from-purple-500/20 to-purple-500/5", border: "border-purple-400/10", icon: Users },
-              { label: "Courses Done", value: courses.toLocaleString(), suffix: "", color: "text-blue-300", bg: "from-blue-500/20 to-blue-500/5", border: "border-blue-400/10", icon: GraduationCap },
-              { label: "Startups", value: startups.toLocaleString(), suffix: "", color: "text-green-300", bg: "from-green-500/20 to-green-500/5", border: "border-green-400/10", icon: Rocket },
+              { label: "Empowered", value: courses.toLocaleString(), suffix: "", color: "text-blue-300", bg: "from-blue-500/20 to-blue-500/5", border: "border-blue-400/10", icon: GraduationCap },
+              { label: "Startups Launched", value: startups.toLocaleString(), suffix: "", color: "text-green-300", bg: "from-green-500/20 to-green-500/5", border: "border-green-400/10", icon: Rocket },
               { label: "Jobs Created", value: jobs.toLocaleString(), suffix: "+", color: "text-pink-300", bg: "from-pink-500/20 to-pink-500/5", border: "border-pink-400/10", icon: Briefcase },
             ].map((metric, i) => (
               <div key={i} className={`bg-gradient-to-br ${metric.bg} border ${metric.border} rounded-lg p-2.5 text-center`}>
