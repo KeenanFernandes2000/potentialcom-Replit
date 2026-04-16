@@ -581,9 +581,6 @@ const NationalPrograms = () => {
                     <Button size="lg" className="text-base px-8 py-6 rounded-xl bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-500 hover:to-pink-400 border-0 shadow-lg shadow-purple-500/25 text-white" onClick={openDemo}>
                       Request Free Demo <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
-                    <Button size="lg" variant="outline" className="text-base px-8 py-6 rounded-xl border-white/20 text-white hover:bg-white/10 hover:text-white bg-transparent" onClick={() => navigate("/book")}>
-                      Book a Strategy Call
-                    </Button>
                   </div>
                 </SlideIn>
               </div>
