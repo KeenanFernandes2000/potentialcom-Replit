@@ -532,7 +532,7 @@ const NationalPrograms = () => {
       <main className="pt-20">
 
         {/* SECTION 1 — HERO */}
-        <section className="relative py-24 md:py-32 lg:py-36 overflow-hidden bg-[#1a0a2e]">
+        <section className="relative py-12 md:py-16 lg:py-20 overflow-hidden bg-[#1a0a2e]">
           <div className="absolute inset-0 bg-gradient-to-br from-[#1a0a2e] via-[#2d1154] to-[#0f1642]" />
           <div className="absolute top-[-200px] right-[-100px] w-[700px] h-[700px] bg-purple-600/20 rounded-full blur-[150px]" />
           <div className="absolute bottom-[-150px] left-[-100px] w-[500px] h-[500px] bg-blue-600/15 rounded-full blur-[130px]" />
