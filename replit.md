@@ -97,6 +97,7 @@ This is a modern full-stack web application for Potential.com, an AI agents plat
 - CDN integration for static assets
 
 ## Changelog
+- April 16, 2026. Created National Programs landing page at /national-programs with 9 sections (Hero with dashboard visual, Trusted logos, Why Now cards, Solution features, Who It's For audience cards, How It Works timeline, Proof/case studies, Trust signals with counter). Includes HubSpot demo form popup modal, slide-in/scale-in animations, and responsive design.
 - February 11, 2026. Created Year of Family landing page at /year-of-family with 6 sections (Hero, Opportunity, Solution, Impact, Strategic Positioning, Final CTA), AI-generated images, fade-in scroll animations, booking modal, and responsive design
 - October 27, 2025. Updated Demo page "What Ruby Can Do" section with beauty & cosmetics industry use cases focused on Alora Brands (Shopping, Booking Experts, Learning Courses, HR & Career, Customer Support, System Automation)
 - October 27, 2025. Replaced integrations text with actual brand logos using react-icons (Shopify, Stripe, HubSpot, Salesforce, Mailchimp, Twilio, Slack, Zapier, Notion, AWS, Google Cloud)
