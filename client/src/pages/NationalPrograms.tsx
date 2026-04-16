@@ -235,11 +235,9 @@ const AnimatedDashboard = () => {
       <div className="absolute -inset-2 bg-gradient-to-br from-purple-400/10 to-pink-400/10 rounded-2xl blur-md" />
       <div className="relative bg-gradient-to-br from-[#1e1040]/95 via-[#18082e]/95 to-[#0d0a2a]/95 backdrop-blur-xl border border-white/15 rounded-2xl overflow-hidden shadow-2xl shadow-purple-900/40">
 
-        <div className="flex items-center gap-2 px-5 py-3 border-b border-white/5">
-          <div className="w-3 h-3 rounded-full bg-red-400/80" />
-          <div className="w-3 h-3 rounded-full bg-yellow-400/80" />
-          <div className="w-3 h-3 rounded-full bg-green-400/80" />
-          <span className="text-xs text-purple-200/60 ml-2 font-medium">Program Dashboard</span>
+        <div className="flex items-center gap-2 px-5 py-3 border-b border-white/10">
+          <BarChart3 className="w-4 h-4 text-purple-300/70" />
+          <span className="text-xs text-white/80 font-semibold tracking-wide">Impact Reporting Dashboard</span>
           <div className="ml-auto flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
             <span className="text-[10px] text-green-300/70 font-medium">LIVE</span>
