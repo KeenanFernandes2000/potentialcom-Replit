@@ -170,36 +170,45 @@ const NationalPrograms = () => {
     let cancelled = false;
     let retries = 0;
     const maxRetries = 25;
+    let timerId: ReturnType<typeof setTimeout> | null = null;
 
     const checkAndCreate = () => {
       if (cancelled || retries >= maxRetries) return;
       retries++;
-      if ((window as any).hbspt) {
-        (window as any).hbspt.forms.create({
-          portalId: "25217377",
-          formId: "f794634e-348b-40c2-acf5-23bd46cb3df6",
-          region: "eu1",
-          target: "#hs-demo-form-container",
-        });
-      } else {
-        setTimeout(checkAndCreate, 200);
+      try {
+        if ((window as any).hbspt && (window as any).hbspt.forms) {
+          (window as any).hbspt.forms.create({
+            portalId: "25217377",
+            formId: "f794634e-348b-40c2-acf5-23bd46cb3df6",
+            region: "eu1",
+            target: "#hs-demo-form-container",
+          });
+        } else {
+          timerId = setTimeout(checkAndCreate, 200);
+        }
+      } catch (e) {
+        console.warn("HubSpot form creation error:", e);
       }
     };
 
     const existing = document.querySelector('script[src*="js-eu1.hsforms.net"]');
     if (!existing) {
       const script = document.createElement("script");
-      script.src = "//js-eu1.hsforms.net/forms/embed/v2.js";
+      script.src = "https://js-eu1.hsforms.net/forms/embed/v2.js";
       script.charset = "utf-8";
       script.type = "text/javascript";
       script.async = true;
-      script.onload = checkAndCreate;
+      script.onload = () => checkAndCreate();
+      script.onerror = () => console.warn("Failed to load HubSpot forms script");
       document.head.appendChild(script);
     } else {
       checkAndCreate();
     }
 
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+      if (timerId) clearTimeout(timerId);
+    };
   }, []);
 
   useEffect(() => {
