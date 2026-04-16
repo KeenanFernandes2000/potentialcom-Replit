@@ -734,13 +734,6 @@ const NationalPrograms = () => {
                 </SlideIn>
               ))}
             </div>
-            <SlideIn direction="up" delay={500}>
-              <div className="text-center mt-12">
-                <Button size="lg" variant="outline" className="text-base px-8 py-6 rounded-xl border-primary text-primary hover:bg-primary hover:text-primary-foreground" onClick={() => navigate("/book")}>
-                  Book a Strategy Session <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </div>
-            </SlideIn>
           </div>
         </section>
 
