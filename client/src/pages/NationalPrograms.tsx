@@ -835,7 +835,7 @@ const NationalPrograms = () => {
                     <div className="relative w-full h-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                       <div className="absolute inset-0 [backface-visibility:hidden] rounded-2xl overflow-hidden shadow-lg border border-border bg-white flex flex-col items-center justify-center p-8">
                         <div className="flex-1 flex items-center justify-center w-full">
-                          <img src={card.logo} alt={card.title} className="max-h-28 max-w-[80%] object-contain" />
+                          <img src={card.logo} alt={card.title} className={`object-contain ${i === 0 ? "max-h-28 max-w-[80%]" : "max-h-40 max-w-[90%]"}`} />
                         </div>
                         <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-xl px-5 py-3 w-full text-center">
                           <h3 className="text-lg font-bold text-foreground">{card.title}</h3>
