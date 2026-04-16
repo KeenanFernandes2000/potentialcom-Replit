@@ -22,8 +22,8 @@ export default function Book() {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Book a Meeting - Schedule a Consultation | Potential.com"
-        description="Schedule a free consultation with our AI solutions team. Discover how Potential.com's AI agents can transform your business operations and drive growth."
+        title="Book a Meeting | Potential.com"
+        description="Schedule a free consultation to design and launch impactful National Resilience Programs"
       />
       <Header />
       <section className="pt-28 pb-12 relative overflow-hidden">
