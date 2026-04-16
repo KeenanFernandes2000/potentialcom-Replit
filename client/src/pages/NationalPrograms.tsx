@@ -19,7 +19,6 @@ import {
   Heart,
   TrendingUp,
   Zap,
-  Target,
   Building2,
   X,
   GraduationCap,
@@ -34,6 +33,10 @@ import {
 import whyNowImg1 from "@assets/1_1776339706269.png";
 import whyNowImg2 from "@assets/2_1776339706277.png";
 import whyNowImg3 from "@assets/3_1776339706282.png";
+
+import hsbcProofLogo from "@assets/HSBC_MASTERBRAND_LOGO_CMYK_1776340917689.png";
+import bankMuscatProofLogo from "@assets/BankMuscat-Horizontal-Flat_1776340986119.jpg";
+import moEconomyLogo from "@assets/MOEconomy_UAE_logo_1776341149105.jpg";
 
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
 import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
@@ -509,19 +512,25 @@ const NationalPrograms = () => {
 
   const proofCards = [
     {
-      title: "HSBC Tatawwar",
-      description: "Entrepreneurship programs across multiple countries.",
-      icon: Target,
+      title: "Tatawwar Program",
+      logo: hsbcProofLogo,
+      audience: "Youth & students (ages 15–18) across MENA",
+      outcome: "Empowered youth to become social innovators through education, prototyping, and acceleration programs focused on UN SDGs",
+      stats: ["25,000+ Youth engaged", "250+ Idea prototypes developed", "20+ Startups accelerated"],
     },
     {
-      title: "Bank Muscat Maliyat",
-      description: "National financial literacy program reaching thousands.",
-      icon: Banknote,
+      title: "The Entrepreneurial Nation (TEN)",
+      logo: moEconomyLogo,
+      audience: "Entrepreneurs, startups, and SMEs",
+      outcome: "Strengthened the national entrepreneurship ecosystem through partnerships, programs, and funding opportunities",
+      stats: ["5,000+ Entrepreneurs engaged", "20+ Global Partners", "$1M support provided"],
     },
     {
-      title: "Ministry of Economy",
-      description: "Powered the Entrepreneurial Nation initiative.",
-      icon: Landmark,
+      title: "Maliyat Program",
+      logo: bankMuscatProofLogo,
+      audience: "Students, youth, and adults across Oman",
+      outcome: "Enhanced financial literacy and money management skills through practical learning on budgeting, saving, and financial planning",
+      stats: ["20,000+ Individuals engaged"],
     },
   ];
 
@@ -822,12 +831,31 @@ const NationalPrograms = () => {
             <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {proofCards.map((card, i) => (
                 <SlideIn key={i} direction="left" delay={i * 150}>
-                  <div className="group bg-card border border-border rounded-2xl p-8 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-                    <div className="bg-primary/10 w-14 h-14 rounded-xl flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors">
-                      <card.icon className="h-7 w-7 text-primary" />
+                  <div className="group [perspective:1000px] h-[380px]">
+                    <div className="relative w-full h-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                      <div className="absolute inset-0 [backface-visibility:hidden] rounded-2xl overflow-hidden shadow-lg border border-border bg-white flex flex-col items-center justify-center p-8">
+                        <div className="flex-1 flex items-center justify-center w-full">
+                          <img src={card.logo} alt={card.title} className="max-h-28 max-w-[80%] object-contain" />
+                        </div>
+                        <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-xl px-5 py-3 w-full text-center">
+                          <h3 className="text-lg font-bold text-foreground">{card.title}</h3>
+                        </div>
+                      </div>
+                      <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-2xl overflow-hidden shadow-lg bg-gradient-to-br from-primary/90 to-primary flex flex-col justify-center p-7 text-white">
+                        <h3 className="text-lg font-bold mb-3">{card.title}</h3>
+                        <p className="text-white/80 text-xs font-semibold uppercase tracking-wider mb-1">Target Audience</p>
+                        <p className="text-white/95 text-sm mb-3">{card.audience}</p>
+                        <p className="text-white/80 text-xs font-semibold uppercase tracking-wider mb-1">Outcome</p>
+                        <p className="text-white/95 text-sm mb-4 leading-relaxed">{card.outcome}</p>
+                        <div className="flex flex-wrap gap-2">
+                          {card.stats.map((stat, j) => (
+                            <span key={j} className="bg-white/20 backdrop-blur-sm rounded-full px-3 py-1 text-xs font-semibold">
+                              {stat}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
                     </div>
-                    <h3 className="text-xl font-bold mb-2">{card.title}</h3>
-                    <p className="text-muted-foreground leading-relaxed">{card.description}</p>
                   </div>
                 </SlideIn>
               ))}
