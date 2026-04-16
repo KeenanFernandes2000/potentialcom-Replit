@@ -26,7 +26,6 @@ export default function Book() {
         description="Schedule a free consultation with our AI solutions team. Discover how Potential.com's AI agents can transform your business operations and drive growth."
       />
       <Header />
-
       <section className="pt-28 pb-12 relative overflow-hidden">
         <div className="absolute inset-0 bg-grid-pattern opacity-5" />
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl opacity-20" />
@@ -40,10 +39,7 @@ export default function Book() {
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               Book a <span className="gradient-text">Meeting</span>
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-              Schedule a free consultation with our team to explore how AI agents
-              can accelerate your business growth.
-            </p>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">Schedule a free consultation with our team to explore how Potential.com can support you in designing and launching your National Resilience Programs.</p>
           </div>
 
           <div className="max-w-4xl mx-auto bg-card border border-border rounded-2xl shadow-lg overflow-hidden">
@@ -55,7 +51,6 @@ export default function Book() {
           </div>
         </div>
       </section>
-
       <section className="py-16 bg-muted/30">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
@@ -92,7 +87,6 @@ export default function Book() {
           </div>
         </div>
       </section>
-
       <Footer />
     </div>
   );
