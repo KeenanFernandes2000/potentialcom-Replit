@@ -725,7 +725,7 @@ const NationalPrograms = () => {
         </section>
 
         {/* SECTION 5 — WHO IT'S FOR */}
-        <section className="py-20 md:py-28">
+        <section className="py-20 md:py-28 bg-muted/50">
           <div className="container">
             <SlideIn direction="up">
               <div className="text-center mb-14">
