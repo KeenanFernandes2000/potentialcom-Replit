@@ -22,6 +22,13 @@ import {
   Target,
   Building2,
   X,
+  GraduationCap,
+  Handshake,
+  Trophy,
+  MessageCircle,
+  MapPin,
+  Activity,
+  Briefcase,
 } from "lucide-react";
 
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
@@ -137,6 +144,199 @@ const SlideIn = ({ children, className = "", delay = 0, direction = "up" }: {
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
+    </div>
+  );
+};
+
+const useLoopingCounter = (target: number, duration = 3000, pauseDuration = 2000) => {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    let animFrame: number;
+    let startTime: number | null = null;
+    let pausing = false;
+
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+
+      if (pausing) {
+        if (elapsed > pauseDuration) {
+          pausing = false;
+          startTime = timestamp;
+        }
+      } else {
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        setCount(Math.floor(eased * target));
+        if (progress >= 1) {
+          setCount(target);
+          pausing = true;
+          startTime = timestamp;
+        }
+      }
+      animFrame = requestAnimationFrame(animate);
+    };
+    animFrame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animFrame);
+  }, [target, duration, pauseDuration]);
+  return count;
+};
+
+const regionDots = [
+  { top: "18%", left: "48%", label: "Europe", delay: 0 },
+  { top: "32%", left: "55%", label: "Middle East", delay: 400 },
+  { top: "45%", left: "42%", label: "Africa", delay: 800 },
+  { top: "28%", left: "68%", label: "South Asia", delay: 1200 },
+  { top: "38%", left: "78%", label: "Southeast Asia", delay: 1600 },
+  { top: "22%", left: "25%", label: "Americas", delay: 600 },
+];
+
+const AnimatedDashboard = () => {
+  const participants = useLoopingCounter(24580, 4000, 3000);
+  const courses = useLoopingCounter(18420, 3500, 3000);
+  const startups = useLoopingCounter(1247, 3000, 3000);
+  const jobs = useLoopingCounter(8930, 3800, 3000);
+  const [activeDot, setActiveDot] = useState(0);
+  const [pulseModule, setPulseModule] = useState(0);
+
+  useEffect(() => {
+    const dotInterval = setInterval(() => {
+      setActiveDot(prev => (prev + 1) % regionDots.length);
+    }, 2000);
+    const moduleInterval = setInterval(() => {
+      setPulseModule(prev => (prev + 1) % 4);
+    }, 1500);
+    return () => {
+      clearInterval(dotInterval);
+      clearInterval(moduleInterval);
+    };
+  }, []);
+
+  const modules = [
+    { icon: GraduationCap, label: "Learning", color: "from-blue-400/30 to-blue-500/10" },
+    { icon: Handshake, label: "Mentorship", color: "from-green-400/30 to-green-500/10" },
+    { icon: Trophy, label: "Hackathons", color: "from-orange-400/30 to-orange-500/10" },
+    { icon: MessageCircle, label: "Community", color: "from-pink-400/30 to-pink-500/10" },
+  ];
+
+  return (
+    <div className="relative">
+      <div className="absolute -inset-4 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-blue-500/20 rounded-3xl blur-xl" />
+      <div className="relative bg-white/[0.07] backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
+
+        <div className="flex items-center gap-2 px-5 py-3 border-b border-white/5">
+          <div className="w-3 h-3 rounded-full bg-red-400/80" />
+          <div className="w-3 h-3 rounded-full bg-yellow-400/80" />
+          <div className="w-3 h-3 rounded-full bg-green-400/80" />
+          <span className="text-xs text-purple-200/60 ml-2 font-medium">Program Dashboard</span>
+          <div className="ml-auto flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
+            <span className="text-[10px] text-green-300/70 font-medium">LIVE</span>
+          </div>
+        </div>
+
+        <div className="p-4">
+          <div className="flex items-center justify-between mb-3">
+            <div>
+              <div className="text-white/90 font-semibold text-sm">National Workforce Program</div>
+              <div className="flex items-center gap-2 mt-1">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-500/20 border border-green-400/20 text-[10px] text-green-300 font-medium">
+                  <Activity className="w-3 h-3" /> Active
+                </span>
+                <span className="text-[10px] text-purple-200/50">{participants.toLocaleString()}+ participants</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-purple-500/15 border border-purple-400/15">
+              <Brain className="w-3.5 h-3.5 text-purple-300" />
+              <span className="text-[10px] text-purple-300 font-medium">AI Coach Active</span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-4 gap-2 mb-3">
+            {[
+              { label: "Participants", value: participants.toLocaleString(), suffix: "+", color: "text-purple-300", bg: "from-purple-500/20 to-purple-500/5", border: "border-purple-400/10", icon: Users },
+              { label: "Courses Done", value: courses.toLocaleString(), suffix: "", color: "text-blue-300", bg: "from-blue-500/20 to-blue-500/5", border: "border-blue-400/10", icon: GraduationCap },
+              { label: "Startups", value: startups.toLocaleString(), suffix: "", color: "text-green-300", bg: "from-green-500/20 to-green-500/5", border: "border-green-400/10", icon: Rocket },
+              { label: "Jobs Created", value: jobs.toLocaleString(), suffix: "+", color: "text-pink-300", bg: "from-pink-500/20 to-pink-500/5", border: "border-pink-400/10", icon: Briefcase },
+            ].map((metric, i) => (
+              <div key={i} className={`bg-gradient-to-br ${metric.bg} border ${metric.border} rounded-lg p-2.5 text-center`}>
+                <metric.icon className={`w-3.5 h-3.5 ${metric.color} mx-auto mb-1 opacity-60`} />
+                <div className={`text-base font-bold ${metric.color} tabular-nums`}>{metric.value}{metric.suffix}</div>
+                <div className="text-[9px] text-purple-200/40 mt-0.5">{metric.label}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-1.5 mb-3 px-2 py-1.5 rounded-lg bg-white/[0.03] border border-white/5">
+            <Sparkles className="w-3 h-3 text-yellow-300/70" />
+            <span className="text-[10px] text-purple-200/60">Personalized Journey Running</span>
+            <div className="ml-auto flex gap-0.5">
+              {[0,1,2].map(i => (
+                <div key={i} className="w-1 h-3 rounded-full bg-purple-400/30 overflow-hidden">
+                  <div className="w-full bg-purple-400/70 rounded-full animate-pulse" style={{ height: `${40 + Math.random() * 60}%`, animationDelay: `${i * 200}ms` }} />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="relative bg-white/[0.03] border border-white/5 rounded-lg p-3 mb-3">
+            <div className="flex items-center gap-1.5 mb-2">
+              <Globe className="w-3 h-3 text-purple-300/60" />
+              <span className="text-[10px] text-purple-200/50 font-medium">Global Reach</span>
+            </div>
+            <div className="relative h-16">
+              {regionDots.map((dot, i) => (
+                <div key={i} className="absolute transition-all duration-700" style={{ top: dot.top, left: dot.left }}>
+                  <div className={`relative ${i === activeDot ? "scale-150" : "scale-100"} transition-transform duration-500`}>
+                    <div className={`w-2 h-2 rounded-full ${i === activeDot ? "bg-purple-400 shadow-lg shadow-purple-400/50" : "bg-purple-400/40"} transition-all duration-500`} />
+                    {i === activeDot && (
+                      <div className="absolute -inset-1 rounded-full bg-purple-400/20 animate-ping" />
+                    )}
+                  </div>
+                  {i === activeDot && (
+                    <div className="absolute -top-5 left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] text-purple-300/80 font-medium bg-purple-500/20 px-1.5 py-0.5 rounded">
+                      {dot.label}
+                    </div>
+                  )}
+                </div>
+              ))}
+              {regionDots.map((dot, i) => {
+                const next = regionDots[(i + 1) % regionDots.length];
+                return (
+                  <svg key={`line-${i}`} className="absolute inset-0 w-full h-full" style={{ overflow: "visible" }}>
+                    <line
+                      x1={dot.left} y1={dot.top} x2={next.left} y2={next.top}
+                      stroke="rgba(168,130,255,0.08)"
+                      strokeWidth="1"
+                    />
+                  </svg>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-4 gap-2">
+            {modules.map((mod, i) => (
+              <div
+                key={i}
+                className={`relative bg-gradient-to-br ${mod.color} border border-white/5 rounded-lg p-2 text-center transition-all duration-500 ${i === pulseModule ? "border-white/20 scale-[1.05]" : ""}`}
+              >
+                {i === pulseModule && (
+                  <div className="absolute inset-0 rounded-lg bg-white/5 animate-pulse" />
+                )}
+                <mod.icon className="w-4 h-4 text-white/60 mx-auto mb-1" />
+                <div className="text-[9px] text-white/50 font-medium">{mod.label}</div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </div>
+
+      <div className="absolute -top-3 -right-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl px-4 py-2 text-sm font-bold shadow-lg shadow-purple-500/30 flex items-center gap-1.5">
+        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+        Live Data
+      </div>
     </div>
   );
 };
@@ -390,48 +590,7 @@ const NationalPrograms = () => {
               </div>
 
               <SlideIn direction="right" delay={400}>
-                <div className="relative">
-                  <div className="absolute -inset-4 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-blue-500/20 rounded-3xl blur-xl" />
-                  <div className="relative bg-white/[0.07] backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-2xl">
-                    <div className="flex items-center gap-2 mb-5">
-                      <div className="w-3 h-3 rounded-full bg-red-400/80" />
-                      <div className="w-3 h-3 rounded-full bg-yellow-400/80" />
-                      <div className="w-3 h-3 rounded-full bg-green-400/80" />
-                      <span className="text-xs text-purple-200/60 ml-2 font-medium">Impact Dashboard</span>
-                    </div>
-                    <div className="grid grid-cols-2 gap-3 mb-4">
-                      <div className="bg-gradient-to-br from-purple-500/20 to-purple-500/5 border border-purple-400/10 rounded-xl p-4 text-center">
-                        <div className="text-2xl font-bold text-purple-300">12,450</div>
-                        <div className="text-xs text-purple-200/50 mt-1">Active Participants</div>
-                      </div>
-                      <div className="bg-gradient-to-br from-green-500/20 to-green-500/5 border border-green-400/10 rounded-xl p-4 text-center">
-                        <div className="text-2xl font-bold text-green-300">94%</div>
-                        <div className="text-xs text-green-200/50 mt-1">Completion Rate</div>
-                      </div>
-                      <div className="bg-gradient-to-br from-blue-500/20 to-blue-500/5 border border-blue-400/10 rounded-xl p-4 text-center">
-                        <div className="text-2xl font-bold text-blue-300">847</div>
-                        <div className="text-xs text-blue-200/50 mt-1">New Businesses</div>
-                      </div>
-                      <div className="bg-gradient-to-br from-pink-500/20 to-pink-500/5 border border-pink-400/10 rounded-xl p-4 text-center">
-                        <div className="text-2xl font-bold text-pink-300">4.8</div>
-                        <div className="text-xs text-pink-200/50 mt-1">Avg. Rating</div>
-                      </div>
-                    </div>
-                    <div className="bg-white/5 border border-white/5 rounded-xl p-4">
-                      <div className="flex justify-between items-center mb-3">
-                        <span className="text-sm font-medium text-purple-100/80">Program Progress</span>
-                        <span className="text-sm text-purple-300 font-bold">78%</span>
-                      </div>
-                      <div className="w-full bg-white/10 rounded-full h-2.5">
-                        <div className="bg-gradient-to-r from-purple-500 to-pink-500 h-2.5 rounded-full shadow-sm shadow-purple-500/50" style={{ width: "78%" }} />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="absolute -top-3 -right-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl px-4 py-2 text-sm font-bold shadow-lg shadow-purple-500/30 flex items-center gap-1.5">
-                    <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                    Live Data
-                  </div>
-                </div>
+                <AnimatedDashboard />
               </SlideIn>
             </div>
           </div>
