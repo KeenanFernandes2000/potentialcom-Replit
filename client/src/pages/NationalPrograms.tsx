@@ -777,23 +777,20 @@ const NationalPrograms = () => {
         </section>
 
         {/* CTA — Deliver Real Impact */}
-        <section className="py-16 bg-primary">
-          <div className="container">
-            <SlideIn direction="scale">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-                <h2 className="text-2xl md:text-3xl font-bold text-primary-foreground text-center md:text-left">
-                  Deliver Real Impact at Scale — Starting Now
-                </h2>
-                <Button
-                  size="lg"
-                  variant="secondary"
-                  className="text-base px-8 py-6 rounded-xl whitespace-nowrap"
-                  onClick={openDemo}
-                >
-                  Request Free Demo <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </div>
-            </SlideIn>
+        <section className="py-16 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #0B1846 0%, #1a2a6c 40%, #8844DD 100%)" }}>
+          <div className="container relative z-10">
+            <div className="max-w-3xl mx-auto text-center" data-aos="fade-up">
+              <p className="text-xl md:text-2xl font-semibold text-white mb-8">
+                Deliver Real Impact at Scale — Starting Now
+              </p>
+              <Button
+                size="lg"
+                className="rounded-full bg-white text-[#0B1846] hover:bg-white/90 font-semibold px-10 py-6 text-lg shadow-lg"
+                onClick={openDemo}
+              >
+                Request Free Demo <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </div>
           </div>
         </section>
 
@@ -832,25 +829,20 @@ const NationalPrograms = () => {
         </section>
 
         {/* SECTION 9 — FINAL CTA */}
-        <section className="py-16 bg-primary">
-          <div className="container">
-            <SlideIn direction="scale">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-                <div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-primary-foreground text-center md:text-left">
-                    Turn Your Strategy Into a Live Impact Program — Fast
-                  </h2>
-                </div>
-                <Button
-                  size="lg"
-                  variant="secondary"
-                  className="text-base px-8 py-6 rounded-xl whitespace-nowrap"
-                  onClick={openDemo}
-                >
-                  Request Free Demo <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </div>
-            </SlideIn>
+        <section className="py-16 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #0B1846 0%, #1a2a6c 40%, #8844DD 100%)" }}>
+          <div className="container relative z-10">
+            <div className="max-w-3xl mx-auto text-center" data-aos="fade-up">
+              <p className="text-xl md:text-2xl font-semibold text-white mb-8">
+                Turn Your Strategy Into a Live Impact Program — Fast
+              </p>
+              <Button
+                size="lg"
+                className="rounded-full bg-white text-[#0B1846] hover:bg-white/90 font-semibold px-10 py-6 text-lg shadow-lg"
+                onClick={openDemo}
+              >
+                Request Free Demo <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </div>
           </div>
         </section>
 
