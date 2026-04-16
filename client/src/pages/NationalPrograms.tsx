@@ -272,7 +272,7 @@ const AnimatedDashboard = () => {
               <div key={i} className={`bg-gradient-to-br ${metric.bg} border ${metric.border} rounded-lg p-2.5 text-center`}>
                 <metric.icon className={`w-3.5 h-3.5 ${metric.color} mx-auto mb-1 opacity-60`} />
                 <div className={`text-base font-bold ${metric.color} tabular-nums`}>{metric.value}{metric.suffix}</div>
-                <div className="text-[9px] text-purple-200/40 mt-0.5">{metric.label}</div>
+                <div className="mt-0.5 text-[#ffffff] text-[11px]">{metric.label}</div>
               </div>
             ))}
           </div>
@@ -333,7 +333,6 @@ const AnimatedDashboard = () => {
 
         </div>
       </div>
-
       <div className="absolute -top-3 -right-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl px-4 py-2 text-sm font-bold shadow-lg shadow-purple-500/30 flex items-center gap-1.5">
         <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
         Live Data
