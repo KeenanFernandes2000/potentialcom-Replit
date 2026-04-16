@@ -183,22 +183,22 @@ const useLoopingCounter = (target: number, duration = 3000, pauseDuration = 2000
 };
 
 const regionDots = [
-  { top: "38%", left: "55%", label: "UAE", delay: 0 },
-  { top: "32%", left: "50%", label: "Saudi Arabia", delay: 300 },
-  { top: "42%", left: "48%", label: "Oman", delay: 600 },
-  { top: "30%", left: "44%", label: "Egypt", delay: 900 },
-  { top: "28%", left: "52%", label: "Jordan", delay: 1200 },
-  { top: "34%", left: "46%", label: "Bahrain", delay: 1500 },
-  { top: "22%", left: "40%", label: "Tunisia", delay: 1800 },
-  { top: "24%", left: "36%", label: "Morocco", delay: 2100 },
-  { top: "18%", left: "48%", label: "Turkey", delay: 2400 },
-  { top: "36%", left: "42%", label: "Libya", delay: 2700 },
-  { top: "26%", left: "38%", label: "Algeria", delay: 3000 },
-  { top: "34%", left: "56%", label: "Kuwait", delay: 3300 },
-  { top: "36%", left: "54%", label: "Qatar", delay: 3600 },
-  { top: "46%", left: "44%", label: "Sudan", delay: 3900 },
-  { top: "26%", left: "50%", label: "Lebanon", delay: 4200 },
-  { top: "20%", left: "46%", label: "Iraq", delay: 4500 },
+  { top: "45%", left: "82%", label: "UAE", delay: 0 },
+  { top: "38%", left: "65%", label: "Saudi Arabia", delay: 300 },
+  { top: "58%", left: "75%", label: "Oman", delay: 600 },
+  { top: "42%", left: "35%", label: "Egypt", delay: 900 },
+  { top: "28%", left: "58%", label: "Jordan", delay: 1200 },
+  { top: "40%", left: "78%", label: "Bahrain", delay: 1500 },
+  { top: "18%", left: "22%", label: "Tunisia", delay: 1800 },
+  { top: "25%", left: "8%", label: "Morocco", delay: 2100 },
+  { top: "8%", left: "52%", label: "Turkey", delay: 2400 },
+  { top: "48%", left: "28%", label: "Libya", delay: 2700 },
+  { top: "22%", left: "15%", label: "Algeria", delay: 3000 },
+  { top: "32%", left: "72%", label: "Kuwait", delay: 3300 },
+  { top: "42%", left: "88%", label: "Qatar", delay: 3600 },
+  { top: "68%", left: "40%", label: "Sudan", delay: 3900 },
+  { top: "22%", left: "55%", label: "Lebanon", delay: 4200 },
+  { top: "15%", left: "62%", label: "Iraq", delay: 4500 },
 ];
 
 const AnimatedDashboard = () => {
@@ -297,7 +297,7 @@ const AnimatedDashboard = () => {
               </div>
               <span className="text-[9px] text-purple-300/50 font-medium">{regionDots.length} countries</span>
             </div>
-            <div className="relative h-20">
+            <div className="relative h-28">
               {regionDots.map((dot, i) => (
                 <div key={i} className="absolute transition-all duration-700" style={{ top: dot.top, left: dot.left }}>
                   <div className={`relative ${i === activeDot ? "scale-[1.8]" : "scale-100"} transition-transform duration-500`}>
