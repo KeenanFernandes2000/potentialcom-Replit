@@ -724,7 +724,7 @@ const NationalPrograms = () => {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 max-w-6xl mx-auto">
               {audiences.map((item, i) => (
                 <SlideIn key={i} direction="scale" delay={i * 120}>
-                  <div className="group relative bg-gradient-to-br from-card to-muted/50 border border-border rounded-2xl p-6 text-center hover:shadow-2xl hover:border-primary/40 hover:-translate-y-2 transition-all duration-300 overflow-hidden">
+                  <div className="group relative bg-gradient-to-br from-card to-muted/50 border border-border rounded-2xl p-6 text-center hover:shadow-2xl hover:border-primary/40 hover:-translate-y-2 transition-all duration-300 overflow-hidden h-full">
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] to-primary/[0.08] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="relative z-10">
                       <div className="bg-gradient-to-br from-primary/15 to-primary/5 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:from-primary/25 group-hover:to-primary/10 transition-colors shadow-sm">
