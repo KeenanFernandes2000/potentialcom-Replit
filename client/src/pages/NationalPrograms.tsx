@@ -862,7 +862,7 @@ const NationalPrograms = () => {
             </div>
             <SlideIn direction="up" delay={500}>
               <p className="text-center mt-10 text-lg font-bold gradient-text">
-                Trusted by leading governments and enterprises globally
+                Trusted by 100+ organizations running programs on our platform
               </p>
             </SlideIn>
           </div>
