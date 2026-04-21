@@ -799,9 +799,7 @@ const NationalPrograms = () => {
         <section className="py-16 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #0B1846 0%, #1a2a6c 40%, #8844DD 100%)" }}>
           <div className="container relative z-10">
             <div className="max-w-3xl mx-auto text-center" data-aos="fade-up">
-              <p className="text-xl md:text-2xl font-semibold text-white mb-8">
-                Deliver Real Impact at Scale — Starting Now
-              </p>
+              <p className="text-xl md:text-2xl font-semibold text-white mb-8">Ready to Scale Your CSR Impact?</p>
               <Button
                 size="lg"
                 className="rounded-full bg-white text-[#0B1846] hover:bg-white/90 font-semibold px-10 py-6 text-lg shadow-lg"
