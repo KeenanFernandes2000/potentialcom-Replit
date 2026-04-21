@@ -572,9 +572,8 @@ const NationalPrograms = () => {
                   </h1>
                 </SlideIn>
                 <SlideIn direction="left" delay={200}>
-                  <p className="text-lg md:text-xl text-purple-100/70 mb-10 leading-relaxed max-w-xl">
-                    We help governments, enterprises, and financial institutions design and launch AI-powered national programs for workforce development, entrepreneurship, and economic resilience.
-                  </p>
+                  <p className="text-lg md:text-xl text-purple-100/70 mb-10 leading-relaxed max-w-xl">Empower communities, employees, and stakeholders with AI-powered CSR programs—designed to launch, manage, and scale impactful ESG initiatives with ease.
+</p>
                 </SlideIn>
                 <div className="grid grid-cols-2 gap-x-6 gap-y-4 mb-10">
                   {[
