@@ -707,9 +707,7 @@ const NationalPrograms = () => {
                   <h2 className="text-3xl md:text-4xl font-bold mb-4">
                     A Complete Program-in-a-Box — <span className="gradient-text">Powered by AI</span>
                   </h2>
-                  <p className="text-lg text-primary font-semibold mb-6">
-                    We don't sell software. We deliver running programs.
-                  </p>
+                  <p className="text-lg text-primary font-semibold mb-6">More Than CSR Management—A Full Impact Ecosystem</p>
                 </SlideIn>
                 <SlideIn direction="left" delay={200}>
                   <p className="text-muted-foreground mb-8 text-lg leading-relaxed">
