@@ -567,7 +567,7 @@ const NationalPrograms = () => {
                 <SlideIn direction="left" delay={100}>
                   <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.05] mb-6 tracking-tight">
                     <span className="text-white">Launch CSR Programs That Deliver Measurable</span>
-                    <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-orange-300 bg-clip-text text-transparent">
+                    <span className="block bg-gradient-to-r from-purple-400 via-pink-400 to-orange-300 bg-clip-text text-transparent">
                     Impact</span>
                   </h1>
                 </SlideIn>
