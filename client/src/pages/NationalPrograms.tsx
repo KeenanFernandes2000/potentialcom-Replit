@@ -774,7 +774,7 @@ const NationalPrograms = () => {
                   How It Works
                 </div>
                 <h2 className="text-3xl md:text-4xl font-bold">
-                  From Idea to National Program <span className="gradient-text">in Weeks</span>
+                  From Idea to National CSR Program <span className="gradient-text">in Weeks</span>
                 </h2>
               </div>
             </SlideIn>
