@@ -471,14 +471,14 @@ const NationalPrograms = () => {
 
   const audiences = [
     {
-      icon: Landmark,
-      title: "Government Entities",
-      description: "Launch national workforce and entrepreneurship programs with measurable outcomes.",
-    },
-    {
       icon: Building2,
       title: "Enterprise CSR / ESG",
       description: "Turn CSR budgets into scalable, measurable impact programs.",
+    },
+    {
+      icon: Landmark,
+      title: "Government Entities",
+      description: "Launch national workforce and entrepreneurship programs with measurable outcomes.",
     },
     {
       icon: Banknote,
