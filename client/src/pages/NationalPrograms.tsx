@@ -32,7 +32,7 @@ import {
 
 import whyNowImg1 from "@assets/1_1776339706269.png";
 import whyNowImg2 from "@assets/2_1776339706277.png";
-import whyNowImg3 from "@assets/3_1776339706282.png";
+import whyNowImg3 from "@assets/web_1776844141490.png";
 
 import hsbcProofLogo from "@assets/HSBC_MASTERBRAND_LOGO_CMYK_1776340917689.png";
 import bankMuscatProofLogo from "@assets/BankMuscat-Horizontal-Flat_1776340986119.jpg";
