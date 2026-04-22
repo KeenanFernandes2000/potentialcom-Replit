@@ -28,6 +28,9 @@ import {
   MapPin,
   Activity,
   Briefcase,
+  Leaf,
+  ShieldCheck,
+  Target,
 } from "lucide-react";
 
 import whyNowImg1 from "@assets/1_1776339706269.png";
@@ -213,6 +216,10 @@ const AnimatedDashboard = () => {
   const courses = useLoopingCounter(18420, 3500, 3000);
   const startups = useLoopingCounter(1247, 3000, 3000);
   const jobs = useLoopingCounter(8930, 3800, 3000);
+  const co2Saved = useLoopingCounter(1840, 3600, 3000);
+  const sdgsAligned = useLoopingCounter(12, 2500, 3000);
+  const esgScore = useLoopingCounter(87, 2800, 3000);
+  const volunteerHours = useLoopingCounter(46200, 4000, 3000);
   const [activeDot, setActiveDot] = useState(0);
   const [pulseModule, setPulseModule] = useState(0);
 
@@ -254,7 +261,7 @@ const AnimatedDashboard = () => {
         <div className="p-4">
           <div className="flex items-center justify-between mb-3">
             <div>
-              <div className="text-white/90 font-semibold text-sm">National Workforce Program</div>
+              <div className="text-white/90 font-semibold text-sm">ESG & CSR Impact Program</div>
               <div className="flex items-center gap-2 mt-1">
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-500/20 border border-green-400/20 text-[10px] text-green-300 font-medium">
                   <Activity className="w-3 h-3" /> Active
@@ -281,6 +288,28 @@ const AnimatedDashboard = () => {
                 <div className="mt-0.5 text-[#ffffff] text-[11px]">{metric.label}</div>
               </div>
             ))}
+          </div>
+
+          <div className="mb-3 p-2.5 rounded-lg bg-gradient-to-br from-emerald-500/10 to-teal-500/5 border border-emerald-400/15">
+            <div className="flex items-center gap-1.5 mb-2">
+              <Leaf className="w-3 h-3 text-emerald-300" />
+              <span className="text-[10px] text-emerald-200/80 font-semibold tracking-wide uppercase">ESG Impact Metrics</span>
+              <span className="ml-auto text-[9px] text-emerald-300/60 font-medium">YTD</span>
+            </div>
+            <div className="grid grid-cols-4 gap-2">
+              {[
+                { label: "CO₂ Saved (t)", value: co2Saved.toLocaleString(), color: "text-emerald-300", icon: Leaf },
+                { label: "UN SDGs", value: `${sdgsAligned}/17`, color: "text-teal-300", icon: Target },
+                { label: "ESG Score", value: `${esgScore}`, color: "text-cyan-300", icon: ShieldCheck },
+                { label: "Volunteer Hrs", value: volunteerHours.toLocaleString(), color: "text-green-300", icon: Heart },
+              ].map((metric, i) => (
+                <div key={i} className="text-center">
+                  <metric.icon className={`w-3 h-3 ${metric.color} mx-auto mb-0.5 opacity-70`} />
+                  <div className={`text-sm font-bold ${metric.color} tabular-nums`}>{metric.value}</div>
+                  <div className="text-[9px] text-white/60">{metric.label}</div>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="flex items-center gap-1.5 mb-3 px-2 py-1.5 rounded-lg bg-white/[0.03] border border-white/5">
