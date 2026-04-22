@@ -454,8 +454,8 @@ const NationalPrograms = () => {
     },
     {
       icon: Users,
-      title: "Social Pressure",
-      description: "Stakeholders expect real, measurable impact. Programs must deliver visible results at scale.",
+      title: "ESG Compliance & Disclosure",
+      description: "Enterprises must meet growing ESG reporting requirements with transparent, measurable data on impact and outcomes.",
       image: whyNowImg3,
     },
   ];
