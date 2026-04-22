@@ -540,7 +540,7 @@ const NationalPrograms = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Launch National Programs in Weeks | Potential.com"
+        title="Launch ESG & CSR Programs in Weeks | Potential.com"
         description="Launch workforce, entrepreneurship, and CSR programs with a real impact tracking. AI-powered, fully branded, and trusted by governments and enterprises."
         keywords="national programs, workforce development, entrepreneurship programs, CSR programs, AI-powered platform, government programs, impact tracking"
       />
