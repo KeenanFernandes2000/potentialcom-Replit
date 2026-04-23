@@ -134,28 +134,13 @@ const useCounter = (target: number, isVisible: boolean, duration = 2000) => {
   return count;
 };
 
-const SlideIn = ({ children, className = "", delay = 0, direction = "up" }: {
+const SlideIn = ({ children, className = "", delay: _delay = 0, direction: _direction = "up" }: {
   children: React.ReactNode;
   className?: string;
   delay?: number;
   direction?: "up" | "left" | "right" | "scale";
 }) => {
-  const { ref, isVisible } = useInView();
-  const transforms: Record<string, string> = {
-    up: "translate-y-12",
-    left: "-translate-x-12",
-    right: "translate-x-12",
-    scale: "scale-95",
-  };
-  return (
-    <div
-      ref={ref}
-      className={`transition-all duration-700 ease-out ${isVisible ? "opacity-100 translate-y-0 translate-x-0 scale-100" : `opacity-0 ${transforms[direction]}`} ${className}`}
-      style={{ transitionDelay: `${delay}ms` }}
-    >
-      {children}
-    </div>
-  );
+  return <div className={className}>{children}</div>;
 };
 
 const useLoopingCounter = (target: number, duration = 3000, pauseDuration = 2000) => {
