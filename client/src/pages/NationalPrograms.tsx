@@ -851,7 +851,7 @@ const NationalPrograms = () => {
                 </h2>
               </div>
             </SlideIn>
-            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
               {proofCards.map((card, i) => (
                 <SlideIn key={i} direction="left" delay={i * 150}>
                   <div className="group [perspective:1000px] h-[380px]">
