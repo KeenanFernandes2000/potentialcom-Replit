@@ -283,7 +283,7 @@ const AnimatedDashboard = () => {
             </div>
             <div className="grid grid-cols-4 gap-2">
               {[
-                { label: "CO₂ Saved (t)", value: co2Saved.toLocaleString(), color: "text-emerald-300", icon: Leaf },
+                { label: "Mentors Engaged", value: co2Saved.toLocaleString(), color: "text-emerald-300", icon: Leaf },
                 { label: "UN SDGs", value: `${sdgsAligned}/17`, color: "text-teal-300", icon: Target },
                 { label: "ESG Score", value: `${esgScore}`, color: "text-cyan-300", icon: ShieldCheck },
                 { label: "Volunteer Hrs", value: volunteerHours.toLocaleString(), color: "text-green-300", icon: Heart },
