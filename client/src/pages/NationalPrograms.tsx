@@ -278,7 +278,7 @@ const AnimatedDashboard = () => {
           <div className="mb-3 p-2.5 rounded-lg bg-gradient-to-br from-emerald-500/10 to-teal-500/5 border border-emerald-400/15">
             <div className="flex items-center gap-1.5 mb-2">
               <Leaf className="w-3 h-3 text-emerald-300" />
-              <span className="text-[10px] text-emerald-200/80 font-semibold tracking-wide uppercase">ESG Impact Metrics</span>
+              <span className="text-[10px] text-emerald-200/80 font-semibold tracking-wide uppercase">Impact Metrics</span>
               <span className="ml-auto text-[9px] text-emerald-300/60 font-medium">YTD</span>
             </div>
             <div className="grid grid-cols-4 gap-2">
