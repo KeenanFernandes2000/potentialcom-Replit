@@ -550,13 +550,12 @@ const NationalPrograms = () => {
     {
       title: "Cartier Women's Initiative",
       logo: cartierProofLogo,
-      audience: "Women business leaders and women-led startups across the Middle East and North Africa (MENA)",
+      audience: "Women business leaders and women entrepreneurs across MENA",
       outcome: "Empowered and scaled high-growth, socially impactful women-led businesses through funding, mentorship, and a digital empowerment platform aligned with UN SDGs",
       stats: [
-        "25,000+ grants distributed to leading women-led businesses",
-        "3,000+ women trained through the digital platform",
-        "20+ regional partners onboarded to expand reach",
-        "Hundreds of women engaged through face-to-face workshops and mentorship programs",
+        "$500,000+ grants distributed",
+        "3,000+ women trained",
+        "20+ regional partners onboarded",
       ],
     },
   ];
