@@ -893,7 +893,7 @@ const NationalPrograms = () => {
         {/* SECTION 9 — FINAL CTA */}
         <section className="py-16 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #0B1846 0%, #1a2a6c 40%, #8844DD 100%)" }}>
           <div className="container relative z-10">
-            <div className="max-w-3xl mx-auto text-center" data-aos="fade-up">
+            <div className="max-w-3xl mx-auto text-center" data-aos="fade-up" data-aos-once="true" data-aos-duration="900" data-aos-easing="ease-out-cubic">
               <p className="text-xl md:text-2xl font-semibold text-white mb-8">Turn Your CSR Strategy Into a Live Impact Program — Fast</p>
               <Button
                 size="lg"
