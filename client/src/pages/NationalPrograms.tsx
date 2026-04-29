@@ -487,7 +487,7 @@ const NationalPrograms = () => {
     {
       icon: Building2,
       title: "Enterprise CSR / ESG",
-      description: "Turn ESG commitments into scalable programs with real-time impact measurement and reporting dashboards.",
+      description: "Turn ESG commitments into scalable, branded CSR programs — with built-in dashboards to track delivery and engagement.",
     },
     {
       icon: Landmark,
