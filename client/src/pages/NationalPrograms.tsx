@@ -468,8 +468,8 @@ const NationalPrograms = () => {
     },
     {
       icon: Users,
-      title: "ESG Compliance & Disclosure",
-      description: "Enterprises must meet growing ESG reporting requirements with transparent, measurable data on impact and outcomes.",
+      title: "Demand for Real Impact",
+      description: "Stakeholders, regulators, and communities expect enterprises to run programs that change lives — not just publish reports. Potential.com helps you launch and run them in weeks.",
       image: whyNowImg3,
     },
   ];
