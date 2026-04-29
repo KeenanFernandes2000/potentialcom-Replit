@@ -246,7 +246,7 @@ const AnimatedDashboard = () => {
         <div className="p-4">
           <div className="flex items-center justify-between mb-3">
             <div>
-              <div className="text-white/90 font-semibold text-sm">ESG & CSR Impact Program</div>
+              <div className="text-white/90 font-semibold text-sm">CSR Impact Program</div>
               <div className="flex items-center gap-2 mt-1">
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-500/20 border border-green-400/20 text-[10px] text-green-300 font-medium">
                   <Activity className="w-3 h-3" /> Active
