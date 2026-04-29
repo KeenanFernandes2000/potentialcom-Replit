@@ -40,6 +40,7 @@ import whyNowImg3 from "@assets/web_1776844141490.png";
 import hsbcProofLogo from "@assets/HSBC_MASTERBRAND_LOGO_CMYK_1776340917689.png";
 import bankMuscatProofLogo from "@assets/BankMuscat-Horizontal-Flat_1776340986119.jpg";
 import moEconomyLogo from "@assets/MOEconomy_UAE_logo_1776341149105.jpg";
+import cartierProofLogo from "@assets/Cartier-Logo_1777438788255.png";
 
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
 import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
@@ -545,6 +546,18 @@ const NationalPrograms = () => {
       audience: "Students, youth, and adults across Oman",
       outcome: "Enhanced financial literacy and money management skills through practical learning on budgeting, saving, and financial planning",
       stats: ["20,000+ Individuals engaged"],
+    },
+    {
+      title: "Cartier Women's Initiative",
+      logo: cartierProofLogo,
+      audience: "Women business leaders and women-led startups across the Middle East and North Africa (MENA)",
+      outcome: "Empowered and scaled high-growth, socially impactful women-led businesses through funding, mentorship, and a digital empowerment platform aligned with UN SDGs",
+      stats: [
+        "25,000+ grants distributed to leading women-led businesses",
+        "3,000+ women trained through the digital platform",
+        "20+ regional partners onboarded to expand reach",
+        "Hundreds of women engaged through face-to-face workshops and mentorship programs",
+      ],
     },
   ];
 
