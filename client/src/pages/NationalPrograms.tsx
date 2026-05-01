@@ -606,7 +606,7 @@ const NationalPrograms = () => {
                     { text: "Fully designed program in 1–2 weeks", icon: Rocket },
                     { text: "Launch-ready platform in 3–4 weeks", icon: Zap },
                     { text: "Engage 1,000–100,000+ participants", icon: Users },
-                    { text: "Real-time dashboards for impact reporting", icon: BarChart3 },
+                    { text: "Live program dashboards to track delivery and engagement", icon: BarChart3 },
                   ].map((item, i) => (
                     <SlideIn key={i} direction="up" delay={300 + i * 100}>
                       <div className="flex items-start gap-3 group">
