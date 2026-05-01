@@ -204,7 +204,7 @@ const AnimatedDashboard = () => {
   const jobs = useLoopingCounter(8930, 3800, 3000);
   const co2Saved = useLoopingCounter(1840, 3600, 3000);
   const sdgsAligned = useLoopingCounter(12, 2500, 3000);
-  const esgScore = useLoopingCounter(87, 2800, 3000);
+  const esgScore = useLoopingCounter(98489, 2800, 3000);
   const volunteerHours = useLoopingCounter(46200, 4000, 3000);
   const [activeDot, setActiveDot] = useState(0);
   const [pulseModule, setPulseModule] = useState(0);
@@ -286,7 +286,7 @@ const AnimatedDashboard = () => {
               {[
                 { label: "Mentors Engaged", value: co2Saved.toLocaleString(), color: "text-emerald-300", icon: Leaf },
                 { label: "UN SDGs", value: `${sdgsAligned}/17`, color: "text-teal-300", icon: Target },
-                { label: "ESG Score", value: `${esgScore}`, color: "text-cyan-300", icon: ShieldCheck },
+                { label: "Hours Delivered", value: esgScore.toLocaleString(), color: "text-cyan-300", icon: ShieldCheck },
                 { label: "Volunteer Hrs", value: volunteerHours.toLocaleString(), color: "text-green-300", icon: Heart },
               ].map((metric, i) => (
                 <div key={i} className="text-center">
