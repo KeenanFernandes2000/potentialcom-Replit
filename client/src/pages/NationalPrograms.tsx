@@ -237,7 +237,7 @@ const AnimatedDashboard = () => {
 
         <div className="flex items-center gap-2 px-5 py-3 border-b border-white/10">
           <BarChart3 className="w-4 h-4 text-purple-300/70" />
-          <span className="text-xs text-white/80 font-semibold tracking-wide">Impact Reporting Dashboard</span>
+          <span className="text-xs text-white/80 font-semibold tracking-wide">Program Impact Live View</span>
           <div className="ml-auto flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
             <span className="text-[10px] text-green-300/70 font-medium">LIVE</span>
