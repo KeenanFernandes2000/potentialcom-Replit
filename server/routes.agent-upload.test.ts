@@ -47,4 +47,15 @@ describe("POST /api/agent/:agentKey/upload", () => {
     expect(fetchMock).toHaveBeenCalledOnce();
     expect(String(fetchMock.mock.calls[0][0])).toContain("/streaming/upload");
   });
+
+  it("returns the upstream status when upstream fails", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(new Response("nope", { status: 500 })),
+    );
+    const res = await request(makeApp())
+      .post("/api/agent/ruby/upload")
+      .attach("file", Buffer.from("fake-image"), "photo.png");
+    expect(res.status).toBe(500);
+  });
 });

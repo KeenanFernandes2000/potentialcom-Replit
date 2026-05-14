@@ -12,8 +12,11 @@ interface AgentChatProps {
   registry: ToolRegistry;
 }
 
-// Generic, agent-agnostic chat panel. Fetches the agent's bot config (name,
-// greeting, avatar) on mount, renders the conversation, and owns the input box.
+// Chat panel: fetches the agent's bot config (name, greeting, avatar) on
+// mount, renders the conversation, and owns the input box. Structurally
+// agent-agnostic (driven by the agentKey + registry props), though the
+// subtitle and input placeholder are currently Ruby-specific copy —
+// parameterize when a second agent is added.
 export function AgentChat({ agentKey, registry }: AgentChatProps) {
   const { messages, status, send } = useAgentChat(agentKey);
   const { toast } = useToast();
