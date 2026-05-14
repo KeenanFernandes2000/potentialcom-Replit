@@ -24,15 +24,31 @@ rendering.
   Vera/Ayla/Lumi can reuse the same infrastructure later. The browser never
   sees a bot ID, system prompt, or upstream URL.
 
-## Non-goals
+## Non-goals (this phase — v1)
 
-- Voice / TTS / STT (the embed had it; out of scope for this work).
+- Voice mode / STT / TTS — deferred to **v2** (see Roadmap).
+- Avatar mode — deferred to **v3** (see Roadmap).
 - Persisting chat history across page reloads — `sessionId` is regenerated per
   page session, matching the embed's behavior.
 - Building tool registries for other agents (Vera/Ayla) — only the
   infrastructure is made generic; Ruby is the only agent wired up.
 - Changing the rest of the `/demo` page — the "What Ruby Can Do" accordion and
   Integrations grid stay as-is.
+
+## Roadmap
+
+- **v1 (this spec):** native text chat — streaming, full 19-tool rich-card
+  parity, image upload, generic Express proxy.
+- **v2:** Voice mode — STT for user input and TTS for agent responses. The
+  embed already exposes `streaming/audio` and `streaming/texttovoice`
+  endpoints to proxy. `AgentChat` is built mode-agnostic so a voice mode
+  slots in alongside the text interface.
+- **v3:** Avatar mode — interactive talking-head presentation layer over the
+  same `useAgentChat` stream.
+
+The layered architecture (generic hook + parser + proxy) is deliberately
+chosen so v2 and v3 reuse the streaming core and only add a presentation
+layer.
 
 ## Decisions (from brainstorming)
 
