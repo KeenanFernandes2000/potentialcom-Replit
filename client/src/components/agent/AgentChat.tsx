@@ -39,8 +39,18 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
     if (!file) return;
     setUploading(true);
     try {
+      // Sanitize the filename before upload: the server stores files under
+      // their original name, and the downstream `[image: <filename>]` tag is
+      // parsed out of message text by the agent — spaces/parens in the name
+      // break that handoff. Strip them at the source so the whole chain stays
+      // clean.
+      const safeName = file.name.replace(/[^a-zA-Z0-9._-]+/g, "_");
+      const safeFile =
+        safeName === file.name
+          ? file
+          : new File([file], safeName, { type: file.type });
       const form = new FormData();
-      form.append("file", file);
+      form.append("file", safeFile);
       const res = await fetch(`/api/agent/${agentKey}/upload`, {
         method: "POST",
         credentials: "include",
