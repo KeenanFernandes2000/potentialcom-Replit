@@ -726,6 +726,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Proxies an image upload to the upstream agent file endpoint. The raw
+  // multipart body is streamed straight through — express.json() ignores
+  // non-JSON content types, so the body arrives here untouched.
+  app.post("/api/agent/:agentKey/upload", async (req, res) => {
+    const agent = getAgent(req.params.agentKey);
+    if (!agent) {
+      return res.status(404).json({ message: "Unknown agent" });
+    }
+    try {
+      const upstream = await fetch(`${POTENTIAL_API_BASE}/streaming/upload`, {
+        method: "POST",
+        headers: { "Content-Type": req.headers["content-type"] ?? "" },
+        body: Readable.toWeb(req) as any,
+        duplex: "half",
+      } as any);
+      const text = await upstream.text();
+      res
+        .status(upstream.status)
+        .type(upstream.headers.get("content-type") ?? "application/json")
+        .send(text);
+    } catch (err) {
+      console.error("Agent upload proxy error:", err);
+      res.status(502).json({ message: "Failed to upload" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
