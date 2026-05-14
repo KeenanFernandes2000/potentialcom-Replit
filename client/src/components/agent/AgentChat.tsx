@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Send, ImagePlus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 import { MessageBubble } from "./MessageBubble";
 import { useAgentChat } from "./useAgentChat";
 import type { ToolRegistry } from "./toolRegistry";
@@ -15,6 +16,7 @@ interface AgentChatProps {
 // greeting, avatar) on mount, renders the conversation, and owns the input box.
 export function AgentChat({ agentKey, registry }: AgentChatProps) {
   const { messages, status, send } = useAgentChat(agentKey);
+  const { toast } = useToast();
   const [input, setInput] = useState("");
   const [bot, setBot] = useState<AgentBotConfig | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -45,13 +47,17 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
       const data = await res.json();
       const filename = data.filename ?? data.fileName ?? data.name;
       if (!filename) throw new Error("Upload response missing filename");
-      setPendingImage({
-        previewUrl: URL.createObjectURL(file),
-        filename,
+      setPendingImage((prev) => {
+        if (prev) URL.revokeObjectURL(prev.previewUrl);
+        return { previewUrl: URL.createObjectURL(file), filename };
       });
     } catch (err) {
       console.error(err);
-      alert("Image upload failed. Please try again.");
+      toast({
+        title: "Image upload failed",
+        description: "Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setUploading(false);
     }
@@ -143,7 +149,12 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
             </span>
             <button
               type="button"
-              onClick={() => setPendingImage(null)}
+              onClick={() =>
+                setPendingImage((prev) => {
+                  if (prev) URL.revokeObjectURL(prev.previewUrl);
+                  return null;
+                })
+              }
               className="text-muted-foreground hover:text-foreground"
               aria-label="Remove attached image"
             >
