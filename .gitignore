@@ -7,3 +7,5 @@ vite.config.ts.*
 .env
 .config
 URL_Analysis_Report.txt
+# Visual brainstorming companion
+.superpowers/
