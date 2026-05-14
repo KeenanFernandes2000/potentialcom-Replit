@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Send } from "lucide-react";
+import { Send, ImagePlus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MessageBubble } from "./MessageBubble";
 import { useAgentChat } from "./useAgentChat";
@@ -18,6 +18,44 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
   const [input, setInput] = useState("");
   const [bot, setBot] = useState<AgentBotConfig | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [pendingImage, setPendingImage] = useState<{
+    previewUrl: string;
+    filename: string;
+  } | null>(null);
+  const [uploading, setUploading] = useState(false);
+
+  const handleFileSelected = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = e.target.files?.[0];
+    e.target.value = ""; // allow re-selecting the same file later
+    if (!file) return;
+    setUploading(true);
+    try {
+      const form = new FormData();
+      form.append("file", file);
+      const res = await fetch(`/api/agent/${agentKey}/upload`, {
+        method: "POST",
+        credentials: "include",
+        body: form,
+      });
+      if (!res.ok) throw new Error(`Upload failed: ${res.status}`);
+      const data = await res.json();
+      const filename = data.filename ?? data.fileName ?? data.name;
+      if (!filename) throw new Error("Upload response missing filename");
+      setPendingImage({
+        previewUrl: URL.createObjectURL(file),
+        filename,
+      });
+    } catch (err) {
+      console.error(err);
+      alert("Image upload failed. Please try again.");
+    } finally {
+      setUploading(false);
+    }
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -43,10 +81,19 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || status === "streaming") return;
-    const text = input;
+    if (status === "streaming") return;
+    const hasText = input.trim().length > 0;
+    if (!hasText && !pendingImage) return;
+
+    // When an image is attached, append its uploaded filename to the message
+    // so the agent's analyze_product_image flow can reference it.
+    const text = pendingImage
+      ? `${input} [image: ${pendingImage.filename}]`.trim()
+      : input;
+    const previewUrl = pendingImage?.previewUrl;
     setInput("");
-    void send(text);
+    setPendingImage(null);
+    void send(text, previewUrl);
   };
 
   return (
@@ -83,27 +130,68 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
       </div>
 
       {/* Input */}
-      <form
-        onSubmit={handleSubmit}
-        className="flex items-center gap-2 border-t border-border bg-card p-3"
-      >
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask Ruby anything…"
-          className="flex-1 rounded-full border border-border bg-background px-4 py-2 text-sm outline-none focus:border-primary"
-          data-testid="agent-chat-input"
-        />
-        <Button
-          type="submit"
-          size="icon"
-          className="rounded-full"
-          disabled={status === "streaming" || !input.trim()}
-          data-testid="agent-chat-send"
-        >
-          <Send className="h-4 w-4" />
-        </Button>
-      </form>
+      <div className="border-t border-border bg-card p-3">
+        {pendingImage && (
+          <div className="mb-2 inline-flex items-center gap-2 rounded-lg border border-border bg-background p-1 pr-2">
+            <img
+              src={pendingImage.previewUrl}
+              alt="Attached"
+              className="h-10 w-10 rounded object-cover"
+            />
+            <span className="text-xs text-muted-foreground">
+              Image attached
+            </span>
+            <button
+              type="button"
+              onClick={() => setPendingImage(null)}
+              className="text-muted-foreground hover:text-foreground"
+              aria-label="Remove attached image"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+        )}
+        <form onSubmit={handleSubmit} className="flex items-center gap-2">
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handleFileSelected}
+            data-testid="agent-chat-file"
+          />
+          <Button
+            type="button"
+            size="icon"
+            variant="outline"
+            className="rounded-full"
+            disabled={uploading || status === "streaming"}
+            onClick={() => fileInputRef.current?.click()}
+            data-testid="agent-chat-upload"
+            aria-label="Attach an image"
+          >
+            <ImagePlus className="h-4 w-4" />
+          </Button>
+          <input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Ask Ruby anything…"
+            className="flex-1 rounded-full border border-border bg-background px-4 py-2 text-sm outline-none focus:border-primary"
+            data-testid="agent-chat-input"
+          />
+          <Button
+            type="submit"
+            size="icon"
+            className="rounded-full"
+            disabled={
+              status === "streaming" || (!input.trim() && !pendingImage)
+            }
+            data-testid="agent-chat-send"
+          >
+            <Send className="h-4 w-4" />
+          </Button>
+        </form>
+      </div>
     </div>
   );
 }
