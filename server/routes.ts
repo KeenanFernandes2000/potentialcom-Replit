@@ -696,6 +696,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Returns whitelisted bot config — name, greeting, avatar only. The upstream
+  // `system` prompt and internal IDs are deliberately stripped.
+  app.get("/api/agent/:agentKey/bot", async (req, res) => {
+    const agent = getAgent(req.params.agentKey);
+    if (!agent) {
+      return res.status(404).json({ message: "Unknown agent" });
+    }
+    try {
+      const upstream = await fetch(
+        `${POTENTIAL_API_BASE}/api/admin/bot/${agent.botId}`,
+      );
+      if (!upstream.ok) {
+        return res
+          .status(upstream.status || 502)
+          .json({ message: "Upstream agent error" });
+      }
+      const data: any = await upstream.json();
+      res.json({
+        name: typeof data.name === "string" ? data.name : "",
+        greeting: typeof data.greeting === "string" ? data.greeting : "",
+        avatarUrl: data.imageName
+          ? `${POTENTIAL_API_BASE}/static/mentors/${data.imageName}`
+          : "",
+      });
+    } catch (err) {
+      console.error("Agent bot config proxy error:", err);
+      res.status(502).json({ message: "Failed to reach agent" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
