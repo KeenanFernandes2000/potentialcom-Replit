@@ -7,3 +7,4 @@ vite.config.ts.*
 .env
 .config
 URL_Analysis_Report.txt
+.claude/worktrees/clever-mclaren-4d0786/
