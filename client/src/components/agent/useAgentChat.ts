@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { AgentMessage, ToolInvocation } from "@shared/agent";
 import { createStreamParser } from "./parseAgentStream";
 
@@ -22,6 +22,9 @@ export function useAgentChat(agentKey: string): UseAgentChat {
   const [messages, setMessages] = useState<AgentMessage[]>([]);
   const [status, setStatus] = useState<"idle" | "streaming">("idle");
   const sessionIdRef = useRef<string>(newSessionId());
+  const abortRef = useRef<AbortController | null>(null);
+
+  useEffect(() => () => abortRef.current?.abort(), []);
 
   // Mutates the agent message with the given id via an updater function.
   const updateAgentMessage = useCallback(
@@ -56,11 +59,15 @@ export function useAgentChat(agentKey: string): UseAgentChat {
       setMessages((prev) => [...prev, userMessage, agentMessage]);
       setStatus("streaming");
 
+      const controller = new AbortController();
+      abortRef.current = controller;
+
       try {
         const res = await fetch(`/api/agent/${agentKey}/chat`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
+          signal: controller.signal,
           body: JSON.stringify({
             message: text,
             sessionId: sessionIdRef.current,
@@ -105,8 +112,14 @@ export function useAgentChat(agentKey: string): UseAgentChat {
               );
             } else if (event.kind === "toolResponse") {
               updateAgentMessage(agentId, (m) => {
-                // Attach the response to the most recent loading invocation
-                // for this tool name.
+                // Match by tool name only: upstream toolResponse events carry
+                // no arguments, so they can't be matched against the toolCall
+                // invocation id (which includes the arguments). We attach to
+                // the most recent still-loading invocation of this tool name.
+                // Limitation: two concurrent calls to the SAME tool with
+                // different arguments could mis-attach. Acceptable for the
+                // single-call golden path; revisit if upstream adds a
+                // correlation id.
                 const idx = [...m.tools]
                   .map((t, i) => ({ t, i }))
                   .reverse()
@@ -147,6 +160,7 @@ export function useAgentChat(agentKey: string): UseAgentChat {
           m.status === "streaming" ? { ...m, status: "complete" } : m,
         );
       } catch (err) {
+        if (controller.signal.aborted) return;
         console.error("useAgentChat send error:", err);
         updateAgentMessage(agentId, (m) => ({
           ...m,
@@ -156,6 +170,7 @@ export function useAgentChat(agentKey: string): UseAgentChat {
           status: "error",
         }));
       } finally {
+        if (abortRef.current === controller) abortRef.current = null;
         setStatus("idle");
       }
     },
