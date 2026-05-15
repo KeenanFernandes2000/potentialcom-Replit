@@ -59,6 +59,40 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoSpeak]);
 
+  // When a voice call ends, mark every current agent message as
+  // "already spoken" so the auto-speak play effect doesn't replay the
+  // voice-mode responses through the /speak TTS proxy on the next
+  // render. The in-call audio already played them via the WebSocket
+  // MediaSource pipeline; auto-speak would otherwise double-speak them.
+  const prevVoiceStateRef = useRef(voice.state);
+  useEffect(() => {
+    const prev = prevVoiceStateRef.current;
+    const curr = voice.state;
+    const wasActive = prev !== "idle" && prev !== "error";
+    const isInactive = curr === "idle" || curr === "error";
+    if (wasActive && isInactive) {
+      for (const m of messages) {
+        if (m.role === "agent" && m.status === "complete") {
+          spokenMessageIds.current.add(m.id);
+        }
+      }
+    }
+    prevVoiceStateRef.current = curr;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [voice.state]);
+
+  // Surface voice errors as a toast. The hook holds the upstream
+  // message (e.g., "Voice trial exhausted", "Mic access denied").
+  // Without this, the call bar would silently disappear on error.
+  useEffect(() => {
+    if (voice.state !== "error") return;
+    toast({
+      title: "Voice call error",
+      description: voice.errorMessage ?? "Something went wrong with the voice call.",
+      variant: "destructive",
+    });
+  }, [voice.state, voice.errorMessage, toast]);
+
   // Auto-speak: when a new agent message completes and auto-speak is on,
   // play it. We dedupe via a per-message-id set so toggling auto-speak
   // mid-conversation doesn't re-speak everything.
