@@ -1,3 +1,4 @@
+import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import type { ToolInvocation } from "@shared/agent";
 import { CardShell } from "./CardShell";
@@ -81,8 +82,57 @@ function renderPayload(payload: unknown): React.ReactNode {
       );
     }
   }
-  // Rule 4 (object → key-value table) is added in Task 12. Until then, stringify.
+  if (typeof payload === "object") {
+    const entries = Object.entries(payload as Record<string, unknown>);
+    if (entries.length === 0) {
+      return <span className="text-tool-card-muted-foreground">(empty object)</span>;
+    }
+    return (
+      <div className="flex flex-col">
+        {entries.map(([k, v]) => (
+          <KVRow key={k} k={k} v={v} />
+        ))}
+      </div>
+    );
+  }
   return <span>{String(payload)}</span>;
+}
+
+function KVRow({ k, v }: { k: string; v: unknown }) {
+  const [expanded, setExpanded] = useState(false);
+  let display: string;
+  let canTruncate = false;
+  if (typeof v === "string") {
+    display = v;
+    canTruncate = v.length > 200;
+  } else {
+    display = JSON.stringify(v, null, 2);
+  }
+  const visible =
+    canTruncate && !expanded ? display.slice(0, 200) + "…" : display;
+  return (
+    <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-2 py-1 border-b border-tool-card-border last:border-b-0">
+      <div className="text-xs font-mono text-tool-card-muted-foreground break-words">
+        {k}
+      </div>
+      <div className="text-sm break-words">
+        {typeof v === "string" ? (
+          <span>{visible}</span>
+        ) : (
+          <pre className="whitespace-pre-wrap break-words text-xs">{visible}</pre>
+        )}
+        {canTruncate && (
+          <button
+            type="button"
+            className="ml-2 text-xs underline text-tool-card-accent"
+            onClick={() => setExpanded((s) => !s)}
+          >
+            {expanded ? "Show less" : "Show more"}
+          </button>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export function ThemedGenericCard({ invocation }: ThemedGenericCardProps) {

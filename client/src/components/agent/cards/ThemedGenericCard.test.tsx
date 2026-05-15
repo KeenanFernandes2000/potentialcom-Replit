@@ -144,3 +144,49 @@ describe("ThemedGenericCard — array rule", () => {
     expect(screen.getByText(/\(empty list\)/)).toBeInTheDocument();
   });
 });
+
+describe("ThemedGenericCard — object key/value rule", () => {
+  it("renders a 2-column table for plain object payloads", () => {
+    render(
+      <ThemedGenericCard
+        invocation={inv({ response: { color: "red", size: "M" } })}
+      />,
+    );
+    expect(screen.getByText("color")).toBeInTheDocument();
+    expect(screen.getByText("red")).toBeInTheDocument();
+    expect(screen.getByText("size")).toBeInTheDocument();
+    expect(screen.getByText("M")).toBeInTheDocument();
+  });
+
+  it("truncates string values longer than 200 chars behind a 'Show more' toggle", () => {
+    const longValue = "x".repeat(250);
+    render(
+      <ThemedGenericCard
+        invocation={inv({ response: { description: longValue } })}
+      />,
+    );
+    expect(screen.queryByText(longValue)).toBeNull();
+    expect(screen.getByText(/Show more/)).toBeInTheDocument();
+  });
+
+  it("does not truncate values 200 chars or shorter", () => {
+    const value = "x".repeat(200);
+    render(
+      <ThemedGenericCard
+        invocation={inv({ response: { description: value } })}
+      />,
+    );
+    expect(screen.getByText(value)).toBeInTheDocument();
+    expect(screen.queryByText(/Show more/)).toBeNull();
+  });
+
+  it("stringifies nested objects/arrays as JSON inside the row", () => {
+    render(
+      <ThemedGenericCard
+        invocation={inv({ response: { items: ["a", "b"] } })}
+      />,
+    );
+    // Appears twice: once in the kv-row's JSON <pre>, once in the Raw response <pre>.
+    expect(screen.getAllByText(/"a"/).length).toBeGreaterThanOrEqual(2);
+  });
+});
