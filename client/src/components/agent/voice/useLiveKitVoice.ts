@@ -63,6 +63,11 @@ export function useLiveKitVoice(
   const [durationMs, setDurationMs] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
 
+  const stateRef = useRef<VoiceState>("idle");
+  useEffect(() => {
+    stateRef.current = state;
+  }, [state]);
+
   const wsRef = useRef<WebSocket | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
@@ -308,7 +313,7 @@ export function useLiveKitVoice(
       setErrorMessage("Voice connection error");
     };
     ws.onclose = () => {
-      if (state !== "ending" && state !== "error") {
+      if (stateRef.current !== "ending" && stateRef.current !== "error") {
         setState("error");
         setErrorMessage("Voice call dropped");
       }
@@ -344,7 +349,7 @@ export function useLiveKitVoice(
     };
 
     setupPlayer();
-  }, [agentKey, cleanup, handleBinary, handleJson, setupPlayer, state]);
+  }, [agentKey, cleanup, handleBinary, handleJson, setupPlayer]);
 
   const hangup = useCallback(() => {
     setState("ending");
