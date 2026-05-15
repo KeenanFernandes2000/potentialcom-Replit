@@ -17,6 +17,15 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        "tool-card": {
+          DEFAULT: "hsl(var(--tool-card))",
+          foreground: "hsl(var(--tool-card-foreground))",
+          border: "hsl(var(--tool-card-border))",
+          muted: "hsl(var(--tool-card-muted))",
+          "muted-foreground": "hsl(var(--tool-card-muted-fg))",
+          accent: "hsl(var(--tool-card-accent))",
+          "accent-foreground": "hsl(var(--tool-card-accent-fg))",
+        },
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",

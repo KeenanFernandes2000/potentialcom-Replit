@@ -124,10 +124,10 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  // ALWAYS serve the app on port 5000
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = 5000;
+  // Default to port 5000 (the firewall-allowed port in deployment).
+  // Allow override via PORT env for local dev where 5000 is often
+  // taken by macOS ControlCenter (AirPlay Receiver).
+  const port = Number(process.env.PORT) || 5000;
   server.listen(port, "0.0.0.0", () => {
     log(`serving on port ${port}`);
   });

@@ -7,5 +7,5 @@ export interface ToolCardProps {
 }
 
 // Maps a tool name to the component that renders it. Tools absent from a
-// registry fall back to GenericToolCard (see ToolCard.tsx).
+// registry fall back to ThemedGenericCard (see ToolCard.tsx).
 export type ToolRegistry = Record<string, ComponentType<ToolCardProps>>;

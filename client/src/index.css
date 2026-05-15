@@ -63,6 +63,15 @@ body {
   /* Misc */
   --ring: 270 70% 56%;
   --radius: 1rem;
+
+  /* Tool card tokens — light = clean minimal */
+  --tool-card: 0 0% 100%;
+  --tool-card-foreground: 240 6% 10%;
+  --tool-card-border: 240 5% 90%;
+  --tool-card-muted: 240 5% 96%;
+  --tool-card-muted-fg: 240 4% 46%;
+  --tool-card-accent: 240 6% 10%;
+  --tool-card-accent-fg: 0 0% 100%;
 }
 
 .dark {
@@ -97,6 +106,15 @@ body {
   /* Misc */
   --ring: 270 80% 60%;
   --radius: 1rem;
+
+  /* Tool card tokens — dark = brand-matched */
+  --tool-card: 273 35% 11%;
+  --tool-card-foreground: 0 0% 100%;
+  --tool-card-border: 272 27% 24%;
+  --tool-card-muted: 273 32% 14%;
+  --tool-card-muted-fg: 255 92% 76%;
+  --tool-card-accent: 262 83% 58%;
+  --tool-card-accent-fg: 0 0% 100%;
 }
 
 @layer base {
