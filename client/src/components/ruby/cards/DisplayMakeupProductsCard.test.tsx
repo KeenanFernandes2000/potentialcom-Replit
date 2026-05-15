@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { DisplayMakeupProductsCard } from "./DisplayMakeupProductsCard";
 import type { ToolInvocation } from "@shared/agent";
@@ -160,5 +160,25 @@ describe("DisplayMakeupProductsCard — defensive", () => {
     );
     expect(container.textContent).not.toMatch(/\$undefined/);
     expect(container.textContent).not.toMatch(/\$null/);
+  });
+
+  it("warns to console for skipped malformed items in dev", () => {
+    const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+    render(
+      <DisplayMakeupProductsCard
+        invocation={inv({
+          products: [
+            { id: "ok", title: "Good", price: 1 },
+            "garbage" as unknown,
+            { /* no id, no title */ price: 2 },
+          ],
+        })}
+      />,
+    );
+    expect(warnSpy).toHaveBeenCalledTimes(1);
+    expect(warnSpy).toHaveBeenCalledWith(
+      expect.stringContaining("skipped 2 malformed item(s)"),
+    );
+    warnSpy.mockRestore();
   });
 });

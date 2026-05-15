@@ -48,6 +48,12 @@ function extractArgs(raw: unknown): Args | null {
   const obj = raw as Record<string, unknown>;
   if (!Array.isArray(obj.products)) return null;
   const products = obj.products.filter(isProduct);
+  const dropped = obj.products.length - products.length;
+  if (dropped > 0 && import.meta.env.DEV) {
+    console.warn(
+      `display_makeup_products: skipped ${dropped} malformed item(s)`,
+    );
+  }
   const title = typeof obj.title === "string" ? obj.title : undefined;
   return { products, title };
 }
