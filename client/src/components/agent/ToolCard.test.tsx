@@ -65,4 +65,33 @@ describe("ToolCard dispatcher integration with rubyToolRegistry", () => {
       screen.getAllByText("display_makeup_products").length,
     ).toBeGreaterThan(0);
   });
+
+  it("routes search_shopify_products to SearchShopifyProductsCard", () => {
+    render(
+      <ToolCard
+        invocation={{
+          ...inv("search_shopify_products"),
+          response: JSON.stringify({
+            result: {
+              query: "lipstick",
+              products: [
+                {
+                  id: "p1",
+                  name: "Velvet Matte Lipstick",
+                  price: "24.0 USD",
+                  url: "https://example.com/lip",
+                },
+              ],
+            },
+          }),
+        }}
+        registry={rubyToolRegistry}
+      />,
+    );
+    // Bespoke card shows the search-results header and the product name.
+    expect(
+      screen.getByText(/Search results for "lipstick"/),
+    ).toBeInTheDocument();
+    expect(screen.getByText("Velvet Matte Lipstick")).toBeInTheDocument();
+  });
 });
