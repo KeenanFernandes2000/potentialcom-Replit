@@ -127,14 +127,16 @@ describe("ThemedGenericCard — array rule", () => {
     expect(screen.getByText("What is Y?")).toBeInTheDocument();
   });
 
-  it("stringifies non-QA array entries inside the accordion body", () => {
+  it("renders non-QA array entries as 'Item N' accordions with JSON body", () => {
     render(
       <ThemedGenericCard
         invocation={inv({ response: [{ foo: "bar" }] })}
       />,
     );
-    // The Raw response <pre> also contains the same JSON, so use getAllByText.
-    expect(screen.getAllByText(/"foo": "bar"/).length).toBeGreaterThan(0);
+    // "Item 1" is unique to renderArrayEntry's non-QA branch.
+    expect(screen.getByText("Item 1")).toBeInTheDocument();
+    // The JSON body appears at least twice: once in the accordion, once in the Raw response pre.
+    expect(screen.getAllByText(/"foo": "bar"/).length).toBeGreaterThanOrEqual(2);
   });
 
   it("handles an empty array gracefully", () => {
