@@ -28,6 +28,27 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
   const { enabled: autoSpeak } = useAutoSpeak();
   const spokenMessageIds = useRef<Set<string>>(new Set());
 
+  // When auto-speak flips ON, mark all currently-completed agent messages
+  // as "already spoken" so we don't replay history. Only newly-completing
+  // messages from this point forward will auto-play.
+  //
+  // CRITICAL: this effect must be declared BEFORE the play effect below.
+  // Both effects react to the same autoSpeak transition, and React runs
+  // them in declaration order. If the play effect ran first, it would
+  // see the latest backlog message and speak it before the seed effect
+  // had a chance to mark it as already-spoken.
+  useEffect(() => {
+    if (!autoSpeak) return;
+    for (const m of messages) {
+      if (m.role === "agent" && m.status === "complete") {
+        spokenMessageIds.current.add(m.id);
+      }
+    }
+    // We intentionally don't include `messages` in deps — we only want to
+    // seed on the autoSpeak transition, not every time messages change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoSpeak]);
+
   // Auto-speak: when a new agent message completes and auto-speak is on,
   // play it. We dedupe via a per-message-id set so toggling auto-speak
   // mid-conversation doesn't re-speak everything.
@@ -42,21 +63,6 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
     spokenMessageIds.current.add(last.id);
     void tts.play(last.text);
   }, [autoSpeak, bot, messages, tts]);
-
-  // When auto-speak flips ON, mark all currently-completed agent messages
-  // as "already spoken" so we don't replay history. Only newly-completing
-  // messages from this point forward will auto-play.
-  useEffect(() => {
-    if (!autoSpeak) return;
-    for (const m of messages) {
-      if (m.role === "agent" && m.status === "complete") {
-        spokenMessageIds.current.add(m.id);
-      }
-    }
-    // We intentionally don't include `messages` in deps — we only want to
-    // seed on the autoSpeak transition, not every time messages change.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autoSpeak]);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [pendingImage, setPendingImage] = useState<{
