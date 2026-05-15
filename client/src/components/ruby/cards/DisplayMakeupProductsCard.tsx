@@ -7,6 +7,7 @@ import {
   CardGrid,
   ToolLoadingPill,
 } from "@/components/agent/cards";
+import { ThemedGenericCard } from "@/components/agent/cards/ThemedGenericCard";
 
 interface DisplayMakeupProductsCardProps {
   invocation: ToolInvocation;
@@ -62,9 +63,7 @@ export function DisplayMakeupProductsCard({
 
   const args = extractArgs(rawArgs);
   if (!args || args.products.length === 0) {
-    // Defensive fallback handled in Task 15. For the happy-path task, this
-    // branch is unreachable when callers pass well-formed data.
-    return null;
+    return <ThemedGenericCard invocation={invocation} />;
   }
 
   const headerTitle = args.title ?? "Makeup picks for you";

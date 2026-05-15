@@ -90,3 +90,75 @@ describe("DisplayMakeupProductsCard — happy path", () => {
     expect(screen.getByText("Makeup picks for you")).toBeInTheDocument();
   });
 });
+
+describe("DisplayMakeupProductsCard — defensive", () => {
+  it("falls back to ThemedGenericCard when products is missing", () => {
+    render(<DisplayMakeupProductsCard invocation={inv({})} />);
+    // Generic card renders the tool name in its header (title + pill).
+    expect(screen.getAllByText("display_makeup_products").length).toBeGreaterThan(0);
+  });
+
+  it("falls back to ThemedGenericCard when products is empty", () => {
+    render(<DisplayMakeupProductsCard invocation={inv({ products: [] })} />);
+    expect(screen.getAllByText("display_makeup_products").length).toBeGreaterThan(0);
+  });
+
+  it("falls back to ThemedGenericCard when arguments is not an object", () => {
+    render(<DisplayMakeupProductsCard invocation={inv("oops")} />);
+    expect(screen.getAllByText("display_makeup_products").length).toBeGreaterThan(0);
+  });
+
+  it("skips malformed items but renders the rest", () => {
+    render(
+      <DisplayMakeupProductsCard
+        invocation={inv({
+          products: [
+            { id: "ok", title: "Good Item", price: 10, product_url: "https://x.test/a" },
+            "garbage" as unknown,
+            { /* no id, no title */ price: 5 },
+          ],
+        })}
+      />,
+    );
+    expect(screen.getByText("Good Item")).toBeInTheDocument();
+    // Only one CTA — the malformed entries are skipped.
+    expect(screen.getAllByRole("link")).toHaveLength(1);
+  });
+
+  it("omits the CTA when product_url is missing", () => {
+    render(
+      <DisplayMakeupProductsCard
+        invocation={inv({
+          products: [{ id: "p1", title: "No Link", price: 5 }],
+        })}
+      />,
+    );
+    expect(screen.queryByRole("link")).toBeNull();
+    expect(screen.getByText("No Link")).toBeInTheDocument();
+  });
+
+  it("renders only the price (no leading separator) when vendor is missing", () => {
+    render(
+      <DisplayMakeupProductsCard
+        invocation={inv({
+          products: [{ id: "p1", title: "No Vendor", price: 7 }],
+        })}
+      />,
+    );
+    // Must not contain the " · " separator with no vendor before it.
+    expect(screen.queryByText(/^ · \$7$/)).toBeNull();
+    expect(screen.getByText(/\$7/)).toBeInTheDocument();
+  });
+
+  it("omits the price when price is missing", () => {
+    const { container } = render(
+      <DisplayMakeupProductsCard
+        invocation={inv({
+          products: [{ id: "p1", title: "Free", vendor: "Acme" }],
+        })}
+      />,
+    );
+    expect(container.textContent).not.toMatch(/\$undefined/);
+    expect(container.textContent).not.toMatch(/\$null/);
+  });
+});
