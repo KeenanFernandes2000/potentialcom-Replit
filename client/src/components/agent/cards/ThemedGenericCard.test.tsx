@@ -200,4 +200,28 @@ describe("ThemedGenericCard — object key/value rule", () => {
     // Appears twice: once in the kv-row's JSON <pre>, once in the Raw response <pre>.
     expect(screen.getAllByText(/"a"/).length).toBeGreaterThanOrEqual(2);
   });
+
+  it("expands and collapses on Show more / Show less click", async () => {
+    const userEvent = await import("@testing-library/user-event");
+    const user = userEvent.default.setup();
+    const longValue = "x".repeat(250);
+    render(
+      <ThemedGenericCard
+        invocation={inv({ response: { description: longValue } })}
+      />,
+    );
+    // Initially collapsed: long value not visible, "Show more" present.
+    expect(screen.queryByText(longValue)).toBeNull();
+    const moreBtn = screen.getByText(/Show more/);
+    await user.click(moreBtn);
+
+    // Expanded: full value visible, button label flips to "Show less".
+    expect(screen.getByText(longValue)).toBeInTheDocument();
+    const lessBtn = screen.getByText(/Show less/);
+    await user.click(lessBtn);
+
+    // Collapsed again.
+    expect(screen.queryByText(longValue)).toBeNull();
+    expect(screen.getByText(/Show more/)).toBeInTheDocument();
+  });
 });
