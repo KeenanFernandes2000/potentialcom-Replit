@@ -826,6 +826,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     if (!agent) {
       return res.status(404).json({ message: "Unknown agent" });
     }
+    const sessionId = req.body?.sessionId;
+    if (typeof sessionId !== "string" || sessionId.trim().length === 0) {
+      return res
+        .status(400)
+        .json({ message: "sessionId is required" });
+    }
     try {
       const upstream = await fetch(
         `${POTENTIAL_API_BASE}/api/voice/room/create`,
@@ -834,7 +840,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             botId: agent.botId,
-            sessionId: req.body?.sessionId,
+            sessionId,
           }),
         },
       );

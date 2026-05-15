@@ -82,4 +82,15 @@ describe("POST /api/agent/:agentKey/voice/room", () => {
       error: "Voice disabled: 10-minute voice trial exhausted",
     });
   });
+
+  it("returns 400 when sessionId is missing", async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+    const res = await request(makeApp())
+      .post("/api/agent/ruby/voice/room")
+      .send({});
+    expect(res.status).toBe(400);
+    expect(res.body).toEqual({ message: "sessionId is required" });
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
 });
