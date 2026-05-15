@@ -1,0 +1,1 @@
+export { DisplayMakeupProductsCard } from "./DisplayMakeupProductsCard";
