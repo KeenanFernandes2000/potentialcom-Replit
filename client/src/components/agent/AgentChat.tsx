@@ -169,6 +169,7 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
             message={message}
             registry={registry}
             tts={tts}
+            ttsEnabled={!!bot?.audiotts}
           />
         ))}
       </div>
