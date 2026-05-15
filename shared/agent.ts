@@ -37,4 +37,6 @@ export interface AgentBotConfig {
   name: string;
   greeting: string;
   avatarUrl: string;
+  audiostt: boolean;   // true → mic button is allowed
+  audiotts: boolean;   // true → speaker buttons + auto-speak are allowed
 }

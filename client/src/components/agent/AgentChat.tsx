@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { MessageBubble } from "./MessageBubble";
 import { useAgentChat } from "./useAgentChat";
+import { MicButton, AutoSpeakToggle, useTextToSpeech, useAutoSpeak } from "./voice";
 import type { ToolRegistry } from "./toolRegistry";
 import type { AgentBotConfig } from "@shared/agent";
 
@@ -23,6 +24,45 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
   const [input, setInput] = useState("");
   const [bot, setBot] = useState<AgentBotConfig | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const tts = useTextToSpeech(agentKey);
+  const { enabled: autoSpeak } = useAutoSpeak();
+  const spokenMessageIds = useRef<Set<string>>(new Set());
+
+  // When auto-speak flips ON, mark all currently-completed agent messages
+  // as "already spoken" so we don't replay history. Only newly-completing
+  // messages from this point forward will auto-play.
+  //
+  // CRITICAL: this effect must be declared BEFORE the play effect below.
+  // Both effects react to the same autoSpeak transition, and React runs
+  // them in declaration order. If the play effect ran first, it would
+  // see the latest backlog message and speak it before the seed effect
+  // had a chance to mark it as already-spoken.
+  useEffect(() => {
+    if (!autoSpeak) return;
+    for (const m of messages) {
+      if (m.role === "agent" && m.status === "complete") {
+        spokenMessageIds.current.add(m.id);
+      }
+    }
+    // We intentionally don't include `messages` in deps — we only want to
+    // seed on the autoSpeak transition, not every time messages change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoSpeak]);
+
+  // Auto-speak: when a new agent message completes and auto-speak is on,
+  // play it. We dedupe via a per-message-id set so toggling auto-speak
+  // mid-conversation doesn't re-speak everything.
+  useEffect(() => {
+    if (!autoSpeak || !bot?.audiotts) return;
+    const last = messages[messages.length - 1];
+    if (!last) return;
+    if (last.role !== "agent") return;
+    if (last.status !== "complete") return;
+    if (!last.text || !last.text.trim()) return;
+    if (spokenMessageIds.current.has(last.id)) return;
+    spokenMessageIds.current.add(last.id);
+    void tts.play(last.text);
+  }, [autoSpeak, bot, messages, tts]);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [pendingImage, setPendingImage] = useState<{
@@ -130,6 +170,11 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
           <div className="text-sm font-semibold">{bot?.name ?? "Ruby"}</div>
           <div className="text-xs text-muted-foreground">AI Beauty Concierge</div>
         </div>
+        {bot?.audiotts && (
+          <div className="ml-auto">
+            <AutoSpeakToggle />
+          </div>
+        )}
       </div>
 
       {/* Messages */}
@@ -144,6 +189,8 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
             key={message.id}
             message={message}
             registry={registry}
+            tts={tts}
+            ttsEnabled={!!bot?.audiotts}
           />
         ))}
       </div>
@@ -196,6 +243,11 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
           >
             <ImagePlus className="h-4 w-4" />
           </Button>
+          <MicButton
+            agentKey={agentKey}
+            disabled={!bot?.audiostt}
+            onTranscript={(text) => setInput(text)}
+          />
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
