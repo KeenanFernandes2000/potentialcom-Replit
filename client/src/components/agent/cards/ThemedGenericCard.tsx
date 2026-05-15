@@ -1,3 +1,4 @@
+import ReactMarkdown from "react-markdown";
 import type { ToolInvocation } from "@shared/agent";
 import { CardShell } from "./CardShell";
 import { CardHeader } from "./CardHeader";
@@ -7,17 +8,39 @@ interface ThemedGenericCardProps {
   invocation: ToolInvocation;
 }
 
-// Renders the chosen payload. Tasks 10-12 add rule-based branches; for now
-// it just stringifies anything truthy.
+function pickTextField(o: Record<string, unknown>): string | null {
+  for (const key of ["summary", "text", "content"] as const) {
+    const v = o[key];
+    if (typeof v === "string") return v;
+  }
+  return null;
+}
+
 function renderPayload(payload: unknown): React.ReactNode {
   if (payload == null) {
     return <span className="text-tool-card-muted-foreground">(no response)</span>;
   }
+  if (typeof payload === "string") {
+    return (
+      <div className="prose prose-sm max-w-none dark:prose-invert">
+        <ReactMarkdown>{payload}</ReactMarkdown>
+      </div>
+    );
+  }
+  if (typeof payload === "object" && !Array.isArray(payload)) {
+    const text = pickTextField(payload as Record<string, unknown>);
+    if (text !== null) {
+      return (
+        <div className="prose prose-sm max-w-none dark:prose-invert">
+          <ReactMarkdown>{text}</ReactMarkdown>
+        </div>
+      );
+    }
+  }
+  // Rules 3 and 4 are added in Tasks 11 and 12. Until then, stringify.
   return <span>{String(payload)}</span>;
 }
 
-// Theme-aware fallback for any tool without a bespoke card. Also handles
-// the loading state and exposes a "Raw response" details block in dev.
 export function ThemedGenericCard({ invocation }: ThemedGenericCardProps) {
   const { name, status, arguments: args, response } = invocation;
 

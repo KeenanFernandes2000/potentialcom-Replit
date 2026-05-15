@@ -42,15 +42,15 @@ describe("ThemedGenericCard — loading & empty", () => {
         invocation={inv({ response: "from-response", arguments: "from-args" })}
       />,
     );
-    // The visible payload renders in a <span>; the raw-response <pre> also
-    // contains the full JSON, so filter by tag to scope to the payload.
+    // The raw-response <pre> also contains the full JSON, so exclude any
+    // element inside a <pre> to scope to the visible payload.
     const visibleMatches = screen
       .getAllByText(/from-response/)
-      .filter((el) => el.tagName === "SPAN");
+      .filter((el) => el.closest("pre") === null);
     expect(visibleMatches.length).toBeGreaterThan(0);
     const visibleArgs = screen
       .queryAllByText(/from-args/)
-      .filter((el) => el.tagName === "SPAN");
+      .filter((el) => el.closest("pre") === null);
     expect(visibleArgs).toHaveLength(0);
   });
 
@@ -58,10 +58,44 @@ describe("ThemedGenericCard — loading & empty", () => {
     render(
       <ThemedGenericCard invocation={inv({ arguments: "from-args" })} />,
     );
-    // Scope to the visible payload <span>, ignoring the raw-response <pre>.
+    // Scope to the visible payload, ignoring the raw-response <pre>.
     const visibleMatches = screen
       .getAllByText(/from-args/)
-      .filter((el) => el.tagName === "SPAN");
+      .filter((el) => el.closest("pre") === null);
     expect(visibleMatches.length).toBeGreaterThan(0);
+  });
+});
+
+describe("ThemedGenericCard — string & text-field rules", () => {
+  it("renders a string payload as markdown", () => {
+    render(<ThemedGenericCard invocation={inv({ response: "**bold**" })} />);
+    expect(screen.getByText("bold").tagName).toBe("STRONG");
+  });
+
+  it("renders object.summary as markdown when present", () => {
+    render(
+      <ThemedGenericCard
+        invocation={inv({ response: { summary: "**hello**", extra: 1 } })}
+      />,
+    );
+    expect(screen.getByText("hello").tagName).toBe("STRONG");
+  });
+
+  it("renders object.text as markdown when summary is absent", () => {
+    render(
+      <ThemedGenericCard
+        invocation={inv({ response: { text: "**hi**" } })}
+      />,
+    );
+    expect(screen.getByText("hi").tagName).toBe("STRONG");
+  });
+
+  it("renders object.content as markdown when summary & text are absent", () => {
+    render(
+      <ThemedGenericCard
+        invocation={inv({ response: { content: "**ok**" } })}
+      />,
+    );
+    expect(screen.getByText("ok").tagName).toBe("STRONG");
   });
 });
