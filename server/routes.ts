@@ -781,6 +781,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Proxies a text-to-speech request to the upstream TTS endpoint. The
+  // upstream replies with audio/mpeg on success or JSON on error.
+  app.post("/api/agent/:agentKey/speak", async (req, res) => {
+    const agent = getAgent(req.params.agentKey);
+    if (!agent) {
+      return res.status(404).json({ message: "Unknown agent" });
+    }
+    try {
+      const upstream = await fetch(
+        `${POTENTIAL_API_BASE}/agent/chatbot/${agent.botId}/speak`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: req.body?.text }),
+        },
+      );
+      const contentType = upstream.headers.get("content-type") ?? "";
+      if (contentType.includes("audio/")) {
+        const buffer = Buffer.from(await upstream.arrayBuffer());
+        res.status(upstream.status).type(contentType).send(buffer);
+        return;
+      }
+      const text = await upstream.text();
+      res
+        .status(upstream.status)
+        .type(contentType || "application/json")
+        .send(text);
+    } catch (err) {
+      console.error("Agent speak proxy error:", err);
+      res.status(502).json({ message: "Failed to reach agent" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
