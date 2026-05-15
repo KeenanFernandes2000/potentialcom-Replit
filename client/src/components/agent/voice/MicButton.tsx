@@ -72,6 +72,18 @@ export function MicButton({ agentKey, onTranscript, disabled }: MicButtonProps) 
 
   const onClick = useCallback(async () => {
     if (disabled) return;
+    // Blur the currently-focused element. macOS Safari doesn't move
+    // focus to a button on mouse click by default, so the chat input
+    // can remain focused while we record — letting OS-level dictation
+    // (Dictation, Voice Control) auto-type the same speech into the
+    // input in parallel with our Deepgram round-trip. Explicit blur
+    // helps; users with Voice Control may still need to disable it.
+    if (
+      typeof document !== "undefined" &&
+      document.activeElement instanceof HTMLElement
+    ) {
+      document.activeElement.blur();
+    }
     if (recorder.state === "recording") {
       const blob = await recorder.stop();
       if (!blob || blob.size === 0) {
