@@ -7,4 +7,6 @@ vite.config.ts.*
 .env
 .config
 URL_Analysis_Report.txt
+# Visual brainstorming companion
+.superpowers/
 .claude/worktrees/clever-mclaren-4d0786/

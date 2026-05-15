@@ -1,21 +1,9 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { SEO } from "@/components/SEO";
-import { Button } from "@/components/ui/button";
-import { VoiceControlPanel } from "@/components/VoiceControlPanel";
+import { RubyChat } from "@/components/ruby/RubyChat";
 import {
-  MessageCircle,
-  Mic,
-  User,
-  ShoppingCart,
-  Briefcase,
-  GraduationCap,
-  Hospital,
-  Users,
-  Send,
-  Play,
-  Pause,
   ChevronDown,
   Check,
 } from "lucide-react";
@@ -41,28 +29,13 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 
-type InterfaceMode = "chat" | "voice" | "avatar";
-
-interface Message {
-  role: "user" | "agent";
-  text: string;
-}
-
 const Demo = () => {
-  const [activeMode, setActiveMode] = useState<InterfaceMode>("chat");
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [inputValue, setInputValue] = useState("");
-  const [isVoiceActive, setIsVoiceActive] = useState(false);
-  const [isSpeaking, setIsSpeaking] = useState(false);
   const { toast } = useToast();
 
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
-      toast({
-        title: "Copied!",
-        description: "Text copied to clipboard",
-      });
+      toast({ title: "Copied!", description: "Text copied to clipboard" });
     } catch (err) {
       toast({
         title: "Failed to copy",
@@ -73,260 +46,11 @@ const Demo = () => {
   };
 
   useEffect(() => {
-    // Show initial message when component mounts
-    setMessages([
-      {
-        role: "agent",
-        text: "Assume you are:",
-      },
-    ]);
-
-    // Refresh AOS animations on page load
+    // Refresh AOS animations on page load.
     if (typeof window !== "undefined" && (window as any).AOS) {
       (window as any).AOS.refresh();
     }
-
-    // Load Ruby chat embed script only once on component mount
-    // Check if script is already loaded
-    const existingScript = document.querySelector(
-      'script[src="https://ai.potential.com/static/embed/ruby-section.js"]',
-    );
-
-    if (!existingScript) {
-      console.log("Loading Ruby chat embed script...");
-
-      // First script: Load the embed library
-      const embedScript = document.createElement("script");
-      embedScript.src = "https://ai.potential.com/static/embed/ruby-section.js";
-      embedScript.charset = "utf-8";
-      embedScript.type = "text/javascript";
-      embedScript.crossOrigin = "anonymous";
-      embedScript.id = "ruby-embed-script";
-
-      embedScript.onload = () => {
-        console.log("Ruby chat embed script loaded");
-
-        // Second script: Initialize the chat
-        const initScript = document.createElement("script");
-        initScript.type = "text/javascript";
-        initScript.id = "ruby-embed-init";
-        initScript.text = `
-          chatembed({
-            botId: "69008a08a7cc3cda2022e07f",
-            botIcon: "https://api.potential.com/static/mentors/Ruby-1761643015937-WhatsAppImage2025-05-09at2.10.10PM.jpeg",
-            botColor: "#8b5cf6",
-            botName: "Ruby",
-            divPlacement: "potchat",
-            theme: "auto",
-          });
-        `;
-
-        document.body.appendChild(initScript);
-        console.log("Chat embed initialization script added");
-      };
-
-      embedScript.onerror = () => {
-        console.error("Failed to load Ruby chat embed script");
-      };
-
-      document.body.appendChild(embedScript);
-    } else {
-      console.log("Ruby chat embed script already loaded");
-    }
   }, []);
-
-  const handleUseCaseClick = (prompt: string, useCase: string) => {
-    // Add user message
-    setMessages((prev) => [...prev, { role: "user", text: useCase }]);
-
-    // Simulate agent response after a delay
-    setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "agent",
-          text: `Great! I'm now acting as your ${useCase}. ${prompt}`,
-        },
-      ]);
-    }, 1000);
-  };
-
-  const handleSendMessage = () => {
-    if (!inputValue.trim()) return;
-
-    setMessages((prev) => [...prev, { role: "user", text: inputValue }]);
-    setInputValue("");
-
-    // Simulate agent response
-    setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "agent",
-          text: "I understand! Let me help you with that.",
-        },
-      ]);
-    }, 1000);
-  };
-
-  const toggleVoice = () => {
-    setIsVoiceActive(!isVoiceActive);
-    if (!isVoiceActive) {
-      // Simulate speaking animation
-      setIsSpeaking(true);
-      setTimeout(() => setIsSpeaking(false), 3000);
-    } else {
-      setIsSpeaking(false);
-    }
-  };
-
-  const useCases = [
-    {
-      icon: <ShoppingCart className="h-5 w-5" />,
-      emoji: "🛍️",
-      label: "E-Commerce & Shopping Assistant",
-      prompt: "How can I help you shop today?",
-    },
-    {
-      icon: <Briefcase className="h-5 w-5" />,
-      emoji: "💼",
-      label: "Sales & Marketing Agent",
-      prompt: "Let me help you grow your business!",
-    },
-    {
-      icon: <GraduationCap className="h-5 w-5" />,
-      emoji: "🎓",
-      label: "Learning Concierge",
-      prompt: "Ready to accelerate your learning journey?",
-    },
-    {
-      icon: <Hospital className="h-5 w-5" />,
-      emoji: "🏥",
-      label: "Clinic & Hospital Assistant",
-      prompt: "How can I assist with your healthcare needs?",
-    },
-    {
-      icon: <Users className="h-5 w-5" />,
-      emoji: "👩‍💼",
-      label: "HR & People Assistant",
-      prompt: "Let me help you with HR and people management!",
-    },
-  ];
-
-  const renderVoiceInterface = () => (
-    <div className="w-full max-w-3xl mx-auto">
-      <div className="bg-card border border-border rounded-2xl shadow-lg p-12">
-        <div className="flex flex-col items-center justify-center space-y-8">
-          {/* Pulsing microphone animation */}
-          <div className="relative">
-            <div
-              className={`absolute inset-0 rounded-full bg-primary/30 ${
-                isSpeaking ? "animate-ping" : ""
-              }`}
-            />
-            <div
-              className={`relative w-32 h-32 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center ${
-                isSpeaking ? "animate-pulse" : ""
-              }`}
-            >
-              <Mic className="h-16 w-16 text-white" />
-            </div>
-          </div>
-
-          <div className="text-center">
-            <h3 className="text-2xl font-semibold mb-2">
-              {isVoiceActive ? "Listening..." : "Tap to speak with Ruby"}
-            </h3>
-            <p className="text-muted-foreground">
-              {isVoiceActive
-                ? "I'm here to help! What would you like to know?"
-                : "Start a voice conversation"}
-            </p>
-          </div>
-
-          <Button
-            size="lg"
-            onClick={toggleVoice}
-            className={`rounded-full px-8 ${
-              isVoiceActive
-                ? "bg-destructive hover:bg-destructive/90"
-                : "bg-primary hover:bg-primary/90"
-            }`}
-            data-testid="button-toggle-voice"
-          >
-            {isVoiceActive ? (
-              <>
-                <Pause className="mr-2 h-5 w-5" />
-                End Call
-              </>
-            ) : (
-              <>
-                <Play className="mr-2 h-5 w-5" />
-                Start Voice Chat
-              </>
-            )}
-          </Button>
-
-          {/* Waveform visualization when speaking */}
-          {isSpeaking && (
-            <div className="flex items-center justify-center gap-1 h-16">
-              {[...Array(5)].map((_, i) => (
-                <div
-                  key={i}
-                  className="w-2 bg-primary rounded-full animate-pulse"
-                  style={{
-                    height: `${Math.random() * 60 + 20}px`,
-                    animationDelay: `${i * 0.1}s`,
-                  }}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-
-  const renderAvatarInterface = () => (
-    <div className="w-full max-w-3xl mx-auto">
-      <div className="bg-card border border-border rounded-2xl shadow-lg overflow-hidden">
-        {/* Avatar video area */}
-        <div className="aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 relative">
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center">
-              <div className="w-48 h-48 rounded-full bg-gradient-to-br from-primary to-primary/70 mx-auto mb-4 flex items-center justify-center">
-                <User className="h-24 w-24 text-white" />
-              </div>
-              <h3 className="text-2xl font-semibold mb-2">Ruby</h3>
-              <p className="text-muted-foreground">Your AI Assistant</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Avatar controls */}
-        <div className="p-6 space-y-4">
-          <div className="text-center">
-            <p className="text-sm text-muted-foreground mb-4">
-              Interactive avatar mode - Coming soon
-            </p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-              {useCases.map((useCase, idx) => (
-                <Button
-                  key={idx}
-                  variant="outline"
-                  size="sm"
-                  className="text-xs"
-                  data-testid={`button-avatar-usecase-${idx}`}
-                >
-                  {useCase.emoji} {useCase.label.split(" ")[0]}
-                </Button>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
 
   const detailedUseCases = [
     {
@@ -443,7 +167,7 @@ const Demo = () => {
     <div className="min-h-screen bg-background">
       <SEO
         title="AI Agent Demo - Ruby | Potential.com"
-        description="Experience Ruby, our interactive AI agent demo. Try Chat, Voice, and Avatar interfaces for E-Commerce, Sales, Learning, Healthcare, and HR use cases."
+        description="Experience Ruby, our interactive AI agent demo. Chat with Ruby to shop products, book beauty experts, learn, and get customer support — a live look at Potential.com AI agents."
       />
       <Header />
 
@@ -465,54 +189,9 @@ const Demo = () => {
             </p>
           </div>
 
-          {/* Mode toggles */}
-          <div
-            className="flex justify-center gap-4 mb-12"
-            data-aos="fade-up"
-            data-aos-delay="100"
-          >
-            <Button
-              variant={activeMode === "chat" ? "default" : "outline"}
-              onClick={() => setActiveMode("chat")}
-              className="rounded-full"
-              data-testid="button-mode-chat"
-            >
-              <MessageCircle className="mr-2 h-4 w-4" />
-              Chat 💬
-            </Button>
-            {/* <Button
-              variant={activeMode === "voice" ? "default" : "outline"}
-              onClick={() => setActiveMode("voice")}
-              className="rounded-full"
-              data-testid="button-mode-voice"
-            >
-              <Mic className="mr-2 h-4 w-4" />
-              Voice 🎙️
-            </Button>
-            <Button
-              variant={activeMode === "avatar" ? "default" : "outline"}
-              onClick={() => setActiveMode("avatar")}
-              className="rounded-full"
-              data-testid="button-mode-avatar"
-            >
-              <User className="mr-2 h-4 w-4" />
-              Avatar 🧑‍💻
-            </Button> */}
-          </div>
-
-          {/* Chat embed - always rendered but hidden when not active */}
-          <div
-            id="potchat"
-            className="w-full min-h-[500px] max-w-3xl mx-auto"
-            style={{ display: activeMode === "chat" ? "block" : "none" }}
-            data-aos="fade-up"
-            data-aos-delay="200"
-          ></div>
-
-          {/* Interface rendering */}
+          {/* Native chat interface */}
           <div data-aos="fade-up" data-aos-delay="200">
-            {activeMode === "voice" && renderVoiceInterface()}
-            {activeMode === "avatar" && renderAvatarInterface()}
+            <RubyChat />
           </div>
 
           {/* Scroll indicator */}

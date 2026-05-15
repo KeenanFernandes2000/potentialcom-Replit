@@ -1,6 +1,8 @@
 import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import path from "path";
+import { Readable } from "node:stream";
+import { getAgent, POTENTIAL_API_BASE } from "./agents";
 import sgMail from "@sendgrid/mail";
 import { storage } from "./storage";
 import {
@@ -656,6 +658,97 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Get downloads error:", error);
       res.status(500).json({ message: "Server error" });
+    }
+  });
+
+  // --- AI Agent proxy (native chat) ---
+
+  // Streams an agent chat response. Browser sends only an agentKey; the bot ID
+  // is resolved server-side and never exposed.
+  app.post("/api/agent/:agentKey/chat", async (req, res) => {
+    const agent = getAgent(req.params.agentKey);
+    if (!agent) {
+      return res.status(404).json({ message: "Unknown agent" });
+    }
+    try {
+      const upstream = await fetch(
+        `${POTENTIAL_API_BASE}/agent/chatbot/${agent.botId}/chat`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            message: req.body?.message,
+            sessionId: req.body?.sessionId,
+          }),
+        },
+      );
+      if (!upstream.ok || !upstream.body) {
+        return res
+          .status(upstream.status || 502)
+          .json({ message: "Upstream agent error" });
+      }
+      res.setHeader("Content-Type", "text/event-stream");
+      res.setHeader("Cache-Control", "no-cache");
+      Readable.fromWeb(upstream.body as any).pipe(res);
+    } catch (err) {
+      console.error("Agent chat proxy error:", err);
+      res.status(502).json({ message: "Failed to reach agent" });
+    }
+  });
+
+  // Returns whitelisted bot config — name, greeting, avatar only. The upstream
+  // `system` prompt and internal IDs are deliberately stripped.
+  app.get("/api/agent/:agentKey/bot", async (req, res) => {
+    const agent = getAgent(req.params.agentKey);
+    if (!agent) {
+      return res.status(404).json({ message: "Unknown agent" });
+    }
+    try {
+      const upstream = await fetch(
+        `${POTENTIAL_API_BASE}/api/admin/bot/${agent.botId}`,
+      );
+      if (!upstream.ok) {
+        return res
+          .status(upstream.status || 502)
+          .json({ message: "Upstream agent error" });
+      }
+      const data: any = await upstream.json();
+      res.json({
+        name: typeof data.name === "string" ? data.name : "",
+        greeting: typeof data.greeting === "string" ? data.greeting : "",
+        avatarUrl: data.imageName
+          ? `${POTENTIAL_API_BASE}/static/mentors/${data.imageName}`
+          : "",
+      });
+    } catch (err) {
+      console.error("Agent bot config proxy error:", err);
+      res.status(502).json({ message: "Failed to reach agent" });
+    }
+  });
+
+  // Proxies an image upload to the upstream agent file endpoint. The raw
+  // multipart body is streamed straight through — express.json() ignores
+  // non-JSON content types, so the body arrives here untouched.
+  app.post("/api/agent/:agentKey/upload", async (req, res) => {
+    const agent = getAgent(req.params.agentKey);
+    if (!agent) {
+      return res.status(404).json({ message: "Unknown agent" });
+    }
+    try {
+      const upstream = await fetch(`${POTENTIAL_API_BASE}/streaming/upload`, {
+        method: "POST",
+        headers: { "Content-Type": req.headers["content-type"] ?? "" },
+        body: Readable.toWeb(req) as any,
+        duplex: "half",
+      } as any);
+      const text = await upstream.text();
+      res
+        .status(upstream.status)
+        .type(upstream.headers.get("content-type") ?? "application/json")
+        .send(text);
+    } catch (err) {
+      console.error("Agent upload proxy error:", err);
+      res.status(502).json({ message: "Failed to upload" });
     }
   });
 
