@@ -3,6 +3,14 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MicButton } from "./MicButton";
 
+// Mock useToast so we can assert toast calls without rendering the
+// real toaster.
+const toastMock = vi.fn();
+vi.mock("@/hooks/use-toast", () => ({
+  useToast: () => ({ toast: toastMock, toasts: [], dismiss: vi.fn() }),
+  toast: (...args: unknown[]) => toastMock(...args),
+}));
+
 // Reuse the FakeMediaRecorder / getUserMedia shims from useVoiceRecorder.test.ts.
 class FakeMediaRecorder {
   static isTypeSupported = vi.fn().mockReturnValue(true);
@@ -24,6 +32,7 @@ class FakeMediaRecorder {
 }
 
 beforeEach(() => {
+  toastMock.mockReset();
   // @ts-expect-error jsdom shim
   globalThis.MediaRecorder = FakeMediaRecorder;
   Object.defineProperty(navigator, "mediaDevices", {
@@ -88,7 +97,7 @@ describe("MicButton", () => {
     expect(onTranscript).toHaveBeenCalledWith("find me a lipstick");
   });
 
-  it("does not emit transcript when text is empty", async () => {
+  it("does not emit transcript when text is empty and fires a toast", async () => {
     vi.stubGlobal(
       "fetch",
       vi.fn().mockResolvedValue(
@@ -107,5 +116,38 @@ describe("MicButton", () => {
     await new Promise((r) => setTimeout(r, 0));
 
     expect(onTranscript).not.toHaveBeenCalled();
+    expect(toastMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        title: expect.stringMatching(/no speech detected/i),
+        variant: "destructive",
+      }),
+    );
+  });
+
+  it("fires a toast when the transcribe endpoint returns an HTTP error", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(
+        new Response(JSON.stringify({ error: "boom" }), {
+          status: 500,
+          headers: { "Content-Type": "application/json" },
+        }),
+      ),
+    );
+    const onTranscript = vi.fn();
+    const user = userEvent.setup();
+
+    render(<MicButton agentKey="ruby" onTranscript={onTranscript} />);
+    await user.click(screen.getByRole("button", { name: /record/i }));
+    await user.click(screen.getByRole("button", { name: /stop/i }));
+    await new Promise((r) => setTimeout(r, 0));
+
+    expect(onTranscript).not.toHaveBeenCalled();
+    expect(toastMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        title: expect.stringMatching(/could not transcribe/i),
+        variant: "destructive",
+      }),
+    );
   });
 });

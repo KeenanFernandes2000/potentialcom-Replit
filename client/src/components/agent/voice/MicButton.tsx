@@ -1,5 +1,6 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Mic, Square } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 import { useVoiceRecorder } from "./useVoiceRecorder";
 
 interface MicButtonProps {
@@ -24,15 +25,62 @@ function formatDuration(ms: number): string {
   return `${m}:${s.toString().padStart(2, "0")}`;
 }
 
+// Heuristic: getUserMedia surfaces permission denial as either a
+// NotAllowedError or a SecurityError; both share the same user-visible
+// remedy ("turn the mic on in browser settings"). Fall back to a generic
+// message for anything else (no device, hardware failure, etc.).
+function isPermissionError(message: string | null): boolean {
+  if (!message) return false;
+  const lower = message.toLowerCase();
+  return (
+    lower.includes("permission") ||
+    lower.includes("denied") ||
+    lower.includes("notallowed") ||
+    lower.includes("not allowed") ||
+    lower.includes("security")
+  );
+}
+
 export function MicButton({ agentKey, onTranscript, disabled }: MicButtonProps) {
   const recorder = useVoiceRecorder();
+  const { toast } = useToast();
   const [uploading, setUploading] = useState(false);
+  // Track the last error we toasted so a steady "error" state with the
+  // same message doesn't re-fire every render.
+  const lastToastedErrorRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (recorder.state !== "error") {
+      lastToastedErrorRef.current = null;
+      return;
+    }
+    const message = recorder.errorMessage ?? "";
+    if (lastToastedErrorRef.current === message) return;
+    lastToastedErrorRef.current = message;
+    if (isPermissionError(message)) {
+      toast({
+        title: "Mic access blocked. Enable in your browser's site settings.",
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Recording failed — try again.",
+        variant: "destructive",
+      });
+    }
+  }, [recorder.state, recorder.errorMessage, toast]);
 
   const onClick = useCallback(async () => {
     if (disabled) return;
     if (recorder.state === "recording") {
       const blob = await recorder.stop();
-      if (!blob || blob.size === 0) return;
+      if (!blob || blob.size === 0) {
+        toast({
+          title: "No speech detected — try again.",
+          variant: "destructive",
+        });
+        return;
+      }
       setUploading(true);
       try {
         const form = new FormData();
@@ -41,17 +89,30 @@ export function MicButton({ agentKey, onTranscript, disabled }: MicButtonProps) 
           method: "POST",
           body: form,
         });
-        if (!res.ok) return;
+        if (!res.ok) {
+          toast({
+            title: "Could not transcribe — try again.",
+            variant: "destructive",
+          });
+          return;
+        }
         const data = (await res.json()) as { text?: string };
         const text = (data.text ?? "").trim();
-        if (text) onTranscript(text);
+        if (!text) {
+          toast({
+            title: "No speech detected — try again.",
+            variant: "destructive",
+          });
+          return;
+        }
+        onTranscript(text);
       } finally {
         setUploading(false);
       }
     } else {
       await recorder.start();
     }
-  }, [agentKey, disabled, onTranscript, recorder]);
+  }, [agentKey, disabled, onTranscript, recorder, toast]);
 
   if (disabled || !isRecordingSupported()) return null;
 
