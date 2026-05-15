@@ -97,7 +97,7 @@ const Lumi = () => {
 
       // First script: Load the embed library
       const embedScript = document.createElement("script");
-      embedScript.src = "http://localhost:3000/static/embed/lumi-section.js";
+      embedScript.src = "https://ai.potential.com/static/embed/lumi-section.js";
       embedScript.charset = "utf-8";
       embedScript.type = "text/javascript";
       embedScript.crossOrigin = "anonymous";
@@ -113,7 +113,7 @@ const Lumi = () => {
         initScript.text = `
           chatembed({
             botId: "693aa4e59fd1f887775819d9",
-            botIcon: "http://localhost:3000/static/mentors/Lumi-1766049219677-lumi.png",
+            botIcon: "https://ai.potential.com/static/mentors/Lumi-1766049219677-lumi.png",
             botColor: "#8b5cf6",
             botName: "Lumi",
             divPlacement: "potchat",
@@ -373,7 +373,7 @@ const Lumi = () => {
         "Discover special promotions, discounts, and exclusive offers available at the clinic.",
       actions: [
         '"What all offers you have in your clinic?"',
-        '"What is included in the Summer Glow Laser Package offer?"'
+        '"What is included in the Summer Glow Laser Package offer?"',
       ],
     },
     {
@@ -520,7 +520,8 @@ const Lumi = () => {
               What <span className="gradient-text">Lumi</span> Can Do
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Your AI clinic receptionist — ready to recommend, book appointments, share offers, and more.
+              Your AI clinic receptionist — ready to recommend, book
+              appointments, share offers, and more.
             </p>
           </div>
 
@@ -574,10 +575,8 @@ const Lumi = () => {
                                   <div className="flex flex-wrap gap-2 ml-4">
                                     {faqCategory.prompts.map(
                                       (prompt: string, promptIdx: number) => {
-                                        const textWithoutQuotes = prompt.replace(
-                                          /^["']|["']$/g,
-                                          "",
-                                        );
+                                        const textWithoutQuotes =
+                                          prompt.replace(/^["']|["']$/g, "");
                                         return (
                                           <div
                                             key={promptIdx}
@@ -600,120 +599,127 @@ const Lumi = () => {
                           useCase.id === "appointments" ||
                           useCase.id === "offers" ? (
                           <div className="space-y-2 ml-7">
-                            {(useCase.actions || []).map((action, actionIdx) => {
-                              // Check if this is a main section header (Recommend Doctors, Recommend Services)
-                              const isMainSectionHeader = 
-                                action === "Recommend Doctors" || 
-                                action === "Recommend Services";
-                              // Check if this is a step header (starts with "Step")
-                              const isStepHeader = action.startsWith("Step");
-                              // Check if this is a prompt header (Find All Doctors, Find Doctor by Concern, etc.)
-                              const isPromptHeader = 
-                                action.startsWith("Find All") ||
-                                action.startsWith("Find Doctor") ||
-                                action.startsWith("Find Service");
-                              // Check if this is a section header (Doctors, Services)
-                              const isSectionHeader = 
-                                action === "Doctors" || 
-                                action === "Services";
-                              // Check if this is a quoted prompt (starts with quote)
-                              const isQuotedPrompt =
-                                action.startsWith('"') ||
-                                action.startsWith("'");
-                              // Check if this is a prompt with prefix (Prompt A:, Prompt B:, Prompt:)
-                              const isPromptWithPrefix =
-                                /^(Prompt [A-Z]:|Prompt:)/.test(action);
+                            {(useCase.actions || []).map(
+                              (action, actionIdx) => {
+                                // Check if this is a main section header (Recommend Doctors, Recommend Services)
+                                const isMainSectionHeader =
+                                  action === "Recommend Doctors" ||
+                                  action === "Recommend Services";
+                                // Check if this is a step header (starts with "Step")
+                                const isStepHeader = action.startsWith("Step");
+                                // Check if this is a prompt header (Find All Doctors, Find Doctor by Concern, etc.)
+                                const isPromptHeader =
+                                  action.startsWith("Find All") ||
+                                  action.startsWith("Find Doctor") ||
+                                  action.startsWith("Find Service");
+                                // Check if this is a section header (Doctors, Services)
+                                const isSectionHeader =
+                                  action === "Doctors" || action === "Services";
+                                // Check if this is a quoted prompt (starts with quote)
+                                const isQuotedPrompt =
+                                  action.startsWith('"') ||
+                                  action.startsWith("'");
+                                // Check if this is a prompt with prefix (Prompt A:, Prompt B:, Prompt:)
+                                const isPromptWithPrefix =
+                                  /^(Prompt [A-Z]:|Prompt:)/.test(action);
 
-                              if (isMainSectionHeader) {
-                                return (
-                                  <div
-                                    key={actionIdx}
-                                    className="mt-4 first:mt-0 flex items-center gap-2"
-                                  >
-                                    <span className="text-primary font-bold">•</span>
-                                    <span className="font-bold text-foreground">
+                                if (isMainSectionHeader) {
+                                  return (
+                                    <div
+                                      key={actionIdx}
+                                      className="mt-4 first:mt-0 flex items-center gap-2"
+                                    >
+                                      <span className="text-primary font-bold">
+                                        •
+                                      </span>
+                                      <span className="font-bold text-foreground">
+                                        {action}
+                                      </span>
+                                    </div>
+                                  );
+                                } else if (isPromptHeader) {
+                                  return (
+                                    <div
+                                      key={actionIdx}
+                                      className="mt-4 first:mt-0"
+                                    >
+                                      <span className="text-muted-foreground text-xs">
+                                        {action}
+                                      </span>
+                                    </div>
+                                  );
+                                } else if (isStepHeader || isSectionHeader) {
+                                  return (
+                                    <div
+                                      key={actionIdx}
+                                      className="mt-4 first:mt-0"
+                                    >
+                                      <span className="font-bold text-foreground">
+                                        {action}
+                                      </span>
+                                    </div>
+                                  );
+                                } else if (isQuotedPrompt) {
+                                  // Remove quotes for display and copy
+                                  const textWithoutQuotes = action.replace(
+                                    /^["']|["']$/g,
+                                    "",
+                                  );
+                                  return (
+                                    <div
+                                      key={actionIdx}
+                                      onClick={() =>
+                                        copyToClipboard(textWithoutQuotes)
+                                      }
+                                      className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm border border-primary/20 hover:bg-primary/20 transition-colors cursor-pointer inline-block ml-4"
+                                    >
                                       {action}
-                                    </span>
-                                  </div>
-                                );
-                              } else if (isPromptHeader) {
-                                return (
-                                  <div
-                                    key={actionIdx}
-                                    className="mt-4 first:mt-0"
-                                  >
-                                    <span className="text-muted-foreground text-xs">
+                                    </div>
+                                  );
+                                } else if (isPromptWithPrefix) {
+                                  // Extract the quoted text for copying (remove prefix and quotes)
+                                  const quotedMatch =
+                                    action.match(/["']([^"']+)["']/);
+                                  const textToCopy = quotedMatch
+                                    ? quotedMatch[1]
+                                    : action;
+                                  return (
+                                    <div
+                                      key={actionIdx}
+                                      onClick={() =>
+                                        copyToClipboard(textToCopy)
+                                      }
+                                      className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm border border-primary/20 hover:bg-primary/20 transition-colors cursor-pointer inline-block ml-4"
+                                    >
                                       {action}
-                                    </span>
-                                  </div>
-                                );
-                              } else if (isStepHeader || isSectionHeader) {
-                                return (
-                                  <div
-                                    key={actionIdx}
-                                    className="mt-4 first:mt-0"
-                                  >
-                                    <span className="font-bold text-foreground">
+                                    </div>
+                                  );
+                                } else {
+                                  return (
+                                    <div
+                                      key={actionIdx}
+                                      className="text-muted-foreground ml-4"
+                                    >
                                       {action}
-                                    </span>
-                                  </div>
-                                );
-                              } else if (isQuotedPrompt) {
-                                // Remove quotes for display and copy
-                                const textWithoutQuotes = action.replace(
-                                  /^["']|["']$/g,
-                                  "",
-                                );
-                                return (
-                                  <div
-                                    key={actionIdx}
-                                    onClick={() =>
-                                      copyToClipboard(textWithoutQuotes)
-                                    }
-                                    className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm border border-primary/20 hover:bg-primary/20 transition-colors cursor-pointer inline-block ml-4"
-                                  >
-                                    {action}
-                                  </div>
-                                );
-                              } else if (isPromptWithPrefix) {
-                                // Extract the quoted text for copying (remove prefix and quotes)
-                                const quotedMatch =
-                                  action.match(/["']([^"']+)["']/);
-                                const textToCopy = quotedMatch
-                                  ? quotedMatch[1]
-                                  : action;
-                                return (
-                                  <div
-                                    key={actionIdx}
-                                    onClick={() => copyToClipboard(textToCopy)}
-                                    className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm border border-primary/20 hover:bg-primary/20 transition-colors cursor-pointer inline-block ml-4"
-                                  >
-                                    {action}
-                                  </div>
-                                );
-                              } else {
-                                return (
-                                  <div
-                                    key={actionIdx}
-                                    className="text-muted-foreground ml-4"
-                                  >
-                                    {action}
-                                  </div>
-                                );
-                              }
-                            })}
+                                    </div>
+                                  );
+                                }
+                              },
+                            )}
                           </div>
                         ) : (
                           <ul className="space-y-2 ml-7">
-                            {(useCase.actions || []).map((action, actionIdx) => (
-                              <li
-                                key={actionIdx}
-                                className="text-muted-foreground flex items-start gap-2"
-                              >
-                                <span className="text-primary mt-1">•</span>
-                                <span>{action}</span>
-                              </li>
-                            ))}
+                            {(useCase.actions || []).map(
+                              (action, actionIdx) => (
+                                <li
+                                  key={actionIdx}
+                                  className="text-muted-foreground flex items-start gap-2"
+                                >
+                                  <span className="text-primary mt-1">•</span>
+                                  <span>{action}</span>
+                                </li>
+                              ),
+                            )}
                           </ul>
                         )}
                       </div>
@@ -797,4 +803,3 @@ const Lumi = () => {
 };
 
 export default Lumi;
-
