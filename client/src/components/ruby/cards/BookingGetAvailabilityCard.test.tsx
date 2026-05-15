@@ -17,6 +17,20 @@ function inv(
   };
 }
 
+// Real n8n response shape (verified live).
+const n8nResponse = {
+  type: "booking_get_availability",
+  status: "completed",
+  result: {
+    allOneHourAvailableSlots: [
+      { start: "15/05/2026, 14:00", end: "15/05/2026, 15:00" },
+      { start: "15/05/2026, 15:00", end: "15/05/2026, 16:00" },
+      { start: "18/05/2026, 08:00", end: "18/05/2026, 09:00" },
+    ],
+  },
+};
+
+// Legacy / alternate shapes the extractor must still handle.
 const flatResponse = {
   slots: [
     { start_time: "2026-06-01T10:00:00Z", expert_name: "Amira" },
@@ -48,27 +62,40 @@ describe("BookingGetAvailabilityCard — happy path", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders header with slot count from a flat `slots` array", () => {
+  it("renders the real n8n shape (result.allOneHourAvailableSlots, DD/MM/YYYY)", () => {
+    render(<BookingGetAvailabilityCard invocation={inv(n8nResponse)} />);
+    expect(screen.getByText("Available slots")).toBeInTheDocument();
+    expect(screen.getByText("3 slots")).toBeInTheDocument();
+    // Date group headers use the DD/MM/YYYY portion.
+    expect(screen.getByText("15/05/2026")).toBeInTheDocument();
+    expect(screen.getByText("18/05/2026")).toBeInTheDocument();
+    // Each slot renders as "HH:MM – HH:MM".
+    expect(screen.getByText("14:00 – 15:00")).toBeInTheDocument();
+    expect(screen.getByText("15:00 – 16:00")).toBeInTheDocument();
+    expect(screen.getByText("08:00 – 09:00")).toBeInTheDocument();
+  });
+
+  it("also accepts the response as a JSON-stringified n8n payload", () => {
+    render(
+      <BookingGetAvailabilityCard invocation={inv(JSON.stringify(n8nResponse))} />,
+    );
+    expect(screen.getByText("3 slots")).toBeInTheDocument();
+    expect(screen.getByText("14:00 – 15:00")).toBeInTheDocument();
+  });
+
+  it("renders header with slot count from a flat `slots` array (legacy shape)", () => {
     render(<BookingGetAvailabilityCard invocation={inv(flatResponse)} />);
     expect(screen.getByText("Available slots")).toBeInTheDocument();
     expect(screen.getByText("2 slots")).toBeInTheDocument();
   });
 
-  it("accepts response as JSON string with .days grouping", () => {
+  it("accepts response with `.days` pre-grouping (legacy shape)", () => {
     render(
       <BookingGetAvailabilityCard
         invocation={inv(JSON.stringify(groupedResponse))}
       />,
     );
     expect(screen.getByText("2 slots")).toBeInTheDocument();
-  });
-
-  it("renders formatted start times", () => {
-    render(<BookingGetAvailabilityCard invocation={inv(flatResponse)} />);
-    const expected = new Date(
-      flatResponse.slots[0].start_time,
-    ).toLocaleString();
-    expect(screen.getByText(expected)).toBeInTheDocument();
   });
 
   it("accepts response under `availability` key as a fallback", () => {
@@ -109,6 +136,17 @@ describe("BookingGetAvailabilityCard — defensive", () => {
 
   it("falls back when slots is empty", () => {
     render(<BookingGetAvailabilityCard invocation={inv({ slots: [] })} />);
+    expect(
+      screen.getAllByText("booking_get_availability").length,
+    ).toBeGreaterThan(0);
+  });
+
+  it("falls back when result.allOneHourAvailableSlots is empty", () => {
+    render(
+      <BookingGetAvailabilityCard
+        invocation={inv({ result: { allOneHourAvailableSlots: [] } })}
+      />,
+    );
     expect(
       screen.getAllByText("booking_get_availability").length,
     ).toBeGreaterThan(0);
