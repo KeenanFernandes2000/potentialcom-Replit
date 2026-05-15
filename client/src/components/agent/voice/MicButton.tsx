@@ -128,22 +128,22 @@ export function MicButton({ agentKey, onTranscript, disabled }: MicButtonProps) 
       onClick={onClick}
       disabled={uploading}
       className={
-        "inline-flex h-9 w-9 items-center justify-center rounded-full border " +
+        "inline-flex h-9 items-center justify-center rounded-full border " +
         (isRecording
-          ? "border-red-500/40 bg-red-500/15 text-red-500 animate-pulse"
+          ? "px-3 gap-1.5 border-red-500/40 bg-red-500/15 text-red-500 animate-pulse"
           : isError
-            ? "border-red-500/40 bg-transparent text-red-500"
-            : "border-tool-card-border bg-tool-card text-tool-card-foreground hover:bg-tool-card-muted")
+            ? "w-9 border-red-500/40 bg-transparent text-red-500"
+            : "w-9 border-tool-card-border bg-tool-card text-tool-card-foreground hover:bg-tool-card-muted")
       }
       data-state={recorder.state}
     >
       {isRecording ? (
-        <span className="flex items-center gap-1">
-          <Square className="h-3.5 w-3.5" />
-          <span className="text-[10px] font-mono">
+        <>
+          <Square className="h-3 w-3 fill-current" />
+          <span className="text-xs font-mono tabular-nums">
             {formatDuration(recorder.durationMs)}
           </span>
-        </span>
+        </>
       ) : uploading ? (
         <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-current border-t-transparent" />
       ) : (
