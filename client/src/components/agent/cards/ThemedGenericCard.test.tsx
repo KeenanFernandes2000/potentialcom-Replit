@@ -99,3 +99,46 @@ describe("ThemedGenericCard — string & text-field rules", () => {
     expect(screen.getByText("ok").tagName).toBe("STRONG");
   });
 });
+
+describe("ThemedGenericCard — array rule", () => {
+  it("renders one <details> per array entry (plus the Raw response details)", () => {
+    const { container } = render(
+      <ThemedGenericCard
+        invocation={inv({ response: ["alpha", "beta", "gamma"] })}
+      />,
+    );
+    // 3 entries + 1 'Raw response' details
+    expect(container.querySelectorAll("details")).toHaveLength(4);
+  });
+
+  it("renders Q&A style when entries have question/answer", () => {
+    render(
+      <ThemedGenericCard
+        invocation={inv({
+          response: [
+            { question: "What is X?", answer: "It is X." },
+            { question: "What is Y?", answer: "It is Y." },
+          ],
+        })}
+      />,
+    );
+    expect(screen.getByText("What is X?")).toBeInTheDocument();
+    expect(screen.getByText("It is X.")).toBeInTheDocument();
+    expect(screen.getByText("What is Y?")).toBeInTheDocument();
+  });
+
+  it("stringifies non-QA array entries inside the accordion body", () => {
+    render(
+      <ThemedGenericCard
+        invocation={inv({ response: [{ foo: "bar" }] })}
+      />,
+    );
+    // The Raw response <pre> also contains the same JSON, so use getAllByText.
+    expect(screen.getAllByText(/"foo": "bar"/).length).toBeGreaterThan(0);
+  });
+
+  it("handles an empty array gracefully", () => {
+    render(<ThemedGenericCard invocation={inv({ response: [] })} />);
+    expect(screen.getByText(/\(empty list\)/)).toBeInTheDocument();
+  });
+});
