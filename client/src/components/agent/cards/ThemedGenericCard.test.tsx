@@ -98,6 +98,17 @@ describe("ThemedGenericCard — string & text-field rules", () => {
     );
     expect(screen.getByText("ok").tagName).toBe("STRONG");
   });
+
+  it("prefers summary over text and content when multiple are present", () => {
+    render(
+      <ThemedGenericCard
+        invocation={inv({ response: { summary: "**S**", text: "**T**", content: "**C**" } })}
+      />,
+    );
+    expect(screen.getByText("S").tagName).toBe("STRONG");
+    expect(screen.queryByText("T")).toBeNull();
+    expect(screen.queryByText("C")).toBeNull();
+  });
 });
 
 describe("ThemedGenericCard — array rule", () => {
