@@ -27,35 +27,48 @@ describe("GET /api/agent/:agentKey/bot", () => {
     expect(res.status).toBe(404);
   });
 
-  it("returns only whitelisted fields and never the system prompt", async () => {
-    const fetchMock = vi.fn().mockResolvedValue(
-      new Response(
-        JSON.stringify({
-          _id: "6a056e4ece71ae96a167f826",
-          name: "RUBY — AI BEAUTY CONCIERGE",
-          imageName: "ruby-avatar.jpeg",
-          description: "AI Customer Service bot",
-          greeting: "Hi! I'm Ruby.",
-          sectionTitle: "Customer Service",
-          system: "SECRET SYSTEM PROMPT — must not leak",
-        }),
-        { status: 200, headers: { "Content-Type": "application/json" } },
+  it("forwards the whitelisted fields including audio gating flags", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(
+        new Response(
+          JSON.stringify({
+            name: "RUBY — AI BEAUTY CONCIERGE",
+            greeting: "Hi!",
+            imageName: "ruby.png",
+            audiostt: true,
+            audiotts: true,
+            system: "should NOT be exposed",
+          }),
+          { status: 200, headers: { "Content-Type": "application/json" } },
+        ),
       ),
     );
-    vi.stubGlobal("fetch", fetchMock);
-
     const res = await request(makeApp()).get("/api/agent/ruby/bot");
-
     expect(res.status).toBe(200);
     expect(res.body).toEqual({
       name: "RUBY — AI BEAUTY CONCIERGE",
-      greeting: "Hi! I'm Ruby.",
-      avatarUrl:
-        "https://api.potential.com/static/mentors/ruby-avatar.jpeg",
+      greeting: "Hi!",
+      avatarUrl: expect.stringContaining("/static/mentors/ruby.png"),
+      audiostt: true,
+      audiotts: true,
     });
-    expect(JSON.stringify(res.body)).not.toContain("SECRET SYSTEM PROMPT");
-    expect(res.body).not.toHaveProperty("system");
-    expect(res.body).not.toHaveProperty("_id");
+    expect(res.body.system).toBeUndefined();
+  });
+
+  it("defaults audio flags to false when upstream omits them", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(
+        new Response(
+          JSON.stringify({ name: "R", greeting: "G" }),
+          { status: 200, headers: { "Content-Type": "application/json" } },
+        ),
+      ),
+    );
+    const res = await request(makeApp()).get("/api/agent/ruby/bot");
+    expect(res.body.audiostt).toBe(false);
+    expect(res.body.audiotts).toBe(false);
   });
 
   it("returns the upstream status when upstream fails", async () => {

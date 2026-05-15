@@ -719,6 +719,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         avatarUrl: data.imageName
           ? `${POTENTIAL_API_BASE}/static/mentors/${data.imageName}`
           : "",
+        audiostt: data.audiostt === true,
+        audiotts: data.audiotts === true,
       });
     } catch (err) {
       console.error("Agent bot config proxy error:", err);
