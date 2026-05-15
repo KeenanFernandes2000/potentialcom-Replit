@@ -4,7 +4,15 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { MessageBubble } from "./MessageBubble";
 import { useAgentChat } from "./useAgentChat";
-import { MicButton, AutoSpeakToggle, useTextToSpeech, useAutoSpeak } from "./voice";
+import {
+  MicButton,
+  AutoSpeakToggle,
+  useTextToSpeech,
+  useAutoSpeak,
+  useLiveKitVoice,
+  VoiceModeButton,
+  VoiceCallBar,
+} from "./voice";
 import type { ToolRegistry } from "./toolRegistry";
 import type { AgentBotConfig } from "@shared/agent";
 
@@ -19,12 +27,14 @@ interface AgentChatProps {
 // subtitle and input placeholder are currently Ruby-specific copy —
 // parameterize when a second agent is added.
 export function AgentChat({ agentKey, registry }: AgentChatProps) {
-  const { messages, status, send } = useAgentChat(agentKey);
+  const chat = useAgentChat(agentKey);
+  const { messages, status, send } = chat;
   const { toast } = useToast();
   const [input, setInput] = useState("");
   const [bot, setBot] = useState<AgentBotConfig | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const tts = useTextToSpeech(agentKey);
+  const voice = useLiveKitVoice(agentKey, chat.pushExternalEvent);
   const { enabled: autoSpeak } = useAutoSpeak();
   const spokenMessageIds = useRef<Set<string>>(new Set());
 
@@ -49,11 +59,46 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoSpeak]);
 
+  // When a voice call ends, mark every current agent message as
+  // "already spoken" so the auto-speak play effect doesn't replay the
+  // voice-mode responses through the /speak TTS proxy on the next
+  // render. The in-call audio already played them via the WebSocket
+  // MediaSource pipeline; auto-speak would otherwise double-speak them.
+  const prevVoiceStateRef = useRef(voice.state);
+  useEffect(() => {
+    const prev = prevVoiceStateRef.current;
+    const curr = voice.state;
+    const wasActive = prev !== "idle" && prev !== "error";
+    const isInactive = curr === "idle" || curr === "error";
+    if (wasActive && isInactive) {
+      for (const m of messages) {
+        if (m.role === "agent" && m.status === "complete") {
+          spokenMessageIds.current.add(m.id);
+        }
+      }
+    }
+    prevVoiceStateRef.current = curr;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [voice.state]);
+
+  // Surface voice errors as a toast. The hook holds the upstream
+  // message (e.g., "Voice trial exhausted", "Mic access denied").
+  // Without this, the call bar would silently disappear on error.
+  useEffect(() => {
+    if (voice.state !== "error") return;
+    toast({
+      title: "Voice call error",
+      description: voice.errorMessage ?? "Something went wrong with the voice call.",
+      variant: "destructive",
+    });
+  }, [voice.state, voice.errorMessage, toast]);
+
   // Auto-speak: when a new agent message completes and auto-speak is on,
   // play it. We dedupe via a per-message-id set so toggling auto-speak
   // mid-conversation doesn't re-speak everything.
   useEffect(() => {
     if (!autoSpeak || !bot?.audiotts) return;
+    if (voice.state !== "idle" && voice.state !== "error") return; // gate off during a voice call
     const last = messages[messages.length - 1];
     if (!last) return;
     if (last.role !== "agent") return;
@@ -62,7 +107,7 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
     if (spokenMessageIds.current.has(last.id)) return;
     spokenMessageIds.current.add(last.id);
     void tts.play(last.text);
-  }, [autoSpeak, bot, messages, tts]);
+  }, [autoSpeak, bot, messages, tts, voice.state]);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [pendingImage, setPendingImage] = useState<{
@@ -170,11 +215,24 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
           <div className="text-sm font-semibold">{bot?.name ?? "Ruby"}</div>
           <div className="text-xs text-muted-foreground">AI Beauty Concierge</div>
         </div>
-        {bot?.audiotts && (
-          <div className="ml-auto">
-            <AutoSpeakToggle />
-          </div>
-        )}
+        <div className="ml-auto flex items-center gap-2">
+          {bot?.audiostt && bot?.audiotts &&
+            (voice.state === "idle" || voice.state === "error" ? (
+              <VoiceModeButton
+                busy={status === "streaming"}
+                onClick={() => void voice.start()}
+              />
+            ) : (
+              <VoiceCallBar
+                state={voice.state}
+                durationMs={voice.durationMs}
+                isMuted={voice.isMuted}
+                onMute={voice.toggleMute}
+                onHangup={voice.hangup}
+              />
+            ))}
+          {bot?.audiotts && <AutoSpeakToggle />}
+        </div>
       </div>
 
       {/* Messages */}

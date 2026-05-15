@@ -12,10 +12,23 @@ function newSessionId(): string {
   return `session-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
 }
 
+export type ExternalVoiceEvent =
+  | { kind: "user-transcript"; text: string }
+  | { kind: "agent-response"; text: string }
+  | {
+      kind: "tool-call";
+      id: string;
+      name: string;
+      args: unknown;
+      async: boolean;
+    }
+  | { kind: "tool-result"; id: string; result: unknown };
+
 export interface UseAgentChat {
   messages: AgentMessage[];
   status: "idle" | "streaming";
   send: (text: string, imageUrl?: string) => Promise<void>;
+  pushExternalEvent: (event: ExternalVoiceEvent) => void;
 }
 
 export function useAgentChat(agentKey: string): UseAgentChat {
@@ -35,6 +48,81 @@ export function useAgentChat(agentKey: string): UseAgentChat {
     },
     [],
   );
+
+  // Inject events from a parallel channel (e.g., the voice WebSocket).
+  // Events follow the same lifecycle conventions as the SSE-driven
+  // typed chat — user messages are complete, agent messages start
+  // complete (voice TTS is server-side, not streamed token-by-token),
+  // and tool calls attach to the most recent agent message.
+  const pushExternalEvent = useCallback((event: ExternalVoiceEvent) => {
+    setMessages((prev) => {
+      switch (event.kind) {
+        case "user-transcript":
+          return [
+            ...prev,
+            {
+              id: nextId("user"),
+              role: "user",
+              text: event.text,
+              tools: [],
+              status: "complete",
+            },
+          ];
+        case "agent-response":
+          return [
+            ...prev,
+            {
+              id: nextId("agent"),
+              role: "agent",
+              text: event.text,
+              tools: [],
+              status: "complete",
+            },
+          ];
+        case "tool-call": {
+          const invocation: ToolInvocation = {
+            id: event.id,
+            name: event.name,
+            arguments: event.args,
+            status: "loading",
+          };
+          // Attach to the last agent message if one exists; otherwise
+          // open a new agent message to host the invocation.
+          const lastIdx = prev.length - 1;
+          if (lastIdx >= 0 && prev[lastIdx].role === "agent") {
+            const last = prev[lastIdx];
+            return [
+              ...prev.slice(0, lastIdx),
+              { ...last, tools: [...last.tools, invocation] },
+            ];
+          }
+          return [
+            ...prev,
+            {
+              id: nextId("agent"),
+              role: "agent",
+              text: "",
+              tools: [invocation],
+              status: "complete",
+            },
+          ];
+        }
+        case "tool-result":
+          return prev.map((m) =>
+            m.role === "agent" && m.tools.some((t) => t.id === event.id)
+              ? {
+                  ...m,
+                  tools: m.tools.map((t) =>
+                    t.id === event.id
+                      ? { ...t, status: "complete", response: event.result }
+                      : t,
+                  ),
+                }
+              : m,
+          );
+      }
+    });
+  }, []);
 
   const send = useCallback(
     async (text: string, imageUrl?: string) => {
@@ -177,5 +265,5 @@ export function useAgentChat(agentKey: string): UseAgentChat {
     [agentKey, status, updateAgentMessage],
   );
 
-  return { messages, status, send };
+  return { messages, status, send, pushExternalEvent };
 }

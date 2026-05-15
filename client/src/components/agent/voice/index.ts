@@ -7,3 +7,7 @@ export type { UseAutoSpeakResult } from "./useAutoSpeak";
 export { MicButton } from "./MicButton";
 export { SpeakButton } from "./SpeakButton";
 export { AutoSpeakToggle } from "./AutoSpeakToggle";
+export { useLiveKitVoice } from "./useLiveKitVoice";
+export type { VoiceState, UseLiveKitVoiceResult } from "./useLiveKitVoice";
+export { VoiceModeButton } from "./VoiceModeButton";
+export { VoiceCallBar } from "./VoiceCallBar";
