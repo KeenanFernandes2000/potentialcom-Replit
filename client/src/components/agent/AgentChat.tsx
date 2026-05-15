@@ -43,6 +43,21 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
     void tts.play(last.text);
   }, [autoSpeak, bot, messages, tts]);
 
+  // When auto-speak flips ON, mark all currently-completed agent messages
+  // as "already spoken" so we don't replay history. Only newly-completing
+  // messages from this point forward will auto-play.
+  useEffect(() => {
+    if (!autoSpeak) return;
+    for (const m of messages) {
+      if (m.role === "agent" && m.status === "complete") {
+        spokenMessageIds.current.add(m.id);
+      }
+    }
+    // We intentionally don't include `messages` in deps — we only want to
+    // seed on the autoSpeak transition, not every time messages change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoSpeak]);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [pendingImage, setPendingImage] = useState<{
     previewUrl: string;
