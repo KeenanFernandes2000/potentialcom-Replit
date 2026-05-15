@@ -816,6 +816,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Mints a voice-mode room via potentialTS. The upstream gates the
+  // request on the bot's voice-trial budget and returns
+  // {roomName, token, wsUrl, participantName}. The browser then opens
+  // a WebSocket directly to potentialTS using those values; this proxy
+  // does NOT sit in the audio data path.
+  app.post("/api/agent/:agentKey/voice/room", async (req, res) => {
+    const agent = getAgent(req.params.agentKey);
+    if (!agent) {
+      return res.status(404).json({ message: "Unknown agent" });
+    }
+    try {
+      const upstream = await fetch(
+        `${POTENTIAL_API_BASE}/api/voice/room/create`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            botId: agent.botId,
+            sessionId: req.body?.sessionId,
+          }),
+        },
+      );
+      const text = await upstream.text();
+      res
+        .status(upstream.status)
+        .type(upstream.headers.get("content-type") ?? "application/json")
+        .send(text);
+    } catch (err) {
+      console.error("Agent voice room proxy error:", err);
+      res.status(502).json({ message: "Failed to reach voice service" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
