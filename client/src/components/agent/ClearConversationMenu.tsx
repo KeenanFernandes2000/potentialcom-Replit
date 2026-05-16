@@ -43,7 +43,7 @@ export function ClearConversationMenu({ onClear }: ClearConversationMenuProps) {
             type="button"
             aria-label="Chat menu"
             title="Chat menu"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            className="inline-flex h-11 w-11 sm:h-9 sm:w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             data-testid="chat-menu-trigger"
           >
             <MoreVertical className="h-4 w-4" />

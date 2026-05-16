@@ -387,7 +387,7 @@ const Demo = () => {
             Built on the Potential platform — trusted by teams at
           </p>
           <div
-            className="flex flex-wrap items-center justify-center gap-x-12 gap-y-8 opacity-70 grayscale"
+            className="flex flex-wrap items-center justify-center gap-x-6 gap-y-4 sm:gap-x-12 sm:gap-y-8 opacity-70 grayscale"
             data-aos="fade-up"
             data-aos-delay="100"
           >

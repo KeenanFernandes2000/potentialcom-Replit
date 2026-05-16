@@ -196,8 +196,11 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
           scrolls. h-[680px] gives a comfortable default; max-h-[85vh]
           clamps it on smaller viewports (phones, short laptops) so
           the input row never falls below the fold. Inside, the
-          messages div uses flex-1 + overflow-y-auto to scroll. */}
-      <div className="flex h-[680px] max-h-[85vh] flex-col overflow-hidden rounded-2xl border border-border/60 bg-card">
+          messages div uses flex-1 + overflow-y-auto to scroll.
+          Mobile (< sm): use dvh (dynamic viewport height) so the
+          iOS virtual keyboard doesn't push the input offscreen, and
+          leave ~180px of space for browser chrome + keyboard. */}
+      <div className="flex h-[680px] max-h-[calc(100dvh-180px)] sm:max-h-[85vh] flex-col overflow-hidden rounded-2xl border border-border/60 bg-card">
       {/* Header — generous padding, h-12 avatar so it carries
           presence, name in lg-weight semibold. Status dot is bigger
           and uses brand primary on-call. */}
@@ -223,10 +226,13 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
           </div>
         )}
         <div className="min-w-0 flex-1">
-          <div className="text-base font-semibold leading-tight text-foreground">
+          <div className="text-base font-semibold leading-tight text-foreground truncate">
             {bot?.name ?? "Ruby"}
           </div>
-          <div className="text-xs text-muted-foreground mt-0.5">
+          {/* Subtitle: hidden on the narrowest viewports so the header
+              row doesn't overflow on 320–375px screens. The status is
+              still encoded in the avatar dot color. */}
+          <div className="hidden sm:block text-xs text-muted-foreground mt-0.5">
             {isOnCall
               ? "On call · live"
               : status === "streaming"

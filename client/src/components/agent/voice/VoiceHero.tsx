@@ -136,7 +136,7 @@ export function VoiceHero({
           )}
         </div>
         {secondary && (
-          <div className="truncate text-xs text-muted-foreground">
+          <div className="hidden sm:block truncate text-xs text-muted-foreground">
             {secondary}
           </div>
         )}
@@ -153,7 +153,7 @@ export function VoiceHero({
             onClick={onMute}
             data-testid="voice-hero-mute"
             className={
-              "inline-flex h-9 w-9 items-center justify-center rounded-full border transition-colors " +
+              "inline-flex h-11 w-11 sm:h-9 sm:w-9 items-center justify-center rounded-full border transition-colors " +
               (isMuted
                 ? "border-foreground/30 bg-muted text-foreground"
                 : "border-border bg-background hover:bg-muted")
@@ -172,7 +172,7 @@ export function VoiceHero({
           title="End call"
           onClick={onHangup}
           data-testid="voice-hero-hangup"
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-red-500 text-white shadow-sm transition-colors hover:bg-red-600"
+          className="inline-flex h-11 w-11 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-red-500 text-white shadow-sm transition-colors hover:bg-red-600"
         >
           <PhoneOff className="h-4 w-4" />
         </button>
