@@ -4,15 +4,12 @@ import Footer from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { RubyChat } from "@/components/ruby/RubyChat";
 import {
-  ChevronDown,
   Check,
   ShoppingBag,
   Calendar,
   GraduationCap,
   Heart,
   Mic,
-  Sparkles,
-  Zap,
 } from "lucide-react";
 import {
   SiShopify,
@@ -26,7 +23,6 @@ import {
   SiAmazon,
   SiGooglecloud,
   SiMailchimp,
-  SiOpenai,
 } from "react-icons/si";
 import {
   Accordion,
@@ -179,78 +175,62 @@ const Demo = () => {
       />
       <Header />
 
-      {/* Hero Section — Ruby IS the demo.
-         Split layout: marketing rail on the left (badge, headline,
-         capabilities, try-this prompts, tech-stack strip), live chat
-         on the right. The chat takes a min-h that scales to the
-         viewport so first paint shows Ruby as the focal subject, not
-         as an embed below a title. Stacks vertically on < lg. */}
-      <section className="relative overflow-hidden pt-28 pb-16 lg:pt-32 lg:pb-20">
-        {/* Background decoration — kept (matches the rest of the site)
-            but reduced so the chat shell's own aurora orbs dominate. */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-[0.04]" />
-        <div className="absolute top-0 right-0 w-96 h-96 bg-fuchsia-500/15 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-indigo-500/15 rounded-full blur-3xl" />
-
-        <div className="container relative z-10">
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_minmax(0,520px)] lg:gap-12 lg:items-stretch">
+      {/* Hero — minimal split layout. Ruby IS the demo.
+         Left: tight marketing rail (live dot, headline, paragraph,
+         line-icon capability links, try-this chips).
+         Right: live chat panel as the focal element. Stacks on < lg.
+         No background decoration in the hero itself — the page's
+         neutral surface lets the chat carry the visual weight. */}
+      <section className="pt-28 pb-16 lg:pt-32 lg:pb-20">
+        <div className="container">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_minmax(0,560px)] lg:gap-14 lg:items-stretch">
             {/* Left: marketing rail */}
             <div className="flex flex-col justify-center" data-aos="fade-up">
-              {/* Live badge — animated dot conveys "this isn't a static
-                  mockup, you're looking at the actual agent right now." */}
-              <div className="mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-fuchsia-500/30 bg-fuchsia-500/10 px-3 py-1 text-xs font-medium text-fuchsia-700 dark:text-fuchsia-300">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inset-0 animate-ping rounded-full bg-fuchsia-500/70" />
-                  <span className="relative h-2 w-2 rounded-full bg-fuchsia-500" />
-                </span>
-                Live AI agent · talk to her right now
+              {/* Live indicator — single emerald dot, no pulse, no
+                  pill background. Quiet but present. */}
+              <div className="mb-5 inline-flex w-fit items-center gap-2 text-xs font-medium text-muted-foreground">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                Live demo
               </div>
 
-              <h1 className="text-5xl font-bold tracking-tight md:text-6xl">
-                Meet <span className="ruby-hero-name motion-safe:animate-text-shimmer">Ruby</span>
+              <h1 className="text-4xl font-semibold tracking-tight text-foreground md:text-5xl">
+                Meet Ruby.
               </h1>
-              <p className="mt-4 max-w-xl text-lg text-muted-foreground md:text-xl">
-                Your AI Beauty Concierge. She shops, books, teaches,
-                supports — over text or live voice — and runs on the
-                same Potential platform powering enterprise agents today.
+              <p className="mt-4 max-w-lg text-base text-muted-foreground md:text-lg">
+                An AI agent that shops, books, teaches, and supports —
+                over text or live voice. Built on the Potential
+                platform powering enterprise agents today.
               </p>
 
-              {/* Capability pills — what she actually does, with icons.
-                  Each one scrolls to the relevant accordion below for
-                  the full breakdown. */}
-              <div className="mt-6 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+              {/* Capability links — line-icon row. Each anchors to the
+                  matching use-case section below. */}
+              <div className="mt-7 grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-4 sm:gap-x-5">
                 {[
-                  { icon: ShoppingBag, label: "Shop", color: "from-fuchsia-500 to-pink-500", target: "shopping" },
-                  { icon: Calendar, label: "Book", color: "from-purple-500 to-indigo-500", target: "booking" },
-                  { icon: GraduationCap, label: "Learn", color: "from-indigo-500 to-sky-500", target: "support" },
-                  { icon: Heart, label: "Support", color: "from-sky-500 to-fuchsia-500", target: "support" },
+                  { icon: ShoppingBag, label: "Shop", target: "shopping" },
+                  { icon: Calendar, label: "Book", target: "booking" },
+                  { icon: GraduationCap, label: "Learn", target: "support" },
+                  { icon: Heart, label: "Support", target: "support" },
                 ].map((cap) => {
                   const Icon = cap.icon;
                   return (
                     <a
                       key={cap.label}
                       href={`#use-case-${cap.target}`}
-                      className="group flex items-center gap-2 rounded-xl border border-border/70 bg-card/80 backdrop-blur px-3 py-2.5 text-sm font-medium transition-all hover:-translate-y-0.5 hover:border-fuchsia-400/60 hover:shadow-[0_12px_28px_-14px_rgba(217,70,239,0.55)]"
+                      className="group flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
                       data-testid={`capability-${cap.label.toLowerCase()}`}
                     >
-                      <span
-                        className={`flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br ${cap.color} text-white shadow-sm`}
-                      >
-                        <Icon className="h-4 w-4" />
-                      </span>
+                      <Icon className="h-4 w-4" />
                       <span>{cap.label}</span>
                     </a>
                   );
                 })}
               </div>
 
-              {/* Try-this prompts — clicking dispatches a custom event
-                  that AgentChat picks up and sends as a user turn.
-                  Designed for instant-gratification: zero typing,
-                  immediate rich-card render. */}
-              <div className="mt-7">
-                <div className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  <Sparkles className="h-3.5 w-3.5" />
+              {/* Try-this chips — minimal pills, neutral surface,
+                  underline-on-hover feel. Dispatch ruby:send so the
+                  chat picks them up with zero typing. */}
+              <div className="mt-8">
+                <div className="mb-2.5 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
                   Try saying
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -270,60 +250,29 @@ const Demo = () => {
                           }),
                         )
                       }
-                      className="rounded-full border border-fuchsia-500/30 bg-gradient-to-r from-fuchsia-500/10 to-purple-500/10 px-3.5 py-1.5 text-sm font-medium text-foreground transition-all hover:-translate-y-0.5 hover:border-fuchsia-500/60 hover:from-fuchsia-500/20 hover:to-purple-500/20"
+                      className="rounded-full border border-border bg-background px-3 py-1.5 text-sm text-foreground/80 transition-colors hover:border-foreground/30 hover:bg-muted hover:text-foreground"
                       data-testid={`hero-try-${prompt.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
                     >
-                      “{prompt}”
+                      {prompt}
                     </button>
                   ))}
                 </div>
-                {/* Voice prompt — separate row to make the modality
-                    switch visible at a glance. */}
-                <div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
-                  <Mic className="h-3.5 w-3.5 text-fuchsia-500" />
-                  or tap the voice button in the header to talk to her
-                  in real time
-                </div>
-              </div>
-
-              {/* Tech stack strip — establishes credibility. Single
-                  monochrome row so it reads as a "Built with" not a
-                  carnival of competing brand colors. */}
-              <div className="mt-8 border-t border-border/60 pt-5">
-                <div className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  Built with
-                </div>
-                <div className="flex flex-wrap items-center gap-x-5 gap-y-3 text-muted-foreground">
-                  <SiOpenai title="OpenAI" className="h-5 w-5" />
-                  <span className="text-xs font-medium">LiveKit</span>
-                  <SiShopify title="Shopify" className="h-5 w-5" />
-                  <SiStripe title="Stripe" className="h-5 w-5" />
-                  <SiHubspot title="HubSpot" className="h-5 w-5" />
-                  <SiTwilio title="Twilio" className="h-5 w-5" />
-                  <span className="inline-flex items-center gap-1.5 text-xs font-medium">
-                    <Zap className="h-3.5 w-3.5 text-fuchsia-500" />
-                    Real-time voice
-                  </span>
+                <div className="mt-3 flex items-center gap-1.5 text-xs text-muted-foreground">
+                  <Mic className="h-3.5 w-3.5" />
+                  or tap the voice button to talk in real time
                 </div>
               </div>
             </div>
 
-            {/* Right: the chat itself — sized to fill the hero column on
-                desktop so Ruby is the visual centerpiece, not an embed.
-                On mobile it falls back to its own min-height (set inside
-                AgentChat's shell). */}
+            {/* Right: the chat panel. Sized to fill its column on lg+
+                so the panel reads as the centerpiece. */}
             <div
-              className="lg:min-h-[680px]"
+              className="lg:min-h-[640px]"
               data-aos="fade-up"
               data-aos-delay="150"
             >
               <RubyChat />
             </div>
-          </div>
-
-          {/* Scroll indicator */}
-          <div className="mt-14 flex justify-center motion-safe:animate-bounce">
-            <ChevronDown className="h-7 w-7 text-muted-foreground" />
           </div>
         </div>
       </section>
