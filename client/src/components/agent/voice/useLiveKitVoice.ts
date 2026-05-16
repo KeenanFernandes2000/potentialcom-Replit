@@ -299,6 +299,17 @@ export function useLiveKitVoice(
     // can interleave with awaited Promises; assigning here ensures the
     // handler is registered before that microtask fires.
     ws.onopen = () => {
+      // The server's WebSocket handler waits for a JSON config message
+      // BEFORE it sets up the Deepgram STT connection. Until this is
+      // sent, every PCM frame we forward is dropped on the floor.
+      // The matching AudioContext is at 16000 Hz (see `new AudioContext`
+      // above); the worklet emits Int16 LE PCM at that rate.
+      try {
+        ws.send(JSON.stringify({ type: "config", sampleRate: 16000 }));
+      } catch {
+        // If send fails here the socket is likely already closing — the
+        // onclose/onerror handlers will surface the failure.
+      }
       setState("listening");
       startTimeRef.current = Date.now();
       setDurationMs(0);

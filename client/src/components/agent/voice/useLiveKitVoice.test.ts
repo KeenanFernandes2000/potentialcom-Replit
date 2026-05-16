@@ -136,6 +136,27 @@ describe("useLiveKitVoice", () => {
     expect(result.current.state).toBe("listening");
   });
 
+  it("sends a JSON config message immediately on WS open so the server sets up Deepgram with the right sample rate", async () => {
+    vi.stubGlobal("fetch", mockFetchRoom());
+    const push = vi.fn();
+    const { result } = renderHook(() => useLiveKitVoice("ruby", push));
+    await act(async () => {
+      await result.current.start();
+    });
+    await act(async () => {
+      await Promise.resolve();
+    });
+    const ws = FakeWebSocket.instances[0];
+    // The very first send must be a JSON {type:"config", sampleRate:16000}
+    // payload. Without this, the upstream silently drops every PCM frame
+    // because it never opens the Deepgram connection.
+    expect(ws.send).toHaveBeenCalled();
+    const firstCall = ws.send.mock.calls[0]?.[0];
+    expect(typeof firstCall).toBe("string");
+    const parsed = JSON.parse(firstCall as string);
+    expect(parsed).toEqual({ type: "config", sampleRate: 16000 });
+  });
+
   it("pushes user-transcript on incoming transcript event", async () => {
     vi.stubGlobal("fetch", mockFetchRoom());
     const push = vi.fn();
