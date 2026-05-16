@@ -249,7 +249,11 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
           <ClearConversationMenu
             onClear={() => {
               clear();
-              bumpFocus();
+              // setTimeout(0) so bumpFocus() runs AFTER Radix's
+              // AlertDialog FocusScope restores focus to the menu
+              // trigger on dialog close. Without this we race that
+              // restore and may lose focus to the trigger.
+              setTimeout(bumpFocus, 0);
             }}
           />
         </div>
