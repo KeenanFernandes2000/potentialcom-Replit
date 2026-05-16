@@ -1,101 +1,14 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { renderHook, act } from "@testing-library/react";
+import { renderHook, act, waitFor } from "@testing-library/react";
+
+// IMPORTANT: install the FakeRoom BEFORE importing useLiveKitVoice so the
+// hook picks up the mocked Room from livekit-client.
+import { installFakeRoom, getLastFakeRoom, FakeRoom } from "../../../test/livekitFakeRoom";
+installFakeRoom();
+
 import { useLiveKitVoice } from "./useLiveKitVoice";
 
-// ---------- Fakes for browser APIs jsdom doesn't ship ----------
-
-class FakeWebSocket {
-  static instances: FakeWebSocket[] = [];
-  static OPEN = 1;
-  static CLOSED = 3;
-  readyState = 0; // CONNECTING
-  url: string;
-  onopen: ((e?: unknown) => void) | null = null;
-  onmessage: ((e: MessageEvent) => void) | null = null;
-  onerror: ((e: unknown) => void) | null = null;
-  onclose: ((e?: unknown) => void) | null = null;
-  send = vi.fn();
-  close = vi.fn(() => {
-    this.readyState = FakeWebSocket.CLOSED;
-    this.onclose?.();
-  });
-  constructor(url: string) {
-    this.url = url;
-    FakeWebSocket.instances.push(this);
-    queueMicrotask(() => {
-      this.readyState = FakeWebSocket.OPEN;
-      this.onopen?.();
-    });
-  }
-}
-
-class FakeAudioWorkletNode {
-  port = { onmessage: null as ((e: MessageEvent) => void) | null };
-  connect = vi.fn();
-  disconnect = vi.fn();
-}
-
-class FakeMediaStreamSource {
-  connect = vi.fn();
-  disconnect = vi.fn();
-}
-
-class FakeAudioContext {
-  audioWorklet = { addModule: vi.fn().mockResolvedValue(undefined) };
-  state = "running";
-  createMediaStreamSource = vi.fn(() => new FakeMediaStreamSource());
-  close = vi.fn().mockResolvedValue(undefined);
-  suspend = vi.fn().mockResolvedValue(undefined);
-}
-
-class FakeMediaSource {
-  static instances: FakeMediaSource[] = [];
-  addEventListener = vi.fn();
-  addSourceBuffer = vi.fn(() => ({
-    appendBuffer: vi.fn(),
-    addEventListener: vi.fn(),
-    updating: false,
-  }));
-  constructor() {
-    FakeMediaSource.instances.push(this);
-  }
-}
-
-beforeEach(() => {
-  FakeWebSocket.instances = [];
-  FakeMediaSource.instances = [];
-  // @ts-expect-error jsdom shim
-  globalThis.WebSocket = FakeWebSocket;
-  // @ts-expect-error jsdom shim
-  globalThis.AudioContext = FakeAudioContext;
-  // @ts-expect-error jsdom shim
-  globalThis.AudioWorkletNode = FakeAudioWorkletNode;
-  // @ts-expect-error jsdom shim
-  globalThis.MediaSource = FakeMediaSource;
-  Object.defineProperty(URL, "createObjectURL", {
-    configurable: true,
-    value: vi.fn().mockReturnValue("blob:fake"),
-  });
-  Object.defineProperty(URL, "revokeObjectURL", {
-    configurable: true,
-    value: vi.fn(),
-  });
-  Object.defineProperty(navigator, "mediaDevices", {
-    configurable: true,
-    value: {
-      getUserMedia: vi.fn().mockResolvedValue({
-        getTracks: () => [{ stop: vi.fn() }],
-      }),
-    },
-  });
-});
-
-afterEach(() => {
-  vi.restoreAllMocks();
-  vi.unstubAllGlobals();
-});
-
-function mockFetchRoom() {
+function mockFetchRoom(extra: Record<string, unknown> = {}) {
   return vi.fn().mockResolvedValue(
     new Response(
       JSON.stringify({
@@ -104,13 +17,24 @@ function mockFetchRoom() {
         token: "tok",
         wsUrl: "wss://livekit.test",
         participantName: "user-1",
+        useNativeAgent: true,
+        ...extra,
       }),
       { status: 200, headers: { "Content-Type": "application/json" } },
     ),
   );
 }
 
-describe("useLiveKitVoice", () => {
+beforeEach(() => {
+  FakeRoom.instances = [];
+});
+
+afterEach(() => {
+  vi.restoreAllMocks();
+  vi.unstubAllGlobals();
+});
+
+describe("useLiveKitVoice (LiveKit-native)", () => {
   it("starts in idle state", () => {
     const push = vi.fn();
     const { result } = renderHook(() => useLiveKitVoice("ruby", push));
@@ -118,80 +42,47 @@ describe("useLiveKitVoice", () => {
     expect(result.current.isMuted).toBe(false);
   });
 
-  it("fetches the room, opens the WS, and transitions to listening on start()", async () => {
+  it("fetches the room, connects via livekit-client, and transitions to listening", async () => {
     vi.stubGlobal("fetch", mockFetchRoom());
     const push = vi.fn();
     const { result } = renderHook(() => useLiveKitVoice("ruby", push));
-
     await act(async () => {
       await result.current.start();
     });
-    // Wait a microtask for the WS onopen to fire
-    await act(async () => {
-      await Promise.resolve();
-    });
 
-    expect(FakeWebSocket.instances).toHaveLength(1);
-    expect(FakeWebSocket.instances[0].url).toContain("/ws/livekit/room-1/");
-    expect(result.current.state).toBe("listening");
+    const room = getLastFakeRoom();
+    expect(room.connect).toHaveBeenCalledOnce();
+    expect(room.lastConnectArgs.url).toBe("wss://livekit.test");
+    expect(room.lastConnectArgs.token).toBe("tok");
+    expect(room.localParticipant.enableMicrophone).toHaveBeenCalledOnce();
+    await waitFor(() => expect(result.current.state).toBe("listening"));
   });
 
-  it("sends a JSON config message immediately on WS open so the server sets up Deepgram with the right sample rate", async () => {
+  it("pushes user-transcript on incoming transcript data message", async () => {
     vi.stubGlobal("fetch", mockFetchRoom());
     const push = vi.fn();
     const { result } = renderHook(() => useLiveKitVoice("ruby", push));
     await act(async () => {
       await result.current.start();
-    });
-    await act(async () => {
-      await Promise.resolve();
-    });
-    const ws = FakeWebSocket.instances[0];
-    // The very first send must be a JSON {type:"config", sampleRate:16000}
-    // payload. Without this, the upstream silently drops every PCM frame
-    // because it never opens the Deepgram connection.
-    expect(ws.send).toHaveBeenCalled();
-    const firstCall = ws.send.mock.calls[0]?.[0];
-    expect(typeof firstCall).toBe("string");
-    const parsed = JSON.parse(firstCall as string);
-    expect(parsed).toEqual({ type: "config", sampleRate: 16000 });
-  });
-
-  it("pushes user-transcript on incoming transcript event", async () => {
-    vi.stubGlobal("fetch", mockFetchRoom());
-    const push = vi.fn();
-    const { result } = renderHook(() => useLiveKitVoice("ruby", push));
-    await act(async () => {
-      await result.current.start();
-    });
-    await act(async () => {
-      await Promise.resolve();
     });
     act(() => {
-      FakeWebSocket.instances[0].onmessage?.({
-        data: JSON.stringify({ type: "transcript", text: "find me a lipstick" }),
-      } as MessageEvent);
+      getLastFakeRoom().triggerDataReceived({ type: "transcript", text: "find me a lipstick" });
     });
-    expect(push).toHaveBeenCalledWith({
-      kind: "user-transcript",
-      text: "find me a lipstick",
-    });
+    expect(push).toHaveBeenCalledWith({ kind: "user-transcript", text: "find me a lipstick" });
   });
 
-  it("pushes agent-response on incoming aiResponse event", async () => {
+  it("pushes agent-response on ai_response data message", async () => {
     vi.stubGlobal("fetch", mockFetchRoom());
     const push = vi.fn();
     const { result } = renderHook(() => useLiveKitVoice("ruby", push));
     await act(async () => {
       await result.current.start();
     });
-    await act(async () => {
-      await Promise.resolve();
-    });
     act(() => {
-      FakeWebSocket.instances[0].onmessage?.({
-        data: JSON.stringify({ type: "aiResponse", text: "Here are some lipsticks." }),
-      } as MessageEvent);
+      getLastFakeRoom().triggerDataReceived({
+        type: "ai_response",
+        text: "Here are some lipsticks.",
+      });
     });
     expect(push).toHaveBeenCalledWith({
       kind: "agent-response",
@@ -199,123 +90,96 @@ describe("useLiveKitVoice", () => {
     });
   });
 
-  it("pushes tool-call and tool-result, threading by id", async () => {
+  it("pushes tool-call and tool-result, threading by callId", async () => {
     vi.stubGlobal("fetch", mockFetchRoom());
     const push = vi.fn();
     const { result } = renderHook(() => useLiveKitVoice("ruby", push));
     await act(async () => {
       await result.current.start();
     });
-    await act(async () => {
-      await Promise.resolve();
-    });
     act(() => {
-      FakeWebSocket.instances[0].onmessage?.({
-        data: JSON.stringify({
-          type: "tool_call",
-          toolCall: {
-            name: "search_shopify_products",
-            arguments: { query: "lipstick" },
-            async: false,
-          },
-        }),
-      } as MessageEvent);
-      FakeWebSocket.instances[0].onmessage?.({
-        data: JSON.stringify({
-          type: "tool_result",
-          toolResult: {
-            name: "search_shopify_products",
-            result: '{"count":3}',
-          },
-        }),
-      } as MessageEvent);
+      const room = getLastFakeRoom();
+      room.triggerDataReceived({
+        type: "tool_call",
+        name: "search_shopify_products",
+        arguments: { query: "lipstick" },
+        callId: "call-42",
+      });
+      room.triggerDataReceived({
+        type: "tool_result",
+        name: "search_shopify_products",
+        output: JSON.stringify({ count: 3 }),
+        callId: "call-42",
+        isError: false,
+      });
     });
-
     const calls = push.mock.calls.map((c) => c[0]);
-    const call = calls.find((c) => c.kind === "tool-call");
-    const result2 = calls.find((c) => c.kind === "tool-result");
-    expect(call).toBeDefined();
-    expect(call.name).toBe("search_shopify_products");
-    expect(result2).toBeDefined();
-    // Both events carry the same id so useAgentChat can pair them.
-    expect(call.id).toBe(result2.id);
+    const call = calls.find((c: any) => c.kind === "tool-call");
+    const res = calls.find((c: any) => c.kind === "tool-result");
+    expect(call).toMatchObject({
+      kind: "tool-call",
+      id: "call-42",
+      name: "search_shopify_products",
+    });
+    expect(res).toMatchObject({
+      kind: "tool-result",
+      id: "call-42",
+      result: { count: 3 },
+    });
   });
 
-  it("toggles state to agent-speaking on audio_start, back to listening on audio_end", async () => {
+  it("toggles state to agent-speaking on agent_speaking events", async () => {
     vi.stubGlobal("fetch", mockFetchRoom());
     const push = vi.fn();
     const { result } = renderHook(() => useLiveKitVoice("ruby", push));
     await act(async () => {
       await result.current.start();
     });
-    await act(async () => {
-      await Promise.resolve();
-    });
-
     act(() => {
-      FakeWebSocket.instances[0].onmessage?.({
-        data: JSON.stringify({ type: "audio_start" }),
-      } as MessageEvent);
+      getLastFakeRoom().triggerDataReceived({ type: "agent_speaking", speaking: true });
     });
     expect(result.current.state).toBe("agent-speaking");
-
     act(() => {
-      FakeWebSocket.instances[0].onmessage?.({
-        data: JSON.stringify({ type: "audio_end" }),
-      } as MessageEvent);
+      getLastFakeRoom().triggerDataReceived({ type: "agent_speaking", speaking: false });
     });
     expect(result.current.state).toBe("listening");
   });
 
-  it("toggleMute flips isMuted; while muted, audio frames are NOT sent", async () => {
+  it("toggleMute flips isMuted and calls setMicrophoneEnabled with the opposite", async () => {
     vi.stubGlobal("fetch", mockFetchRoom());
     const push = vi.fn();
     const { result } = renderHook(() => useLiveKitVoice("ruby", push));
     await act(async () => {
       await result.current.start();
     });
-    await act(async () => {
-      await Promise.resolve();
-    });
+    const room = getLastFakeRoom();
+    expect(result.current.isMuted).toBe(false);
 
-    const ws = FakeWebSocket.instances[0];
-    const sendCallsBeforeMute = ws.send.mock.calls.length;
-
-    // Simulate a PCM frame arriving from the worklet via the port message.
-    // Find the worklet port that the hook wired up. Because we faked the
-    // AudioWorkletNode, the hook's internal listener is set on a port we
-    // can grab from the FakeAudioWorkletNode... but FakeAudioWorkletNode
-    // doesn't expose its instance globally. The minimal verifiable
-    // assertion is: toggleMute flips the boolean.
     act(() => {
       result.current.toggleMute();
     });
     expect(result.current.isMuted).toBe(true);
+    expect(room.localParticipant.setMicrophoneEnabled).toHaveBeenLastCalledWith(false);
 
     act(() => {
       result.current.toggleMute();
     });
     expect(result.current.isMuted).toBe(false);
-
-    // The send count should not have changed from the mute toggle alone.
-    expect(ws.send.mock.calls.length).toBe(sendCallsBeforeMute);
+    expect(room.localParticipant.setMicrophoneEnabled).toHaveBeenLastCalledWith(true);
   });
 
-  it("hangup closes the WebSocket and returns to idle", async () => {
+  it("hangup disconnects the Room and returns to idle", async () => {
     vi.stubGlobal("fetch", mockFetchRoom());
     const push = vi.fn();
     const { result } = renderHook(() => useLiveKitVoice("ruby", push));
     await act(async () => {
       await result.current.start();
     });
+    const room = getLastFakeRoom();
     await act(async () => {
-      await Promise.resolve();
-    });
-
-    act(() => {
       result.current.hangup();
     });
-    expect(FakeWebSocket.instances[0].close).toHaveBeenCalled();
+    expect(room.disconnect).toHaveBeenCalledOnce();
     expect(result.current.state).toBe("idle");
   });
 
@@ -338,16 +202,58 @@ describe("useLiveKitVoice", () => {
     expect(result.current.errorMessage).toMatch(/trial|403/i);
   });
 
-  it("transitions to error when getUserMedia rejects", async () => {
-    (navigator.mediaDevices.getUserMedia as ReturnType<typeof vi.fn>)
-      .mockRejectedValueOnce(new Error("Permission denied"));
+  it("transitions to error when Room.connect rejects", async () => {
+    vi.stubGlobal("fetch", mockFetchRoom());
+    // Make every new FakeRoom's connect reject once.
+    const origCtor = FakeRoom.prototype.connect;
+    FakeRoom.prototype.connect = vi.fn().mockRejectedValueOnce(new Error("connect failed"));
+    try {
+      const push = vi.fn();
+      const { result } = renderHook(() => useLiveKitVoice("ruby", push));
+      await act(async () => {
+        await result.current.start();
+      });
+      expect(result.current.state).toBe("error");
+      expect(result.current.errorMessage).toMatch(/connect/i);
+    } finally {
+      FakeRoom.prototype.connect = origCtor;
+    }
+  });
+
+  it("transitions to error when enableMicrophone rejects (mic denied)", async () => {
+    vi.stubGlobal("fetch", mockFetchRoom());
+    const origEnable = FakeRoom.prototype.localParticipant?.enableMicrophone;
+    // Patch the prototype's localParticipant.enableMicrophone for the next instance.
+    const realInit = FakeRoom.prototype.constructor;
+    // Simplest path: spy on the next-created instance via instances[].
+    const push = vi.fn();
+    const { result } = renderHook(() => useLiveKitVoice("ruby", push));
+    // Kick off start, then patch the just-created room's mic to reject.
+    const startPromise = result.current.start();
+    await Promise.resolve(); // let the hook create the Room
+    if (FakeRoom.instances.length) {
+      FakeRoom.instances[FakeRoom.instances.length - 1].localParticipant.enableMicrophone =
+        vi.fn().mockRejectedValueOnce(new Error("Permission denied"));
+    }
+    await act(async () => {
+      await startPromise;
+    });
+    expect(result.current.state).toBe("error");
+    expect(result.current.errorMessage).toMatch(/permission|denied/i);
+  });
+
+  it("emits an error when Room emits Disconnected unexpectedly mid-call", async () => {
     vi.stubGlobal("fetch", mockFetchRoom());
     const push = vi.fn();
     const { result } = renderHook(() => useLiveKitVoice("ruby", push));
     await act(async () => {
       await result.current.start();
     });
+    await waitFor(() => expect(result.current.state).toBe("listening"));
+    act(() => {
+      getLastFakeRoom().triggerDisconnected();
+    });
     expect(result.current.state).toBe("error");
-    expect(result.current.errorMessage).toMatch(/permission|denied/i);
+    expect(result.current.errorMessage).toMatch(/dropped|disconnect/i);
   });
 });
