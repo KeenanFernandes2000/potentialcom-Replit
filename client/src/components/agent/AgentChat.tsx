@@ -181,7 +181,12 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
     // page (Demo.tsx) sets lg:min-h on its column; legacy embed usage
     // relies on the min-h fallback below.
     <div className="w-full" data-testid="agent-chat-shell">
-      <div className="flex h-full min-h-[640px] flex-col overflow-hidden rounded-2xl border border-border/60 bg-card">
+      {/* Fixed-height shell so the messages area inside actually
+          scrolls. h-[680px] gives a comfortable default; max-h-[85vh]
+          clamps it on smaller viewports (phones, short laptops) so
+          the input row never falls below the fold. Inside, the
+          messages div uses flex-1 + overflow-y-auto to scroll. */}
+      <div className="flex h-[680px] max-h-[85vh] flex-col overflow-hidden rounded-2xl border border-border/60 bg-card">
       {/* Header — generous padding, h-12 avatar so it carries
           presence, name in lg-weight semibold. Status dot is bigger
           and uses brand primary on-call. */}
