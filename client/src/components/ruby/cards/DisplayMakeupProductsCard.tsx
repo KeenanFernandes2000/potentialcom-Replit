@@ -29,13 +29,54 @@ function formatPrice(price: number | string | undefined): string {
   return s.startsWith("$") ? s : `$${s}`;
 }
 
-function isProduct(x: unknown): x is Product {
-  return (
-    typeof x === "object" &&
-    x !== null &&
-    typeof (x as Record<string, unknown>).id === "string" &&
-    typeof (x as Record<string, unknown>).title === "string"
-  );
+/**
+ * Normalize an incoming product object to our internal shape. Accepts
+ * either the Shopify-style schema ({id, title, image_url, product_url})
+ * or Ruby's curated-list schema ({name, image, description, link}).
+ *
+ * Returns null when nothing usable can be extracted (no name/title AND
+ * no image source).
+ */
+function normalizeProduct(raw: unknown, index: number): Product | null {
+  if (typeof raw !== "object" || raw === null) return null;
+  const obj = raw as Record<string, unknown>;
+
+  const title =
+    (typeof obj.title === "string" && obj.title) ||
+    (typeof obj.name === "string" && obj.name) ||
+    "";
+
+  const image_url =
+    (typeof obj.image_url === "string" && obj.image_url) ||
+    (typeof obj.image === "string" && obj.image) ||
+    undefined;
+
+  // Both flavors need at least a title or an image to be worth rendering.
+  if (!title && !image_url) return null;
+
+  const product_url =
+    (typeof obj.product_url === "string" && obj.product_url) ||
+    (typeof obj.link === "string" && obj.link) ||
+    undefined;
+
+  const id =
+    typeof obj.id === "string" || typeof obj.id === "number"
+      ? String(obj.id)
+      : `${title || "product"}-${index}`;
+
+  return {
+    id,
+    title: title || "Product",
+    vendor: typeof obj.vendor === "string" ? obj.vendor : undefined,
+    price:
+      typeof obj.price === "string" || typeof obj.price === "number"
+        ? obj.price
+        : undefined,
+    image_url,
+    product_url,
+    description:
+      typeof obj.description === "string" ? obj.description : undefined,
+  };
 }
 
 interface Args {
@@ -43,31 +84,55 @@ interface Args {
   title?: string;
 }
 
-function extractArgs(raw: unknown): Args | null {
+/**
+ * Pull the products list from either the LLM's tool arguments or the
+ * tool's result body. Different callers wrap it differently:
+ *   - LLM passes raw args:        { products: [...] }
+ *   - LLM passes raw args (titled): { products: [...], title: "..." }
+ *   - Tool result echoes args:    { type, status, message, parameters: { products: [...] } }
+ *   - Tool result raw:            { products: [...] }
+ */
+function extractFromCandidate(raw: unknown): Args | null {
   if (typeof raw !== "object" || raw === null) return null;
   const obj = raw as Record<string, unknown>;
-  if (!Array.isArray(obj.products)) return null;
-  const products = obj.products.filter(isProduct);
-  const dropped = obj.products.length - products.length;
-  if (dropped > 0 && import.meta.env.DEV) {
-    console.warn(
-      `display_makeup_products: skipped ${dropped} malformed item(s)`,
-    );
+  // Direct shape.
+  if (Array.isArray(obj.products)) {
+    const products = obj.products
+      .map((p, i) => normalizeProduct(p, i))
+      .filter((p): p is Product => p !== null);
+    const dropped = obj.products.length - products.length;
+    if (dropped > 0 && import.meta.env.DEV) {
+      console.warn(
+        `display_makeup_products: skipped ${dropped} malformed item(s)`,
+      );
+    }
+    if (products.length === 0) return null;
+    const title = typeof obj.title === "string" ? obj.title : undefined;
+    return { products, title };
   }
-  const title = typeof obj.title === "string" ? obj.title : undefined;
-  return { products, title };
+  // Wrapped under .parameters (potentialTS tool-result envelope).
+  if (typeof obj.parameters === "object" && obj.parameters !== null) {
+    return extractFromCandidate(obj.parameters);
+  }
+  return null;
+}
+
+function extractArgs(rawArgs: unknown, rawResponse: unknown): Args | null {
+  // Prefer args (what the LLM intended to show); fall back to response
+  // (what the tool returned — which may echo the args).
+  return extractFromCandidate(rawArgs) ?? extractFromCandidate(rawResponse);
 }
 
 export function DisplayMakeupProductsCard({
   invocation,
 }: DisplayMakeupProductsCardProps) {
-  const { status, name, arguments: rawArgs } = invocation;
+  const { status, name, arguments: rawArgs, response } = invocation;
 
   if (status === "loading") {
     return <ToolLoadingPill name={name} />;
   }
 
-  const args = extractArgs(rawArgs);
+  const args = extractArgs(rawArgs, response);
   if (!args || args.products.length === 0) {
     return <ThemedGenericCard invocation={invocation} />;
   }

@@ -1,85 +1,35 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+
+// IMPORTANT: FakeRoom must be imported and the vi.mock hoisted before
+// AgentChat / useLiveKitVoice are resolved. vi.mock is hoisted by Vitest so
+// this intercepts livekit-client at module resolution time.
+import { installFakeRoom, getLastFakeRoom, FakeRoom } from "../../../test/livekitFakeRoom";
+installFakeRoom();
+
+vi.mock("livekit-client", async () => {
+  const actual = await vi.importActual<any>("livekit-client");
+  return { ...actual, Room: FakeRoom };
+});
+
 import { AgentChat } from "../AgentChat";
 import { rubyToolRegistry } from "../../ruby/rubyToolRegistry";
 import { Toaster } from "@/components/ui/toaster";
 
-// FakeWebSocket — same shape as useLiveKitVoice.test.ts. Captures
-// instances so the test can drive incoming messages.
-class FakeWebSocket {
-  static instances: FakeWebSocket[] = [];
-  static OPEN = 1;
-  static CLOSED = 3;
-  readyState = 0;
-  url: string;
-  onopen: ((e?: unknown) => void) | null = null;
-  onmessage: ((e: MessageEvent) => void) | null = null;
-  onerror: ((e: unknown) => void) | null = null;
-  onclose: ((e?: unknown) => void) | null = null;
-  send = vi.fn();
-  close = vi.fn(() => {
-    this.readyState = FakeWebSocket.CLOSED;
-    this.onclose?.();
-  });
-  constructor(url: string) {
-    this.url = url;
-    FakeWebSocket.instances.push(this);
-    queueMicrotask(() => {
-      this.readyState = FakeWebSocket.OPEN;
-      this.onopen?.();
-    });
-  }
-}
-
-class FakeAudioWorkletNode {
-  port = { onmessage: null as ((e: MessageEvent) => void) | null };
-  connect = vi.fn();
-  disconnect = vi.fn();
-}
-class FakeMediaStreamSource {
-  connect = vi.fn();
-  disconnect = vi.fn();
-}
-class FakeAudioContext {
-  audioWorklet = { addModule: vi.fn().mockResolvedValue(undefined) };
-  state = "running";
-  createMediaStreamSource = vi.fn(() => new FakeMediaStreamSource());
-  close = vi.fn().mockResolvedValue(undefined);
-  suspend = vi.fn().mockResolvedValue(undefined);
-}
-class FakeMediaSource {
-  addEventListener = vi.fn();
-  addSourceBuffer = vi.fn(() => ({
-    appendBuffer: vi.fn(),
-    addEventListener: vi.fn(),
-    updating: false,
-  }));
-}
-
 beforeEach(() => {
-  FakeWebSocket.instances = [];
+  FakeRoom.instances = [];
+  FakeRoom.nextConnectError = null;
+  FakeRoom.nextEnableMicError = null;
+
   if (!Element.prototype.scrollTo) {
     Element.prototype.scrollTo = vi.fn() as unknown as typeof Element.prototype.scrollTo;
   } else {
     vi.spyOn(Element.prototype, "scrollTo").mockImplementation(() => {});
   }
-  // @ts-expect-error jsdom shim
-  globalThis.WebSocket = FakeWebSocket;
-  // @ts-expect-error jsdom shim
-  globalThis.AudioContext = FakeAudioContext;
-  // @ts-expect-error jsdom shim
-  globalThis.AudioWorkletNode = FakeAudioWorkletNode;
-  // @ts-expect-error jsdom shim
-  globalThis.MediaSource = FakeMediaSource;
-  Object.defineProperty(URL, "createObjectURL", {
-    configurable: true,
-    value: vi.fn().mockReturnValue("blob:fake"),
-  });
-  Object.defineProperty(URL, "revokeObjectURL", {
-    configurable: true,
-    value: vi.fn(),
-  });
+
+  // VoiceModeButton checks isVoiceSupported() which requires mediaDevices.getUserMedia
+  // and WebSocket. jsdom doesn't provide these by default.
   Object.defineProperty(navigator, "mediaDevices", {
     configurable: true,
     value: {
@@ -96,7 +46,7 @@ afterEach(() => {
 });
 
 describe("AgentChat voice mode integration", () => {
-  it("clicking Talk to Ruby opens a WS and renders voice events as chat messages", async () => {
+  it("clicking Talk to Ruby connects via LiveKit and renders voice events as chat messages", async () => {
     const fetchMock = vi.fn().mockImplementation(async (url: string) => {
       if (typeof url === "string" && url.endsWith("/api/agent/ruby/bot")) {
         return new Response(
@@ -138,17 +88,20 @@ describe("AgentChat voice mode integration", () => {
     });
     await user.click(talkBtn);
 
-    // WebSocket constructed once the room mints.
-    await waitFor(() => expect(FakeWebSocket.instances).toHaveLength(1));
+    // FakeRoom is constructed once the room is minted and hook connects.
+    await waitFor(() => expect(FakeRoom.instances).toHaveLength(1));
+
+    const room = getLastFakeRoom();
+    // Verify connect was called with the correct LiveKit URL and token.
+    await waitFor(() => expect(room.connect).toHaveBeenCalledOnce());
+    expect(room.lastConnectArgs).toEqual({
+      url: "wss://livekit.test",
+      token: "tok",
+    });
 
     // Drive an aiResponse event and assert the chat renders it.
     act(() => {
-      FakeWebSocket.instances[0].onmessage?.({
-        data: JSON.stringify({
-          type: "aiResponse",
-          text: "Welcome! How can I help?",
-        }),
-      } as MessageEvent);
+      room.triggerDataReceived({ type: "aiResponse", text: "Welcome! How can I help?" });
     });
 
     expect(
@@ -213,16 +166,16 @@ describe("AgentChat voice mode integration", () => {
 
     // Start the call.
     await user.click(screen.getByRole("button", { name: /talk to ruby/i }));
-    await waitFor(() => expect(FakeWebSocket.instances).toHaveLength(1));
+    await waitFor(() => expect(FakeRoom.instances).toHaveLength(1));
+    const room = getLastFakeRoom();
+    await waitFor(() => expect(room.connect).toHaveBeenCalledOnce());
 
     // During the call, server sends an aiResponse.
     act(() => {
-      FakeWebSocket.instances[0].onmessage?.({
-        data: JSON.stringify({
-          type: "aiResponse",
-          text: "Here are some lipsticks.",
-        }),
-      } as MessageEvent);
+      room.triggerDataReceived({
+        type: "aiResponse",
+        text: "Here are some lipsticks.",
+      });
     });
     expect(
       await screen.findByText("Here are some lipsticks."),

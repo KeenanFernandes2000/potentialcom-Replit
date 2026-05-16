@@ -27,6 +27,7 @@ export type ExternalVoiceEvent =
 export interface UseAgentChat {
   messages: AgentMessage[];
   status: "idle" | "streaming";
+  sessionId: string;
   send: (text: string, imageUrl?: string) => Promise<void>;
   pushExternalEvent: (event: ExternalVoiceEvent) => void;
 }
@@ -57,7 +58,22 @@ export function useAgentChat(agentKey: string): UseAgentChat {
   const pushExternalEvent = useCallback((event: ExternalVoiceEvent) => {
     setMessages((prev) => {
       switch (event.kind) {
-        case "user-transcript":
+        case "user-transcript": {
+          // Voice workers commonly emit the same transcript twice — once
+          // from a streaming STT event (e.g. UserInputTranscribed) and once
+          // when the conversation item commits (ConversationItemAdded).
+          // If the most recent message is already a user message with the
+          // same trimmed text, treat the new event as a refresh of that
+          // turn rather than a new utterance.
+          const last = prev[prev.length - 1];
+          const incoming = event.text.trim();
+          if (
+            last &&
+            last.role === "user" &&
+            last.text.trim() === incoming
+          ) {
+            return prev;
+          }
           return [
             ...prev,
             {
@@ -68,6 +84,7 @@ export function useAgentChat(agentKey: string): UseAgentChat {
               status: "complete",
             },
           ];
+        }
         case "agent-response":
           return [
             ...prev,
@@ -265,5 +282,5 @@ export function useAgentChat(agentKey: string): UseAgentChat {
     [agentKey, status, updateAgentMessage],
   );
 
-  return { messages, status, send, pushExternalEvent };
+  return { messages, status, sessionId: sessionIdRef.current, send, pushExternalEvent };
 }

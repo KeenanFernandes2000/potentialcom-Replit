@@ -19,6 +19,59 @@ describe("useAgentChat — pushExternalEvent", () => {
     expect(msg.status).toBe("complete");
   });
 
+  it("dedupes a back-to-back user-transcript with the same text (worker double-publish protection)", () => {
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    act(() => {
+      result.current.pushExternalEvent({
+        kind: "user-transcript",
+        text: "show me lipsticks",
+      });
+      result.current.pushExternalEvent({
+        kind: "user-transcript",
+        text: "show me lipsticks",
+      });
+    });
+    expect(result.current.messages).toHaveLength(1);
+    expect(result.current.messages[0].text).toBe("show me lipsticks");
+  });
+
+  it("treats whitespace-only differences as duplicates", () => {
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    act(() => {
+      result.current.pushExternalEvent({
+        kind: "user-transcript",
+        text: "yes",
+      });
+      result.current.pushExternalEvent({
+        kind: "user-transcript",
+        text: "  yes  ",
+      });
+    });
+    expect(result.current.messages).toHaveLength(1);
+  });
+
+  it("does NOT dedupe when the user genuinely says the same thing after an agent reply", () => {
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    act(() => {
+      result.current.pushExternalEvent({
+        kind: "user-transcript",
+        text: "yes",
+      });
+      result.current.pushExternalEvent({
+        kind: "agent-response",
+        text: "Got it!",
+      });
+      result.current.pushExternalEvent({
+        kind: "user-transcript",
+        text: "yes",
+      });
+    });
+    expect(result.current.messages).toHaveLength(3);
+    expect(result.current.messages[0].role).toBe("user");
+    expect(result.current.messages[1].role).toBe("agent");
+    expect(result.current.messages[2].role).toBe("user");
+  });
+
   it("appends a complete agent message on agent-response", () => {
     const { result } = renderHook(() => useAgentChat("ruby"));
     act(() => {
@@ -84,6 +137,18 @@ describe("useAgentChat — pushExternalEvent", () => {
     expect(result.current.messages[1].role).toBe("agent");
     expect(result.current.messages[1].tools).toHaveLength(1);
     expect(result.current.messages[1].tools[0].status).toBe("loading");
+  });
+
+  it("exposes a stable non-empty sessionId for cross-hook sharing", () => {
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    expect(typeof result.current.sessionId).toBe("string");
+    expect(result.current.sessionId.length).toBeGreaterThan(0);
+    // Same hook instance should return the same id across renders.
+    const first = result.current.sessionId;
+    act(() => {
+      result.current.pushExternalEvent({ kind: "user-transcript", text: "hi" });
+    });
+    expect(result.current.sessionId).toBe(first);
   });
 
   it("marks the invocation complete on tool-result, matching by id", () => {

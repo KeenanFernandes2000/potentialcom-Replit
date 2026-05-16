@@ -34,7 +34,7 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
   const [bot, setBot] = useState<AgentBotConfig | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const tts = useTextToSpeech(agentKey);
-  const voice = useLiveKitVoice(agentKey, chat.pushExternalEvent);
+  const voice = useLiveKitVoice(agentKey, chat.sessionId, chat.pushExternalEvent);
   const { enabled: autoSpeak } = useAutoSpeak();
   const spokenMessageIds = useRef<Set<string>>(new Set());
 
