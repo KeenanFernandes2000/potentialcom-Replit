@@ -44,7 +44,7 @@ afterEach(() => {
 describe("useLiveKitVoice (LiveKit-native)", () => {
   it("starts in idle state", () => {
     const push = vi.fn();
-    const { result } = renderHook(() => useLiveKitVoice("ruby", push));
+    const { result } = renderHook(() => useLiveKitVoice("ruby", "test-session", push));
     expect(result.current.state).toBe("idle");
     expect(result.current.isMuted).toBe(false);
   });
@@ -52,7 +52,7 @@ describe("useLiveKitVoice (LiveKit-native)", () => {
   it("fetches the room, connects via livekit-client, and transitions to listening", async () => {
     vi.stubGlobal("fetch", mockFetchRoom());
     const push = vi.fn();
-    const { result } = renderHook(() => useLiveKitVoice("ruby", push));
+    const { result } = renderHook(() => useLiveKitVoice("ruby", "test-session", push));
     await act(async () => {
       await result.current.start();
     });
@@ -68,7 +68,7 @@ describe("useLiveKitVoice (LiveKit-native)", () => {
   it("pushes user-transcript on incoming transcript data message", async () => {
     vi.stubGlobal("fetch", mockFetchRoom());
     const push = vi.fn();
-    const { result } = renderHook(() => useLiveKitVoice("ruby", push));
+    const { result } = renderHook(() => useLiveKitVoice("ruby", "test-session", push));
     await act(async () => {
       await result.current.start();
     });
@@ -81,7 +81,7 @@ describe("useLiveKitVoice (LiveKit-native)", () => {
   it("pushes agent-response on ai_response data message", async () => {
     vi.stubGlobal("fetch", mockFetchRoom());
     const push = vi.fn();
-    const { result } = renderHook(() => useLiveKitVoice("ruby", push));
+    const { result } = renderHook(() => useLiveKitVoice("ruby", "test-session", push));
     await act(async () => {
       await result.current.start();
     });
@@ -100,7 +100,7 @@ describe("useLiveKitVoice (LiveKit-native)", () => {
   it("pushes tool-call and tool-result, threading by callId", async () => {
     vi.stubGlobal("fetch", mockFetchRoom());
     const push = vi.fn();
-    const { result } = renderHook(() => useLiveKitVoice("ruby", push));
+    const { result } = renderHook(() => useLiveKitVoice("ruby", "test-session", push));
     await act(async () => {
       await result.current.start();
     });
@@ -138,7 +138,7 @@ describe("useLiveKitVoice (LiveKit-native)", () => {
   it("toggles state to agent-speaking on agent_speaking events", async () => {
     vi.stubGlobal("fetch", mockFetchRoom());
     const push = vi.fn();
-    const { result } = renderHook(() => useLiveKitVoice("ruby", push));
+    const { result } = renderHook(() => useLiveKitVoice("ruby", "test-session", push));
     await act(async () => {
       await result.current.start();
     });
@@ -155,7 +155,7 @@ describe("useLiveKitVoice (LiveKit-native)", () => {
   it("toggleMute flips isMuted and calls setMicrophoneEnabled with the opposite", async () => {
     vi.stubGlobal("fetch", mockFetchRoom());
     const push = vi.fn();
-    const { result } = renderHook(() => useLiveKitVoice("ruby", push));
+    const { result } = renderHook(() => useLiveKitVoice("ruby", "test-session", push));
     await act(async () => {
       await result.current.start();
     });
@@ -178,7 +178,7 @@ describe("useLiveKitVoice (LiveKit-native)", () => {
   it("hangup disconnects the Room and returns to idle", async () => {
     vi.stubGlobal("fetch", mockFetchRoom());
     const push = vi.fn();
-    const { result } = renderHook(() => useLiveKitVoice("ruby", push));
+    const { result } = renderHook(() => useLiveKitVoice("ruby", "test-session", push));
     await act(async () => {
       await result.current.start();
     });
@@ -201,7 +201,7 @@ describe("useLiveKitVoice (LiveKit-native)", () => {
       ),
     );
     const push = vi.fn();
-    const { result } = renderHook(() => useLiveKitVoice("ruby", push));
+    const { result } = renderHook(() => useLiveKitVoice("ruby", "test-session", push));
     await act(async () => {
       await result.current.start();
     });
@@ -215,7 +215,7 @@ describe("useLiveKitVoice (LiveKit-native)", () => {
     FakeRoom.nextConnectError = new Error("connect failed");
     try {
       const push = vi.fn();
-      const { result } = renderHook(() => useLiveKitVoice("ruby", push));
+      const { result } = renderHook(() => useLiveKitVoice("ruby", "test-session", push));
       await act(async () => {
         await result.current.start();
       });
@@ -232,7 +232,7 @@ describe("useLiveKitVoice (LiveKit-native)", () => {
     FakeRoom.nextEnableMicError = new Error("Permission denied");
     try {
       const push = vi.fn();
-      const { result } = renderHook(() => useLiveKitVoice("ruby", push));
+      const { result } = renderHook(() => useLiveKitVoice("ruby", "test-session", push));
       await act(async () => {
         await result.current.start();
       });
@@ -246,7 +246,7 @@ describe("useLiveKitVoice (LiveKit-native)", () => {
   it("emits an error when Room emits Disconnected unexpectedly mid-call", async () => {
     vi.stubGlobal("fetch", mockFetchRoom());
     const push = vi.fn();
-    const { result } = renderHook(() => useLiveKitVoice("ruby", push));
+    const { result } = renderHook(() => useLiveKitVoice("ruby", "test-session", push));
     await act(async () => {
       await result.current.start();
     });
@@ -256,5 +256,32 @@ describe("useLiveKitVoice (LiveKit-native)", () => {
     });
     expect(result.current.state).toBe("error");
     expect(result.current.errorMessage).toMatch(/dropped|disconnect/i);
+  });
+
+  it("forwards the provided sessionId in the /voice/room POST body", async () => {
+    const fetchSpy = vi.fn().mockResolvedValue(
+      new Response(
+        JSON.stringify({
+          success: true,
+          roomName: "room-1",
+          token: "tok",
+          wsUrl: "wss://livekit.test",
+          useNativeAgent: true,
+        }),
+        { status: 200, headers: { "Content-Type": "application/json" } },
+      ),
+    );
+    vi.stubGlobal("fetch", fetchSpy);
+    const push = vi.fn();
+    const { result } = renderHook(() =>
+      useLiveKitVoice("ruby", "shared-session-123", push),
+    );
+    await act(async () => {
+      await result.current.start();
+    });
+    expect(fetchSpy).toHaveBeenCalledOnce();
+    const [, init] = fetchSpy.mock.calls[0] as [string, RequestInit];
+    const body = JSON.parse(String(init.body));
+    expect(body.sessionId).toBe("shared-session-123");
   });
 });

@@ -86,6 +86,18 @@ describe("useAgentChat — pushExternalEvent", () => {
     expect(result.current.messages[1].tools[0].status).toBe("loading");
   });
 
+  it("exposes a stable non-empty sessionId for cross-hook sharing", () => {
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    expect(typeof result.current.sessionId).toBe("string");
+    expect(result.current.sessionId.length).toBeGreaterThan(0);
+    // Same hook instance should return the same id across renders.
+    const first = result.current.sessionId;
+    act(() => {
+      result.current.pushExternalEvent({ kind: "user-transcript", text: "hi" });
+    });
+    expect(result.current.sessionId).toBe(first);
+  });
+
   it("marks the invocation complete on tool-result, matching by id", () => {
     const { result } = renderHook(() => useAgentChat("ruby"));
     act(() => {

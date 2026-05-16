@@ -54,6 +54,7 @@ interface DataMessage {
  */
 export function useLiveKitVoice(
   agentKey: string,
+  sessionId: string,
   pushExternalEvent: (event: ExternalVoiceEvent) => void,
 ): UseLiveKitVoiceResult {
   const [state, setState] = useState<VoiceState>("idle");
@@ -62,7 +63,6 @@ export function useLiveKitVoice(
   const [isMuted, setIsMuted] = useState(false);
 
   const roomRef = useRef<Room | null>(null);
-  const sessionIdRef = useRef<string>("");
   const tickRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const startTimeRef = useRef<number>(0);
   // Mirror state for use inside non-React callbacks (Disconnected handler)
@@ -158,14 +158,10 @@ export function useLiveKitVoice(
     // 1. Mint a room via the Express proxy (existing /voice/room).
     let room: RoomCreateResponse;
     try {
-      const sid =
-        sessionIdRef.current ||
-        `voice-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
-      sessionIdRef.current = sid;
       const res = await fetch(`/api/agent/${agentKey}/voice/room`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sessionId: sid }),
+        body: JSON.stringify({ sessionId }),
       });
       if (!res.ok) {
         const body = await res.text();
@@ -240,7 +236,7 @@ export function useLiveKitVoice(
     tickRef.current = setInterval(() => {
       setDurationMs(Date.now() - startTimeRef.current);
     }, 1000);
-  }, [agentKey, cleanup, handleData]);
+  }, [agentKey, sessionId, cleanup, handleData]);
 
   const hangup = useCallback(() => {
     setState("ending");

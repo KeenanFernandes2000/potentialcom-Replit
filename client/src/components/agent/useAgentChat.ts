@@ -27,6 +27,7 @@ export type ExternalVoiceEvent =
 export interface UseAgentChat {
   messages: AgentMessage[];
   status: "idle" | "streaming";
+  sessionId: string;
   send: (text: string, imageUrl?: string) => Promise<void>;
   pushExternalEvent: (event: ExternalVoiceEvent) => void;
 }
@@ -265,5 +266,5 @@ export function useAgentChat(agentKey: string): UseAgentChat {
     [agentKey, status, updateAgentMessage],
   );
 
-  return { messages, status, send, pushExternalEvent };
+  return { messages, status, sessionId: sessionIdRef.current, send, pushExternalEvent };
 }
