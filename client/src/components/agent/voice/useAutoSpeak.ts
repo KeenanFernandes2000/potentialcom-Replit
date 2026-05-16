@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 
-const STORAGE_KEY = "ruby:autoSpeak";
+// Bumped from "ruby:autoSpeak" so existing visitors who toggled it on
+// during Plan 2a testing get a fresh OFF default — auto-speak is too
+// intrusive as a default behavior for a discovery demo. Per-tab
+// preferences still persist normally inside the new key.
+const STORAGE_KEY = "ruby:autoSpeak:v2";
 const SYNC_EVENT = "ruby:autoSpeakChanged";
 
 export interface UseAutoSpeakResult {
