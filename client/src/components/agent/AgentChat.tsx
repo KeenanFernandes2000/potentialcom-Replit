@@ -171,30 +171,33 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
   }, [agentKey, status, send]);
 
   return (
-    // Minimal shell: flat neutral surface, single hairline border, no
-    // ambient orbs, no aurora, no glassmorphism. The chat panel itself
-    // is the focal element — decoration competes with content.
+    // Brand-matched shell: white card with shadow-lg + border, the same
+    // pattern used by Vera's form card and other product surfaces on
+    // the site. rounded-xl matches the site radius. The chat is the
+    // focal element on the hero, so it earns visual weight via the
+    // shadow rather than via decoration.
     //
     // Layout: w-full so it fills whatever the parent grants. The host
     // page (Demo.tsx) constrains width; legacy embed usage relies on
-    // the legacy h-[600px] fallback below.
+    // the min-h fallback below.
     <div className="w-full" data-testid="agent-chat-shell">
-      <div className="flex h-full min-h-[600px] flex-col overflow-hidden rounded-2xl border border-border bg-card">
-      {/* Header — quiet status line. One small dot (live = emerald,
-          on-call = primary, pulses only while Ruby is actually
-          speaking). No rings, no shadows. */}
-      <div className="flex items-center gap-3 border-b border-border px-4 py-3">
+      <div className="flex h-full min-h-[600px] flex-col overflow-hidden rounded-xl border border-border bg-card shadow-lg">
+      {/* Header — primary-accented status. One small dot (live =
+          emerald, on-call = primary, pulses only while Ruby is
+          actively speaking). Matches the brand's restrained header
+          pattern. */}
+      <div className="flex items-center gap-3 border-b border-border bg-card px-5 py-4">
         {bot?.avatarUrl && (
           <div className="relative flex-shrink-0">
             <img
               src={bot.avatarUrl}
               alt={bot.name}
-              className="h-9 w-9 rounded-full object-cover"
+              className="h-10 w-10 rounded-full object-cover ring-2 ring-primary/15"
             />
             <span
               aria-hidden="true"
               className={
-                "absolute bottom-0 right-0 block h-2 w-2 rounded-full ring-2 ring-card " +
+                "absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full ring-2 ring-card " +
                 (isOnCall
                   ? isAgentSpeaking
                     ? "bg-primary motion-safe:animate-pulse"
@@ -205,7 +208,7 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
           </div>
         )}
         <div className="min-w-0">
-          <div className="text-sm font-medium leading-tight">
+          <div className="text-sm font-semibold leading-tight text-foreground">
             {bot?.name ?? "Ruby"}
           </div>
           <div className="text-xs text-muted-foreground">
@@ -243,9 +246,9 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
             onHangup={voice.hangup}
           />
         )}
-        {/* Empty-state hero — only when no messages AND not in a call.
-            Quiet, centered, neutral. No glow, no shimmer, no gradient
-            text. Lets the prompt chips below be the call-to-action. */}
+        {/* Empty-state — quiet centered greeting + brand-styled chips.
+            The avatar gets a subtle primary ring to tie it to the
+            header status dot. */}
         {messages.length === 0 && !isOnCall && (
           <div
             className="flex flex-col items-center pt-6 text-center"
@@ -255,13 +258,13 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
               <img
                 src={bot.avatarUrl}
                 alt={bot.name}
-                className="mb-4 h-16 w-16 rounded-full object-cover"
+                className="mb-4 h-16 w-16 rounded-full object-cover ring-2 ring-primary/20"
               />
             )}
             <h2 className="text-lg font-semibold tracking-tight text-foreground">
-              {bot?.name ? `Hey, I'm ${bot.name}` : "Welcome"}
+              Hi, I'm {bot?.name ?? "Ruby"}
             </h2>
-            <p className="mt-1 max-w-xs text-sm text-muted-foreground">
+            <p className="mt-1.5 max-w-xs text-sm text-muted-foreground">
               {bot?.greeting ??
                 "Ask me anything — I'll find products, courses, experts, and deals."}
             </p>
