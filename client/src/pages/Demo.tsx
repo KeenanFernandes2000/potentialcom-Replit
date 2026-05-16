@@ -248,21 +248,21 @@ const Demo = () => {
             </div>
           </div>
 
-          {/* The chat panel — centered, max-w-3xl, focal element of
-              the page. h-[680px] inside the shell guarantees the
-              messages area scrolls within it. */}
+          {/* The chat panel — centered, max-w-5xl so it gets serious
+              breathing room (longer messages don't wrap as harshly,
+              tool cards have more room to render). h-[680px] inside
+              the shell guarantees the messages area scrolls within it. */}
           <div
-            className="max-w-3xl mx-auto"
+            className="max-w-5xl mx-auto"
             data-aos="fade-up"
             data-aos-delay="150"
           >
             <RubyChat />
           </div>
 
-          {/* Try-this chips + capability links — sit below the chat
-              as a "what's possible" rail. Centered to match the rest
-              of the hero composition. */}
-          <div className="max-w-3xl mx-auto mt-8 space-y-5" data-aos="fade-up" data-aos-delay="250">
+          {/* Try-this chips + capability links — match the chat width
+              so they read as part of the same focal block. */}
+          <div className="max-w-5xl mx-auto mt-8 space-y-5" data-aos="fade-up" data-aos-delay="250">
             <div className="text-center">
               <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-3">
                 Try one of these
