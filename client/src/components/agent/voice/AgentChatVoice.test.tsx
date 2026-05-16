@@ -165,59 +165,6 @@ describe("AgentChat voice wiring", () => {
     expect(speakCalls).toHaveLength(0);
   });
 
-  it("toggling auto-speak ON does not replay an existing completed agent message", async () => {
-    // Seed one already-complete agent message so we can prove the
-    // backlog isn't auto-spoken when the toggle flips.
-    mockMessages = [
-      {
-        id: "msg-1",
-        role: "agent",
-        text: "welcome to ruby",
-        tools: [],
-        status: "complete",
-      },
-    ];
-
-    const fetchMock = buildFetchMock({
-      "/bot": () =>
-        new Response(JSON.stringify(botConfig), {
-          status: 200,
-          headers: { "Content-Type": "application/json" },
-        }),
-      "/speak": () =>
-        new Response(new Uint8Array([1, 2, 3]), {
-          status: 200,
-          headers: { "Content-Type": "audio/mpeg" },
-        }),
-    });
-    vi.stubGlobal("fetch", fetchMock);
-
-    const user = userEvent.setup();
-    render(<AgentChat agentKey="ruby" registry={{}} />);
-
-    // Wait for bot config so the AutoSpeakToggle is mounted.
-    const toggle = await screen.findByRole("switch", { name: /auto-speak/i });
-    expect(toggle).toHaveAttribute("aria-checked", "false");
-
-    // Before the toggle, /speak has not been called.
-    expect(
-      fetchMock.mock.calls.some((c) => String(c[0]).includes("/speak")),
-    ).toBe(false);
-
-    await user.click(toggle);
-    expect(toggle).toHaveAttribute("aria-checked", "true");
-
-    // Give React a tick to flush both auto-speak effects.
-    await new Promise((r) => setTimeout(r, 0));
-
-    // The historical message must NOT have triggered /speak. If it had,
-    // we'd see a POST to /api/agent/ruby/speak here.
-    const speakCalls = fetchMock.mock.calls.filter((c) =>
-      String(c[0]).includes("/speak"),
-    );
-    expect(speakCalls).toHaveLength(0);
-  });
-
   it("dispatching a 'ruby:send' window event sends that prompt through the agent (hero try-this buttons)", async () => {
     const fetchMock = buildFetchMock({
       "/bot": () =>

@@ -7,9 +7,7 @@ import { SuggestedPrompts } from "./SuggestedPrompts";
 import { useAgentChat } from "./useAgentChat";
 import {
   MicButton,
-  AutoSpeakToggle,
   useTextToSpeech,
-  useAutoSpeak,
   useLiveKitVoice,
   VoiceModeButton,
   VoiceHero,
@@ -36,51 +34,6 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const tts = useTextToSpeech(agentKey);
   const voice = useLiveKitVoice(agentKey, chat.sessionId, chat.pushExternalEvent);
-  const { enabled: autoSpeak } = useAutoSpeak();
-  const spokenMessageIds = useRef<Set<string>>(new Set());
-
-  // When auto-speak flips ON, mark all currently-completed agent messages
-  // as "already spoken" so we don't replay history. Only newly-completing
-  // messages from this point forward will auto-play.
-  //
-  // CRITICAL: this effect must be declared BEFORE the play effect below.
-  // Both effects react to the same autoSpeak transition, and React runs
-  // them in declaration order. If the play effect ran first, it would
-  // see the latest backlog message and speak it before the seed effect
-  // had a chance to mark it as already-spoken.
-  useEffect(() => {
-    if (!autoSpeak) return;
-    for (const m of messages) {
-      if (m.role === "agent" && m.status === "complete") {
-        spokenMessageIds.current.add(m.id);
-      }
-    }
-    // We intentionally don't include `messages` in deps — we only want to
-    // seed on the autoSpeak transition, not every time messages change.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autoSpeak]);
-
-  // When a voice call ends, mark every current agent message as
-  // "already spoken" so the auto-speak play effect doesn't replay the
-  // voice-mode responses through the /speak TTS proxy on the next
-  // render. The in-call audio already played them via the WebSocket
-  // MediaSource pipeline; auto-speak would otherwise double-speak them.
-  const prevVoiceStateRef = useRef(voice.state);
-  useEffect(() => {
-    const prev = prevVoiceStateRef.current;
-    const curr = voice.state;
-    const wasActive = prev !== "idle" && prev !== "error";
-    const isInactive = curr === "idle" || curr === "error";
-    if (wasActive && isInactive) {
-      for (const m of messages) {
-        if (m.role === "agent" && m.status === "complete") {
-          spokenMessageIds.current.add(m.id);
-        }
-      }
-    }
-    prevVoiceStateRef.current = curr;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [voice.state]);
 
   // Surface voice errors as a toast. The hook holds the upstream
   // message (e.g., "Voice trial exhausted", "Mic access denied").
@@ -93,22 +46,6 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
       variant: "destructive",
     });
   }, [voice.state, voice.errorMessage, toast]);
-
-  // Auto-speak: when a new agent message completes and auto-speak is on,
-  // play it. We dedupe via a per-message-id set so toggling auto-speak
-  // mid-conversation doesn't re-speak everything.
-  useEffect(() => {
-    if (!autoSpeak || !bot?.audiotts) return;
-    if (voice.state !== "idle" && voice.state !== "error") return; // gate off during a voice call
-    const last = messages[messages.length - 1];
-    if (!last) return;
-    if (last.role !== "agent") return;
-    if (last.status !== "complete") return;
-    if (!last.text || !last.text.trim()) return;
-    if (spokenMessageIds.current.has(last.id)) return;
-    spokenMessageIds.current.add(last.id);
-    void tts.play(last.text);
-  }, [autoSpeak, bot, messages, tts, voice.state]);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [pendingImage, setPendingImage] = useState<{
@@ -313,7 +250,6 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
                 onClick={() => void voice.start()}
               />
             )}
-          {bot?.audiotts && <AutoSpeakToggle />}
         </div>
       </div>
 
