@@ -1,10 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Send, ImagePlus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { MessageBubble } from "./MessageBubble";
 import { SuggestedPrompts } from "./SuggestedPrompts";
 import { useAgentChat } from "./useAgentChat";
+import { AutoGrowTextarea } from "./AutoGrowTextarea";
+import { ScrollToLatestPill } from "./ScrollToLatestPill";
+import { useSmartScroll } from "./hooks/useSmartScroll";
 import {
   MicButton,
   useTextToSpeech,
@@ -32,6 +35,12 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
   const [input, setInput] = useState("");
   const [bot, setBot] = useState<AgentBotConfig | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { isNearBottom, scrollToBottom } = useSmartScroll(scrollRef);
+  // focusBumpCounter increments each time we want the textarea to refocus
+  // (initial mount, after a successful send, after clear()). Passed as
+  // the autoFocusKey prop on AutoGrowTextarea.
+  const [focusBumpCounter, setFocusBumpCounter] = useState(0);
+  const bumpFocus = useCallback(() => setFocusBumpCounter((n) => n + 1), []);
   const tts = useTextToSpeech(agentKey);
   const voice = useLiveKitVoice(agentKey, chat.sessionId, chat.pushExternalEvent);
 
@@ -114,12 +123,12 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
     };
   }, [agentKey]);
 
+  // Auto-scroll on new messages, but ONLY if the user is already near
+  // the bottom. Otherwise leave them where they are and let the
+  // ScrollToLatestPill surface the option to jump back.
   useEffect(() => {
-    scrollRef.current?.scrollTo({
-      top: scrollRef.current.scrollHeight,
-      behavior: "smooth",
-    });
-  }, [messages]);
+    if (isNearBottom) scrollToBottom(true);
+  }, [messages, isNearBottom, scrollToBottom]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -136,6 +145,7 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
     setInput("");
     setPendingImage(null);
     void send(text, previewUrl);
+    bumpFocus();
   };
 
   // Visual states for the header avatar.
@@ -240,57 +250,67 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
 
       {/* Messages — generous padding (px-6 py-5) so message bubbles
           have room to breathe. space-y-5 between messages for clearer
-          turn separation. */}
-      <div ref={scrollRef} className="flex-1 space-y-5 overflow-y-auto px-6 py-5">
-        {/* In-call hero overlay — captures attention while letting
-            prior messages scroll above it. */}
-        {isOnCall && (
-          <VoiceHero
-            state={voice.state}
-            durationMs={voice.durationMs}
-            isMuted={voice.isMuted}
-            avatarUrl={bot?.avatarUrl}
-            agentName={bot?.name ?? "Ruby"}
-            onMute={voice.toggleMute}
-            onHangup={voice.hangup}
-          />
-        )}
-        {/* Empty-state — generous spacing, centered hero treatment
-            with a larger avatar so the first paint reads as a proper
-            intro screen, not a default state. */}
-        {messages.length === 0 && !isOnCall && (
-          <div
-            className="flex flex-col items-center py-10 text-center"
-            data-testid="agent-chat-empty-hero"
-          >
-            {bot?.avatarUrl && (
-              <img
-                src={bot.avatarUrl}
-                alt={bot.name}
-                className="mb-5 h-20 w-20 rounded-full object-cover"
-              />
-            )}
-            <h2 className="text-xl font-semibold tracking-tight text-foreground">
-              Hi, I'm {bot?.name ?? "Ruby"}
-            </h2>
-            <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              {bot?.greeting ??
-                "Ask me anything — I'll find products, courses, experts, and deals."}
-            </p>
-            <div className="w-full max-w-md mt-2">
-              <SuggestedPrompts onSelect={handlePromptSelect} />
+          turn separation. Wrapped in a relative container so the
+          ScrollToLatestPill can absolute-position itself over the
+          scrollable area without affecting layout. */}
+      <div className="relative flex-1 overflow-hidden">
+        <div
+          ref={scrollRef}
+          className="absolute inset-0 space-y-5 overflow-y-auto px-6 py-5"
+        >
+          {/* In-call hero overlay — captures attention while letting
+              prior messages scroll above it. */}
+          {isOnCall && (
+            <VoiceHero
+              state={voice.state}
+              durationMs={voice.durationMs}
+              isMuted={voice.isMuted}
+              avatarUrl={bot?.avatarUrl}
+              agentName={bot?.name ?? "Ruby"}
+              onMute={voice.toggleMute}
+              onHangup={voice.hangup}
+            />
+          )}
+          {/* Empty-state — generous spacing, centered hero treatment
+              with a larger avatar so the first paint reads as a proper
+              intro screen, not a default state. */}
+          {messages.length === 0 && !isOnCall && (
+            <div
+              className="flex flex-col items-center py-10 text-center"
+              data-testid="agent-chat-empty-hero"
+            >
+              {bot?.avatarUrl && (
+                <img
+                  src={bot.avatarUrl}
+                  alt={bot.name}
+                  className="mb-5 h-20 w-20 rounded-full object-cover"
+                />
+              )}
+              <h2 className="text-xl font-semibold tracking-tight text-foreground">
+                Hi, I'm {bot?.name ?? "Ruby"}
+              </h2>
+              <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted-foreground">
+                {bot?.greeting ??
+                  "Ask me anything — I'll find products, courses, experts, and deals."}
+              </p>
+              <div className="w-full max-w-md mt-2">
+                <SuggestedPrompts onSelect={handlePromptSelect} />
+              </div>
             </div>
-          </div>
+          )}
+          {messages.map((message) => (
+            <MessageBubble
+              key={message.id}
+              message={message}
+              registry={registry}
+              tts={tts}
+              ttsEnabled={!!bot?.audiotts}
+            />
+          ))}
+        </div>
+        {!isNearBottom && messages.length > 0 && (
+          <ScrollToLatestPill onClick={() => scrollToBottom(true)} />
         )}
-        {messages.map((message) => (
-          <MessageBubble
-            key={message.id}
-            message={message}
-            registry={registry}
-            tts={tts}
-            ttsEnabled={!!bot?.audiotts}
-          />
-        ))}
       </div>
 
       {/* Input — generous padding (px-6 py-4) so the input row breathes;
@@ -348,12 +368,27 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
             disabled={!bot?.audiostt}
             onTranscript={(text) => setInput(text)}
           />
-          <input
+          <AutoGrowTextarea
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={setInput}
+            onSubmit={() => {
+              // Mirror the form's submit: build the same payload handleSubmit
+              // would, then bump focus to keep typing flowing.
+              if (status === "streaming") return;
+              const hasText = input.trim().length > 0;
+              if (!hasText && !pendingImage) return;
+              const text = pendingImage
+                ? `${input} [image: ${pendingImage.filename}]`.trim()
+                : input;
+              const previewUrl = pendingImage?.previewUrl;
+              setInput("");
+              setPendingImage(null);
+              void send(text, previewUrl);
+              bumpFocus();
+            }}
             placeholder="Message Ruby…"
-            className="flex-1 h-11 rounded-full border border-border bg-muted/40 px-5 text-sm text-foreground placeholder:text-muted-foreground/70 outline-none transition-all focus:border-primary/60 focus:bg-background focus:ring-2 focus:ring-primary/20"
-            data-testid="agent-chat-input"
+            disabled={status === "streaming"}
+            autoFocusKey={focusBumpCounter}
           />
           <Button
             type="submit"
