@@ -15,6 +15,14 @@ import { vi } from "vitest";
  *   // ... render the hook, click start ...
  *   const room = getLastFakeRoom();
  *   room.triggerDataReceived({ type: "transcript", text: "hi" });
+ *
+ * To make the next Room.connect() reject:
+ *   FakeRoom.nextConnectError = new Error("connect failed");
+ *   // restore: FakeRoom.nextConnectError = null after the test
+ *
+ * To make the next Room.localParticipant.enableMicrophone() reject:
+ *   FakeRoom.nextEnableMicError = new Error("Permission denied");
+ *   // restore: FakeRoom.nextEnableMicError = null after the test
  */
 
 type Listener = (...args: any[]) => void;
@@ -22,15 +30,26 @@ type Listener = (...args: any[]) => void;
 export class FakeRoom {
   static instances: FakeRoom[] = [];
 
+  /**
+   * If set, the next constructed instance's connect() will reject with
+   * this error (once). Cleared after use.
+   */
+  static nextConnectError: Error | null = null;
+
+  /**
+   * If set, the next constructed instance's setMicrophoneEnabled(true) will
+   * reject with this error (once). Cleared after use.
+   */
+  static nextEnableMicError: Error | null = null;
+
   private listeners: Record<string, Listener[]> = {};
 
   // Public mocks (vitest stubs the hook can spy on).
-  connect = vi.fn().mockResolvedValue(undefined);
-  disconnect = vi.fn().mockResolvedValue(undefined);
+  connect: ReturnType<typeof vi.fn>;
+  disconnect: ReturnType<typeof vi.fn>;
 
-  localParticipant = {
-    enableMicrophone: vi.fn().mockResolvedValue(undefined),
-    setMicrophoneEnabled: vi.fn().mockResolvedValue(undefined),
+  localParticipant: {
+    setMicrophoneEnabled: ReturnType<typeof vi.fn>;
   };
 
   // The hook spies on this URL to assert the connect target.
@@ -38,12 +57,25 @@ export class FakeRoom {
 
   constructor() {
     FakeRoom.instances.push(this);
-    // Capture connect arguments for assertions.
-    const origConnect = this.connect.bind(this);
+
+    // Consume once-errors set by tests.
+    const connectError = FakeRoom.nextConnectError;
+    FakeRoom.nextConnectError = null;
+    const enableMicError = FakeRoom.nextEnableMicError;
+    FakeRoom.nextEnableMicError = null;
+
     this.connect = vi.fn(async (url: string, token: string) => {
       this.lastConnectArgs = { url, token };
-      return origConnect();
+      if (connectError) throw connectError;
     });
+
+    this.disconnect = vi.fn().mockResolvedValue(undefined);
+
+    this.localParticipant = {
+      setMicrophoneEnabled: enableMicError
+        ? vi.fn().mockRejectedValue(enableMicError)
+        : vi.fn().mockResolvedValue(undefined),
+    };
   }
 
   on(event: string, cb: Listener): this {
@@ -83,6 +115,8 @@ export class FakeRoom {
  */
 export function installFakeRoom(): void {
   FakeRoom.instances = [];
+  FakeRoom.nextConnectError = null;
+  FakeRoom.nextEnableMicError = null;
   vi.doMock("livekit-client", async () => {
     const actual = await vi.importActual<any>("livekit-client");
     return {

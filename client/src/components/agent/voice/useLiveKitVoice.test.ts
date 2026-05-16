@@ -3,8 +3,15 @@ import { renderHook, act, waitFor } from "@testing-library/react";
 
 // IMPORTANT: install the FakeRoom BEFORE importing useLiveKitVoice so the
 // hook picks up the mocked Room from livekit-client.
+// vi.mock is hoisted by Vitest so it intercepts livekit-client at module
+// resolution time, before useLiveKitVoice.ts is evaluated.
 import { installFakeRoom, getLastFakeRoom, FakeRoom } from "../../../test/livekitFakeRoom";
 installFakeRoom();
+
+vi.mock("livekit-client", async () => {
+  const actual = await vi.importActual<any>("livekit-client");
+  return { ...actual, Room: FakeRoom };
+});
 
 import { useLiveKitVoice } from "./useLiveKitVoice";
 
@@ -54,7 +61,7 @@ describe("useLiveKitVoice (LiveKit-native)", () => {
     expect(room.connect).toHaveBeenCalledOnce();
     expect(room.lastConnectArgs.url).toBe("wss://livekit.test");
     expect(room.lastConnectArgs.token).toBe("tok");
-    expect(room.localParticipant.enableMicrophone).toHaveBeenCalledOnce();
+    expect(room.localParticipant.setMicrophoneEnabled).toHaveBeenCalledOnce();
     await waitFor(() => expect(result.current.state).toBe("listening"));
   });
 
@@ -204,9 +211,8 @@ describe("useLiveKitVoice (LiveKit-native)", () => {
 
   it("transitions to error when Room.connect rejects", async () => {
     vi.stubGlobal("fetch", mockFetchRoom());
-    // Make every new FakeRoom's connect reject once.
-    const origCtor = FakeRoom.prototype.connect;
-    FakeRoom.prototype.connect = vi.fn().mockRejectedValueOnce(new Error("connect failed"));
+    // Signal the next FakeRoom instance to reject on connect.
+    FakeRoom.nextConnectError = new Error("connect failed");
     try {
       const push = vi.fn();
       const { result } = renderHook(() => useLiveKitVoice("ruby", push));
@@ -216,30 +222,25 @@ describe("useLiveKitVoice (LiveKit-native)", () => {
       expect(result.current.state).toBe("error");
       expect(result.current.errorMessage).toMatch(/connect/i);
     } finally {
-      FakeRoom.prototype.connect = origCtor;
+      FakeRoom.nextConnectError = null;
     }
   });
 
-  it("transitions to error when enableMicrophone rejects (mic denied)", async () => {
+  it("transitions to error when setMicrophoneEnabled rejects (mic denied)", async () => {
     vi.stubGlobal("fetch", mockFetchRoom());
-    const origEnable = FakeRoom.prototype.localParticipant?.enableMicrophone;
-    // Patch the prototype's localParticipant.enableMicrophone for the next instance.
-    const realInit = FakeRoom.prototype.constructor;
-    // Simplest path: spy on the next-created instance via instances[].
-    const push = vi.fn();
-    const { result } = renderHook(() => useLiveKitVoice("ruby", push));
-    // Kick off start, then patch the just-created room's mic to reject.
-    const startPromise = result.current.start();
-    await Promise.resolve(); // let the hook create the Room
-    if (FakeRoom.instances.length) {
-      FakeRoom.instances[FakeRoom.instances.length - 1].localParticipant.enableMicrophone =
-        vi.fn().mockRejectedValueOnce(new Error("Permission denied"));
+    // Signal the next FakeRoom instance to reject on setMicrophoneEnabled.
+    FakeRoom.nextEnableMicError = new Error("Permission denied");
+    try {
+      const push = vi.fn();
+      const { result } = renderHook(() => useLiveKitVoice("ruby", push));
+      await act(async () => {
+        await result.current.start();
+      });
+      expect(result.current.state).toBe("error");
+      expect(result.current.errorMessage).toMatch(/permission|denied/i);
+    } finally {
+      FakeRoom.nextEnableMicError = null;
     }
-    await act(async () => {
-      await startPromise;
-    });
-    expect(result.current.state).toBe("error");
-    expect(result.current.errorMessage).toMatch(/permission|denied/i);
   });
 
   it("emits an error when Room emits Disconnected unexpectedly mid-call", async () => {

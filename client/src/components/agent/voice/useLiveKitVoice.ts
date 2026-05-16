@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Room, RoomEvent, Track } from "livekit-client";
 import type { ExternalVoiceEvent } from "../useAgentChat";
 
 export type VoiceState =
@@ -21,44 +22,36 @@ export interface UseLiveKitVoiceResult {
 }
 
 interface RoomCreateResponse {
+  success?: boolean;
   roomName: string;
-  token?: string;
+  token: string;
   wsUrl: string;
-  // The proxy synthesizes this so the browser knows where the custom
-  // /ws/livekit/... handler lives (potentialTS HTTP host, not the
-  // LiveKit native server on wsUrl). Prefer customWsUrl when present.
-  customWsUrl?: string;
-  botId?: string;
   participantName?: string;
+  useNativeAgent?: boolean;
 }
 
-interface ServerJsonEvent {
+interface DataMessage {
   type: string;
   text?: string;
-  toolCall?: { name: string; arguments: unknown; async: boolean };
-  toolResult?: { name: string; result: unknown };
+  name?: string;
+  arguments?: unknown;
+  output?: string;
+  callId?: string;
+  isError?: boolean;
+  speaking?: boolean;
 }
 
-// Stable id for matching tool_call → tool_result. The server's
-// tool_result event carries the tool name but not the call arguments,
-// so we key both events by name only. This means two concurrent calls
-// to the SAME tool name with different args would collide — acceptable
-// for the single-call golden path; revisit if upstream adds a real
-// correlation id.
-function makeToolId(name: string): string {
-  return `voice-${name}`;
-}
-
-// Parse tool_result.result, which the server sends as a JSON string.
-function parseResult(raw: unknown): unknown {
-  if (typeof raw !== "string") return raw;
-  try {
-    return JSON.parse(raw);
-  } catch {
-    return raw;
-  }
-}
-
+/**
+ * Real-time voice mode hook. Talks to LiveKit directly via `livekit-client`.
+ * A worker registered as "voice-agent" is dispatched into the room by
+ * potentialTS; the worker publishes structured events
+ * (transcript / ai_response / tool_call / tool_result / agent_speaking)
+ * via the room's data channel, which we route to pushExternalEvent so the
+ * chat scroll renders them identically to typed conversations.
+ *
+ * Public surface kept intact for Plan 2b consumers (AgentChat, VoiceCallBar,
+ * VoiceModeButton). Internals replaced from the legacy custom-WS transport.
+ */
 export function useLiveKitVoice(
   agentKey: string,
   pushExternalEvent: (event: ExternalVoiceEvent) => void,
@@ -68,160 +61,88 @@ export function useLiveKitVoice(
   const [durationMs, setDurationMs] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
 
+  const roomRef = useRef<Room | null>(null);
+  const sessionIdRef = useRef<string>("");
+  const tickRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const startTimeRef = useRef<number>(0);
+  // Mirror state for use inside non-React callbacks (Disconnected handler)
+  // without stale closures.
   const stateRef = useRef<VoiceState>("idle");
   useEffect(() => {
     stateRef.current = state;
   }, [state]);
-
-  const wsRef = useRef<WebSocket | null>(null);
-  const streamRef = useRef<MediaStream | null>(null);
-  const audioCtxRef = useRef<AudioContext | null>(null);
-  const workletNodeRef = useRef<AudioWorkletNode | null>(null);
-  const sourceNodeRef = useRef<MediaStreamAudioSourceNode | null>(null);
-  const playerAudioRef = useRef<HTMLAudioElement | null>(null);
-  const playerUrlRef = useRef<string | null>(null);
-  const mediaSourceRef = useRef<MediaSource | null>(null);
-  const sourceBufferRef = useRef<SourceBuffer | null>(null);
-  const audioQueueRef = useRef<ArrayBuffer[]>([]);
-  const isMutedRef = useRef(false);
-  const tickRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const startTimeRef = useRef<number>(0);
-  const sessionIdRef = useRef<string>("");
 
   const cleanup = useCallback(() => {
     if (tickRef.current) {
       clearInterval(tickRef.current);
       tickRef.current = null;
     }
-    if (wsRef.current && wsRef.current.readyState !== WebSocket.CLOSED) {
+    if (roomRef.current) {
       try {
-        wsRef.current.close();
+        // Disconnect is idempotent; ignore errors.
+        void roomRef.current.disconnect();
       } catch {
         /* ignore */
       }
+      roomRef.current = null;
     }
-    wsRef.current = null;
-
-    workletNodeRef.current?.disconnect();
-    workletNodeRef.current = null;
-
-    sourceNodeRef.current?.disconnect();
-    sourceNodeRef.current = null;
-
-    streamRef.current?.getTracks().forEach((t) => t.stop());
-    streamRef.current = null;
-
-    audioCtxRef.current?.close()?.catch(() => {});
-    audioCtxRef.current = null;
-
-    if (playerAudioRef.current) {
-      playerAudioRef.current.pause();
-      playerAudioRef.current = null;
-    }
-    if (playerUrlRef.current) {
-      URL.revokeObjectURL(playerUrlRef.current);
-      playerUrlRef.current = null;
-    }
-    mediaSourceRef.current = null;
-    sourceBufferRef.current = null;
-    audioQueueRef.current = [];
   }, []);
 
   useEffect(() => () => cleanup(), [cleanup]);
 
-  const setupPlayer = useCallback(() => {
-    if (typeof MediaSource === "undefined") return;
-    const ms = new MediaSource();
-    const url = URL.createObjectURL(ms);
-    const audio = new Audio();
-    audio.src = url;
-    void audio.play()?.catch(() => {});
-
-    ms.addEventListener("sourceopen", () => {
+  const handleData = useCallback(
+    (payload: Uint8Array) => {
+      let parsed: DataMessage;
       try {
-        const sb = ms.addSourceBuffer("audio/mpeg");
-        sourceBufferRef.current = sb;
-        sb.addEventListener("updateend", () => {
-          const q = audioQueueRef.current;
-          if (q.length > 0 && !sb.updating) {
-            const next = q.shift();
-            if (next) sb.appendBuffer(next);
-          }
-        });
-      } catch {
-        /* sourceopen errors: fallback later */
-      }
-    });
-
-    mediaSourceRef.current = ms;
-    playerAudioRef.current = audio;
-    playerUrlRef.current = url;
-  }, []);
-
-  const handleBinary = useCallback((data: ArrayBuffer) => {
-    const sb = sourceBufferRef.current;
-    if (!sb) {
-      audioQueueRef.current.push(data);
-      return;
-    }
-    if (sb.updating || audioQueueRef.current.length > 0) {
-      audioQueueRef.current.push(data);
-    } else {
-      try {
-        sb.appendBuffer(data);
-      } catch {
-        // Likely "QuotaExceededError" — drop the chunk and keep playing.
-      }
-    }
-  }, []);
-
-  const handleJson = useCallback(
-    (raw: string) => {
-      let ev: ServerJsonEvent;
-      try {
-        ev = JSON.parse(raw) as ServerJsonEvent;
+        const text = new TextDecoder().decode(payload);
+        parsed = JSON.parse(text) as DataMessage;
       } catch {
         return;
       }
-      switch (ev.type) {
+
+      switch (parsed.type) {
         case "transcript":
-          if (typeof ev.text === "string" && ev.text.trim()) {
-            pushExternalEvent({ kind: "user-transcript", text: ev.text });
+          if (typeof parsed.text === "string" && parsed.text.trim()) {
+            pushExternalEvent({ kind: "user-transcript", text: parsed.text });
           }
           return;
-        case "aiResponse":
         case "ai_response":
-          if (typeof ev.text === "string" && ev.text.trim()) {
-            pushExternalEvent({ kind: "agent-response", text: ev.text });
+        case "aiResponse":
+          if (typeof parsed.text === "string" && parsed.text.trim()) {
+            pushExternalEvent({ kind: "agent-response", text: parsed.text });
           }
           return;
         case "tool_call":
-          if (ev.toolCall) {
+          if (parsed.callId && parsed.name) {
             pushExternalEvent({
               kind: "tool-call",
-              id: makeToolId(ev.toolCall.name),
-              name: ev.toolCall.name,
-              args: ev.toolCall.arguments,
-              async: ev.toolCall.async,
+              id: parsed.callId,
+              name: parsed.name,
+              args: parsed.arguments ?? {},
+              async: false,
             });
           }
           return;
         case "tool_result":
-          if (ev.toolResult) {
+          if (parsed.callId) {
+            let result: unknown = parsed.output;
+            if (typeof parsed.output === "string") {
+              try {
+                result = JSON.parse(parsed.output);
+              } catch {
+                // Keep as string if not parseable JSON.
+              }
+            }
             pushExternalEvent({
               kind: "tool-result",
-              id: makeToolId(ev.toolResult.name),
-              result: parseResult(ev.toolResult.result),
+              id: parsed.callId,
+              result,
             });
           }
           return;
-        case "audio_start":
-          setState("agent-speaking");
+        case "agent_speaking":
+          setState(parsed.speaking ? "agent-speaking" : "listening");
           return;
-        case "audio_end":
-          setState("listening");
-          return;
-        case "KeepAlive":
         default:
           return;
       }
@@ -234,7 +155,7 @@ export function useLiveKitVoice(
     setErrorMessage(null);
     setState("connecting");
 
-    // 1. Mint a room
+    // 1. Mint a room via the Express proxy (existing /voice/room).
     let room: RoomCreateResponse;
     try {
       const sid =
@@ -251,7 +172,7 @@ export function useLiveKitVoice(
         let msg = `Failed to start voice call (${res.status})`;
         try {
           const j = JSON.parse(body);
-          if (j && typeof j.error === "string") msg = j.error;
+          if (j?.error) msg = j.error;
         } catch {
           /* ignore */
         }
@@ -264,123 +185,80 @@ export function useLiveKitVoice(
       return;
     }
 
-    // 2. Mic
-    let stream: MediaStream;
-    try {
-      stream = await navigator.mediaDevices.getUserMedia({
-        audio: {
-          channelCount: 1,
-          echoCancellation: true,
-          noiseSuppression: true,
-        },
-      });
-    } catch (err) {
-      setState("error");
-      setErrorMessage(err instanceof Error ? err.message : "Mic access denied");
-      return;
-    }
-    streamRef.current = stream;
+    // 2. Construct + wire the Room (handlers registered BEFORE connect so
+    //    any synchronous events during connect are caught).
+    const rkRoom = new Room();
+    roomRef.current = rkRoom;
 
-    // 3. WebSocket. The custom WS handler lives on the potentialTS
-    // HTTP server (api.potential.com) at /ws/livekit/{roomName}/{botId}/{sessionId}.
-    // The proxy synthesizes `customWsUrl` from POTENTIAL_API_BASE so we
-    // don't have to derive it client-side. Falls back to `wsUrl` if the
-    // proxy didn't include it (older server).
-    const sid = sessionIdRef.current;
-    const wsBase = (room.customWsUrl ?? room.wsUrl).replace(/\/$/, "");
-    const botPathSegment = room.botId ?? agentKey;
-    const wsUrl = `${wsBase}/ws/livekit/${room.roomName}/${botPathSegment}/${sid}`;
-    const ws = new WebSocket(wsUrl);
-    wsRef.current = ws;
+    rkRoom.on(RoomEvent.DataReceived, (payload: Uint8Array) => {
+      handleData(payload);
+    });
 
-    // Wire up WS handlers immediately after construction so they are in
-    // place before any async suspension (addModule). FakeWebSocket fires
-    // onopen via queueMicrotask, which runs after the current task but
-    // can interleave with awaited Promises; assigning here ensures the
-    // handler is registered before that microtask fires.
-    ws.onopen = () => {
-      // The server's WebSocket handler waits for a JSON config message
-      // BEFORE it sets up the Deepgram STT connection. Until this is
-      // sent, every PCM frame we forward is dropped on the floor.
-      // The matching AudioContext is at 16000 Hz (see `new AudioContext`
-      // above); the worklet emits Int16 LE PCM at that rate.
-      try {
-        ws.send(JSON.stringify({ type: "config", sampleRate: 16000 }));
-      } catch {
-        // If send fails here the socket is likely already closing — the
-        // onclose/onerror handlers will surface the failure.
+    rkRoom.on(RoomEvent.TrackSubscribed, (track) => {
+      if (track.kind === Track.Kind.Audio) {
+        // attach() returns the auto-created <audio> element; it auto-plays.
+        // We don't keep the reference — the SDK manages lifecycle.
+        try {
+          (track as any).attach?.();
+        } catch {
+          /* ignore */
+        }
       }
-      setState("listening");
-      startTimeRef.current = Date.now();
-      setDurationMs(0);
-      if (tickRef.current) clearInterval(tickRef.current);
-      tickRef.current = setInterval(() => {
-        setDurationMs(Date.now() - startTimeRef.current);
-      }, 1000);
-    };
-    ws.onmessage = (event: MessageEvent) => {
-      if (typeof event.data === "string") {
-        handleJson(event.data);
-      } else if (event.data instanceof ArrayBuffer) {
-        handleBinary(event.data);
-      } else if (event.data instanceof Blob) {
-        event.data.arrayBuffer().then(handleBinary);
-      }
-    };
-    ws.onerror = () => {
-      setState("error");
-      setErrorMessage("Voice connection error");
-    };
-    ws.onclose = () => {
-      if (stateRef.current !== "ending" && stateRef.current !== "error") {
+    });
+
+    rkRoom.on(RoomEvent.Disconnected, () => {
+      if (stateRef.current !== "ending" && stateRef.current !== "idle") {
         setState("error");
         setErrorMessage("Voice call dropped");
       }
-    };
+    });
 
-    // 4. AudioContext + worklet
-    const ctx = new AudioContext({ sampleRate: 16000 });
-    audioCtxRef.current = ctx;
-
+    // 3. Connect, then enable mic. Either step may throw → error state.
     try {
-      // Vite resolves the URL with `import.meta.url`. In tests, the
-      // FakeAudioContext.addModule is a no-op mock that returns
-      // undefined; this still resolves cleanly.
-      const workletUrl = new URL("./pcm-worklet.ts", import.meta.url).href;
-      await ctx.audioWorklet.addModule(workletUrl);
-    } catch {
-      // Fall through — production builds will resolve correctly; tests
-      // never reach this branch because the module is mocked.
+      await rkRoom.connect(room.wsUrl, room.token);
+    } catch (err) {
+      setState("error");
+      setErrorMessage(err instanceof Error ? err.message : "Voice connection error");
+      cleanup();
+      return;
     }
 
-    const source = ctx.createMediaStreamSource(stream);
-    sourceNodeRef.current = source;
-    const node = new AudioWorkletNode(ctx, "pcm-worklet");
-    workletNodeRef.current = node;
-    source.connect(node);
+    try {
+      await rkRoom.localParticipant.setMicrophoneEnabled(true);
+    } catch (err) {
+      setState("error");
+      setErrorMessage(err instanceof Error ? err.message : "Mic access denied");
+      cleanup();
+      return;
+    }
 
-    node.port.onmessage = (ev: MessageEvent) => {
-      if (isMutedRef.current) return;
-      const buf = ev.data as ArrayBuffer;
-      if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
-        wsRef.current.send(buf);
-      }
-    };
-
-    setupPlayer();
-  }, [agentKey, cleanup, handleBinary, handleJson, setupPlayer]);
+    // 4. Active. Tick the duration timer.
+    setState("listening");
+    startTimeRef.current = Date.now();
+    setDurationMs(0);
+    if (tickRef.current) clearInterval(tickRef.current);
+    tickRef.current = setInterval(() => {
+      setDurationMs(Date.now() - startTimeRef.current);
+    }, 1000);
+  }, [agentKey, cleanup, handleData]);
 
   const hangup = useCallback(() => {
     setState("ending");
     cleanup();
     setState("idle");
     setDurationMs(0);
+    setIsMuted(false);
   }, [cleanup]);
 
   const toggleMute = useCallback(() => {
     setIsMuted((prev) => {
       const next = !prev;
-      isMutedRef.current = next;
+      // Fire-and-forget — the SDK throws only on truly broken rooms.
+      try {
+        void roomRef.current?.localParticipant.setMicrophoneEnabled(!next);
+      } catch {
+        /* ignore */
+      }
       return next;
     });
   }, []);
