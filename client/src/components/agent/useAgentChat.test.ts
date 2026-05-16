@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { useAgentChat } from "./useAgentChat";
 
@@ -403,5 +403,46 @@ describe("useAgentChat — pushExternalEvent", () => {
     expect(result.current.status).toBe("idle");
     expect(result.current.sessionId).not.toBe(originalSessionId);
     expect(result.current.sessionId.length).toBeGreaterThan(0);
+  });
+
+  it("send() after clear() uses the new sessionId (not the stale pre-clear one)", async () => {
+    // Return a FRESH Response per call — Response bodies are single-use
+    // ReadableStreams, so reusing one Response across two send() calls
+    // would throw "ReadableStream is locked" on the second read.
+    const fetchMock = vi.fn().mockImplementation(
+      async () =>
+        new Response("data: [DONE]\n\n", {
+          status: 200,
+          headers: { "Content-Type": "text/event-stream" },
+        }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    const originalSessionId = result.current.sessionId;
+
+    // First send uses the original sessionId.
+    await act(async () => {
+      await result.current.send("first");
+    });
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    const firstBody = JSON.parse(fetchMock.mock.calls[0][1].body);
+    expect(firstBody.sessionId).toBe(originalSessionId);
+
+    // Clear, then send again — must use the NEW sessionId.
+    act(() => {
+      result.current.clear();
+    });
+    const newSessionId = result.current.sessionId;
+    expect(newSessionId).not.toBe(originalSessionId);
+
+    await act(async () => {
+      await result.current.send("second");
+    });
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    const secondBody = JSON.parse(fetchMock.mock.calls[1][1].body);
+    expect(secondBody.sessionId).toBe(newSessionId);
+
+    vi.unstubAllGlobals();
   });
 });

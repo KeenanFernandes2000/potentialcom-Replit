@@ -364,7 +364,7 @@ export function useAgentChat(agentKey: string): UseAgentChat {
         setStatus("idle");
       }
     },
-    [agentKey, status, updateAgentMessage],
+    [agentKey, status, sessionId, updateAgentMessage],
   );
 
   return { messages, status, sessionId, send, pushExternalEvent, clear };
