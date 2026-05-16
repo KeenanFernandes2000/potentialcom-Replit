@@ -6,25 +6,24 @@
 
 **Provider:** [Anam](https://anam.ai/) via the official [`@livekit/agents-plugin-anam`](https://www.npmjs.com/package/@livekit/agents-plugin-anam) package.
 
-**What's already built (PotentialBackendLive) — we consume this, do not rebuild:**
-- `models/avatar.model.ts` — `Avatar` Mongoose model (Anam: `avatarId`, `voiceId`, `language`, `avatarQuality`, `voiceEmotion`, `preview_image_url`, `createdBy` user ref, `active`, `interactions`)
-- `controllers/avatar.controller.ts` — full CRUD: createAvatar / getUserAvatars / getAvatarById / updateAvatar / deleteAvatar, plus a fetch-from-Anam-API hook to populate `preview_image_url` on create
-- `routes/avatar.ts` — REST endpoints for the CRUD above
-- `routes/dashboard.ts` — Anam-specific endpoints powering the dashboard avatar-picker UI:
-  - `POST /api/dashboard/avatars/session-token` (Anam session token, per code comment "Replaces HeyGen streaming-key")
-  - `GET /api/dashboard/avatars/voices` (Anam voices list)
-  - `GET /api/dashboard/avatars/list` (Anam avatar presets)
-  - `POST /api/dashboard/avatars/create-from-image` (custom avatar generation)
-  - `POST /api/dashboard/avatars/speech-to-text` (STT)
-- Env vars: `ANAM_API_KEY`, `ANAM_AVATAR_ID` (legacy default) in `.env.example`
+**Backend repo of record:** `potentialTS` (the single backend going forward — `PotentialBackendLive` is being retired and is not referenced by this spec).
+
+**What potentialTS already has — we consume this, do not rebuild:**
+- `models/avatar.model.ts` — `Avatar` Mongoose model (Anam: `avatarId`, `voiceId`, `language`, `avatarQuality`, `voiceEmotion`, `preview_image_url`, `createdBy` user ref, `active`, `interactions`) — 160 lines
+- `controllers/avatar.controller.ts` — full CRUD (902 lines)
+- `routes/avatar.ts` — REST endpoints for the CRUD
+- `routes/livekit.ts` — existing dispatch endpoint we extend with the `withAvatar` flag
+- `routes/dashboard.ts` — has `avatarSpeechToText` (other Anam-specific dashboard endpoints like `getSessionToken` / `getAnamVoices` / `getAnamAvatarsList` aren't yet in potentialTS but are also NOT needed by Plan 3 — they power a dashboard avatar-picker UI that's a separate concern, deferred until that UI is migrated)
+- Env vars: `ANAM_API_KEY`, `ANAM_AVATAR_ID` in `.env.example`
 
 **What's NOT yet built — this spec adds:**
 - The worker-level LiveKit ↔ Anam plug (`@livekit/agents-plugin-anam`)
-- The bot → avatar config link (a small `avatar` subdocument on `BotVoiceAgent`)
+- The bot → avatar config link: small `avatar: { avatarId, voiceId }` subdocument on `BotVoiceAgent` (in BOTH `potentialTS/src/models/botVoiceAgent.model.ts` AND `LiveKit-agent/src/models/botVoiceAgent.model.ts` — the worker repo owns its own copy of the model)
+- The `withAvatar` flag on `POST /api/livekit/room/create` → propagated through agent-dispatch metadata
 - The browser-level avatar render (subscribe to `anam-*` video track, render in `<AvatarView>`)
 - The mode-pick modal UX on the demo page
 
-The existing `Avatar` collection + dashboard endpoints power the avatar *management* UI (where users in the dashboard pick / create avatars). Those endpoints are NOT on the Plan 3 critical path — the worker reads avatar config directly from the bot's `BotVoiceAgent` record (see "Layer 2 — Schema change" below).
+The Anam plugin authenticates inside the worker using `ANAM_API_KEY` directly — no session-token round-trip to potentialTS is required, so `getSessionToken` and other admin endpoints aren't on this critical path.
 
 ---
 
@@ -96,7 +95,7 @@ The avatar joins as a participant with identity prefix `anam-` (default: `anam-a
 
 **Schema change — `BotVoiceAgent` model gains an `avatar` subdocument.**
 
-The existing `Avatar` model (PotentialBackendLive) stores user-owned avatar configs. Bots need their own avatar pointer — the relationship doesn't exist today. Add a minimal inline subdocument so the worker can read avatar config from the bot's `BotVoiceAgent` record directly, without a second collection lookup.
+The existing `Avatar` model (in potentialTS) stores user-owned avatar configs. Bots need their own avatar pointer — the relationship doesn't exist today. Add a minimal inline subdocument so the worker can read avatar config from the bot's `BotVoiceAgent` record directly, without a second collection lookup.
 
 ```ts
 // In BotVoiceAgent schema:
@@ -528,20 +527,20 @@ On localhost or staging:
 
 - `src/routes/livekit.ts` — accept `withAvatar` in body; pass through to agent-dispatch metadata
 
-### MODIFIED — `LiveKit-agent` (separate repo)
+### MODIFIED — `potentialTS` (backend of record)
+
+- `src/models/botVoiceAgent.model.ts` — add `avatar: { avatarId, voiceId }` subdocument to schema + interface
+- `src/routes/livekit.ts` — accept `withAvatar` in `POST /api/livekit/room/create` body; pass through to agent-dispatch metadata
+
+### MODIFIED — `LiveKit-agent` (worker)
 
 - `package.json` — add `@livekit/agents-plugin-anam`
 - `src/voiceAgent.ts` — parse `withAvatar` from metadata, spawn `AvatarSession` when true (reads `voiceConfig.avatar.avatarId` + `.voiceId` from the existing MongoDB query)
-- `src/models/botVoiceAgent.model.ts` — add the `avatar` subdocument to the schema + interface (mirror of the PotentialBackendLive change, since both repos own their own copy of this model)
-
-### MODIFIED — `PotentialBackendLive` (separate repo)
-
-- `src/models/botVoiceAgent.model.ts` — add the `avatar` subdocument to the schema + interface
-- (Optional) Admin UI to assign a bot's avatar from the existing Avatar collection — deferred follow-up
+- `src/models/botVoiceAgent.model.ts` — add the `avatar` subdocument to the schema + interface (the worker repo keeps its own copy of the model since it queries MongoDB directly)
 
 ### DB pre-flight (manual, not code)
 
-- Update Ruby's `BotVoiceAgent` document to include `avatar.avatarId` and `avatar.voiceId` (Anam UUIDs obtained from Anam's dashboard, or via `GET /api/dashboard/avatars/list` / `/voices` once the dashboard UI is used)
+- After the `BotVoiceAgent` schema change lands, update Ruby's record to include `avatar.avatarId` and `avatar.voiceId` (Anam UUIDs obtained from the Anam dashboard)
 
 ---
 
