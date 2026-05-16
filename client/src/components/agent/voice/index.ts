@@ -10,3 +10,4 @@ export { VoiceModeButton } from "./VoiceModeButton";
 export { VoiceCallBar } from "./VoiceCallBar";
 export { VoiceHero } from "./VoiceHero";
 export { TalkModePicker } from "./TalkModePicker";
+export { AvatarView } from "./AvatarView";
