@@ -3,6 +3,7 @@ import { Send, ImagePlus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { MessageBubble } from "./MessageBubble";
+import { SuggestedPrompts } from "./SuggestedPrompts";
 import { useAgentChat } from "./useAgentChat";
 import {
   MicButton,
@@ -200,20 +201,61 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
     void send(text, previewUrl);
   };
 
+  // Visual states for the header avatar.
+  const isAgentSpeaking = voice.state === "agent-speaking";
+  const isOnCall = voice.state !== "idle" && voice.state !== "error";
+
+  const handlePromptSelect = (prompt: string) => {
+    if (status === "streaming") return;
+    void send(prompt);
+  };
+
   return (
     <div className="mx-auto flex h-[600px] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-border bg-background shadow-lg">
       {/* Header */}
       <div className="flex items-center gap-3 border-b border-border bg-card px-4 py-3">
+        {/*
+          Avatar: bumped to h-11 w-11 for visual presence. Status dot in
+          the bottom-right (green when idle, purple+pulse when on-call).
+          A subtle ping ring surrounds the avatar whenever Ruby is
+          actively speaking — the moment of strongest user-attention need.
+        */}
         {bot?.avatarUrl && (
-          <img
-            src={bot.avatarUrl}
-            alt={bot.name}
-            className="h-9 w-9 rounded-full object-cover"
-          />
+          <div className="relative flex-shrink-0">
+            {isAgentSpeaking && (
+              <span
+                aria-hidden="true"
+                className="absolute inset-0 rounded-full bg-tool-card-accent/60 motion-safe:animate-ping"
+              />
+            )}
+            <img
+              src={bot.avatarUrl}
+              alt={bot.name}
+              className={
+                "relative h-11 w-11 rounded-full object-cover ring-2 transition-shadow " +
+                (isOnCall
+                  ? "ring-tool-card-accent shadow-[0_0_18px_rgba(168,85,247,0.45)]"
+                  : "ring-border")
+              }
+            />
+            <span
+              aria-hidden="true"
+              className={
+                "absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full ring-2 ring-card " +
+                (isOnCall
+                  ? "bg-tool-card-accent motion-safe:animate-pulse"
+                  : "bg-emerald-500")
+              }
+            />
+          </div>
         )}
-        <div>
-          <div className="text-sm font-semibold">{bot?.name ?? "Ruby"}</div>
-          <div className="text-xs text-muted-foreground">AI Beauty Concierge</div>
+        <div className="min-w-0">
+          <div className="text-sm font-semibold leading-tight">
+            {bot?.name ?? "Ruby"}
+          </div>
+          <div className="text-xs text-muted-foreground">
+            {isOnCall ? "On call · listening" : "AI Beauty Concierge"}
+          </div>
         </div>
         <div className="ml-auto flex items-center gap-2">
           {bot?.audiostt && bot?.audiotts &&
@@ -241,6 +283,14 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
           <div className="max-w-[80%] rounded-2xl rounded-bl-sm bg-muted px-4 py-2 text-sm">
             {bot.greeting}
           </div>
+        )}
+        {/*
+          Suggested-prompt chips render only on an empty chat. Each chip
+          triggers a different rich tool card so a visitor's first click
+          immediately demonstrates Ruby's range.
+        */}
+        {messages.length === 0 && (
+          <SuggestedPrompts onSelect={handlePromptSelect} />
         )}
         {messages.map((message) => (
           <MessageBubble
