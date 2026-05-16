@@ -259,6 +259,21 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
         </div>
       </div>
 
+      {/* In-call dock — pinned BETWEEN the header and the message
+          list (NOT inside the scrollable area) so the end-call button
+          stays reachable regardless of message scroll position. */}
+      {isOnCall && (
+        <VoiceHero
+          state={voice.state}
+          durationMs={voice.durationMs}
+          isMuted={voice.isMuted}
+          avatarUrl={bot?.avatarUrl}
+          agentName={bot?.name ?? "Ruby"}
+          onMute={voice.toggleMute}
+          onHangup={voice.hangup}
+        />
+      )}
+
       {/* Messages — generous padding (px-6 py-5) so message bubbles
           have room to breathe. space-y-5 between messages for clearer
           turn separation. Wrapped in a relative container so the
@@ -269,19 +284,6 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
           ref={scrollRef}
           className="absolute inset-0 space-y-5 overflow-y-auto px-6 py-5"
         >
-          {/* In-call hero overlay — captures attention while letting
-              prior messages scroll above it. */}
-          {isOnCall && (
-            <VoiceHero
-              state={voice.state}
-              durationMs={voice.durationMs}
-              isMuted={voice.isMuted}
-              avatarUrl={bot?.avatarUrl}
-              agentName={bot?.name ?? "Ruby"}
-              onMute={voice.toggleMute}
-              onHangup={voice.hangup}
-            />
-          )}
           {/* Empty-state — generous spacing, centered hero treatment
               with a larger avatar so the first paint reads as a proper
               intro screen, not a default state. */}
