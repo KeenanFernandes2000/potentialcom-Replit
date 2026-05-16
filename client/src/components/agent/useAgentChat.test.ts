@@ -217,6 +217,97 @@ describe("useAgentChat — pushExternalEvent", () => {
     expect(result.current.sessionId).toBe(first);
   });
 
+  it("creates a new agent message on the first agent-response-stream event for a turn", () => {
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    act(() => {
+      result.current.pushExternalEvent({
+        kind: "agent-response-stream",
+        turnId: "voice-turn-1",
+        text: "Hi",
+      });
+    });
+    expect(result.current.messages).toHaveLength(1);
+    expect(result.current.messages[0]).toMatchObject({
+      role: "agent",
+      text: "Hi",
+      turnId: "voice-turn-1",
+    });
+  });
+
+  it("updates the SAME bubble for subsequent agent-response-stream events with the same turnId (token-by-token growth)", () => {
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    act(() => {
+      result.current.pushExternalEvent({
+        kind: "agent-response-stream",
+        turnId: "voice-turn-1",
+        text: "Hi",
+      });
+      result.current.pushExternalEvent({
+        kind: "agent-response-stream",
+        turnId: "voice-turn-1",
+        text: "Hi there",
+      });
+      result.current.pushExternalEvent({
+        kind: "agent-response-stream",
+        turnId: "voice-turn-1",
+        text: "Hi there friend",
+      });
+    });
+    // ONE bubble — replaced in-place by each stream event.
+    expect(result.current.messages).toHaveLength(1);
+    expect(result.current.messages[0].text).toBe("Hi there friend");
+    expect(result.current.messages[0].turnId).toBe("voice-turn-1");
+  });
+
+  it("starts a NEW bubble for a different turnId (two consecutive replies)", () => {
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    act(() => {
+      result.current.pushExternalEvent({
+        kind: "agent-response-stream",
+        turnId: "voice-turn-1",
+        text: "First reply",
+      });
+      result.current.pushExternalEvent({
+        kind: "agent-response-stream",
+        turnId: "voice-turn-2",
+        text: "Second reply",
+      });
+    });
+    expect(result.current.messages).toHaveLength(2);
+    expect(result.current.messages[0].text).toBe("First reply");
+    expect(result.current.messages[0].turnId).toBe("voice-turn-1");
+    expect(result.current.messages[1].text).toBe("Second reply");
+    expect(result.current.messages[1].turnId).toBe("voice-turn-2");
+  });
+
+  it("matches agent-response-stream by turnId even when other messages sit between events (skipping intervening tool calls)", () => {
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    act(() => {
+      result.current.pushExternalEvent({
+        kind: "agent-response-stream",
+        turnId: "voice-turn-1",
+        text: "Let me check",
+      });
+      // A user transcript lands while the stream is still mid-flight
+      // (e.g. user interrupts). The next stream chunk must STILL find
+      // the original turn-1 bubble — not append a new one.
+      result.current.pushExternalEvent({
+        kind: "user-transcript",
+        text: "wait",
+      });
+      result.current.pushExternalEvent({
+        kind: "agent-response-stream",
+        turnId: "voice-turn-1",
+        text: "Let me check the catalog",
+      });
+    });
+    expect(result.current.messages).toHaveLength(2);
+    const agentMsg = result.current.messages.find((m) => m.turnId === "voice-turn-1");
+    expect(agentMsg?.text).toBe("Let me check the catalog");
+    // The user transcript is still present and separate.
+    expect(result.current.messages.some((m) => m.role === "user" && m.text === "wait")).toBe(true);
+  });
+
   it("marks the invocation complete on tool-result, matching by id", () => {
     const { result } = renderHook(() => useAgentChat("ruby"));
     act(() => {

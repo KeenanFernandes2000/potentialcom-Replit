@@ -16,6 +16,14 @@ export type ExternalVoiceEvent =
   | { kind: "user-transcript"; text: string }
   | { kind: "agent-response"; text: string }
   | {
+      kind: "agent-response-stream";
+      // Stable id for the LLM turn. Multiple events with the same
+      // turnId update the same chat bubble (text grows token-by-token).
+      // A new turnId starts a fresh bubble.
+      turnId: string;
+      text: string;
+    }
+  | {
       kind: "tool-call";
       id: string;
       name: string;
@@ -124,6 +132,33 @@ export function useAgentChat(agentKey: string): UseAgentChat {
               status: "complete",
             },
           ];
+        }
+        case "agent-response-stream": {
+          // Streaming: find the existing agent message with this turnId
+          // and replace its text (so the bubble grows token-by-token);
+          // create a new agent message if none exists yet.
+          const idx = prev.findIndex(
+            (m) => m.role === "agent" && m.turnId === event.turnId,
+          );
+          if (idx === -1) {
+            return [
+              ...prev,
+              {
+                id: nextId("agent"),
+                role: "agent",
+                text: event.text,
+                tools: [],
+                status: "complete",
+                turnId: event.turnId,
+              },
+            ];
+          }
+          const updated = [...prev];
+          updated[idx] = {
+            ...updated[idx],
+            text: event.text,
+          };
+          return updated;
         }
         case "tool-call": {
           const invocation: ToolInvocation = {
