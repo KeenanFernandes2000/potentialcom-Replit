@@ -148,7 +148,7 @@ describe("AgentChat voice wiring", () => {
 
     await waitFor(() => {
       const input = screen.getByPlaceholderText(
-        /ask ruby/i,
+        /message ruby/i,
       ) as HTMLInputElement;
       expect(input.value).toBe("find me a lipstick");
     });
@@ -178,7 +178,7 @@ describe("AgentChat voice wiring", () => {
     render(<AgentChat agentKey="ruby" registry={{}} />);
     // Wait for bot config so the event listener has been mounted (the
     // useEffect runs after first render and survives subsequent rerenders).
-    await screen.findByPlaceholderText(/ask ruby/i);
+    await screen.findByPlaceholderText(/message ruby/i);
 
     window.dispatchEvent(
       new CustomEvent("ruby:send", {
@@ -201,7 +201,7 @@ describe("AgentChat voice wiring", () => {
     vi.stubGlobal("fetch", fetchMock);
 
     render(<AgentChat agentKey="ruby" registry={{}} />);
-    await screen.findByPlaceholderText(/ask ruby/i);
+    await screen.findByPlaceholderText(/message ruby/i);
 
     window.dispatchEvent(
       new CustomEvent("ruby:send", {

@@ -312,7 +312,7 @@ const Demo = () => {
               data-aos="fade-up"
               data-aos-delay="150"
             >
-              <div className="w-full max-w-xl lg:min-h-[640px]">
+              <div className="w-full max-w-xl lg:min-h-[720px]">
                 <RubyChat />
               </div>
             </div>
