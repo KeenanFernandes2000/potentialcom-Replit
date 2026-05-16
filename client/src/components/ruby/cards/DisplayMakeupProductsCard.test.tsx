@@ -162,6 +162,88 @@ describe("DisplayMakeupProductsCard — defensive", () => {
     expect(container.textContent).not.toMatch(/\$null/);
   });
 
+  it("accepts Ruby's curated shape ({name, image, description, link}) — not just Shopify shape", () => {
+    render(
+      <DisplayMakeupProductsCard
+        invocation={inv({
+          products: [
+            {
+              name: "Velvet Matte Lipstick — Ruby Red",
+              image: "https://cdn.example/velvet.jpg",
+              description: "Long-lasting matte lipstick, intense color, 12 shades",
+              link: "https://alorabrands.com/velvet",
+            },
+            {
+              name: "Hydrating Foundation — Medium",
+              image: "https://cdn.example/hydrating.jpg",
+              description: "Lightweight medium-coverage hydrating foundation",
+              link: "https://alorabrands.com/hydrating",
+            },
+          ],
+        })}
+      />,
+    );
+    expect(screen.getByText("Velvet Matte Lipstick — Ruby Red")).toBeInTheDocument();
+    expect(screen.getByText("Hydrating Foundation — Medium")).toBeInTheDocument();
+    // CTAs should map link → product_url
+    const cta = screen.getAllByText(/View on store/i)[0];
+    expect(cta.closest("a")).toHaveAttribute(
+      "href",
+      "https://alorabrands.com/velvet",
+    );
+  });
+
+  it("falls back to invocation.response when arguments is empty (tool echoes products in result)", () => {
+    render(
+      <DisplayMakeupProductsCard
+        invocation={inv(
+          {},
+          {
+            response: {
+              type: "display_makeup_products",
+              status: "done",
+              message: "display_makeup_products done",
+              parameters: {
+                products: [
+                  {
+                    name: "Volume Boost Mascara",
+                    image: "Image",
+                    description: "Waterproof mascara adds dramatic volume",
+                    link: "View",
+                  },
+                ],
+              },
+            },
+          },
+        )}
+      />,
+    );
+    expect(screen.getByText("Volume Boost Mascara")).toBeInTheDocument();
+  });
+
+  it("falls back to invocation.response when response is the raw products shape (no wrapper)", () => {
+    render(
+      <DisplayMakeupProductsCard
+        invocation={inv(
+          {},
+          {
+            response: {
+              products: [
+                {
+                  name: "Neutral Palette",
+                  image: "https://cdn.example/palette.jpg",
+                  description: "12 shades, 6 matte + 6 shimmer",
+                  link: "https://alorabrands.com/palette",
+                },
+              ],
+            },
+          },
+        )}
+      />,
+    );
+    expect(screen.getByText("Neutral Palette")).toBeInTheDocument();
+  });
+
   it("warns to console for skipped malformed items in dev", () => {
     const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
     render(
