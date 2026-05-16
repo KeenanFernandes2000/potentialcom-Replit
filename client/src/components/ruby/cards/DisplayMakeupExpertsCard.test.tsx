@@ -96,6 +96,82 @@ describe("DisplayMakeupExpertsCard — defensive", () => {
     expect(container.textContent).not.toMatch(/null/);
   });
 
+  // Regression: the LLM started returning `prices` as an object
+  // ({Bridal: "$300", Party: "$200", Trial: "$100"}) instead of a
+  // string. React threw "Objects are not valid as a React child" and
+  // crashed the whole demo page. The coercion below collapses object
+  // shapes into a rendered key:value string.
+  it("renders object-shaped prices as 'key: value · key: value' (LLM regression: {Bridal, Party, Trial})", () => {
+    render(
+      <DisplayMakeupExpertsCard
+        invocation={inv({
+          experts: [
+            {
+              name: "Maya Soares",
+              prices: { Bridal: "$300", Party: "$200", Trial: "$100" },
+            },
+          ],
+        })}
+      />,
+    );
+    expect(screen.getByText("Maya Soares")).toBeInTheDocument();
+    expect(
+      screen.getByText("Bridal: $300 · Party: $200 · Trial: $100"),
+    ).toBeInTheDocument();
+  });
+
+  it("renders array-shaped specialties as comma-joined string", () => {
+    render(
+      <DisplayMakeupExpertsCard
+        invocation={inv({
+          experts: [
+            {
+              name: "Nadia Rahim",
+              specialties: ["Bridal", "Editorial", "Skincare"],
+            },
+          ],
+        })}
+      />,
+    );
+    expect(screen.getByText("Bridal, Editorial, Skincare")).toBeInTheDocument();
+  });
+
+  it("renders the services field (was extracted but previously not rendered)", () => {
+    render(
+      <DisplayMakeupExpertsCard
+        invocation={inv({
+          experts: [
+            {
+              name: "Sara Lin",
+              services: "Hair, Makeup, Skin consult",
+            },
+          ],
+        })}
+      />,
+    );
+    expect(
+      screen.getByText("Hair, Makeup, Skin consult"),
+    ).toBeInTheDocument();
+  });
+
+  it("drops object entries whose values are nested objects (no '[object Object]' in output)", () => {
+    const { container } = render(
+      <DisplayMakeupExpertsCard
+        invocation={inv({
+          experts: [
+            {
+              name: "Tara",
+              // Nested object — should be dropped, not stringified to garbage.
+              prices: { Bridal: "$300", Package: { weekday: "$200" } },
+            },
+          ],
+        })}
+      />,
+    );
+    expect(container.textContent).not.toMatch(/object Object/);
+    expect(screen.getByText("Bridal: $300")).toBeInTheDocument();
+  });
+
   it("skips malformed items and warns once in dev", () => {
     const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
     render(
