@@ -24,6 +24,11 @@ interface RoomCreateResponse {
   roomName: string;
   token?: string;
   wsUrl: string;
+  // The proxy synthesizes this so the browser knows where the custom
+  // /ws/livekit/... handler lives (potentialTS HTTP host, not the
+  // LiveKit native server on wsUrl). Prefer customWsUrl when present.
+  customWsUrl?: string;
+  botId?: string;
   participantName?: string;
 }
 
@@ -276,12 +281,15 @@ export function useLiveKitVoice(
     }
     streamRef.current = stream;
 
-    // 3. WebSocket
+    // 3. WebSocket. The custom WS handler lives on the potentialTS
+    // HTTP server (api.potential.com) at /ws/livekit/{roomName}/{botId}/{sessionId}.
+    // The proxy synthesizes `customWsUrl` from POTENTIAL_API_BASE so we
+    // don't have to derive it client-side. Falls back to `wsUrl` if the
+    // proxy didn't include it (older server).
     const sid = sessionIdRef.current;
-    const wsUrl = `${room.wsUrl.replace(/\/$/, "")}/ws/livekit/${room.roomName}/ruby/${sid}`;
-    // Note: path uses agentKey-as-botId ("ruby") here; the upstream
-    // resolves the real botId from the route params. If the upstream
-    // expects the literal botId in the path, swap "ruby" for it.
+    const wsBase = (room.customWsUrl ?? room.wsUrl).replace(/\/$/, "");
+    const botPathSegment = room.botId ?? agentKey;
+    const wsUrl = `${wsBase}/ws/livekit/${room.roomName}/${botPathSegment}/${sid}`;
     const ws = new WebSocket(wsUrl);
     wsRef.current = ws;
 
