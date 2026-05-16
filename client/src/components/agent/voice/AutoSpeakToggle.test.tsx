@@ -20,7 +20,7 @@ describe("AutoSpeakToggle", () => {
     const cb = screen.getByRole("switch", { name: /auto-speak/i });
     await user.click(cb);
     expect(cb).toHaveAttribute("aria-checked", "true");
-    expect(localStorage.getItem("ruby:autoSpeak")).toBe("true");
+    expect(localStorage.getItem("ruby:autoSpeak:v2")).toBe("true");
   });
 
   it("fires onChange with the new value", async () => {
@@ -32,7 +32,7 @@ describe("AutoSpeakToggle", () => {
   });
 
   it("reads an existing localStorage value on mount", () => {
-    localStorage.setItem("ruby:autoSpeak", "true");
+    localStorage.setItem("ruby:autoSpeak:v2", "true");
     render(<AutoSpeakToggle />);
     expect(
       screen.getByRole("switch", { name: /auto-speak/i }),

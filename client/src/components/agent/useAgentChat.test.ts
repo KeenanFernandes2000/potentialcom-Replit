@@ -72,6 +72,42 @@ describe("useAgentChat — pushExternalEvent", () => {
     expect(result.current.messages[2].role).toBe("user");
   });
 
+  it("dedupes a back-to-back agent-response with the same text (worker SpeechCreated + ConversationItemAdded both fire)", () => {
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    act(() => {
+      result.current.pushExternalEvent({
+        kind: "agent-response",
+        text: "Hi there! How can I help?",
+      });
+      // Second push from the worker's later ConversationItemAdded — same text.
+      result.current.pushExternalEvent({
+        kind: "agent-response",
+        text: "Hi there! How can I help?",
+      });
+    });
+    expect(result.current.messages).toHaveLength(1);
+    expect(result.current.messages[0].role).toBe("agent");
+  });
+
+  it("does NOT dedupe an agent-response after a user turn (genuine new reply)", () => {
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    act(() => {
+      result.current.pushExternalEvent({
+        kind: "agent-response",
+        text: "Sure!",
+      });
+      result.current.pushExternalEvent({
+        kind: "user-transcript",
+        text: "great",
+      });
+      result.current.pushExternalEvent({
+        kind: "agent-response",
+        text: "Sure!",
+      });
+    });
+    expect(result.current.messages).toHaveLength(3);
+  });
+
   it("appends a complete agent message on agent-response", () => {
     const { result } = renderHook(() => useAgentChat("ruby"));
     act(() => {
