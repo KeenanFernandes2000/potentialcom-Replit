@@ -217,4 +217,53 @@ describe("AgentChat voice wiring", () => {
     );
     expect(speakCalls).toHaveLength(0);
   });
+
+  it("dispatching a 'ruby:send' window event sends that prompt through the agent (hero try-this buttons)", async () => {
+    const fetchMock = buildFetchMock({
+      "/bot": () =>
+        new Response(JSON.stringify(botConfig), {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        }),
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    render(<AgentChat agentKey="ruby" registry={{}} />);
+    // Wait for bot config so the event listener has been mounted (the
+    // useEffect runs after first render and survives subsequent rerenders).
+    await screen.findByPlaceholderText(/ask ruby/i);
+
+    window.dispatchEvent(
+      new CustomEvent("ruby:send", {
+        detail: { prompt: "Show me lipsticks", agentKey: "ruby" },
+      }),
+    );
+    await waitFor(() => {
+      expect(sendMock).toHaveBeenCalledWith("Show me lipsticks");
+    });
+  });
+
+  it("'ruby:send' events targeted at a different agentKey are ignored (no cross-agent crosstalk)", async () => {
+    const fetchMock = buildFetchMock({
+      "/bot": () =>
+        new Response(JSON.stringify(botConfig), {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        }),
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    render(<AgentChat agentKey="ruby" registry={{}} />);
+    await screen.findByPlaceholderText(/ask ruby/i);
+
+    window.dispatchEvent(
+      new CustomEvent("ruby:send", {
+        detail: { prompt: "ignored", agentKey: "different-agent" },
+      }),
+    );
+    // Give React a tick — if the event were going to route through, it
+    // would have done so by now.
+    await new Promise((r) => setTimeout(r, 10));
+    expect(sendMock).not.toHaveBeenCalled();
+  });
 });
