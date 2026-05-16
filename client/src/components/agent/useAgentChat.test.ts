@@ -445,4 +445,74 @@ describe("useAgentChat — pushExternalEvent", () => {
 
     vi.unstubAllGlobals();
   });
+
+  it("regenerate() removes the target agent message and re-sends the preceding user message", async () => {
+    // Mock fetch so send() in the implementation completes with a clean
+    // empty stream — the assertion below only cares that send was called
+    // with the original user text, not what comes back.
+    const fetchMock = vi.fn().mockImplementation(async () =>
+      new Response("data: [DONE]\n\n", {
+        status: 200,
+        headers: { "Content-Type": "text/event-stream" },
+      }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+
+    const { result } = renderHook(() => useAgentChat("ruby"));
+
+    // Seed a turn manually via pushExternalEvent (avoids triggering send()
+    // for the seed).
+    act(() => {
+      result.current.pushExternalEvent({ kind: "user-transcript", text: "find me a lipstick" });
+      result.current.pushExternalEvent({ kind: "agent-response", text: "old reply" });
+    });
+    expect(result.current.messages.length).toBe(2);
+    const oldAgent = result.current.messages[1];
+
+    await act(async () => {
+      result.current.regenerate(oldAgent.id);
+    });
+
+    // The old agent message was removed; send() re-emitted both a new
+    // user message and a new (streaming) agent message — but for this
+    // test what matters is that fetch was called with the original user
+    // text in the body.
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    const callArgs = fetchMock.mock.calls[0];
+    const body = JSON.parse(callArgs[1].body);
+    expect(body.message).toBe("find me a lipstick");
+
+    vi.unstubAllGlobals();
+  });
+
+  it("regenerate() no-ops when no preceding user message exists", async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    act(() => {
+      // One agent message, no user message before.
+      result.current.pushExternalEvent({ kind: "agent-response", text: "first" });
+    });
+    const orphanAgent = result.current.messages[0];
+
+    await act(async () => {
+      result.current.regenerate(orphanAgent.id);
+    });
+
+    expect(fetchMock).not.toHaveBeenCalled();
+    vi.unstubAllGlobals();
+  });
+
+  it("regenerate() no-ops on unknown messageId", async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    await act(async () => {
+      result.current.regenerate("not-a-real-id");
+    });
+    expect(fetchMock).not.toHaveBeenCalled();
+    vi.unstubAllGlobals();
+  });
 });

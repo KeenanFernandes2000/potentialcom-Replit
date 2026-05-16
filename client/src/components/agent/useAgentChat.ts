@@ -39,6 +39,7 @@ export interface UseAgentChat {
   send: (text: string, imageUrl?: string) => Promise<void>;
   pushExternalEvent: (event: ExternalVoiceEvent) => void;
   clear: () => void;
+  regenerate: (messageId: string) => void;
 }
 
 export function useAgentChat(agentKey: string): UseAgentChat {
@@ -46,6 +47,14 @@ export function useAgentChat(agentKey: string): UseAgentChat {
   const [status, setStatus] = useState<"idle" | "streaming">("idle");
   const [sessionId, setSessionId] = useState<string>(() => newSessionId());
   const abortRef = useRef<AbortController | null>(null);
+
+  // Mirror messages into a ref so callbacks (regenerate) can read the
+  // latest array without listing it in their deps. Cheaper than putting
+  // messages in the regenerate dep array and re-binding on every render.
+  const messagesRef = useRef<AgentMessage[]>([]);
+  useEffect(() => {
+    messagesRef.current = messages;
+  }, [messages]);
 
   useEffect(() => () => abortRef.current?.abort(), []);
 
@@ -367,5 +376,37 @@ export function useAgentChat(agentKey: string): UseAgentChat {
     [agentKey, status, sessionId, updateAgentMessage],
   );
 
-  return { messages, status, sessionId, send, pushExternalEvent, clear };
+  const regenerate = useCallback(
+    (messageId: string): void => {
+      if (status === "streaming") return; // don't allow mid-stream regen
+      const current = messagesRef.current;
+      const targetIdx = current.findIndex((m) => m.id === messageId);
+      if (targetIdx === -1) return;
+
+      // Walk backwards from targetIdx - 1 to find the immediately preceding
+      // user message. If none exists, no-op.
+      let userIdx = -1;
+      for (let i = targetIdx - 1; i >= 0; i--) {
+        if (current[i].role === "user") {
+          userIdx = i;
+          break;
+        }
+      }
+      if (userIdx === -1) return;
+
+      const userMessage = current[userIdx];
+
+      // Trim up to (but NOT including) the preceding user message. send()
+      // will re-append a fresh user + agent pair, so we drop the old user
+      // turn too to avoid duplicating it.
+      setMessages(current.slice(0, userIdx));
+
+      // Re-fire the original send with the same text + imageUrl. send()
+      // appends a new user + agent pair and kicks off the stream.
+      void send(userMessage.text, userMessage.imageUrl);
+    },
+    [status, send],
+  );
+
+  return { messages, status, sessionId, send, pushExternalEvent, clear, regenerate };
 }
