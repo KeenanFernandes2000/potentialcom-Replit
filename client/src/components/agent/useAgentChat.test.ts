@@ -19,6 +19,59 @@ describe("useAgentChat — pushExternalEvent", () => {
     expect(msg.status).toBe("complete");
   });
 
+  it("dedupes a back-to-back user-transcript with the same text (worker double-publish protection)", () => {
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    act(() => {
+      result.current.pushExternalEvent({
+        kind: "user-transcript",
+        text: "show me lipsticks",
+      });
+      result.current.pushExternalEvent({
+        kind: "user-transcript",
+        text: "show me lipsticks",
+      });
+    });
+    expect(result.current.messages).toHaveLength(1);
+    expect(result.current.messages[0].text).toBe("show me lipsticks");
+  });
+
+  it("treats whitespace-only differences as duplicates", () => {
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    act(() => {
+      result.current.pushExternalEvent({
+        kind: "user-transcript",
+        text: "yes",
+      });
+      result.current.pushExternalEvent({
+        kind: "user-transcript",
+        text: "  yes  ",
+      });
+    });
+    expect(result.current.messages).toHaveLength(1);
+  });
+
+  it("does NOT dedupe when the user genuinely says the same thing after an agent reply", () => {
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    act(() => {
+      result.current.pushExternalEvent({
+        kind: "user-transcript",
+        text: "yes",
+      });
+      result.current.pushExternalEvent({
+        kind: "agent-response",
+        text: "Got it!",
+      });
+      result.current.pushExternalEvent({
+        kind: "user-transcript",
+        text: "yes",
+      });
+    });
+    expect(result.current.messages).toHaveLength(3);
+    expect(result.current.messages[0].role).toBe("user");
+    expect(result.current.messages[1].role).toBe("agent");
+    expect(result.current.messages[2].role).toBe("user");
+  });
+
   it("appends a complete agent message on agent-response", () => {
     const { result } = renderHook(() => useAgentChat("ruby"));
     act(() => {
