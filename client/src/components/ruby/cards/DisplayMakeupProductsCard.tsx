@@ -144,12 +144,15 @@ export function DisplayMakeupProductsCard({
       <CardHeader icon="💄" title={headerTitle} />
       <CardGrid>
         {args.products.map((p) => (
+          // `group` activates the CardImage hover-zoom; `hover:-translate-y-1`
+          // gives the tile itself a subtle lift; the colored shadow on
+          // hover ties it back to the demo's brand palette.
           <div
             key={p.id}
-            className="rounded-lg overflow-hidden bg-tool-card-muted"
+            className="group relative overflow-hidden rounded-xl bg-tool-card-muted ring-1 ring-tool-card-border/60 transition-all duration-300 hover:-translate-y-1 hover:ring-fuchsia-400/50 hover:shadow-[0_18px_40px_-18px_rgba(217,70,239,0.55)]"
           >
             <CardImage src={p.image_url} alt={p.title} aspect="square" />
-            <div className="p-2">
+            <div className="p-2.5">
               <div className="text-sm font-semibold leading-tight">
                 {p.title}
               </div>

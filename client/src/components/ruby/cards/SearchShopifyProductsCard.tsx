@@ -101,12 +101,14 @@ export function SearchShopifyProductsCard({
       />
       <CardGrid>
         {result.products.map((p) => (
+          // `group` activates CardImage's hover-zoom; the tile itself
+          // lifts + glows on hover for a premium product-grid feel.
           <div
             key={p.id}
-            className="rounded-lg overflow-hidden bg-tool-card-muted"
+            className="group relative overflow-hidden rounded-xl bg-tool-card-muted ring-1 ring-tool-card-border/60 transition-all duration-300 hover:-translate-y-1 hover:ring-fuchsia-400/50 hover:shadow-[0_18px_40px_-18px_rgba(217,70,239,0.55)]"
           >
             <CardImage src={p.image} alt={p.name} aspect="square" />
-            <div className="p-2">
+            <div className="p-2.5">
               <div className="text-sm font-semibold leading-tight">
                 {p.name}
               </div>
