@@ -24,6 +24,11 @@ export interface AgentMessage {
   tools: ToolInvocation[];
   imageUrl?: string; // set on user messages that included an uploaded image
   status: "streaming" | "complete" | "error";
+  // For voice-streamed agent messages: stable identifier per LLM turn so
+  // subsequent ai_response_stream events from the same turn can find and
+  // update this message instead of appending a new one. Absent for
+  // typed-chat messages and for non-streaming voice paths.
+  turnId?: string;
 }
 
 // Request body sent to POST /api/agent/:agentKey/chat

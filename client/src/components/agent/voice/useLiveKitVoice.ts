@@ -39,6 +39,9 @@ interface DataMessage {
   callId?: string;
   isError?: boolean;
   speaking?: boolean;
+  // For type:"ai_response_stream" — stable id across a single LLM turn.
+  // Multiple stream messages with the same turnId update the same bubble.
+  turnId?: string;
 }
 
 /**
@@ -110,6 +113,20 @@ export function useLiveKitVoice(
         case "aiResponse":
           if (typeof parsed.text === "string" && parsed.text.trim()) {
             pushExternalEvent({ kind: "agent-response", text: parsed.text });
+          }
+          return;
+        case "ai_response_stream":
+          if (
+            typeof parsed.text === "string" &&
+            parsed.text.trim() &&
+            typeof parsed.turnId === "string" &&
+            parsed.turnId
+          ) {
+            pushExternalEvent({
+              kind: "agent-response-stream",
+              turnId: parsed.turnId,
+              text: parsed.text,
+            });
           }
           return;
         case "tool_call":
