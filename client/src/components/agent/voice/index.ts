@@ -11,3 +11,4 @@ export { VoiceCallBar } from "./VoiceCallBar";
 export { VoiceHero } from "./VoiceHero";
 export { TalkModePicker } from "./TalkModePicker";
 export { AvatarView } from "./AvatarView";
+export { AvatarPane } from "./AvatarPane";

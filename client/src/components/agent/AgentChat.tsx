@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Send, ImagePlus, X, PhoneOff } from "lucide-react";
+import { Send, ImagePlus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { MessageBubble } from "./MessageBubble";
@@ -16,7 +16,7 @@ import {
   VoiceModeButton,
   VoiceHero,
   TalkModePicker,
-  AvatarView,
+  AvatarPane,
 } from "./voice";
 import type { ToolRegistry } from "./toolRegistry";
 import type { AgentBotConfig } from "@shared/agent";
@@ -45,6 +45,12 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
   const [focusBumpCounter, setFocusBumpCounter] = useState(0);
   const bumpFocus = useCallback(() => setFocusBumpCounter((n) => n + 1), []);
   const [talkModePickerOpen, setTalkModePickerOpen] = useState(false);
+  // Eager avatar-mode flag: flipped true the moment the user picks
+  // "Voice + Avatar" so the AvatarPane (with its Connecting fallback)
+  // renders immediately. Without this we'd wait ~7-8s for Anam to
+  // spin up and publish its video track before any avatar UI shows,
+  // which feels like the modal click did nothing. Reset on hangup.
+  const [pickedAvatar, setPickedAvatar] = useState(false);
   const tts = useTextToSpeech(agentKey);
   const voice = useLiveKitVoice(agentKey, chat.sessionId, chat.pushExternalEvent);
 
@@ -155,8 +161,20 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
   // Visual states for the header avatar.
   const isAgentSpeaking = voice.state === "agent-speaking";
   const isOnCall = voice.state !== "idle" && voice.state !== "error";
-  // Avatar mode: true once Anam's video track has joined the room.
-  const isAvatarMode = !!voice.avatarVideoTrack;
+  // Avatar mode is true whenever the user picked avatar OR the Anam
+  // video track has actually arrived. The eager flag drives the
+  // initial Connecting state; the track-based check keeps things
+  // honest if pickedAvatar somehow lingers past hangup.
+  const isAvatarMode =
+    (pickedAvatar && isOnCall) || !!voice.avatarVideoTrack;
+
+  // Once the call leaves the on-call states (hangup or error), reset
+  // the eager flag so the next picker round starts fresh.
+  useEffect(() => {
+    if (!isOnCall && pickedAvatar) {
+      setPickedAvatar(false);
+    }
+  }, [isOnCall, pickedAvatar]);
 
   const handlePromptSelect = (prompt: string) => {
     if (status === "streaming") return;
@@ -185,6 +203,152 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
     window.addEventListener("ruby:send", handler);
     return () => window.removeEventListener("ruby:send", handler);
   }, [agentKey, status, send]);
+
+  // Messages list — extracted so the same JSX renders in both the
+  // normal vertical layout and the side-by-side avatar layout.
+  const messagesNode = (
+    <div className="relative flex-1 overflow-hidden min-h-0">
+      <div
+        ref={scrollRef}
+        className="absolute inset-0 space-y-5 overflow-y-auto px-6 py-5"
+      >
+        {messages.length === 0 && !isOnCall && (
+          <div
+            className="flex flex-col items-center py-10 text-center"
+            data-testid="agent-chat-empty-hero"
+          >
+            {bot?.avatarUrl && (
+              <img
+                src={bot.avatarUrl}
+                alt={bot.name}
+                className="mb-5 h-20 w-20 rounded-full object-cover"
+              />
+            )}
+            <h2 className="text-xl font-semibold tracking-tight text-foreground">
+              Hi, I'm {bot?.name ?? "Ruby"}
+            </h2>
+            <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted-foreground">
+              {bot?.greeting ??
+                "Ask me anything — I'll find products, courses, experts, and deals."}
+            </p>
+            <div className="w-full max-w-md mt-2">
+              <SuggestedPrompts onSelect={handlePromptSelect} />
+            </div>
+          </div>
+        )}
+        {(() => {
+          let lastAgentIdx = -1;
+          for (let i = messages.length - 1; i >= 0; i--) {
+            if (messages[i].role === "agent") {
+              lastAgentIdx = i;
+              break;
+            }
+          }
+          return messages.map((message, idx) => (
+            <MessageBubble
+              key={message.id}
+              message={message}
+              registry={registry}
+              tts={tts}
+              ttsEnabled={!!bot?.audiotts}
+              isLast={idx === lastAgentIdx}
+              onRegenerate={chat.regenerate}
+            />
+          ));
+        })()}
+      </div>
+      {!isNearBottom && messages.length > 0 && (
+        <ScrollToLatestPill onClick={() => scrollToBottom(true)} />
+      )}
+    </div>
+  );
+
+  // Input row — same JSX in both layouts.
+  const inputNode = (
+    <div className="border-t border-border/60 px-6 py-4">
+      {pendingImage && (
+        <div className="mb-2 inline-flex items-center gap-2 rounded-lg border border-border bg-background p-1 pr-2">
+          <img
+            src={pendingImage.previewUrl}
+            alt="Attached"
+            className="h-10 w-10 rounded object-cover"
+          />
+          <span className="text-xs text-muted-foreground">Image attached</span>
+          <button
+            type="button"
+            onClick={() =>
+              setPendingImage((prev) => {
+                if (prev) URL.revokeObjectURL(prev.previewUrl);
+                return null;
+              })
+            }
+            className="text-muted-foreground hover:text-foreground"
+            aria-label="Remove attached image"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+      )}
+      <form onSubmit={handleSubmit} className="flex items-center gap-2">
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={handleFileSelected}
+          data-testid="agent-chat-file"
+        />
+        <Button
+          type="button"
+          size="icon"
+          variant="ghost"
+          className="h-11 w-11 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted"
+          disabled={uploading || status === "streaming"}
+          onClick={() => fileInputRef.current?.click()}
+          data-testid="agent-chat-upload"
+          aria-label="Attach an image"
+        >
+          <ImagePlus className="h-5 w-5" />
+        </Button>
+        <MicButton
+          agentKey={agentKey}
+          disabled={!bot?.audiostt}
+          onTranscript={(text) => setInput(text)}
+        />
+        <AutoGrowTextarea
+          value={input}
+          onChange={setInput}
+          onSubmit={() => {
+            if (status === "streaming") return;
+            const hasText = input.trim().length > 0;
+            if (!hasText && !pendingImage) return;
+            const text = pendingImage
+              ? `${input} [image: ${pendingImage.filename}]`.trim()
+              : input;
+            const previewUrl = pendingImage?.previewUrl;
+            setInput("");
+            setPendingImage(null);
+            void send(text, previewUrl);
+            bumpFocus();
+          }}
+          placeholder="Message Ruby…"
+          disabled={status === "streaming"}
+          autoFocusKey={focusBumpCounter}
+        />
+        <Button
+          type="submit"
+          size="icon"
+          className="h-11 w-11 rounded-full bg-primary hover:bg-primary/90 shadow-sm"
+          disabled={
+            status === "streaming" || (!input.trim() && !pendingImage)
+          }
+          data-testid="agent-chat-send"
+        >
+          <Send className="h-4 w-4" />
+        </Button>
+      </form>
+    </div>
+  );
 
   return (
     // App-grade chat surface. Reads as a real product, not a widget:
@@ -277,204 +441,52 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
         onOpenChange={setTalkModePickerOpen}
         onPick={(withAvatar) => {
           setTalkModePickerOpen(false);
+          setPickedAvatar(withAvatar);
           void voice.start({ withAvatar });
         }}
       />
 
-      {/* In-call dock OR avatar view — both pinned between header and
-          messages. Avatar mode replaces the dock with the video, plus
-          a small overlay row for End Call (since the dock's controls
-          are now absent). */}
-      {isOnCall && !isAvatarMode && (
-        <VoiceHero
-          state={voice.state}
-          durationMs={voice.durationMs}
-          isMuted={voice.isMuted}
-          agentName={bot?.name ?? "Ruby"}
-          onMute={voice.toggleMute}
-          onHangup={voice.hangup}
-        />
-      )}
-      {isOnCall && isAvatarMode && (
-        <div className="relative border-b border-border bg-muted/40">
-          <div className="aspect-video w-full" style={{ maxHeight: "65vh" }}>
-            <AvatarView
-              track={voice.avatarVideoTrack}
-              avatarUrl={bot?.avatarUrl}
+      {/* Layout switcher:
+          - Avatar mode: side-by-side (avatar pane | chat pane) on md+;
+            stacks vertically on mobile (avatar on top, chat below).
+          - Voice-only / no call: classic vertical layout (hero dock if
+            on call, then messages, then input). */}
+      {isOnCall && isAvatarMode ? (
+        <div className="flex flex-1 flex-col overflow-hidden md:flex-row min-h-0">
+          {/* LEFT pane — premium AvatarPane: brand-purple ambient
+              orbs, rounded video tile with speaking ring, live badge,
+              state label + duration timer, mute + end-call controls. */}
+          <AvatarPane
+            track={voice.avatarVideoTrack}
+            avatarUrl={bot?.avatarUrl}
+            agentName={bot?.name ?? "Ruby"}
+            state={voice.state}
+            durationMs={voice.durationMs}
+            isMuted={voice.isMuted}
+            onMute={voice.toggleMute}
+            onHangup={voice.hangup}
+          />
+          {/* RIGHT pane — messages list (scrollable) + input row. */}
+          <div className="flex flex-1 flex-col overflow-hidden min-h-0">
+            {messagesNode}
+            {inputNode}
+          </div>
+        </div>
+      ) : (
+        <>
+          {isOnCall && !isAvatarMode && (
+            <VoiceHero
+              state={voice.state}
+              durationMs={voice.durationMs}
+              isMuted={voice.isMuted}
               agentName={bot?.name ?? "Ruby"}
+              onMute={voice.toggleMute}
+              onHangup={voice.hangup}
             />
-          </div>
-          {/* End-call overlay top-right — voice-only's End Call lived
-              in the VoiceHero dock; in avatar mode it floats over the
-              video. */}
-          <button
-            type="button"
-            onClick={voice.hangup}
-            aria-label="End call"
-            title="End call"
-            className="absolute top-3 right-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-red-500 text-white shadow-md transition-colors hover:bg-red-600"
-            data-testid="avatar-view-hangup"
-          >
-            <PhoneOff className="h-5 w-5" />
-          </button>
-        </div>
-      )}
-
-      {/* Messages — generous padding (px-6 py-5) so message bubbles
-          have room to breathe. space-y-5 between messages for clearer
-          turn separation. Wrapped in a relative container so the
-          ScrollToLatestPill can absolute-position itself over the
-          scrollable area without affecting layout. */}
-      <div className="relative flex-1 overflow-hidden">
-        <div
-          ref={scrollRef}
-          className="absolute inset-0 space-y-5 overflow-y-auto px-6 py-5"
-        >
-          {/* Empty-state — generous spacing, centered hero treatment
-              with a larger avatar so the first paint reads as a proper
-              intro screen, not a default state. */}
-          {messages.length === 0 && !isOnCall && (
-            <div
-              className="flex flex-col items-center py-10 text-center"
-              data-testid="agent-chat-empty-hero"
-            >
-              {bot?.avatarUrl && (
-                <img
-                  src={bot.avatarUrl}
-                  alt={bot.name}
-                  className="mb-5 h-20 w-20 rounded-full object-cover"
-                />
-              )}
-              <h2 className="text-xl font-semibold tracking-tight text-foreground">
-                Hi, I'm {bot?.name ?? "Ruby"}
-              </h2>
-              <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted-foreground">
-                {bot?.greeting ??
-                  "Ask me anything — I'll find products, courses, experts, and deals."}
-              </p>
-              <div className="w-full max-w-md mt-2">
-                <SuggestedPrompts onSelect={handlePromptSelect} />
-              </div>
-            </div>
           )}
-          {(() => {
-            // Precompute the index of the last agent message so we don't recompute
-            // it inside the map (was O(n²) via slice+some).
-            let lastAgentIdx = -1;
-            for (let i = messages.length - 1; i >= 0; i--) {
-              if (messages[i].role === "agent") {
-                lastAgentIdx = i;
-                break;
-              }
-            }
-            return messages.map((message, idx) => (
-              <MessageBubble
-                key={message.id}
-                message={message}
-                registry={registry}
-                tts={tts}
-                ttsEnabled={!!bot?.audiotts}
-                isLast={idx === lastAgentIdx}
-                onRegenerate={chat.regenerate}
-              />
-            ));
-          })()}
-        </div>
-        {!isNearBottom && messages.length > 0 && (
-          <ScrollToLatestPill onClick={() => scrollToBottom(true)} />
-        )}
-      </div>
-
-      {/* Input — hidden in avatar mode (voice-first; user types via
-          Chat mode by ending the call). */}
-      {!isAvatarMode && (
-      <div className="border-t border-border/60 px-6 py-4">
-        {pendingImage && (
-          <div className="mb-2 inline-flex items-center gap-2 rounded-lg border border-border bg-background p-1 pr-2">
-            <img
-              src={pendingImage.previewUrl}
-              alt="Attached"
-              className="h-10 w-10 rounded object-cover"
-            />
-            <span className="text-xs text-muted-foreground">
-              Image attached
-            </span>
-            <button
-              type="button"
-              onClick={() =>
-                setPendingImage((prev) => {
-                  if (prev) URL.revokeObjectURL(prev.previewUrl);
-                  return null;
-                })
-              }
-              className="text-muted-foreground hover:text-foreground"
-              aria-label="Remove attached image"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          </div>
-        )}
-        <form onSubmit={handleSubmit} className="flex items-center gap-2">
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={handleFileSelected}
-            data-testid="agent-chat-file"
-          />
-          <Button
-            type="button"
-            size="icon"
-            variant="ghost"
-            className="h-11 w-11 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted"
-            disabled={uploading || status === "streaming"}
-            onClick={() => fileInputRef.current?.click()}
-            data-testid="agent-chat-upload"
-            aria-label="Attach an image"
-          >
-            <ImagePlus className="h-5 w-5" />
-          </Button>
-          <MicButton
-            agentKey={agentKey}
-            disabled={!bot?.audiostt}
-            onTranscript={(text) => setInput(text)}
-          />
-          <AutoGrowTextarea
-            value={input}
-            onChange={setInput}
-            onSubmit={() => {
-              // Mirror the form's submit: build the same payload handleSubmit
-              // would, then bump focus to keep typing flowing.
-              if (status === "streaming") return;
-              const hasText = input.trim().length > 0;
-              if (!hasText && !pendingImage) return;
-              const text = pendingImage
-                ? `${input} [image: ${pendingImage.filename}]`.trim()
-                : input;
-              const previewUrl = pendingImage?.previewUrl;
-              setInput("");
-              setPendingImage(null);
-              void send(text, previewUrl);
-              bumpFocus();
-            }}
-            placeholder="Message Ruby…"
-            disabled={status === "streaming"}
-            autoFocusKey={focusBumpCounter}
-          />
-          <Button
-            type="submit"
-            size="icon"
-            className="h-11 w-11 rounded-full bg-primary hover:bg-primary/90 shadow-sm"
-            disabled={
-              status === "streaming" || (!input.trim() && !pendingImage)
-            }
-            data-testid="agent-chat-send"
-          >
-            <Send className="h-4 w-4" />
-          </Button>
-        </form>
-      </div>
+          {messagesNode}
+          {inputNode}
+        </>
       )}
       </div>
     </div>
