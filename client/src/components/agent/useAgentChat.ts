@@ -38,12 +38,13 @@ export interface UseAgentChat {
   sessionId: string;
   send: (text: string, imageUrl?: string) => Promise<void>;
   pushExternalEvent: (event: ExternalVoiceEvent) => void;
+  clear: () => void;
 }
 
 export function useAgentChat(agentKey: string): UseAgentChat {
   const [messages, setMessages] = useState<AgentMessage[]>([]);
   const [status, setStatus] = useState<"idle" | "streaming">("idle");
-  const sessionIdRef = useRef<string>(newSessionId());
+  const [sessionId, setSessionId] = useState<string>(() => newSessionId());
   const abortRef = useRef<AbortController | null>(null);
 
   useEffect(() => () => abortRef.current?.abort(), []);
@@ -209,6 +210,19 @@ export function useAgentChat(agentKey: string): UseAgentChat {
     });
   }, []);
 
+  const clear = useCallback(() => {
+    // Abort any in-flight stream so a half-complete agent message doesn't
+    // get appended after the reset. The existing send() also clears
+    // abortRef in its finally — the dual-write here is intentional: even
+    // if send() is mid-await when clear() fires, the abort guarantees the
+    // controller is torn down NOW.
+    abortRef.current?.abort();
+    abortRef.current = null;
+    setMessages([]);
+    setSessionId(newSessionId());
+    setStatus("idle");
+  }, []);
+
   const send = useCallback(
     async (text: string, imageUrl?: string) => {
       if (!text.trim() || status === "streaming") return;
@@ -246,7 +260,7 @@ export function useAgentChat(agentKey: string): UseAgentChat {
           signal: controller.signal,
           body: JSON.stringify({
             message: text,
-            sessionId: sessionIdRef.current,
+            sessionId,
           }),
         });
 
@@ -353,5 +367,5 @@ export function useAgentChat(agentKey: string): UseAgentChat {
     [agentKey, status, updateAgentMessage],
   );
 
-  return { messages, status, sessionId: sessionIdRef.current, send, pushExternalEvent };
+  return { messages, status, sessionId, send, pushExternalEvent, clear };
 }

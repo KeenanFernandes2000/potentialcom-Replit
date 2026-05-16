@@ -385,4 +385,23 @@ describe("useAgentChat — pushExternalEvent", () => {
       expect(m.createdAt).toBeLessThanOrEqual(after);
     }
   });
+
+  it("clear() resets messages to [], mints a new sessionId, and sets status idle", () => {
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    const originalSessionId = result.current.sessionId;
+    act(() => {
+      result.current.pushExternalEvent({ kind: "user-transcript", text: "one" });
+      result.current.pushExternalEvent({ kind: "agent-response", text: "two" });
+    });
+    expect(result.current.messages.length).toBe(2);
+
+    act(() => {
+      result.current.clear();
+    });
+
+    expect(result.current.messages).toEqual([]);
+    expect(result.current.status).toBe("idle");
+    expect(result.current.sessionId).not.toBe(originalSessionId);
+    expect(result.current.sessionId.length).toBeGreaterThan(0);
+  });
 });
