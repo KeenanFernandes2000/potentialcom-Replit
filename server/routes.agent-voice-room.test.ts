@@ -54,7 +54,7 @@ describe("POST /api/agent/:agentKey/voice/room", () => {
 
     expect(fetchMock).toHaveBeenCalledOnce();
     const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
-    expect(String(url)).toContain("/api/voice/room/create");
+    expect(String(url)).toContain("/api/livekit/room/create");
     expect(init.method).toBe("POST");
     expect(init.headers).toMatchObject({ "Content-Type": "application/json" });
     const body = JSON.parse(String(init.body));

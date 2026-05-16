@@ -834,7 +834,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
     try {
       const upstream = await fetch(
-        `${POTENTIAL_API_BASE}/api/voice/room/create`,
+        `${POTENTIAL_API_BASE}/api/livekit/room/create`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
