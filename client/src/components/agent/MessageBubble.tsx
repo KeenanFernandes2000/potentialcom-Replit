@@ -3,12 +3,18 @@ import { ToolCard } from "./ToolCard";
 import type { ToolRegistry } from "./toolRegistry";
 import type { AgentMessage } from "@shared/agent";
 import { SpeakButton, type UseTextToSpeechResult } from "./voice";
+import { MessageActions } from "./MessageActions";
+import { HoverTimestamp } from "./HoverTimestamp";
 
 interface MessageBubbleProps {
   message: AgentMessage;
   registry: ToolRegistry;
   tts?: UseTextToSpeechResult;
   ttsEnabled?: boolean;
+  /** True if this is the most recent agent message in the conversation. */
+  isLast?: boolean;
+  /** Called when the user clicks Regenerate or Retry. */
+  onRegenerate?: (messageId: string) => void;
 }
 
 // Renders one chat message: user messages right-aligned and plain; agent
@@ -19,12 +25,14 @@ export function MessageBubble({
   registry,
   tts,
   ttsEnabled,
+  isLast,
+  onRegenerate,
 }: MessageBubbleProps) {
   const isUser = message.role === "user";
 
   if (isUser) {
     return (
-      <div className="flex justify-end">
+      <div className="group flex flex-col items-end">
         <div className="max-w-[78%] rounded-2xl rounded-br-md bg-primary px-4 py-2.5 text-[15px] leading-relaxed text-primary-foreground">
           {message.imageUrl && (
             <img
@@ -35,6 +43,7 @@ export function MessageBubble({
           )}
           <span>{message.text}</span>
         </div>
+        <HoverTimestamp createdAt={message.createdAt} />
       </div>
     );
   }
@@ -47,7 +56,7 @@ export function MessageBubble({
     message.text.trim().length > 0;
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="group flex flex-col gap-2">
       {message.tools.map((tool) => (
         <ToolCard key={tool.id} invocation={tool} registry={registry} />
       ))}
@@ -69,6 +78,18 @@ export function MessageBubble({
           {canSpeak && tts && (
             <SpeakButton text={message.text} tts={tts} />
           )}
+        </div>
+      )}
+      {/* Hover row: timestamp + actions. Only meaningful when there's
+          actual text (streaming/loading bubbles don't show actions). */}
+      {message.text && onRegenerate && (
+        <div className="flex items-center gap-2">
+          <MessageActions
+            message={message}
+            isLast={!!isLast}
+            onRegenerate={onRegenerate}
+          />
+          <HoverTimestamp createdAt={message.createdAt} />
         </div>
       )}
     </div>
