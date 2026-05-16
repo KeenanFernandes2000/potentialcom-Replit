@@ -62,6 +62,50 @@ describe("POST /api/agent/:agentKey/voice/room", () => {
     expect(body.sessionId).toBe("s1");
   });
 
+  it("forwards withAvatar=true through to upstream when set in body", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(
+      new Response(
+        JSON.stringify({
+          success: true,
+          roomName: "bot-abc-session-s1-12345",
+          token: "fake.jwt.token",
+          wsUrl: "wss://livekit.potential.com",
+        }),
+        { status: 200, headers: { "Content-Type": "application/json" } },
+      ),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+
+    const res = await request(makeApp())
+      .post("/api/agent/ruby/voice/room")
+      .send({ sessionId: "s1", withAvatar: true });
+
+    expect(res.status).toBe(200);
+    expect(fetchMock).toHaveBeenCalledOnce();
+    const [, init] = fetchMock.mock.calls[0] as [string, RequestInit];
+    const body = JSON.parse(String(init.body));
+    expect(body.withAvatar).toBe(true);
+  });
+
+  it("omits withAvatar from upstream payload when not set in body (preserves wire format)", async () => {
+    const fetchMock = vi.fn().mockResolvedValue(
+      new Response(
+        JSON.stringify({ roomName: "x", token: "y", wsUrl: "z" }),
+        { status: 200, headers: { "Content-Type": "application/json" } },
+      ),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+
+    const res = await request(makeApp())
+      .post("/api/agent/ruby/voice/room")
+      .send({ sessionId: "s1" });
+
+    expect(res.status).toBe(200);
+    const [, init] = fetchMock.mock.calls[0] as [string, RequestInit];
+    const body = JSON.parse(String(init.body));
+    expect(body).not.toHaveProperty("withAvatar");
+  });
+
   it("relays a 403 trial-exhausted upstream error verbatim", async () => {
     vi.stubGlobal(
       "fetch",

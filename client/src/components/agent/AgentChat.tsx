@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Send, ImagePlus, X } from "lucide-react";
+import { Send, ImagePlus, X, PhoneOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { MessageBubble } from "./MessageBubble";
@@ -15,6 +15,8 @@ import {
   useLiveKitVoice,
   VoiceModeButton,
   VoiceHero,
+  TalkModePicker,
+  AvatarView,
 } from "./voice";
 import type { ToolRegistry } from "./toolRegistry";
 import type { AgentBotConfig } from "@shared/agent";
@@ -42,6 +44,7 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
   // the autoFocusKey prop on AutoGrowTextarea.
   const [focusBumpCounter, setFocusBumpCounter] = useState(0);
   const bumpFocus = useCallback(() => setFocusBumpCounter((n) => n + 1), []);
+  const [talkModePickerOpen, setTalkModePickerOpen] = useState(false);
   const tts = useTextToSpeech(agentKey);
   const voice = useLiveKitVoice(agentKey, chat.sessionId, chat.pushExternalEvent);
 
@@ -152,6 +155,8 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
   // Visual states for the header avatar.
   const isAgentSpeaking = voice.state === "agent-speaking";
   const isOnCall = voice.state !== "idle" && voice.state !== "error";
+  // Avatar mode: true once Anam's video track has joined the room.
+  const isAvatarMode = !!voice.avatarVideoTrack;
 
   const handlePromptSelect = (prompt: string) => {
     if (status === "streaming") return;
@@ -249,7 +254,7 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
             (voice.state === "idle" || voice.state === "error") && (
               <VoiceModeButton
                 busy={status === "streaming"}
-                onClick={() => void voice.start()}
+                onClick={() => setTalkModePickerOpen(true)}
               />
             )}
           <ClearConversationMenu
@@ -265,10 +270,22 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
         </div>
       </div>
 
-      {/* In-call dock — pinned BETWEEN the header and the message
-          list (NOT inside the scrollable area) so the end-call button
-          stays reachable regardless of message scroll position. */}
-      {isOnCall && (
+      {/* Talk-mode picker modal: opens from the header button.
+          onPick mints the LiveKit room with the chosen withAvatar flag. */}
+      <TalkModePicker
+        open={talkModePickerOpen}
+        onOpenChange={setTalkModePickerOpen}
+        onPick={(withAvatar) => {
+          setTalkModePickerOpen(false);
+          void voice.start({ withAvatar });
+        }}
+      />
+
+      {/* In-call dock OR avatar view — both pinned between header and
+          messages. Avatar mode replaces the dock with the video, plus
+          a small overlay row for End Call (since the dock's controls
+          are now absent). */}
+      {isOnCall && !isAvatarMode && (
         <VoiceHero
           state={voice.state}
           durationMs={voice.durationMs}
@@ -277,6 +294,30 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
           onMute={voice.toggleMute}
           onHangup={voice.hangup}
         />
+      )}
+      {isOnCall && isAvatarMode && (
+        <div className="relative border-b border-border bg-muted/40">
+          <div className="aspect-video w-full" style={{ maxHeight: "65vh" }}>
+            <AvatarView
+              track={voice.avatarVideoTrack}
+              avatarUrl={bot?.avatarUrl}
+              agentName={bot?.name ?? "Ruby"}
+            />
+          </div>
+          {/* End-call overlay top-right — voice-only's End Call lived
+              in the VoiceHero dock; in avatar mode it floats over the
+              video. */}
+          <button
+            type="button"
+            onClick={voice.hangup}
+            aria-label="End call"
+            title="End call"
+            className="absolute top-3 right-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-red-500 text-white shadow-md transition-colors hover:bg-red-600"
+            data-testid="avatar-view-hangup"
+          >
+            <PhoneOff className="h-5 w-5" />
+          </button>
+        </div>
       )}
 
       {/* Messages — generous padding (px-6 py-5) so message bubbles
@@ -344,9 +385,9 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
         )}
       </div>
 
-      {/* Input — generous padding (px-6 py-4) so the input row breathes;
-          larger touch targets (h-11 buttons + h-11 input); brand
-          focus ring with primary color. */}
+      {/* Input — hidden in avatar mode (voice-first; user types via
+          Chat mode by ending the call). */}
+      {!isAvatarMode && (
       <div className="border-t border-border/60 px-6 py-4">
         {pendingImage && (
           <div className="mb-2 inline-flex items-center gap-2 rounded-lg border border-border bg-background p-1 pr-2">
@@ -434,6 +475,7 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
           </Button>
         </form>
       </div>
+      )}
       </div>
     </div>
   );

@@ -104,6 +104,26 @@ export class FakeRoom {
     for (const l of this.listeners["trackSubscribed"] || []) l(track);
   }
 
+  /** Test helper: fire a TrackSubscribed event simulating Anam's video
+   *  track joining the room. Use a placeholder track object that the
+   *  hook's TrackSubscribed handler can store in state. The participant
+   *  identity starts with "anam-" so the hook's filter accepts it. */
+  triggerAnamVideoTrack(): { stubTrack: object; participant: { identity: string } } {
+    // Track and participant shapes mirror what livekit-client emits.
+    // We only need .kind, .attach, .detach, and .identity to satisfy
+    // the hook's branch.
+    const stubTrack = {
+      kind: "video", // Track.Kind.Video at runtime
+      attach: vi.fn(),
+      detach: vi.fn(),
+    };
+    const participant = { identity: "anam-avatar-agent" };
+    for (const l of this.listeners["trackSubscribed"] || []) {
+      l(stubTrack, undefined, participant);
+    }
+    return { stubTrack, participant };
+  }
+
   triggerDisconnected(): void {
     for (const l of this.listeners["disconnected"] || []) l();
   }

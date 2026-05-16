@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Room, RoomEvent, Track } from "livekit-client";
+import { Room, RoomEvent, Track, type RemoteVideoTrack } from "livekit-client";
 import type { ExternalVoiceEvent } from "../useAgentChat";
 
 export type VoiceState =
@@ -16,7 +16,17 @@ export interface UseLiveKitVoiceResult {
   errorMessage: string | null;
   durationMs: number;
   isMuted: boolean;
-  start: () => Promise<void>;
+  /**
+   * Remote video track from the Anam avatar agent, if it has joined
+   * the room (i.e. the call was started with { withAvatar: true } AND
+   * the worker successfully spawned an AvatarSession). null otherwise.
+   * Consumers render this in <AvatarView> when non-null.
+   */
+  avatarVideoTrack: RemoteVideoTrack | null;
+  /** Start a LiveKit call. Pass { withAvatar: true } to request an
+   *  Anam avatar; the backend forwards the flag to the worker via
+   *  dispatch metadata. Defaults to voice-only. */
+  start: (opts?: { withAvatar?: boolean }) => Promise<void>;
   hangup: () => void;
   toggleMute: () => void;
 }
@@ -64,6 +74,7 @@ export function useLiveKitVoice(
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [durationMs, setDurationMs] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
+  const [avatarVideoTrack, setAvatarVideoTrack] = useState<RemoteVideoTrack | null>(null);
 
   const roomRef = useRef<Room | null>(null);
   const tickRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -89,6 +100,7 @@ export function useLiveKitVoice(
       }
       roomRef.current = null;
     }
+    setAvatarVideoTrack(null);
   }, []);
 
   useEffect(() => () => cleanup(), [cleanup]);
@@ -167,7 +179,8 @@ export function useLiveKitVoice(
     [pushExternalEvent],
   );
 
-  const start = useCallback(async () => {
+  const start = useCallback(async (opts?: { withAvatar?: boolean }) => {
+    const withAvatar = opts?.withAvatar === true;
     cleanup();
     setErrorMessage(null);
     setState("connecting");
@@ -178,7 +191,10 @@ export function useLiveKitVoice(
       const res = await fetch(`/api/agent/${agentKey}/voice/room`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sessionId }),
+        body: JSON.stringify({
+          sessionId,
+          ...(withAvatar ? { withAvatar: true } : {}),
+        }),
       });
       if (!res.ok) {
         const body = await res.text();
@@ -207,7 +223,8 @@ export function useLiveKitVoice(
       handleData(payload);
     });
 
-    rkRoom.on(RoomEvent.TrackSubscribed, (track) => {
+    rkRoom.on(RoomEvent.TrackSubscribed, (track, _publication, participant) => {
+      // Audio: auto-attach via livekit-client's helper.
       if (track.kind === Track.Kind.Audio) {
         // attach() returns the auto-created <audio> element; it auto-plays.
         // We don't keep the reference — the SDK manages lifecycle.
@@ -216,6 +233,27 @@ export function useLiveKitVoice(
         } catch {
           /* ignore */
         }
+        return;
+      }
+      // Video from Anam: store the track so <AvatarView> can render it.
+      // Filter by participant identity prefix so we don't accidentally
+      // capture video from other participants if the room ever has any.
+      if (
+        track.kind === Track.Kind.Video &&
+        participant?.identity?.startsWith?.("anam-")
+      ) {
+        setAvatarVideoTrack(track as RemoteVideoTrack);
+      }
+    });
+
+    // Clear the track if the avatar's participant disconnects mid-call
+    // (e.g. Anam quota exceeded, network drop on Anam's side).
+    rkRoom.on(RoomEvent.TrackUnsubscribed, (track, _publication, participant) => {
+      if (
+        track.kind === Track.Kind.Video &&
+        participant?.identity?.startsWith?.("anam-")
+      ) {
+        setAvatarVideoTrack(null);
       }
     });
 
@@ -281,6 +319,7 @@ export function useLiveKitVoice(
     errorMessage,
     durationMs,
     isMuted,
+    avatarVideoTrack,
     start,
     hangup,
     toggleMute,

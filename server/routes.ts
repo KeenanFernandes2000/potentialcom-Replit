@@ -827,6 +827,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.status(404).json({ message: "Unknown agent" });
     }
     const sessionId = req.body?.sessionId;
+    const withAvatar = req.body?.withAvatar;
     if (typeof sessionId !== "string" || sessionId.trim().length === 0) {
       return res
         .status(400)
@@ -841,6 +842,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           body: JSON.stringify({
             botId: agent.botId,
             sessionId,
+            // Only include withAvatar when explicitly true — keeps the
+            // wire format clean for the default case (voice-only).
+            ...(withAvatar === true ? { withAvatar: true } : {}),
           }),
         },
       );
