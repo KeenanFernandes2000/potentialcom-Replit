@@ -192,15 +192,14 @@ const Demo = () => {
       />
       <Header />
 
-      {/* Hero — matches the Vera/Ayla brand pattern:
-         left = "Hello, I'm [Name], Your AI [role]" headline + subhead
-         + primary CTA, right = the visual focal element. For Ruby the
-         right side is the LIVE chat panel (instead of an avatar image).
-         Background uses the brand's signature blurred decorative orbs
-         in primary/accent at low opacity. AOS fade-up on entrance. */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-background via-background to-muted/20 py-20 lg:py-28">
-        {/* Background decoration — matches Vera.tsx exactly. Two
-            soft blurred orbs in brand colors, low opacity. */}
+      {/* Hero — centered focus on Ruby.
+         Stacked composition: centered headline + subhead + primary CTA
+         above, the chat panel as the centered focal element below,
+         and try-this chips + capability links below the chat as the
+         "what's possible" rail. Matches Home's text-center hero
+         pattern, with the chat replacing the usual hero image. */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-background via-background to-muted/20 py-20 lg:py-24">
+        {/* Background decoration — same blurred orbs Vera uses. */}
         <div className="absolute inset-0 -z-10">
           <div className="absolute top-20 left-20 w-64 h-64 opacity-20 dark:opacity-5 blur-3xl">
             <div className="w-full h-full rounded-full bg-primary" />
@@ -211,110 +210,110 @@ const Demo = () => {
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:items-center">
-            {/* Left: brand-pattern headline + CTA */}
-            <div className="space-y-8" data-aos="fade-up">
-              <div className="space-y-6">
-                <h1 className="text-4xl lg:text-6xl font-bold text-foreground leading-tight">
-                  Hello, I'm Ruby,
-                  <br />
-                  <span className="text-primary">
-                    Your AI Beauty Concierge
-                  </span>
-                </h1>
-                <p className="text-xl text-muted-foreground leading-relaxed max-w-lg">
-                  Chat or talk to me, and I'll help you shop products,
-                  book beauty experts, take courses, and answer support
-                  questions — completely free.
-                </p>
+          {/* Centered hero text */}
+          <div
+            className="max-w-3xl mx-auto text-center space-y-6 mb-12"
+            data-aos="fade-up"
+          >
+            <h1 className="text-4xl lg:text-6xl font-bold text-foreground leading-tight">
+              Hello, I'm Ruby,
+              <br />
+              <span className="text-primary">
+                Your AI Beauty Concierge
+              </span>
+            </h1>
+            <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+              Chat or talk to me, and I'll help you shop products, book
+              beauty experts, take courses, and answer support
+              questions — completely free.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+              <Button
+                size="lg"
+                className="bg-primary hover:bg-primary/90 text-white font-semibold px-7 py-5"
+                onClick={() => {
+                  document
+                    .querySelector("[data-testid='agent-chat-shell']")
+                    ?.scrollIntoView({ behavior: "smooth", block: "center" });
+                }}
+                data-testid="hero-start-cta"
+              >
+                Start Chatting
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+              <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                <Mic className="h-4 w-4 text-primary" />
+                or tap voice in the chat to talk
               </div>
+            </div>
+          </div>
 
-              <div className="flex flex-wrap items-center gap-4">
-                <Button
-                  size="lg"
-                  className="bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-6 text-lg"
-                  onClick={() => {
-                    document
-                      .querySelector("[data-testid='agent-chat-shell']")
-                      ?.scrollIntoView({ behavior: "smooth", block: "center" });
-                  }}
-                  data-testid="hero-start-cta"
-                >
-                  Start Chatting with Ruby
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Mic className="h-4 w-4 text-primary" />
-                  or tap voice in the chat to talk in real time
-                </div>
+          {/* The chat panel — centered, max-w-3xl, focal element of
+              the page. h-[680px] inside the shell guarantees the
+              messages area scrolls within it. */}
+          <div
+            className="max-w-3xl mx-auto"
+            data-aos="fade-up"
+            data-aos-delay="150"
+          >
+            <RubyChat />
+          </div>
+
+          {/* Try-this chips + capability links — sit below the chat
+              as a "what's possible" rail. Centered to match the rest
+              of the hero composition. */}
+          <div className="max-w-3xl mx-auto mt-8 space-y-5" data-aos="fade-up" data-aos-delay="250">
+            <div className="text-center">
+              <div className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-3">
+                Try one of these
               </div>
-
-              {/* Try-this chips — let users dispatch a prompt into the
-                  chat without typing. Brand styling: subtle border,
-                  white card surface, primary hover. */}
-              <div className="space-y-3">
-                <div className="text-sm font-medium text-foreground">
-                  Try one of these
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    "Show me lipsticks",
-                    "Find me a makeup expert",
-                    "Any discount codes today?",
-                    "Help me return a product",
-                  ].map((prompt) => (
-                    <button
-                      key={prompt}
-                      type="button"
-                      onClick={() =>
-                        window.dispatchEvent(
-                          new CustomEvent("ruby:send", {
-                            detail: { prompt, agentKey: "ruby" },
-                          }),
-                        )
-                      }
-                      className="rounded-full bg-primary/10 text-primary px-4 py-2 text-sm border border-primary/20 hover:bg-primary/20 transition-colors"
-                      data-testid={`hero-try-${prompt.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
-                    >
-                      {prompt}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Capability mini-links (anchors to the accordion below) */}
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-3 pt-2 text-sm text-muted-foreground">
+              <div className="flex flex-wrap justify-center gap-2">
                 {[
-                  { icon: ShoppingBag, label: "Shop", target: "shopping" },
-                  { icon: Calendar, label: "Book", target: "booking" },
-                  { icon: GraduationCap, label: "Learn", target: "support" },
-                  { icon: Heart, label: "Support", target: "support" },
-                ].map((cap) => {
-                  const Icon = cap.icon;
-                  return (
-                    <a
-                      key={cap.label}
-                      href={`#use-case-${cap.target}`}
-                      className="flex items-center gap-1.5 transition-colors hover:text-primary"
-                      data-testid={`capability-${cap.label.toLowerCase()}`}
-                    >
-                      <Icon className="h-4 w-4" />
-                      <span>{cap.label}</span>
-                    </a>
-                  );
-                })}
+                  "Show me lipsticks",
+                  "Find me a makeup expert",
+                  "Any discount codes today?",
+                  "Help me return a product",
+                ].map((prompt) => (
+                  <button
+                    key={prompt}
+                    type="button"
+                    onClick={() =>
+                      window.dispatchEvent(
+                        new CustomEvent("ruby:send", {
+                          detail: { prompt, agentKey: "ruby" },
+                        }),
+                      )
+                    }
+                    className="rounded-full bg-primary/10 text-primary px-4 py-2 text-sm border border-primary/20 hover:bg-primary/20 transition-colors"
+                    data-testid={`hero-try-${prompt.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`}
+                  >
+                    {prompt}
+                  </button>
+                ))}
               </div>
             </div>
 
-            {/* Right: the live chat panel as the visual focal point */}
-            <div
-              className="flex justify-center lg:justify-end"
-              data-aos="fade-up"
-              data-aos-delay="150"
-            >
-              <div className="w-full max-w-xl lg:min-h-[720px]">
-                <RubyChat />
-              </div>
+            {/* Capability mini-links — anchors to the accordion below */}
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 pt-1 text-sm text-muted-foreground">
+              {[
+                { icon: ShoppingBag, label: "Shop", target: "shopping" },
+                { icon: Calendar, label: "Book", target: "booking" },
+                { icon: GraduationCap, label: "Learn", target: "support" },
+                { icon: Heart, label: "Support", target: "support" },
+              ].map((cap) => {
+                const Icon = cap.icon;
+                return (
+                  <a
+                    key={cap.label}
+                    href={`#use-case-${cap.target}`}
+                    className="flex items-center gap-1.5 transition-colors hover:text-primary"
+                    data-testid={`capability-${cap.label.toLowerCase()}`}
+                  >
+                    <Icon className="h-4 w-4" />
+                    <span>{cap.label}</span>
+                  </a>
+                );
+              })}
             </div>
           </div>
         </div>
