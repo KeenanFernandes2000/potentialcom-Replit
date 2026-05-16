@@ -51,12 +51,6 @@ describe("POST /api/agent/:agentKey/voice/room", () => {
     expect(res.body.roomName).toBe("bot-abc-session-s1-12345");
     expect(res.body.token).toBe("fake.jwt.token");
     expect(res.body.wsUrl).toBe("wss://livekit.potential.com");
-    // The proxy augments the response with customWsUrl (potentialTS HTTP
-    // host as a ws:/wss: URL) and the resolved botId so the browser can
-    // construct the custom /ws/livekit/{roomName}/{botId}/{sessionId} URL.
-    expect(typeof res.body.customWsUrl).toBe("string");
-    expect(res.body.customWsUrl).toMatch(/^wss?:\/\//);
-    expect(res.body.botId).toBe("6a056e4ece71ae96a167f826");
 
     expect(fetchMock).toHaveBeenCalledOnce();
     const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];

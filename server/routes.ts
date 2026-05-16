@@ -844,35 +844,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }),
         },
       );
-      const upstreamContentType =
-        upstream.headers.get("content-type") ?? "application/json";
       const text = await upstream.text();
-
-      // Augment a successful JSON response with `customWsUrl`, the
-      // WebSocket URL the browser should connect to. The upstream's
-      // `wsUrl` field points at the LiveKit-protocol server
-      // (e.g. ws://livekit.potential.com:7880), which is consumed by
-      // the official LiveKit SDK. Our hook talks to the *custom* WS
-      // handler at `/ws/livekit/{roomName}/{botId}/{sessionId}` mounted
-      // on the potentialTS HTTP server itself, so we synthesize that
-      // base URL from POTENTIAL_API_BASE and pass it back.
-      if (upstream.ok && upstreamContentType.includes("application/json")) {
-        try {
-          const parsed = JSON.parse(text);
-          const customWsBase = POTENTIAL_API_BASE.replace(/^http/, "ws");
-          parsed.customWsUrl = customWsBase;
-          parsed.botId = agent.botId;
-          res
-            .status(upstream.status)
-            .type("application/json")
-            .send(JSON.stringify(parsed));
-          return;
-        } catch {
-          /* fall through to verbatim relay if JSON parse fails */
-        }
-      }
-
-      res.status(upstream.status).type(upstreamContentType).send(text);
+      res
+        .status(upstream.status)
+        .type(upstream.headers.get("content-type") ?? "application/json")
+        .send(text);
     } catch (err) {
       console.error("Agent voice room proxy error:", err);
       res.status(502).json({ message: "Failed to reach voice service" });
