@@ -4,7 +4,27 @@
 
 **Goal:** Add an Avatar mode to Ruby's chat surface where the user sees Ruby's actual face talking to them, with lip-sync, while keeping the same shared session, chat history, and tool-calling pipeline that powers Chat and Voice modes.
 
-**Provider:** [Anam](https://anam.ai/) via the official [`@livekit/agents-plugin-anam`](https://www.npmjs.com/package/@livekit/agents-plugin-anam) package. Backend already has Anam infrastructure (`ANAM_API_KEY`, `ANAM_AVATAR_ID`, `BotVoiceAgent` model with `avatar.avatarId` + `avatar.voiceId`).
+**Provider:** [Anam](https://anam.ai/) via the official [`@livekit/agents-plugin-anam`](https://www.npmjs.com/package/@livekit/agents-plugin-anam) package.
+
+**What's already built (PotentialBackendLive) — we consume this, do not rebuild:**
+- `models/avatar.model.ts` — `Avatar` Mongoose model (Anam: `avatarId`, `voiceId`, `language`, `avatarQuality`, `voiceEmotion`, `preview_image_url`, `createdBy` user ref, `active`, `interactions`)
+- `controllers/avatar.controller.ts` — full CRUD: createAvatar / getUserAvatars / getAvatarById / updateAvatar / deleteAvatar, plus a fetch-from-Anam-API hook to populate `preview_image_url` on create
+- `routes/avatar.ts` — REST endpoints for the CRUD above
+- `routes/dashboard.ts` — Anam-specific endpoints powering the dashboard avatar-picker UI:
+  - `POST /api/dashboard/avatars/session-token` (Anam session token, per code comment "Replaces HeyGen streaming-key")
+  - `GET /api/dashboard/avatars/voices` (Anam voices list)
+  - `GET /api/dashboard/avatars/list` (Anam avatar presets)
+  - `POST /api/dashboard/avatars/create-from-image` (custom avatar generation)
+  - `POST /api/dashboard/avatars/speech-to-text` (STT)
+- Env vars: `ANAM_API_KEY`, `ANAM_AVATAR_ID` (legacy default) in `.env.example`
+
+**What's NOT yet built — this spec adds:**
+- The worker-level LiveKit ↔ Anam plug (`@livekit/agents-plugin-anam`)
+- The bot → avatar config link (a small `avatar` subdocument on `BotVoiceAgent`)
+- The browser-level avatar render (subscribe to `anam-*` video track, render in `<AvatarView>`)
+- The mode-pick modal UX on the demo page
+
+The existing `Avatar` collection + dashboard endpoints power the avatar *management* UI (where users in the dashboard pick / create avatars). Those endpoints are NOT on the Plan 3 critical path — the worker reads avatar config directly from the bot's `BotVoiceAgent` record (see "Layer 2 — Schema change" below).
 
 ---
 
@@ -64,7 +84,7 @@ Add `@livekit/agents-plugin-anam` (v1.0.30, matching our other plugin versions).
 
 In `src/voiceAgent.ts`, when the job's room metadata contains `withAvatar: true`:
 
-1. Fetch the bot's avatar config from MongoDB (`BotVoiceAgent.avatar.avatarId` + `.voiceId`).
+1. Read the bot's avatar config from the already-loaded `BotVoiceAgent` record (`voiceConfig.avatar.avatarId` + `.voiceId` — see Layer 2 schema change below).
 2. Spawn `anam.AvatarSession({ persona_config: anam.PersonaConfig({ avatarId, voiceId }), api_key: process.env.ANAM_API_KEY })` and start it against the same room as the voice session.
 3. Anam plugin auto-pipes the worker's existing TTS audio to the avatar — no extra wiring needed for lip-sync. **Hard requirement: TTS sample rate must be 16kHz.** Update the existing ElevenLabs config (`createTTS`) to set `sampleRate: 16000` when avatar is active.
 
@@ -72,9 +92,25 @@ In `src/voiceAgent.ts`, when the job's room metadata contains `withAvatar: true`
 
 The avatar joins as a participant with identity prefix `anam-` (default: `anam-avatar-agent`). The browser's existing `useLiveKitVoice` already subscribes to all remote participants' tracks — extending it to render the video track (instead of just audio-attaching it) is the frontend change in Layer 3.
 
-### Layer 2 — potentialTS backend (`/Users/potdev/Documents/GitHub/potentialTS`)
+### Layer 2 — potentialTS backend (`/Users/potdev/Documents/GitHub/potentialTS`) + schema change
 
-In `routes/livekit.ts`, the `/api/livekit/room/create` endpoint accepts a new optional flag in the request body:
+**Schema change — `BotVoiceAgent` model gains an `avatar` subdocument.**
+
+The existing `Avatar` model (PotentialBackendLive) stores user-owned avatar configs. Bots need their own avatar pointer — the relationship doesn't exist today. Add a minimal inline subdocument so the worker can read avatar config from the bot's `BotVoiceAgent` record directly, without a second collection lookup.
+
+```ts
+// In BotVoiceAgent schema:
+avatar: {
+  avatarId: { type: String, trim: true },     // Anam UUID
+  voiceId:  { type: String, trim: true },     // Anam UUID
+},
+```
+
+Both fields are optional. When either is missing, the worker treats the bot as not having an avatar configured (falls back to voice-only mode — see Error handling).
+
+**The `Avatar` collection (user-owned library) is untouched.** It continues to power the dashboard's avatar-management UI. Long-term, an admin UI could let users assign an Avatar from their library to a bot (copying or referencing `avatarId` + `voiceId` into `BotVoiceAgent.avatar`). For Plan 3 MVP, Ruby's `BotVoiceAgent.avatar` is populated by a manual DB update before testing.
+
+**Endpoint change — `/api/livekit/room/create` accepts `withAvatar`:**
 
 ```ts
 interface CreateRoomBody {
@@ -90,9 +126,9 @@ const metadata = JSON.stringify({ botId, sessionId, withAvatar: true });
 await agentDispatchClient.createDispatch(roomName, "voice-agent", { metadata });
 ```
 
-The Express proxy in potentialcom-Replit passes through the `withAvatar` field from the browser unchanged.
+The Express proxy in potentialcom-Replit passes the `withAvatar` field through from the browser unchanged.
 
-**No new endpoint, no new database fields** (the bot already has `BotVoiceAgent.avatar` — populated for Ruby manually before testing).
+**No new endpoints.** The existing Anam-related routes in `/api/dashboard/avatars/*` and `/api/avatars/*` are NOT on this critical path — they power the dashboard avatar-management UI separately.
 
 ### Layer 3 — potentialcom-Replit frontend (`/Users/potdev/Documents/GitHub/potentialcom-Replit`)
 
@@ -272,21 +308,49 @@ No other endpoint changes. The bot's avatar config is read by the worker from Mo
 
 `/api/agent/:agentKey/voice/room` already forwards the request body verbatim to potentialTS. Verify it doesn't strip unknown fields — if it does, add `withAvatar` to the allowed forwarded fields.
 
+### `BotVoiceAgent` model — schema change
+
+Add an `avatar` subdocument to the schema:
+
+```ts
+const botVoiceAgentSchema = new Schema<IBotVoiceAgent>({
+  // ...existing fields...
+  avatar: {
+    avatarId: { type: String, trim: true },
+    voiceId:  { type: String, trim: true },
+  },
+});
+```
+
+Update the `IBotVoiceAgent` TypeScript interface:
+
+```ts
+export interface IBotVoiceAgent extends Document {
+  // ...existing fields...
+  avatar?: {
+    avatarId?: string;
+    voiceId?: string;
+  };
+}
+```
+
+Both `avatar.avatarId` and `avatar.voiceId` are optional. Bots without them simply can't render an avatar — the worker handles this gracefully (logs a warning + falls back to voice-only).
+
 ### `BotVoiceAgent` MongoDB document for Ruby
 
-Pre-flight requirement: Ruby's `BotVoiceAgent` record must have:
+Pre-flight requirement (after the schema change above lands): manually populate Ruby's `BotVoiceAgent` record with real Anam UUIDs from the Anam dashboard:
 
 ```js
 {
   // ...existing fields...
   avatar: {
-    avatarId: "<Anam UUID>",   // From Anam dashboard
-    voiceId: "<Anam UUID>",    // From Anam dashboard (/avatars/voices)
+    avatarId: "<Anam avatar UUID>",
+    voiceId: "<Anam voice UUID, from GET /api/dashboard/avatars/voices>",
   },
 }
 ```
 
-These IDs are obtained from Anam's dashboard (already accessible per the backend integration). If Ruby doesn't have an avatar configured yet, set it manually before testing. Documenting this prerequisite in the plan — not part of the code work.
+This step is manual (one-off DB update, not code) — documented as a plan prerequisite, not a code task.
 
 ---
 
@@ -467,12 +531,17 @@ On localhost or staging:
 ### MODIFIED — `LiveKit-agent` (separate repo)
 
 - `package.json` — add `@livekit/agents-plugin-anam`
-- `src/voiceAgent.ts` — parse `withAvatar` from metadata, spawn `AvatarSession` when true
-- `src/models/botVoiceAgent.model.ts` — verify `avatar` subdocument shape matches what we read
+- `src/voiceAgent.ts` — parse `withAvatar` from metadata, spawn `AvatarSession` when true (reads `voiceConfig.avatar.avatarId` + `.voiceId` from the existing MongoDB query)
+- `src/models/botVoiceAgent.model.ts` — add the `avatar` subdocument to the schema + interface (mirror of the PotentialBackendLive change, since both repos own their own copy of this model)
+
+### MODIFIED — `PotentialBackendLive` (separate repo)
+
+- `src/models/botVoiceAgent.model.ts` — add the `avatar` subdocument to the schema + interface
+- (Optional) Admin UI to assign a bot's avatar from the existing Avatar collection — deferred follow-up
 
 ### DB pre-flight (manual, not code)
 
-- Update Ruby's `BotVoiceAgent` document to include `avatar.avatarId` and `avatar.voiceId` (Anam UUIDs from Anam's dashboard)
+- Update Ruby's `BotVoiceAgent` document to include `avatar.avatarId` and `avatar.voiceId` (Anam UUIDs obtained from Anam's dashboard, or via `GET /api/dashboard/avatars/list` / `/voices` once the dashboard UI is used)
 
 ---
 
