@@ -87,20 +87,32 @@ export function useAgentChat(agentKey: string): UseAgentChat {
         }
         case "agent-response": {
           // Mirror the user-transcript dedupe: voice workers can publish
-          // the same assistant text twice when SpeechCreated (early) and
-          // ConversationItemAdded (late) both fire. The worker dedupes
-          // its own state, but if the worker restarts mid-call its set
-          // is lost — this is a defensive backup. If the latest message
-          // is already an agent message with the same trimmed text,
-          // treat the new event as a refresh and skip the append.
+          // the same assistant content twice when multiple paths fire
+          // (onAgentText/SpeechCreated/ConversationItemAdded). The
+          // versions differ in formatting: one carries the raw LLM
+          // output (with markdown + emojis), one is the TTS-cleaned
+          // string (no emojis, no markdown, line breaks → spaces).
+          // Normalize to lowercase alphanumeric to catch both as the
+          // same content. Compare against the last agent message only —
+          // a genuine repeated reply across a user turn won't match
+          // because there'd be a user message in between.
           const lastAgent = prev[prev.length - 1];
-          const incomingAgent = event.text.trim();
-          if (
-            lastAgent &&
-            lastAgent.role === "agent" &&
-            lastAgent.text.trim() === incomingAgent
-          ) {
-            return prev;
+          if (lastAgent && lastAgent.role === "agent") {
+            const normalize = (s: string) =>
+              s.toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, 200);
+            if (normalize(lastAgent.text) === normalize(event.text)) {
+              // Keep the LONGER/RICHER text (usually the raw LLM output
+              // with markdown) by replacing if incoming is longer.
+              if (event.text.length > lastAgent.text.length) {
+                const updated = [...prev];
+                updated[updated.length - 1] = {
+                  ...lastAgent,
+                  text: event.text,
+                };
+                return updated;
+              }
+              return prev;
+            }
           }
           return [
             ...prev,
