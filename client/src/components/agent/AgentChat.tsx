@@ -171,33 +171,32 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
   }, [agentKey, status, send]);
 
   return (
-    // Brand-matched shell: white card with shadow-lg + border, the same
-    // pattern used by Vera's form card and other product surfaces on
-    // the site. rounded-xl matches the site radius. The chat is the
-    // focal element on the hero, so it earns visual weight via the
-    // shadow rather than via decoration.
+    // App-grade chat surface. Reads as a real product, not a widget:
+    // hairline border instead of a heavy shadow, generous interior
+    // spacing, larger touch targets. The page already provides the
+    // visual frame via the gradient hero — the chat doesn't need to
+    // shout to earn its place.
     //
     // Layout: w-full so it fills whatever the parent grants. The host
-    // page (Demo.tsx) constrains width; legacy embed usage relies on
-    // the min-h fallback below.
+    // page (Demo.tsx) sets lg:min-h on its column; legacy embed usage
+    // relies on the min-h fallback below.
     <div className="w-full" data-testid="agent-chat-shell">
-      <div className="flex h-full min-h-[600px] flex-col overflow-hidden rounded-xl border border-border bg-card shadow-lg">
-      {/* Header — primary-accented status. One small dot (live =
-          emerald, on-call = primary, pulses only while Ruby is
-          actively speaking). Matches the brand's restrained header
-          pattern. */}
-      <div className="flex items-center gap-3 border-b border-border bg-card px-5 py-4">
+      <div className="flex h-full min-h-[640px] flex-col overflow-hidden rounded-2xl border border-border/60 bg-card">
+      {/* Header — generous padding, h-12 avatar so it carries
+          presence, name in lg-weight semibold. Status dot is bigger
+          and uses brand primary on-call. */}
+      <div className="flex items-center gap-3.5 border-b border-border/60 px-6 py-4">
         {bot?.avatarUrl && (
           <div className="relative flex-shrink-0">
             <img
               src={bot.avatarUrl}
               alt={bot.name}
-              className="h-10 w-10 rounded-full object-cover ring-2 ring-primary/15"
+              className="h-12 w-12 rounded-full object-cover"
             />
             <span
               aria-hidden="true"
               className={
-                "absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full ring-2 ring-card " +
+                "absolute -bottom-0.5 -right-0.5 block h-3 w-3 rounded-full ring-2 ring-card " +
                 (isOnCall
                   ? isAgentSpeaking
                     ? "bg-primary motion-safe:animate-pulse"
@@ -207,12 +206,16 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
             />
           </div>
         )}
-        <div className="min-w-0">
-          <div className="text-sm font-semibold leading-tight text-foreground">
+        <div className="min-w-0 flex-1">
+          <div className="text-base font-semibold leading-tight text-foreground">
             {bot?.name ?? "Ruby"}
           </div>
-          <div className="text-xs text-muted-foreground">
-            {isOnCall ? "On call" : "AI Beauty Concierge"}
+          <div className="text-xs text-muted-foreground mt-0.5">
+            {isOnCall
+              ? "On call · live"
+              : status === "streaming"
+                ? "Typing…"
+                : "Online · usually replies instantly"}
           </div>
         </div>
         <div className="ml-auto flex items-center gap-2">
@@ -230,11 +233,12 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
         </div>
       </div>
 
-      {/* Messages */}
-      <div ref={scrollRef} className="flex-1 space-y-4 overflow-y-auto p-4">
-        {/* In-call hero overlay. Renders ABOVE the message list so it
-            captures attention while still letting prior messages scroll
-            into view above it as new ones arrive. */}
+      {/* Messages — generous padding (px-6 py-5) so message bubbles
+          have room to breathe. space-y-5 between messages for clearer
+          turn separation. */}
+      <div ref={scrollRef} className="flex-1 space-y-5 overflow-y-auto px-6 py-5">
+        {/* In-call hero overlay — captures attention while letting
+            prior messages scroll above it. */}
         {isOnCall && (
           <VoiceHero
             state={voice.state}
@@ -246,29 +250,29 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
             onHangup={voice.hangup}
           />
         )}
-        {/* Empty-state — quiet centered greeting + brand-styled chips.
-            The avatar gets a subtle primary ring to tie it to the
-            header status dot. */}
+        {/* Empty-state — generous spacing, centered hero treatment
+            with a larger avatar so the first paint reads as a proper
+            intro screen, not a default state. */}
         {messages.length === 0 && !isOnCall && (
           <div
-            className="flex flex-col items-center pt-6 text-center"
+            className="flex flex-col items-center py-10 text-center"
             data-testid="agent-chat-empty-hero"
           >
             {bot?.avatarUrl && (
               <img
                 src={bot.avatarUrl}
                 alt={bot.name}
-                className="mb-4 h-16 w-16 rounded-full object-cover ring-2 ring-primary/20"
+                className="mb-5 h-20 w-20 rounded-full object-cover"
               />
             )}
-            <h2 className="text-lg font-semibold tracking-tight text-foreground">
+            <h2 className="text-xl font-semibold tracking-tight text-foreground">
               Hi, I'm {bot?.name ?? "Ruby"}
             </h2>
-            <p className="mt-1.5 max-w-xs text-sm text-muted-foreground">
+            <p className="mt-2 max-w-sm text-sm leading-relaxed text-muted-foreground">
               {bot?.greeting ??
                 "Ask me anything — I'll find products, courses, experts, and deals."}
             </p>
-            <div className="w-full">
+            <div className="w-full max-w-md mt-2">
               <SuggestedPrompts onSelect={handlePromptSelect} />
             </div>
           </div>
@@ -284,8 +288,10 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
         ))}
       </div>
 
-      {/* Input */}
-      <div className="border-t border-border p-3">
+      {/* Input — generous padding (px-6 py-4) so the input row breathes;
+          larger touch targets (h-11 buttons + h-11 input); brand
+          focus ring with primary color. */}
+      <div className="border-t border-border/60 px-6 py-4">
         {pendingImage && (
           <div className="mb-2 inline-flex items-center gap-2 rounded-lg border border-border bg-background p-1 pr-2">
             <img
@@ -323,14 +329,14 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
           <Button
             type="button"
             size="icon"
-            variant="outline"
-            className="rounded-full"
+            variant="ghost"
+            className="h-11 w-11 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted"
             disabled={uploading || status === "streaming"}
             onClick={() => fileInputRef.current?.click()}
             data-testid="agent-chat-upload"
             aria-label="Attach an image"
           >
-            <ImagePlus className="h-4 w-4" />
+            <ImagePlus className="h-5 w-5" />
           </Button>
           <MicButton
             agentKey={agentKey}
@@ -340,14 +346,14 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask Ruby anything…"
-            className="flex-1 rounded-full border border-border bg-background px-4 py-2 text-sm outline-none focus:border-primary"
+            placeholder="Message Ruby…"
+            className="flex-1 h-11 rounded-full border border-border bg-muted/40 px-5 text-sm text-foreground placeholder:text-muted-foreground/70 outline-none transition-all focus:border-primary/60 focus:bg-background focus:ring-2 focus:ring-primary/20"
             data-testid="agent-chat-input"
           />
           <Button
             type="submit"
             size="icon"
-            className="rounded-full"
+            className="h-11 w-11 rounded-full bg-primary hover:bg-primary/90 shadow-sm"
             disabled={
               status === "streaming" || (!input.trim() && !pendingImage)
             }

@@ -25,7 +25,7 @@ export function MessageBubble({
   if (isUser) {
     return (
       <div className="flex justify-end">
-        <div className="max-w-[80%] rounded-2xl rounded-br-sm bg-primary px-4 py-2 text-sm text-primary-foreground">
+        <div className="max-w-[78%] rounded-2xl rounded-br-md bg-primary px-4 py-2.5 text-[15px] leading-relaxed text-primary-foreground">
           {message.imageUrl && (
             <img
               src={message.imageUrl}
@@ -53,16 +53,16 @@ export function MessageBubble({
       ))}
       {(message.text || message.status === "streaming") && (
         <div className="flex items-start gap-2">
-          <div className="max-w-[80%] rounded-2xl rounded-bl-sm bg-muted px-4 py-2 text-sm">
+          <div className="max-w-[78%] rounded-2xl rounded-bl-md bg-muted px-4 py-2.5 text-[15px] leading-relaxed text-foreground">
             {message.text ? (
-              <div className="prose prose-sm max-w-none dark:prose-invert">
+              <div className="prose prose-sm max-w-none text-foreground prose-p:my-1.5 prose-p:leading-relaxed first:prose-p:mt-0 last:prose-p:mb-0 dark:prose-invert">
                 <ReactMarkdown>{message.text}</ReactMarkdown>
               </div>
             ) : (
-              <span className="inline-flex gap-1">
-                <span className="h-2 w-2 animate-bounce rounded-full bg-muted-foreground/50" />
-                <span className="h-2 w-2 animate-bounce rounded-full bg-muted-foreground/50 [animation-delay:0.15s]" />
-                <span className="h-2 w-2 animate-bounce rounded-full bg-muted-foreground/50 [animation-delay:0.3s]" />
+              <span className="inline-flex gap-1 py-1">
+                <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground/50" />
+                <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground/50 [animation-delay:0.15s]" />
+                <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-muted-foreground/50 [animation-delay:0.3s]" />
               </span>
             )}
           </div>
