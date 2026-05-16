@@ -70,27 +70,34 @@ export function VoiceHero({
       data-testid="voice-hero"
       className="relative mx-auto flex max-w-md flex-col items-center gap-5 px-4 py-10 text-center"
     >
-      {/* Avatar with a single quiet pulse ring */}
-      <div className="relative flex h-32 w-32 items-center justify-center">
+      {/* Avatar with primary-themed concentric rings.
+          Inner ring: solid primary/20 outline.
+          Outer ring: primary/10 outline, breathes slow at idle, fast
+          when Ruby is actively speaking. */}
+      <div className="relative flex h-36 w-36 items-center justify-center">
         <span
           aria-hidden="true"
           className={
-            "absolute inset-0 rounded-full border border-primary/30 " +
+            "absolute inset-0 rounded-full border-2 border-primary/15 " +
             (isSpeaking
               ? "motion-safe:animate-voice-breathe-fast"
               : "motion-safe:animate-voice-breathe")
           }
         />
+        <span
+          aria-hidden="true"
+          className="absolute inset-3 rounded-full border border-primary/25"
+        />
         {avatarUrl ? (
           <img
             src={avatarUrl}
             alt={agentName}
-            className="relative h-24 w-24 rounded-full object-cover"
+            className="relative h-24 w-24 rounded-full object-cover ring-2 ring-primary/30"
           />
         ) : (
           <div
             aria-hidden="true"
-            className="relative h-24 w-24 rounded-full bg-muted"
+            className="relative h-24 w-24 rounded-full bg-primary/10"
           />
         )}
       </div>

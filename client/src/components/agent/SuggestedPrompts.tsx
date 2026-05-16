@@ -48,32 +48,33 @@ const DEFAULT_PROMPTS: Prompt[] = [
   },
 ];
 
-// Empty-state suggestions. Minimal: hairline border, neutral hover,
-// small emoji used as a typographic accent rather than a centerpiece.
-// Tag chip dropped — the labels are short enough to self-categorize.
+// Empty-state suggestions. Brand-aligned pill style — mirrors the
+// `bg-primary/10 text-primary border-primary/20` pattern used in
+// Demo.tsx's hero and accordion prompts so the visual language is
+// consistent across the page.
 export function SuggestedPrompts({
   onSelect,
   prompts = DEFAULT_PROMPTS,
 }: SuggestedPromptsProps) {
   return (
     <div className="mt-5">
-      <div className="mb-2 flex items-center justify-center gap-1.5 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+      <div className="mb-2.5 flex items-center justify-center gap-1.5 text-xs font-medium text-muted-foreground">
         <Sparkles className="h-3 w-3" />
         <span>Try one of these</span>
       </div>
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-2">
+      <div className="flex flex-wrap justify-center gap-2">
         {prompts.map((p) => (
           <button
             key={p.label}
             type="button"
             onClick={() => onSelect(p.prompt)}
-            className="flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-left text-sm transition-colors hover:border-foreground/30 hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+            className="inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3.5 py-1.5 text-sm text-primary transition-colors hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
             data-testid={`suggested-prompt-${p.tag.toLowerCase()}`}
           >
-            <span className="text-base leading-none" aria-hidden="true">
+            <span className="leading-none" aria-hidden="true">
               {p.emoji}
             </span>
-            <span className="text-foreground/90">{p.label}</span>
+            <span>{p.label}</span>
           </button>
         ))}
       </div>
