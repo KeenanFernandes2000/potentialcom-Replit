@@ -12,7 +12,22 @@ import {
   Heart,
   Mic,
   ArrowRight,
+  Zap,
+  MessageCircle,
+  Layers,
 } from "lucide-react";
+
+// Customer logos — reuse the curated subset that already lives in
+// Home.tsx so the demo page borrows the same trust-strip credibility
+// as the marketing site. Six brands picked for global recognizability.
+import microsoftLogo from "@assets/Customer Logos/Microsoft logo.png";
+import googleLogo from "@assets/Customer Logos/Google logo.png";
+import visaLogo from "@assets/Customer Logos/Visa logo.png";
+import nestleLogo from "@assets/Customer Logos/Nestle Logo.png";
+import cartierLogo from "@assets/Customer Logos/Cartier logo.png";
+import hsbcLogo from "@assets/Customer Logos/HSBC logo.png";
+import inditexLogo from "@assets/Customer Logos/Inditex logo.png";
+import pepsicoLogo from "@assets/Customer Logos/Pepsico logo.png";
 import {
   SiShopify,
   SiStripe,
@@ -305,6 +320,99 @@ const Demo = () => {
         </div>
       </section>
 
+      {/* Stats band — credibility density right under the hero.
+         Four cells, each with an icon + a number/lead + a one-line
+         caption. Brand-consistent: bordered card style same as
+         integrations. Subtle bg shift so it visually separates from
+         the hero gradient. */}
+      <section className="border-y border-border bg-card/50">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-border">
+            {[
+              {
+                icon: Layers,
+                lead: "10+",
+                caption: "live tools — products, bookings, courses, support",
+              },
+              {
+                icon: Zap,
+                lead: "<1s",
+                caption: "average response from query to answer",
+              },
+              {
+                icon: Mic,
+                lead: "Live voice",
+                caption: "real-time spoken conversation, not playback",
+              },
+              {
+                icon: MessageCircle,
+                lead: "24/7",
+                caption: "always on — text or voice, any channel",
+              },
+            ].map((stat, idx) => {
+              const Icon = stat.icon;
+              return (
+                <div
+                  key={idx}
+                  className="flex items-start gap-3 px-6 py-6 lg:py-8"
+                  data-testid={`stat-${idx}`}
+                >
+                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-lg font-bold text-foreground leading-tight">
+                      {stat.lead}
+                    </div>
+                    <div className="text-xs text-muted-foreground mt-1 leading-snug">
+                      {stat.caption}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Trust strip — "powered by the same platform trusted by".
+         Borrows the exact customer-logo treatment from Home.tsx, scaled
+         down. Builds enterprise credibility before scrolling into the
+         deeper capability content. */}
+      <section className="py-12 bg-background">
+        <div className="container mx-auto px-4">
+          <p
+            className="text-center text-sm uppercase tracking-widest text-muted-foreground mb-8"
+            data-aos="fade-up"
+          >
+            Built on the Potential platform — trusted by teams at
+          </p>
+          <div
+            className="flex flex-wrap items-center justify-center gap-x-12 gap-y-8 opacity-70 grayscale"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            {[
+              { src: microsoftLogo, alt: "Microsoft" },
+              { src: googleLogo, alt: "Google" },
+              { src: visaLogo, alt: "Visa" },
+              { src: nestleLogo, alt: "Nestle" },
+              { src: cartierLogo, alt: "Cartier" },
+              { src: hsbcLogo, alt: "HSBC" },
+              { src: inditexLogo, alt: "Inditex" },
+              { src: pepsicoLogo, alt: "PepsiCo" },
+            ].map((logo) => (
+              <img
+                key={logo.alt}
+                src={logo.src}
+                alt={logo.alt}
+                className="h-7 sm:h-8 w-auto object-contain"
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Section 2: What Ruby Can Do */}
       <section className="py-20 bg-muted/30">
         <div className="container">
@@ -329,13 +437,15 @@ const Demo = () => {
                   key={useCase.id}
                   id={`use-case-${useCase.id}`}
                   value={useCase.id}
-                  className="bg-card border border-border rounded-xl px-6 data-[state=open]:shadow-lg transition-all scroll-mt-24"
+                  className="bg-card border border-border rounded-xl px-6 hover:border-primary/30 data-[state=open]:border-primary/40 data-[state=open]:shadow-lg transition-all scroll-mt-24"
                 >
                   <AccordionTrigger className="hover:no-underline py-6">
-                    <div className="flex items-center gap-4 text-left">
-                      <span className="text-4xl">{useCase.emoji}</span>
+                    <div className="flex items-center gap-5 text-left">
+                      <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl bg-primary/10 text-3xl">
+                        {useCase.emoji}
+                      </div>
                       <div>
-                        <h3 className="text-xl font-semibold">
+                        <h3 className="text-xl font-semibold text-foreground">
                           {useCase.title}
                         </h3>
                         <p className="text-sm text-muted-foreground mt-1">
@@ -509,6 +619,51 @@ const Demo = () => {
                 </div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA banner — matches the gradient navy → purple banner
+         used across Home.tsx. Closes the page with a clear next step:
+         this isn't just a Ruby demo — it's a proof point for the
+         Potential platform, and you can build YOUR version. */}
+      <section
+        className="py-20 relative overflow-hidden"
+        style={{
+          background:
+            "linear-gradient(135deg, #0B1846 0%, #1a2a6c 40%, #8844DD 100%)",
+        }}
+      >
+        <div className="container relative z-10 mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center space-y-6" data-aos="fade-up">
+            <h2 className="text-3xl md:text-5xl font-bold text-white leading-tight">
+              Want a Ruby for your brand?
+            </h2>
+            <p className="text-lg md:text-xl text-white/85 max-w-2xl mx-auto">
+              Ruby was built on the Potential platform — same agents
+              powering Vera, Ayla, Lumi, and enterprise AI in
+              production today. Yours can ship just as fast.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+              <Button
+                size="lg"
+                className="rounded-full bg-white text-[#0B1846] hover:bg-white/90 font-semibold px-10 py-6 text-lg shadow-lg"
+                onClick={() => (window.location.href = "/book")}
+                data-testid="cta-book-demo"
+              >
+                Book a Demo
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="rounded-full border-white/40 bg-white/10 text-white hover:bg-white/20 font-semibold px-8 py-6 text-lg"
+                onClick={() => (window.location.href = "/ai-agents")}
+                data-testid="cta-build-agent"
+              >
+                Build Your AI Agent
+              </Button>
+            </div>
           </div>
         </div>
       </section>
