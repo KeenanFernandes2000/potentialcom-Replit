@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Copy, Check, RotateCcw, AlertCircle } from "lucide-react";
 import type { AgentMessage } from "@shared/agent";
 
@@ -32,13 +32,23 @@ export function MessageActions({
   onRegenerate,
 }: MessageActionsProps) {
   const [copied, setCopied] = useState(false);
+  // Track the revert-icon timeout so we can clear it on unmount
+  // (prevents a state update on an unmounted MessageBubble after
+  // useAgentChat.clear() resets the conversation).
+  const revertTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => {
+    return () => {
+      if (revertTimeoutRef.current) clearTimeout(revertTimeoutRef.current);
+    };
+  }, []);
   const isError = message.status === "error";
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(message.text);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (revertTimeoutRef.current) clearTimeout(revertTimeoutRef.current);
+      revertTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       // Silent failure — clipboard is gated on secure contexts.
     }

@@ -298,25 +298,28 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
               </div>
             </div>
           )}
-          {messages.map((message, idx) => {
-            // "Last agent message" = the last message in the list whose role is
-            // agent. We tag the bubble so MessageActions can decide whether to
-            // render Regenerate.
-            const isLastAgent =
-              message.role === "agent" &&
-              !messages.slice(idx + 1).some((m) => m.role === "agent");
-            return (
+          {(() => {
+            // Precompute the index of the last agent message so we don't recompute
+            // it inside the map (was O(n²) via slice+some).
+            let lastAgentIdx = -1;
+            for (let i = messages.length - 1; i >= 0; i--) {
+              if (messages[i].role === "agent") {
+                lastAgentIdx = i;
+                break;
+              }
+            }
+            return messages.map((message, idx) => (
               <MessageBubble
                 key={message.id}
                 message={message}
                 registry={registry}
                 tts={tts}
                 ttsEnabled={!!bot?.audiotts}
-                isLast={isLastAgent}
+                isLast={idx === lastAgentIdx}
                 onRegenerate={chat.regenerate}
               />
-            );
-          })}
+            ));
+          })()}
         </div>
         {!isNearBottom && messages.length > 0 && (
           <ScrollToLatestPill onClick={() => scrollToBottom(true)} />
