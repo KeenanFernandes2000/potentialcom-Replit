@@ -48,58 +48,32 @@ const DEFAULT_PROMPTS: Prompt[] = [
   },
 ];
 
-// Empty-state suggestions. Rendered in a responsive grid below the
-// greeting bubble. Each chip is keyboard-accessible (it's a real button)
-// and discloses its purpose via the `tag` chip.
-//
-// Demo-polish notes:
-// - Each card has a soft gradient glow that intensifies on hover via a
-//   pseudo-element (rendered as the first `span` so it sits below the
-//   content). This is what makes them feel "alive" rather than flat.
-// - Emoji is larger (2xl) and the label is slightly heavier — both
-//   targeted at "this is a demo screen people will screenshot."
-// - Hover lifts the card and adds a colored shadow that picks up the
-//   tag color, reinforcing the category.
+// Empty-state suggestions. Minimal: hairline border, neutral hover,
+// small emoji used as a typographic accent rather than a centerpiece.
+// Tag chip dropped — the labels are short enough to self-categorize.
 export function SuggestedPrompts({
   onSelect,
   prompts = DEFAULT_PROMPTS,
 }: SuggestedPromptsProps) {
   return (
     <div className="mt-5">
-      <div className="mb-2.5 flex items-center justify-center gap-1.5 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+      <div className="mb-2 flex items-center justify-center gap-1.5 text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
         <Sparkles className="h-3 w-3" />
         <span>Try one of these</span>
       </div>
-      <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-2">
         {prompts.map((p) => (
           <button
             key={p.label}
             type="button"
             onClick={() => onSelect(p.prompt)}
-            className="group relative flex flex-col items-start gap-2 overflow-hidden rounded-2xl border border-border/70 bg-card/80 backdrop-blur px-3 py-3.5 text-left transition-all hover:-translate-y-1 hover:border-fuchsia-400/60 hover:shadow-[0_18px_40px_-18px_rgba(217,70,239,0.55)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-500/50"
+            className="flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-2 text-left text-sm transition-colors hover:border-foreground/30 hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
             data-testid={`suggested-prompt-${p.tag.toLowerCase()}`}
           >
-            {/* Hover glow — sits under the content. Fades in on hover/focus.
-                Pointer-events-none so it never blocks the click. */}
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 bg-gradient-to-br from-fuchsia-500/0 via-purple-500/0 to-sky-500/0 opacity-0 transition-opacity duration-300 group-hover:from-fuchsia-500/20 group-hover:via-purple-500/15 group-hover:to-sky-500/15 group-hover:opacity-100"
-            />
-            <span
-              className="absolute right-2 top-2 rounded-full bg-gradient-to-br from-fuchsia-500/20 to-purple-500/20 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-foreground/70"
-              aria-hidden="true"
-            >
-              {p.tag}
-            </span>
-            <span
-              className="relative text-2xl leading-none transition-transform duration-300 group-hover:scale-110"
-              aria-hidden="true"
-            >
+            <span className="text-base leading-none" aria-hidden="true">
               {p.emoji}
             </span>
-            <span className="relative text-xs font-semibold leading-snug text-foreground/90 group-hover:text-foreground">
-              {p.label}
-            </span>
+            <span className="text-foreground/90">{p.label}</span>
           </button>
         ))}
       </div>

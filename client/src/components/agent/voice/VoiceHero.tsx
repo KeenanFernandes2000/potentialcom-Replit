@@ -39,26 +39,16 @@ function stateLabel(state: VoiceState): { primary: string; secondary: string } {
 
 /**
  * Voice call hero overlay — sits inside the messages area whenever a
- * call is active. The visual centerpiece is a stack of three concentric
- * "voice orbs" (radial gradients with breathing pulses) wrapping the
- * agent's avatar, with a five-bar waveform underneath. The whole thing
- * stays calm at idle and tightens up while Ruby is speaking.
- *
- * Why an overlay instead of a header pill: the chat-header pill
- * (VoiceCallBar) is fine for compact status, but the demo wants a
- * "moment" — the kind of screen someone would screenshot. Putting the
- * avatar at center stage with active motion gives the call a presence
- * that the pill alone cannot.
+ * call is active. Minimal version: single subtle ring around the
+ * avatar, optional thin waveform during agent-speaking, clean status
+ * text, neutral controls.
  *
  * Behavior summary:
- * - The orbs breathe slowly (2.4s) when idle; the inner orb's animation
- *   speeds up (1.1s) and the waveform reveals itself only when
- *   state === "agent-speaking" — so the visual energy maps to who is
- *   actually generating audio.
- * - Mute is hidden while Ruby is speaking (muting your own mic mid-Ruby
- *   does nothing useful and only adds button noise).
- * - End-call button is always present so the user can bail out
- *   regardless of state — even mid-error.
+ * - One slow pulse ring while idle/listening; speeds up while
+ *   agent-speaking (only the timing changes, not the visual weight).
+ * - Waveform appears only during agent-speaking — the one bit of
+ *   color in the otherwise neutral state.
+ * - Mute hidden during agent-speaking; end-call always present.
  */
 export function VoiceHero({
   state,
@@ -71,7 +61,6 @@ export function VoiceHero({
 }: VoiceHeroProps) {
   const { primary, secondary } = stateLabel(state);
   const isSpeaking = state === "agent-speaking";
-  const isListening = state === "listening" || state === "user-speaking";
   const showMute = !isSpeaking && state !== "connecting" && state !== "ending";
   const showTimer = state !== "connecting" && state !== "error";
 
@@ -79,79 +68,53 @@ export function VoiceHero({
     <div
       data-state={state}
       data-testid="voice-hero"
-      className="relative mx-auto flex max-w-md flex-col items-center gap-5 px-4 py-8 text-center"
+      className="relative mx-auto flex max-w-md flex-col items-center gap-5 px-4 py-10 text-center"
     >
-      {/* Orb stack */}
-      <div className="relative flex h-44 w-44 items-center justify-center">
-        {/* Outer orb — widest, slowest pulse */}
-        <span
-          aria-hidden="true"
-          className="absolute inset-0 rounded-full bg-gradient-to-br from-fuchsia-400/40 via-purple-500/30 to-sky-400/30 blur-2xl motion-safe:animate-voice-breathe"
-        />
-        {/* Middle orb — punchier, mid pulse */}
-        <span
-          aria-hidden="true"
-          className="absolute inset-3 rounded-full bg-gradient-to-br from-fuchsia-500/55 via-purple-500/45 to-indigo-500/40 blur-xl motion-safe:animate-voice-breathe"
-          style={{ animationDelay: "0.4s" }}
-        />
-        {/* Inner orb — tightest, accelerates while Ruby is speaking */}
+      {/* Avatar with a single quiet pulse ring */}
+      <div className="relative flex h-32 w-32 items-center justify-center">
         <span
           aria-hidden="true"
           className={
-            "absolute inset-6 rounded-full bg-gradient-to-br from-fuchsia-500/70 via-purple-500/60 to-indigo-500/60 blur-lg " +
+            "absolute inset-0 rounded-full border border-primary/30 " +
             (isSpeaking
               ? "motion-safe:animate-voice-breathe-fast"
               : "motion-safe:animate-voice-breathe")
           }
         />
-
-        {/* Avatar at the core — keeps a visual anchor; without it the
-            orbs read as decoration rather than "the agent." */}
         {avatarUrl ? (
           <img
             src={avatarUrl}
             alt={agentName}
-            className="relative h-24 w-24 rounded-full object-cover ring-4 ring-white/40 shadow-[0_0_45px_rgba(168,85,247,0.55)]"
+            className="relative h-24 w-24 rounded-full object-cover"
           />
         ) : (
           <div
             aria-hidden="true"
-            className="relative h-24 w-24 rounded-full bg-gradient-to-br from-fuchsia-500 to-indigo-600 ring-4 ring-white/40 shadow-[0_0_45px_rgba(168,85,247,0.55)]"
+            className="relative h-24 w-24 rounded-full bg-muted"
           />
         )}
       </div>
 
-      {/* Waveform — five bars staggered by delay. Only renders during
-          agent-speaking so it doesn't compete with the listening/idle
-          states (which have their own quieter signal). */}
+      {/* Waveform — thin neutral bars, only during agent-speaking. */}
       {isSpeaking && (
         <div
           aria-hidden="true"
-          className="flex h-7 items-end gap-1.5"
+          className="flex h-5 items-end gap-1"
           data-testid="voice-hero-waveform"
         >
           {[0, 0.15, 0.3, 0.15, 0].map((delay, i) => (
             <span
               key={i}
-              className="block h-full w-1.5 origin-bottom rounded-full bg-gradient-to-t from-fuchsia-500 to-indigo-500 motion-safe:animate-sound-bar"
+              className="block h-full w-1 origin-bottom rounded-full bg-primary motion-safe:animate-sound-bar"
               style={{ animationDelay: `${delay}s` }}
             />
           ))}
         </div>
       )}
 
-      {/* Status text */}
+      {/* Status text — single quiet line, no contrast tricks. */}
       <div className="space-y-1">
-        <div
-          className={
-            "text-lg font-semibold tracking-tight " +
-            (isSpeaking
-              ? "text-foreground"
-              : isListening
-                ? "text-foreground"
-                : "text-foreground/80")
-          }
-        >
+        <div className="text-base font-medium tracking-tight text-foreground">
           {primary}
           {showTimer && (
             <span className="ml-2 font-mono text-sm font-normal tabular-nums text-muted-foreground">
@@ -164,7 +127,8 @@ export function VoiceHero({
         )}
       </div>
 
-      {/* Controls — large, centered, demo-grade */}
+      {/* Controls — neutral surface buttons; only the end-call gets
+          color because it's the irreversible/dangerous action. */}
       <div className="flex items-center gap-3">
         {showMute && (
           <button
@@ -174,16 +138,16 @@ export function VoiceHero({
             onClick={onMute}
             data-testid="voice-hero-mute"
             className={
-              "inline-flex h-12 w-12 items-center justify-center rounded-full border transition-all " +
+              "inline-flex h-11 w-11 items-center justify-center rounded-full border transition-colors " +
               (isMuted
-                ? "border-amber-500/40 bg-amber-500/10 text-amber-600 hover:bg-amber-500/15 dark:text-amber-300"
-                : "border-border bg-card/80 backdrop-blur hover:bg-card hover:border-foreground/20")
+                ? "border-foreground/30 bg-muted text-foreground"
+                : "border-border bg-background hover:bg-muted")
             }
           >
             {isMuted ? (
-              <MicOff className="h-5 w-5" />
+              <MicOff className="h-4 w-4" />
             ) : (
-              <Mic className="h-5 w-5" />
+              <Mic className="h-4 w-4" />
             )}
           </button>
         )}
@@ -193,9 +157,9 @@ export function VoiceHero({
           title="End call"
           onClick={onHangup}
           data-testid="voice-hero-hangup"
-          className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-red-500 text-white shadow-[0_8px_28px_rgba(239,68,68,0.45)] transition-all hover:scale-105 hover:bg-red-600 active:scale-95"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-red-500 text-white transition-colors hover:bg-red-600"
         >
-          <PhoneOff className="h-6 w-6" />
+          <PhoneOff className="h-4 w-4" />
         </button>
       </div>
     </div>

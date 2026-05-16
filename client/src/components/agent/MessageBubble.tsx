@@ -24,8 +24,8 @@ export function MessageBubble({
 
   if (isUser) {
     return (
-      <div className="flex justify-end motion-safe:animate-bubble-in">
-        <div className="max-w-[80%] rounded-2xl rounded-br-sm bg-gradient-to-br from-primary to-purple-600 px-4 py-2 text-sm text-primary-foreground shadow-[0_6px_22px_-8px_rgba(99,38,184,0.55)]">
+      <div className="flex justify-end">
+        <div className="max-w-[80%] rounded-2xl rounded-br-sm bg-primary px-4 py-2 text-sm text-primary-foreground">
           {message.imageUrl && (
             <img
               src={message.imageUrl}
@@ -47,13 +47,13 @@ export function MessageBubble({
     message.text.trim().length > 0;
 
   return (
-    <div className="flex flex-col gap-2 motion-safe:animate-bubble-in">
+    <div className="flex flex-col gap-2">
       {message.tools.map((tool) => (
         <ToolCard key={tool.id} invocation={tool} registry={registry} />
       ))}
       {(message.text || message.status === "streaming") && (
         <div className="flex items-start gap-2">
-          <div className="ruby-agent-bubble max-w-[80%] rounded-2xl rounded-bl-sm border border-border/40 px-4 py-2 text-sm shadow-[0_4px_18px_-10px_rgba(99,38,184,0.35)]">
+          <div className="max-w-[80%] rounded-2xl rounded-bl-sm bg-muted px-4 py-2 text-sm">
             {message.text ? (
               <div className="prose prose-sm max-w-none dark:prose-invert">
                 <ReactMarkdown>{message.text}</ReactMarkdown>

@@ -171,71 +171,45 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
   }, [agentKey, status, send]);
 
   return (
-    <div
-      className="relative mx-auto w-full max-w-3xl"
-      data-testid="agent-chat-shell"
-    >
-      {/* Ambient gradient orbs — three blurred circles that drift behind
-          the chat panel. Hidden in print + reduced-motion contexts via
-          motion-safe. Pointer-events disabled so they never block UI. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -inset-12 -z-10 overflow-hidden"
-      >
-        <div className="absolute -top-10 -left-10 h-72 w-72 rounded-full bg-fuchsia-500/30 blur-3xl motion-safe:animate-orb-float-a" />
-        <div className="absolute top-1/3 -right-16 h-80 w-80 rounded-full bg-indigo-500/30 blur-3xl motion-safe:animate-orb-float-b" />
-        <div className="absolute -bottom-12 left-1/4 h-72 w-72 rounded-full bg-sky-400/25 blur-3xl motion-safe:animate-orb-float-c" />
-      </div>
-
-      {/* Shell height: defaults to 600px (legacy embed usage), but the
-          hero on Demo.tsx swaps to a viewport-tied size by passing the
-          chat into a parent that sets a min-height. We use min-h plus
-          h-full so the panel fills its slot when the parent is taller,
-          and falls back to 600px on smaller containers. */}
-      <div className="ruby-glass-shell flex h-full min-h-[600px] flex-col overflow-hidden rounded-2xl border border-border/60 shadow-[0_22px_60px_-22px_rgba(99,38,184,0.45)]">
-      {/* Header */}
-      <div className="ruby-aurora-header relative flex items-center gap-3 border-b border-border/60 px-4 py-3 motion-safe:animate-aurora-drift">
-        {/*
-          Avatar: bumped to h-11 w-11 for visual presence. Status dot in
-          the bottom-right (green when idle, purple+pulse when on-call).
-          A subtle ping ring surrounds the avatar whenever Ruby is
-          actively speaking — the moment of strongest user-attention need.
-        */}
+    // Minimal shell: flat neutral surface, single hairline border, no
+    // ambient orbs, no aurora, no glassmorphism. The chat panel itself
+    // is the focal element — decoration competes with content.
+    //
+    // Layout: w-full so it fills whatever the parent grants. The host
+    // page (Demo.tsx) constrains width; legacy embed usage relies on
+    // the legacy h-[600px] fallback below.
+    <div className="w-full" data-testid="agent-chat-shell">
+      <div className="flex h-full min-h-[600px] flex-col overflow-hidden rounded-2xl border border-border bg-card">
+      {/* Header — quiet status line. One small dot (live = emerald,
+          on-call = primary, pulses only while Ruby is actually
+          speaking). No rings, no shadows. */}
+      <div className="flex items-center gap-3 border-b border-border px-4 py-3">
         {bot?.avatarUrl && (
           <div className="relative flex-shrink-0">
-            {isAgentSpeaking && (
-              <span
-                aria-hidden="true"
-                className="absolute inset-0 rounded-full bg-tool-card-accent/60 motion-safe:animate-ping"
-              />
-            )}
             <img
               src={bot.avatarUrl}
               alt={bot.name}
-              className={
-                "relative h-11 w-11 rounded-full object-cover ring-2 transition-shadow " +
-                (isOnCall
-                  ? "ring-tool-card-accent shadow-[0_0_18px_rgba(168,85,247,0.45)]"
-                  : "ring-border")
-              }
+              className="h-9 w-9 rounded-full object-cover"
             />
             <span
               aria-hidden="true"
               className={
-                "absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full ring-2 ring-card " +
+                "absolute bottom-0 right-0 block h-2 w-2 rounded-full ring-2 ring-card " +
                 (isOnCall
-                  ? "bg-tool-card-accent motion-safe:animate-pulse"
+                  ? isAgentSpeaking
+                    ? "bg-primary motion-safe:animate-pulse"
+                    : "bg-primary"
                   : "bg-emerald-500")
               }
             />
           </div>
         )}
         <div className="min-w-0">
-          <div className="text-sm font-semibold leading-tight">
+          <div className="text-sm font-medium leading-tight">
             {bot?.name ?? "Ruby"}
           </div>
           <div className="text-xs text-muted-foreground">
-            {isOnCall ? "On call · listening" : "AI Beauty Concierge"}
+            {isOnCall ? "On call" : "AI Beauty Concierge"}
           </div>
         </div>
         <div className="ml-auto flex items-center gap-2">
@@ -269,29 +243,22 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
             onHangup={voice.hangup}
           />
         )}
-        {/* Empty-state hero — only when there are no messages AND the
-            user isn't already on a call (the VoiceHero already fills the
-            screen in that case). Centered avatar + gradient name +
-            tagline + chips, giving the first-paint a wow moment. */}
+        {/* Empty-state hero — only when no messages AND not in a call.
+            Quiet, centered, neutral. No glow, no shimmer, no gradient
+            text. Lets the prompt chips below be the call-to-action. */}
         {messages.length === 0 && !isOnCall && (
           <div
-            className="flex flex-col items-center pt-4 text-center motion-safe:animate-bubble-in"
+            className="flex flex-col items-center pt-6 text-center"
             data-testid="agent-chat-empty-hero"
           >
             {bot?.avatarUrl && (
-              <div className="relative mb-3">
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-0 -m-3 rounded-full bg-gradient-to-br from-fuchsia-500/30 via-purple-500/25 to-sky-400/25 blur-2xl motion-safe:animate-voice-breathe"
-                />
-                <img
-                  src={bot.avatarUrl}
-                  alt={bot.name}
-                  className="relative h-20 w-20 rounded-full object-cover ring-4 ring-white/40 shadow-[0_8px_28px_rgba(168,85,247,0.35)]"
-                />
-              </div>
+              <img
+                src={bot.avatarUrl}
+                alt={bot.name}
+                className="mb-4 h-16 w-16 rounded-full object-cover"
+              />
             )}
-            <h2 className="ruby-hero-name text-2xl font-bold tracking-tight motion-safe:animate-text-shimmer">
+            <h2 className="text-lg font-semibold tracking-tight text-foreground">
               {bot?.name ? `Hey, I'm ${bot.name}` : "Welcome"}
             </h2>
             <p className="mt-1 max-w-xs text-sm text-muted-foreground">
@@ -315,7 +282,7 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
       </div>
 
       {/* Input */}
-      <div className="border-t border-border/60 bg-card/80 backdrop-blur p-3">
+      <div className="border-t border-border p-3">
         {pendingImage && (
           <div className="mb-2 inline-flex items-center gap-2 rounded-lg border border-border bg-background p-1 pr-2">
             <img
