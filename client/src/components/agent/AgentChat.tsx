@@ -210,6 +210,29 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
     void send(prompt);
   };
 
+  // External-prefill API. Any element on the host page can drop a
+  // prompt into Ruby by dispatching:
+  //   window.dispatchEvent(new CustomEvent('ruby:send', { detail: { prompt, agentKey } }))
+  // The `agentKey` filter lets multiple chat panels coexist on the same
+  // page without crosstalk (today there's only one, but future-proofing
+  // is cheap). Streaming turns are dropped silently — the caller's
+  // assumption is "if Ruby's busy, the user clearly cares about the
+  // current turn." Dispatched mid-call (voice mode active) still works
+  // because send() routes through the same text path.
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent<{ prompt?: string; agentKey?: string }>).detail;
+      if (!detail || typeof detail.prompt !== "string") return;
+      if (detail.agentKey && detail.agentKey !== agentKey) return;
+      const prompt = detail.prompt.trim();
+      if (!prompt) return;
+      if (status === "streaming") return;
+      void send(prompt);
+    };
+    window.addEventListener("ruby:send", handler);
+    return () => window.removeEventListener("ruby:send", handler);
+  }, [agentKey, status, send]);
+
   return (
     <div
       className="relative mx-auto w-full max-w-3xl"
@@ -227,7 +250,12 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
         <div className="absolute -bottom-12 left-1/4 h-72 w-72 rounded-full bg-sky-400/25 blur-3xl motion-safe:animate-orb-float-c" />
       </div>
 
-      <div className="ruby-glass-shell flex h-[600px] flex-col overflow-hidden rounded-2xl border border-border/60 shadow-[0_22px_60px_-22px_rgba(99,38,184,0.45)]">
+      {/* Shell height: defaults to 600px (legacy embed usage), but the
+          hero on Demo.tsx swaps to a viewport-tied size by passing the
+          chat into a parent that sets a min-height. We use min-h plus
+          h-full so the panel fills its slot when the parent is taller,
+          and falls back to 600px on smaller containers. */}
+      <div className="ruby-glass-shell flex h-full min-h-[600px] flex-col overflow-hidden rounded-2xl border border-border/60 shadow-[0_22px_60px_-22px_rgba(99,38,184,0.45)]">
       {/* Header */}
       <div className="ruby-aurora-header relative flex items-center gap-3 border-b border-border/60 px-4 py-3 motion-safe:animate-aurora-drift">
         {/*
