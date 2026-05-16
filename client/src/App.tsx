@@ -29,6 +29,7 @@ import Voice from "@/pages/Voice";
 import Chatbot from "@/pages/Chatbot";
 import UseCases from "@/pages/UseCases";
 import Demo from "@/pages/Demo";
+import DemoStylesPreview from "@/pages/DemoStylesPreview";
 import Lumi from "@/pages/Lumi";
 import AIForCSR from "@/pages/AIForCSR";
 import AIAgents from "@/pages/AIAgents";
@@ -51,6 +52,7 @@ function Router() {
       <Route path="/chatbot" component={Chatbot} />
       <Route path="/usecases" component={UseCases} />
       <Route path="/demo" component={Demo} />
+      <Route path="/demo-styles" component={DemoStylesPreview} />
       <Route path="/lumi" component={Lumi} />
       <Route path="/ai-for-csr" component={AIForCSR} />
       <Route path="/ai-agents" component={AIAgents} />
