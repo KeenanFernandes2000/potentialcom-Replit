@@ -38,13 +38,23 @@ export interface UseAgentChat {
   sessionId: string;
   send: (text: string, imageUrl?: string) => Promise<void>;
   pushExternalEvent: (event: ExternalVoiceEvent) => void;
+  clear: () => void;
+  regenerate: (messageId: string) => void;
 }
 
 export function useAgentChat(agentKey: string): UseAgentChat {
   const [messages, setMessages] = useState<AgentMessage[]>([]);
   const [status, setStatus] = useState<"idle" | "streaming">("idle");
-  const sessionIdRef = useRef<string>(newSessionId());
+  const [sessionId, setSessionId] = useState<string>(() => newSessionId());
   const abortRef = useRef<AbortController | null>(null);
+
+  // Mirror messages into a ref so callbacks (regenerate) can read the
+  // latest array without listing it in their deps. Cheaper than putting
+  // messages in the regenerate dep array and re-binding on every render.
+  const messagesRef = useRef<AgentMessage[]>([]);
+  useEffect(() => {
+    messagesRef.current = messages;
+  }, [messages]);
 
   useEffect(() => () => abortRef.current?.abort(), []);
 
@@ -90,6 +100,7 @@ export function useAgentChat(agentKey: string): UseAgentChat {
               text: event.text,
               tools: [],
               status: "complete",
+              createdAt: Date.now(),
             },
           ];
         }
@@ -130,6 +141,7 @@ export function useAgentChat(agentKey: string): UseAgentChat {
               text: event.text,
               tools: [],
               status: "complete",
+              createdAt: Date.now(),
             },
           ];
         }
@@ -150,6 +162,7 @@ export function useAgentChat(agentKey: string): UseAgentChat {
                 tools: [],
                 status: "complete",
                 turnId: event.turnId,
+                createdAt: Date.now(),
               },
             ];
           }
@@ -185,6 +198,7 @@ export function useAgentChat(agentKey: string): UseAgentChat {
               text: "",
               tools: [invocation],
               status: "complete",
+              createdAt: Date.now(),
             },
           ];
         }
@@ -205,10 +219,24 @@ export function useAgentChat(agentKey: string): UseAgentChat {
     });
   }, []);
 
+  const clear = useCallback(() => {
+    // Abort any in-flight stream so a half-complete agent message doesn't
+    // get appended after the reset. The existing send() also clears
+    // abortRef in its finally — the dual-write here is intentional: even
+    // if send() is mid-await when clear() fires, the abort guarantees the
+    // controller is torn down NOW.
+    abortRef.current?.abort();
+    abortRef.current = null;
+    setMessages([]);
+    setSessionId(newSessionId());
+    setStatus("idle");
+  }, []);
+
   const send = useCallback(
     async (text: string, imageUrl?: string) => {
       if (!text.trim() || status === "streaming") return;
 
+      const now = Date.now();
       const userMessage: AgentMessage = {
         id: nextId("user"),
         role: "user",
@@ -216,6 +244,7 @@ export function useAgentChat(agentKey: string): UseAgentChat {
         tools: [],
         imageUrl,
         status: "complete",
+        createdAt: now,
       };
       const agentId = nextId("agent");
       const agentMessage: AgentMessage = {
@@ -224,6 +253,7 @@ export function useAgentChat(agentKey: string): UseAgentChat {
         text: "",
         tools: [],
         status: "streaming",
+        createdAt: now,
       };
       setMessages((prev) => [...prev, userMessage, agentMessage]);
       setStatus("streaming");
@@ -239,7 +269,7 @@ export function useAgentChat(agentKey: string): UseAgentChat {
           signal: controller.signal,
           body: JSON.stringify({
             message: text,
-            sessionId: sessionIdRef.current,
+            sessionId,
           }),
         });
 
@@ -343,8 +373,40 @@ export function useAgentChat(agentKey: string): UseAgentChat {
         setStatus("idle");
       }
     },
-    [agentKey, status, updateAgentMessage],
+    [agentKey, status, sessionId, updateAgentMessage],
   );
 
-  return { messages, status, sessionId: sessionIdRef.current, send, pushExternalEvent };
+  const regenerate = useCallback(
+    (messageId: string): void => {
+      if (status === "streaming") return; // don't allow mid-stream regen
+      const current = messagesRef.current;
+      const targetIdx = current.findIndex((m) => m.id === messageId);
+      if (targetIdx === -1) return;
+
+      // Walk backwards from targetIdx - 1 to find the immediately preceding
+      // user message. If none exists, no-op.
+      let userIdx = -1;
+      for (let i = targetIdx - 1; i >= 0; i--) {
+        if (current[i].role === "user") {
+          userIdx = i;
+          break;
+        }
+      }
+      if (userIdx === -1) return;
+
+      const userMessage = current[userIdx];
+
+      // Trim up to (but NOT including) the preceding user message. send()
+      // will re-append a fresh user + agent pair, so we drop the old user
+      // turn too to avoid duplicating it.
+      setMessages(current.slice(0, userIdx));
+
+      // Re-fire the original send with the same text + imageUrl. send()
+      // appends a new user + agent pair and kicks off the stream.
+      void send(userMessage.text, userMessage.imageUrl);
+    },
+    [status, send],
+  );
+
+  return { messages, status, sessionId, send, pushExternalEvent, clear, regenerate };
 }

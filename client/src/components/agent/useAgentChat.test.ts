@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { renderHook, act } from "@testing-library/react";
 import { useAgentChat } from "./useAgentChat";
 
@@ -338,5 +338,181 @@ describe("useAgentChat — pushExternalEvent", () => {
       count: 3,
       products: [{ name: "Lip A" }],
     });
+  });
+
+  it("stamps a numeric createdAt on a user-transcript message", () => {
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    const before = Date.now();
+    act(() => {
+      result.current.pushExternalEvent({
+        kind: "user-transcript",
+        text: "hi",
+      });
+    });
+    const after = Date.now();
+    const msg = result.current.messages[0];
+    expect(typeof msg.createdAt).toBe("number");
+    expect(msg.createdAt).toBeGreaterThanOrEqual(before);
+    expect(msg.createdAt).toBeLessThanOrEqual(after);
+  });
+
+  it("stamps createdAt on agent-response, agent-response-stream, and tool-call-created agent messages", () => {
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    const before = Date.now();
+    act(() => {
+      result.current.pushExternalEvent({ kind: "agent-response", text: "hello" });
+      result.current.pushExternalEvent({
+        kind: "agent-response-stream",
+        turnId: "turn-2",
+        text: "world",
+      });
+      result.current.pushExternalEvent({
+        kind: "user-transcript",
+        text: "another",
+      });
+      result.current.pushExternalEvent({
+        kind: "tool-call",
+        id: "t-1",
+        name: "fake_tool",
+        args: {},
+        async: false,
+      });
+    });
+    const after = Date.now();
+    for (const m of result.current.messages) {
+      expect(typeof m.createdAt).toBe("number");
+      expect(m.createdAt).toBeGreaterThanOrEqual(before);
+      expect(m.createdAt).toBeLessThanOrEqual(after);
+    }
+  });
+
+  it("clear() resets messages to [], mints a new sessionId, and sets status idle", () => {
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    const originalSessionId = result.current.sessionId;
+    act(() => {
+      result.current.pushExternalEvent({ kind: "user-transcript", text: "one" });
+      result.current.pushExternalEvent({ kind: "agent-response", text: "two" });
+    });
+    expect(result.current.messages.length).toBe(2);
+
+    act(() => {
+      result.current.clear();
+    });
+
+    expect(result.current.messages).toEqual([]);
+    expect(result.current.status).toBe("idle");
+    expect(result.current.sessionId).not.toBe(originalSessionId);
+    expect(result.current.sessionId.length).toBeGreaterThan(0);
+  });
+
+  it("send() after clear() uses the new sessionId (not the stale pre-clear one)", async () => {
+    // Return a FRESH Response per call — Response bodies are single-use
+    // ReadableStreams, so reusing one Response across two send() calls
+    // would throw "ReadableStream is locked" on the second read.
+    const fetchMock = vi.fn().mockImplementation(
+      async () =>
+        new Response("data: [DONE]\n\n", {
+          status: 200,
+          headers: { "Content-Type": "text/event-stream" },
+        }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    const originalSessionId = result.current.sessionId;
+
+    // First send uses the original sessionId.
+    await act(async () => {
+      await result.current.send("first");
+    });
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    const firstBody = JSON.parse(fetchMock.mock.calls[0][1].body);
+    expect(firstBody.sessionId).toBe(originalSessionId);
+
+    // Clear, then send again — must use the NEW sessionId.
+    act(() => {
+      result.current.clear();
+    });
+    const newSessionId = result.current.sessionId;
+    expect(newSessionId).not.toBe(originalSessionId);
+
+    await act(async () => {
+      await result.current.send("second");
+    });
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    const secondBody = JSON.parse(fetchMock.mock.calls[1][1].body);
+    expect(secondBody.sessionId).toBe(newSessionId);
+
+    vi.unstubAllGlobals();
+  });
+
+  it("regenerate() removes the target agent message and re-sends the preceding user message", async () => {
+    // Mock fetch so send() in the implementation completes with a clean
+    // empty stream — the assertion below only cares that send was called
+    // with the original user text, not what comes back.
+    const fetchMock = vi.fn().mockImplementation(async () =>
+      new Response("data: [DONE]\n\n", {
+        status: 200,
+        headers: { "Content-Type": "text/event-stream" },
+      }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+
+    const { result } = renderHook(() => useAgentChat("ruby"));
+
+    // Seed a turn manually via pushExternalEvent (avoids triggering send()
+    // for the seed).
+    act(() => {
+      result.current.pushExternalEvent({ kind: "user-transcript", text: "find me a lipstick" });
+      result.current.pushExternalEvent({ kind: "agent-response", text: "old reply" });
+    });
+    expect(result.current.messages.length).toBe(2);
+    const oldAgent = result.current.messages[1];
+
+    await act(async () => {
+      result.current.regenerate(oldAgent.id);
+    });
+
+    // The old agent message was removed; send() re-emitted both a new
+    // user message and a new (streaming) agent message — but for this
+    // test what matters is that fetch was called with the original user
+    // text in the body.
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    const callArgs = fetchMock.mock.calls[0];
+    const body = JSON.parse(callArgs[1].body);
+    expect(body.message).toBe("find me a lipstick");
+
+    vi.unstubAllGlobals();
+  });
+
+  it("regenerate() no-ops when no preceding user message exists", async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    act(() => {
+      // One agent message, no user message before.
+      result.current.pushExternalEvent({ kind: "agent-response", text: "first" });
+    });
+    const orphanAgent = result.current.messages[0];
+
+    await act(async () => {
+      result.current.regenerate(orphanAgent.id);
+    });
+
+    expect(fetchMock).not.toHaveBeenCalled();
+    vi.unstubAllGlobals();
+  });
+
+  it("regenerate() no-ops on unknown messageId", async () => {
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    await act(async () => {
+      result.current.regenerate("not-a-real-id");
+    });
+    expect(fetchMock).not.toHaveBeenCalled();
+    vi.unstubAllGlobals();
   });
 });
