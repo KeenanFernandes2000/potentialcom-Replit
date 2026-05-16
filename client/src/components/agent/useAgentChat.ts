@@ -85,7 +85,23 @@ export function useAgentChat(agentKey: string): UseAgentChat {
             },
           ];
         }
-        case "agent-response":
+        case "agent-response": {
+          // Mirror the user-transcript dedupe: voice workers can publish
+          // the same assistant text twice when SpeechCreated (early) and
+          // ConversationItemAdded (late) both fire. The worker dedupes
+          // its own state, but if the worker restarts mid-call its set
+          // is lost — this is a defensive backup. If the latest message
+          // is already an agent message with the same trimmed text,
+          // treat the new event as a refresh and skip the append.
+          const lastAgent = prev[prev.length - 1];
+          const incomingAgent = event.text.trim();
+          if (
+            lastAgent &&
+            lastAgent.role === "agent" &&
+            lastAgent.text.trim() === incomingAgent
+          ) {
+            return prev;
+          }
           return [
             ...prev,
             {
@@ -96,6 +112,7 @@ export function useAgentChat(agentKey: string): UseAgentChat {
               status: "complete",
             },
           ];
+        }
         case "tool-call": {
           const invocation: ToolInvocation = {
             id: event.id,

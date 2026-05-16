@@ -13,7 +13,7 @@ describe("useAutoSpeak", () => {
   });
 
   it("reads an existing localStorage value on mount", () => {
-    localStorage.setItem("ruby:autoSpeak", "true");
+    localStorage.setItem("ruby:autoSpeak:v2", "true");
     const { result } = renderHook(() => useAutoSpeak());
     expect(result.current.enabled).toBe(true);
   });
@@ -24,17 +24,17 @@ describe("useAutoSpeak", () => {
       result.current.setEnabled(true);
     });
     expect(result.current.enabled).toBe(true);
-    expect(localStorage.getItem("ruby:autoSpeak")).toBe("true");
+    expect(localStorage.getItem("ruby:autoSpeak:v2")).toBe("true");
   });
 
   it("setEnabled(false) clears the localStorage value back to disabled", () => {
-    localStorage.setItem("ruby:autoSpeak", "true");
+    localStorage.setItem("ruby:autoSpeak:v2", "true");
     const { result } = renderHook(() => useAutoSpeak());
     act(() => {
       result.current.setEnabled(false);
     });
     expect(result.current.enabled).toBe(false);
-    expect(localStorage.getItem("ruby:autoSpeak")).toBe("false");
+    expect(localStorage.getItem("ruby:autoSpeak:v2")).toBe("false");
   });
 
   it("syncs across instances via a custom window event", () => {
