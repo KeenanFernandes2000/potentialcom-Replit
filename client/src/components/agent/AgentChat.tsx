@@ -15,6 +15,7 @@ import {
   useLiveKitVoice,
   VoiceModeButton,
   VoiceHero,
+  TalkModePicker,
 } from "./voice";
 import type { ToolRegistry } from "./toolRegistry";
 import type { AgentBotConfig } from "@shared/agent";
@@ -42,6 +43,7 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
   // the autoFocusKey prop on AutoGrowTextarea.
   const [focusBumpCounter, setFocusBumpCounter] = useState(0);
   const bumpFocus = useCallback(() => setFocusBumpCounter((n) => n + 1), []);
+  const [talkModePickerOpen, setTalkModePickerOpen] = useState(false);
   const tts = useTextToSpeech(agentKey);
   const voice = useLiveKitVoice(agentKey, chat.sessionId, chat.pushExternalEvent);
 
@@ -249,7 +251,7 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
             (voice.state === "idle" || voice.state === "error") && (
               <VoiceModeButton
                 busy={status === "streaming"}
-                onClick={() => void voice.start()}
+                onClick={() => setTalkModePickerOpen(true)}
               />
             )}
           <ClearConversationMenu
@@ -264,6 +266,17 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
           />
         </div>
       </div>
+
+      {/* Talk-mode picker modal: opens from the header button.
+          onPick mints the LiveKit room with the chosen withAvatar flag. */}
+      <TalkModePicker
+        open={talkModePickerOpen}
+        onOpenChange={setTalkModePickerOpen}
+        onPick={(withAvatar) => {
+          setTalkModePickerOpen(false);
+          void voice.start({ withAvatar });
+        }}
+      />
 
       {/* In-call dock — pinned BETWEEN the header and the message
           list (NOT inside the scrollable area) so the end-call button

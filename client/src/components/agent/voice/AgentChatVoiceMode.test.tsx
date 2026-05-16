@@ -87,7 +87,9 @@ describe("AgentChat voice mode integration", () => {
       name: /talk to ruby/i,
     });
     await user.click(talkBtn);
-
+    // Picker opens; pick "Voice only" to mint a voice-only room.
+    const voiceOnlyBtn = await screen.findByRole("button", { name: /voice only/i });
+    await user.click(voiceOnlyBtn);
     // FakeRoom is constructed once the room is minted and hook connects.
     await waitFor(() => expect(FakeRoom.instances).toHaveLength(1));
 
@@ -153,6 +155,9 @@ describe("AgentChat voice mode integration", () => {
 
     const talkBtn = await screen.findByRole("button", { name: /talk to ruby/i });
     await user.click(talkBtn);
+    // Picker opens; pick "Voice only" to mint a voice-only room.
+    const voiceOnlyBtn = await screen.findByRole("button", { name: /voice only/i });
+    await user.click(voiceOnlyBtn);
 
     // NB: This test reflects the Task 11 wiring. For T7, we just
     // assert the FakeRoom helper exists and can be triggered. The
@@ -211,6 +216,9 @@ describe("AgentChat voice mode integration", () => {
     await user.click(
       await screen.findByRole("button", { name: /talk to ruby/i }),
     );
+    // Picker opens; pick "Voice only" to mint a voice-only room.
+    const voiceOnlyBtn = await screen.findByRole("button", { name: /voice only/i });
+    await user.click(voiceOnlyBtn);
 
     // The toast renderer mounts the description text in the DOM —
     // it's the same toast viewport used by the rest of the app.
