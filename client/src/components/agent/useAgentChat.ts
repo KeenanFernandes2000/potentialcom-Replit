@@ -90,6 +90,7 @@ export function useAgentChat(agentKey: string): UseAgentChat {
               text: event.text,
               tools: [],
               status: "complete",
+              createdAt: Date.now(),
             },
           ];
         }
@@ -130,6 +131,7 @@ export function useAgentChat(agentKey: string): UseAgentChat {
               text: event.text,
               tools: [],
               status: "complete",
+              createdAt: Date.now(),
             },
           ];
         }
@@ -150,6 +152,7 @@ export function useAgentChat(agentKey: string): UseAgentChat {
                 tools: [],
                 status: "complete",
                 turnId: event.turnId,
+                createdAt: Date.now(),
               },
             ];
           }
@@ -185,6 +188,7 @@ export function useAgentChat(agentKey: string): UseAgentChat {
               text: "",
               tools: [invocation],
               status: "complete",
+              createdAt: Date.now(),
             },
           ];
         }
@@ -209,6 +213,7 @@ export function useAgentChat(agentKey: string): UseAgentChat {
     async (text: string, imageUrl?: string) => {
       if (!text.trim() || status === "streaming") return;
 
+      const now = Date.now();
       const userMessage: AgentMessage = {
         id: nextId("user"),
         role: "user",
@@ -216,6 +221,7 @@ export function useAgentChat(agentKey: string): UseAgentChat {
         tools: [],
         imageUrl,
         status: "complete",
+        createdAt: now,
       };
       const agentId = nextId("agent");
       const agentMessage: AgentMessage = {
@@ -224,6 +230,7 @@ export function useAgentChat(agentKey: string): UseAgentChat {
         text: "",
         tools: [],
         status: "streaming",
+        createdAt: now,
       };
       setMessages((prev) => [...prev, userMessage, agentMessage]);
       setStatus("streaming");

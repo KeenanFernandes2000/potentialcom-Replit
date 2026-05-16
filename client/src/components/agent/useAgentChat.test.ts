@@ -339,4 +339,50 @@ describe("useAgentChat — pushExternalEvent", () => {
       products: [{ name: "Lip A" }],
     });
   });
+
+  it("stamps a numeric createdAt on a user-transcript message", () => {
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    const before = Date.now();
+    act(() => {
+      result.current.pushExternalEvent({
+        kind: "user-transcript",
+        text: "hi",
+      });
+    });
+    const after = Date.now();
+    const msg = result.current.messages[0];
+    expect(typeof msg.createdAt).toBe("number");
+    expect(msg.createdAt).toBeGreaterThanOrEqual(before);
+    expect(msg.createdAt).toBeLessThanOrEqual(after);
+  });
+
+  it("stamps createdAt on agent-response, agent-response-stream, and tool-call-created agent messages", () => {
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    const before = Date.now();
+    act(() => {
+      result.current.pushExternalEvent({ kind: "agent-response", text: "hello" });
+      result.current.pushExternalEvent({
+        kind: "agent-response-stream",
+        turnId: "turn-2",
+        text: "world",
+      });
+      result.current.pushExternalEvent({
+        kind: "user-transcript",
+        text: "another",
+      });
+      result.current.pushExternalEvent({
+        kind: "tool-call",
+        id: "t-1",
+        name: "fake_tool",
+        args: {},
+        async: false,
+      });
+    });
+    const after = Date.now();
+    for (const m of result.current.messages) {
+      expect(typeof m.createdAt).toBe("number");
+      expect(m.createdAt).toBeGreaterThanOrEqual(before);
+      expect(m.createdAt).toBeLessThanOrEqual(after);
+    }
+  });
 });

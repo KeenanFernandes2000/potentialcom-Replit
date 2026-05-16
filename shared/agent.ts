@@ -29,6 +29,10 @@ export interface AgentMessage {
   // update this message instead of appending a new one. Absent for
   // typed-chat messages and for non-streaming voice paths.
   turnId?: string;
+  // Wall-clock time (Date.now()) the message was first created. Used by
+  // the UI to render a hover timestamp on each message bubble. Required:
+  // every message-creation site in useAgentChat sets this explicitly.
+  createdAt: number;
 }
 
 // Request body sent to POST /api/agent/:agentKey/chat
