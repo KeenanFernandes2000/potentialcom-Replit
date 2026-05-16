@@ -89,6 +89,36 @@ describe("useAgentChat — pushExternalEvent", () => {
     expect(result.current.messages[0].role).toBe("agent");
   });
 
+  it("dedupes agent-response across markdown vs TTS-cleaned formatting (same content, different glyphs)", () => {
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    const rich = "Love the energy 💖\n\nWhat are we saying yes to?\n\n• 🛍️ Shopping for beauty products";
+    const cleaned = "Love the energy What are we saying yes to? * Shopping for beauty products";
+    act(() => {
+      result.current.pushExternalEvent({ kind: "agent-response", text: rich });
+      result.current.pushExternalEvent({ kind: "agent-response", text: cleaned });
+    });
+    expect(result.current.messages).toHaveLength(1);
+    // Should keep the longer/richer text (preserves emoji + bullets).
+    expect(result.current.messages[0].text).toBe(rich);
+  });
+
+  it("keeps the longer/richer text when two formatted versions of the SAME content arrive (markdown wins over TTS-cleaned)", () => {
+    const { result } = renderHook(() => useAgentChat("ruby"));
+    // TTS-cleaned arrives first (in practice the order can flip). Both
+    // versions normalize identically (alphanumeric-only); the differences
+    // are emoji + punctuation + an em-dash, which the dedupe strips.
+    const cleaned = "Welcome to Alora let's find your perfect look";
+    const rich = "Welcome to Alora — let's find your perfect look ✨";
+    act(() => {
+      result.current.pushExternalEvent({ kind: "agent-response", text: cleaned });
+      result.current.pushExternalEvent({ kind: "agent-response", text: rich });
+    });
+    expect(result.current.messages).toHaveLength(1);
+    // Both normalize identically (alphanumeric-only, first 200 chars).
+    // The replace-with-longer rule preserves the prettier rendering.
+    expect(result.current.messages[0].text).toBe(rich);
+  });
+
   it("does NOT dedupe an agent-response after a user turn (genuine new reply)", () => {
     const { result } = renderHook(() => useAgentChat("ruby"));
     act(() => {
