@@ -6,6 +6,7 @@ import { MessageBubble } from "./MessageBubble";
 import { SuggestedPrompts } from "./SuggestedPrompts";
 import { useAgentChat } from "./useAgentChat";
 import { AutoGrowTextarea } from "./AutoGrowTextarea";
+import { ClearConversationMenu } from "./ClearConversationMenu";
 import { ScrollToLatestPill } from "./ScrollToLatestPill";
 import { useSmartScroll } from "./hooks/useSmartScroll";
 import {
@@ -30,7 +31,7 @@ interface AgentChatProps {
 // parameterize when a second agent is added.
 export function AgentChat({ agentKey, registry }: AgentChatProps) {
   const chat = useAgentChat(agentKey);
-  const { messages, status, send } = chat;
+  const { messages, status, send, clear } = chat;
   const { toast } = useToast();
   const [input, setInput] = useState("");
   const [bot, setBot] = useState<AgentBotConfig | null>(null);
@@ -245,6 +246,12 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
                 onClick={() => void voice.start()}
               />
             )}
+          <ClearConversationMenu
+            onClear={() => {
+              clear();
+              bumpFocus();
+            }}
+          />
         </div>
       </div>
 
