@@ -12,7 +12,7 @@ import {
   useAutoSpeak,
   useLiveKitVoice,
   VoiceModeButton,
-  VoiceCallBar,
+  VoiceHero,
 } from "./voice";
 import type { ToolRegistry } from "./toolRegistry";
 import type { AgentBotConfig } from "@shared/agent";
@@ -211,9 +211,25 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
   };
 
   return (
-    <div className="mx-auto flex h-[600px] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-border bg-background shadow-lg">
+    <div
+      className="relative mx-auto w-full max-w-3xl"
+      data-testid="agent-chat-shell"
+    >
+      {/* Ambient gradient orbs — three blurred circles that drift behind
+          the chat panel. Hidden in print + reduced-motion contexts via
+          motion-safe. Pointer-events disabled so they never block UI. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -inset-12 -z-10 overflow-hidden"
+      >
+        <div className="absolute -top-10 -left-10 h-72 w-72 rounded-full bg-fuchsia-500/30 blur-3xl motion-safe:animate-orb-float-a" />
+        <div className="absolute top-1/3 -right-16 h-80 w-80 rounded-full bg-indigo-500/30 blur-3xl motion-safe:animate-orb-float-b" />
+        <div className="absolute -bottom-12 left-1/4 h-72 w-72 rounded-full bg-sky-400/25 blur-3xl motion-safe:animate-orb-float-c" />
+      </div>
+
+      <div className="ruby-glass-shell flex h-[600px] flex-col overflow-hidden rounded-2xl border border-border/60 shadow-[0_22px_60px_-22px_rgba(99,38,184,0.45)]">
       {/* Header */}
-      <div className="flex items-center gap-3 border-b border-border bg-card px-4 py-3">
+      <div className="ruby-aurora-header relative flex items-center gap-3 border-b border-border/60 px-4 py-3 motion-safe:animate-aurora-drift">
         {/*
           Avatar: bumped to h-11 w-11 for visual presence. Status dot in
           the bottom-right (green when idle, purple+pulse when on-call).
@@ -258,39 +274,70 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
           </div>
         </div>
         <div className="ml-auto flex items-center gap-2">
-          {bot?.audiostt && bot?.audiotts &&
-            (voice.state === "idle" || voice.state === "error" ? (
+          {/* Only show the "Start voice" button in the header when no
+              call is active — the in-call controls live in VoiceHero
+              below (the in-message overlay) for a stronger focal moment. */}
+          {bot?.audiostt &&
+            bot?.audiotts &&
+            (voice.state === "idle" || voice.state === "error") && (
               <VoiceModeButton
                 busy={status === "streaming"}
                 onClick={() => void voice.start()}
               />
-            ) : (
-              <VoiceCallBar
-                state={voice.state}
-                durationMs={voice.durationMs}
-                isMuted={voice.isMuted}
-                onMute={voice.toggleMute}
-                onHangup={voice.hangup}
-              />
-            ))}
+            )}
           {bot?.audiotts && <AutoSpeakToggle />}
         </div>
       </div>
 
       {/* Messages */}
       <div ref={scrollRef} className="flex-1 space-y-4 overflow-y-auto p-4">
-        {messages.length === 0 && bot?.greeting && (
-          <div className="max-w-[80%] rounded-2xl rounded-bl-sm bg-muted px-4 py-2 text-sm">
-            {bot.greeting}
-          </div>
+        {/* In-call hero overlay. Renders ABOVE the message list so it
+            captures attention while still letting prior messages scroll
+            into view above it as new ones arrive. */}
+        {isOnCall && (
+          <VoiceHero
+            state={voice.state}
+            durationMs={voice.durationMs}
+            isMuted={voice.isMuted}
+            avatarUrl={bot?.avatarUrl}
+            agentName={bot?.name ?? "Ruby"}
+            onMute={voice.toggleMute}
+            onHangup={voice.hangup}
+          />
         )}
-        {/*
-          Suggested-prompt chips render only on an empty chat. Each chip
-          triggers a different rich tool card so a visitor's first click
-          immediately demonstrates Ruby's range.
-        */}
-        {messages.length === 0 && (
-          <SuggestedPrompts onSelect={handlePromptSelect} />
+        {/* Empty-state hero — only when there are no messages AND the
+            user isn't already on a call (the VoiceHero already fills the
+            screen in that case). Centered avatar + gradient name +
+            tagline + chips, giving the first-paint a wow moment. */}
+        {messages.length === 0 && !isOnCall && (
+          <div
+            className="flex flex-col items-center pt-4 text-center motion-safe:animate-bubble-in"
+            data-testid="agent-chat-empty-hero"
+          >
+            {bot?.avatarUrl && (
+              <div className="relative mb-3">
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-0 -m-3 rounded-full bg-gradient-to-br from-fuchsia-500/30 via-purple-500/25 to-sky-400/25 blur-2xl motion-safe:animate-voice-breathe"
+                />
+                <img
+                  src={bot.avatarUrl}
+                  alt={bot.name}
+                  className="relative h-20 w-20 rounded-full object-cover ring-4 ring-white/40 shadow-[0_8px_28px_rgba(168,85,247,0.35)]"
+                />
+              </div>
+            )}
+            <h2 className="ruby-hero-name text-2xl font-bold tracking-tight motion-safe:animate-text-shimmer">
+              {bot?.name ? `Hey, I'm ${bot.name}` : "Welcome"}
+            </h2>
+            <p className="mt-1 max-w-xs text-sm text-muted-foreground">
+              {bot?.greeting ??
+                "Ask me anything — I'll find products, courses, experts, and deals."}
+            </p>
+            <div className="w-full">
+              <SuggestedPrompts onSelect={handlePromptSelect} />
+            </div>
+          </div>
         )}
         {messages.map((message) => (
           <MessageBubble
@@ -304,7 +351,7 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
       </div>
 
       {/* Input */}
-      <div className="border-t border-border bg-card p-3">
+      <div className="border-t border-border/60 bg-card/80 backdrop-blur p-3">
         {pendingImage && (
           <div className="mb-2 inline-flex items-center gap-2 rounded-lg border border-border bg-background p-1 pr-2">
             <img
@@ -375,6 +422,7 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
             <Send className="h-4 w-4" />
           </Button>
         </form>
+      </div>
       </div>
     </div>
   );

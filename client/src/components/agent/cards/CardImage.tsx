@@ -32,14 +32,21 @@ export function CardImage({
       />
     );
   }
+  // Wrap the <img> in an overflow-hidden container so the hover-zoom
+  // doesn't leak out of the rounded frame. The `group-hover` selector
+  // pairs with the surrounding CardGrid item or anchor — falls back
+  // gracefully to no-zoom if the parent doesn't add the `group` class
+  // (CSS selectors without a matching ancestor are silently inert).
   return (
-    <img
-      src={src}
-      alt={alt}
-      loading="lazy"
-      decoding="async"
-      onError={() => setErrored(true)}
-      className={`w-full ${aspectClass} object-cover rounded-md`}
-    />
+    <div className={`relative w-full ${aspectClass} overflow-hidden rounded-md`}>
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        decoding="async"
+        onError={() => setErrored(true)}
+        className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.06]"
+      />
+    </div>
   );
 }
