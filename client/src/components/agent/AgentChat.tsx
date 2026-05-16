@@ -267,7 +267,6 @@ export function AgentChat({ agentKey, registry }: AgentChatProps) {
           state={voice.state}
           durationMs={voice.durationMs}
           isMuted={voice.isMuted}
-          avatarUrl={bot?.avatarUrl}
           agentName={bot?.name ?? "Ruby"}
           onMute={voice.toggleMute}
           onHangup={voice.hangup}

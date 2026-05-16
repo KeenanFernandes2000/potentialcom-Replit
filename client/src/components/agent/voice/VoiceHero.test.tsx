@@ -13,7 +13,6 @@ function renderHero(
     state: "listening" as const,
     durationMs: 12000,
     isMuted: false,
-    avatarUrl: "https://example.com/ruby.png",
     agentName: "Ruby",
     onMute,
     onHangup,
@@ -82,9 +81,11 @@ describe("VoiceHero", () => {
     expect(screen.queryByText(/^\d+:\d{2}$/)).toBeNull();
   });
 
-  it("renders an avatar image with the agent's name as alt text when provided", () => {
-    renderHero({ avatarUrl: "https://example.com/ruby.png", agentName: "Ruby" });
-    const img = screen.getByAltText("Ruby") as HTMLImageElement;
-    expect(img.src).toBe("https://example.com/ruby.png");
+  it("exposes the agent name to screen readers via an sr-only label (the visible avatar lives in the chat header to avoid duplication)", () => {
+    renderHero({ agentName: "Ruby" });
+    // The dock no longer renders an <img> — header already has Ruby's
+    // face. A visually-hidden span provides the accessible name so
+    // screen readers still announce who the call is with.
+    expect(screen.getByText(/ruby call/i)).toBeInTheDocument();
   });
 });

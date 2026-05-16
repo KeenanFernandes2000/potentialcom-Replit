@@ -5,7 +5,11 @@ interface VoiceHeroProps {
   state: VoiceState;
   durationMs: number;
   isMuted: boolean;
-  avatarUrl?: string;
+  /**
+   * Name used in the sr-only label so screen readers can announce who
+   * the call is with. (The visible avatar lives in the chat header —
+   * the dock intentionally omits it to avoid the redundant double-face.)
+   */
   agentName: string;
   onMute: () => void;
   onHangup: () => void;
@@ -63,7 +67,6 @@ export function VoiceHero({
   state,
   durationMs,
   isMuted,
-  avatarUrl,
   agentName,
   onMute,
   onHangup,
@@ -77,31 +80,29 @@ export function VoiceHero({
     <div
       data-state={state}
       data-testid="voice-hero"
-      className="flex items-center gap-4 border-b border-border bg-muted/40 px-5 py-3"
+      className="flex items-center gap-3 border-b border-border bg-muted/40 px-5 py-3"
     >
-      {/* Avatar with quiet breathing ring */}
-      <div className="relative flex h-12 w-12 flex-shrink-0 items-center justify-center">
+      {/* Live-pulse indicator. The header already shows Ruby's avatar
+          — repeating it here was redundant. A small breathing primary
+          dot conveys "call is live" without crowding the header. The
+          dot's inner ring speeds up while Ruby is actively speaking. */}
+      <div className="relative flex h-6 w-6 flex-shrink-0 items-center justify-center">
         <span
           aria-hidden="true"
           className={
-            "absolute inset-0 rounded-full border-2 border-primary/30 " +
+            "absolute inset-0 rounded-full bg-primary/15 " +
             (isSpeaking
               ? "motion-safe:animate-voice-breathe-fast"
               : "motion-safe:animate-voice-breathe")
           }
         />
-        {avatarUrl ? (
-          <img
-            src={avatarUrl}
-            alt={agentName}
-            className="relative h-10 w-10 rounded-full object-cover"
-          />
-        ) : (
-          <div
-            aria-hidden="true"
-            className="relative h-10 w-10 rounded-full bg-primary/10"
-          />
-        )}
+        <span
+          aria-hidden="true"
+          className="relative h-2.5 w-2.5 rounded-full bg-primary"
+        />
+        {/* Hidden accessible name so screen readers still announce the
+            agent — the avatar img used to provide this. */}
+        <span className="sr-only">{agentName} call</span>
       </div>
 
       {/* Status + timer + inline waveform */}
