@@ -175,8 +175,11 @@ describe("AgentChat voice mode integration", () => {
       expect(screen.getByTestId("avatar-view-video")).toBeInTheDocument();
     });
 
-    // Text input should be hidden (avatar mode is voice-first).
-    expect(screen.queryByPlaceholderText(/message ruby/i)).toBeNull();
+    // Text input stays visible in avatar mode so the user can type
+    // while the avatar lip-syncs in the panel above.
+    expect(
+      screen.getByPlaceholderText(/message ruby/i),
+    ).toBeInTheDocument();
   });
 
   it("shows a toast when the voice room mint fails (e.g., trial exhausted)", async () => {
