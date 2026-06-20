@@ -211,6 +211,68 @@ const PrivacyPolicy = () => {
               policy and do not share this data with unauthorized third parties.
             </p>
 
+            <h3 className="text-xl font-semibold mt-6 mb-3">
+              Google Gmail and Calendar (Read-Only) Access
+            </h3>
+            <p>
+              Separately from Google SSO, you may choose to connect your own Google
+              account so your Potential.com AI assistant can use your information to
+              help you. We request only the minimum read-only scopes you explicitly
+              grant on Google&apos;s consent screen:
+            </p>
+            <ul className="list-disc pl-6 my-3 space-y-1">
+              <li>
+                <strong>Gmail (read-only)</strong> &mdash;{" "}
+                <code>gmail.readonly</code>: to read your email so your assistant can
+                answer your questions and surface relevant context. We never send,
+                compose, modify, label, or delete any email.
+              </li>
+              <li>
+                <strong>Google Calendar (read-only)</strong> &mdash;{" "}
+                <code>calendar.readonly</code>: to read your schedule so your assistant
+                can help you plan and answer scheduling questions. We never create,
+                modify, or delete calendar events.
+              </li>
+            </ul>
+            <p>
+              This data is used <strong>only</strong> to provide the user-facing
+              features you requested inside your own assistant, and is processed
+              per-user. Your Google access and refresh tokens are{" "}
+              <strong>encrypted at rest</strong> and transmitted over TLS. We do not
+              sell or transfer your Google user data to third parties, and we do not
+              use it for advertising. You can disconnect Google at any time from your
+              Connections page, which immediately revokes our access and deletes the
+              stored tokens; you may also revoke access at{" "}
+              <a
+                href="https://myaccount.google.com/connections"
+                className="underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                myaccount.google.com/connections
+              </a>
+              .
+            </p>
+            <p>
+              Potential.com&apos;s use and transfer to any other app of information
+              received from Google APIs will adhere to the{" "}
+              <a
+                href="https://developers.google.com/terms/api-services-user-data-policy"
+                className="underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Google API Services User Data Policy
+              </a>
+              , including the <strong>Limited Use</strong> requirements. Specifically,
+              data obtained via Google APIs is used solely to provide and improve the
+              user-facing features the user requested; is not sold or transferred to
+              third parties; is not used for advertising; and is not read by humans
+              except (a) with the user&apos;s explicit consent, (b) for security
+              purposes, (c) to comply with applicable law, or (d) as part of internal
+              operations on aggregated, de-identified data.
+            </p>
+
             <h2 className="text-2xl font-semibold mt-10 mb-4">
               8. Data Security Measures
             </h2>
