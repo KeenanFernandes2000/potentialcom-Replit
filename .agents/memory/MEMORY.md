@@ -1,0 +1,1 @@
+- [Blocked dependency install](blocked-dependency-install.md) — a security-firewall-blocked dep (CVE) aborts the whole npm install, silently leaving other declared deps uninstalled and breaking builds.
