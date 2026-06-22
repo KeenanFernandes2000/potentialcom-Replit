@@ -24,6 +24,7 @@ import moeLogo from "@assets/MOE_logo_1782111063727.png";
 import adgmFepLogo from "@assets/ADGM_logo_1782112596349.jpeg";
 import vxAcademyPdf from "@assets/DCT_VX_Academy_Case_Study_1782113750466.pdf";
 import dubaiSmeYecPdf from "@assets/DubaiSME_YEC_Case_Study_1782113851598.pdf";
+import airbusEntaliqPdf from "@assets/Entaliq_with_Airbus_Case_Study_1782113953296.pdf";
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
 import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
 import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
@@ -187,6 +188,7 @@ const caseStudies: CaseStudy[] = [
     useCase: "Innovation",
     title: "Airbus Entaliq Program in KSA",
     logo: airbusLogo,
+    pdf: airbusEntaliqPdf,
     intro:
       "Empowering Saudi innovators through aviation innovation, mentorship and incubation.",
     stats: [
