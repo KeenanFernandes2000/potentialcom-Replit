@@ -300,7 +300,7 @@ const caseStudies: CaseStudy[] = [
     logo: vxAcademyLogo,
     logoClassName: "max-h-24 max-w-full object-contain",
     intro:
-      "AI-Powered Frontliner Empowerment and Certification program — An initiative by DCT - Abu Dhabi to elevate visitor experience standards in the Emirate.",
+      "AI-Powered Frontliner Empowerment and Certification Academy to elevate visitor experience standards in the Emirate.",
     stats: [
       { value: "100,000", label: "Target Frontliners" },
       { value: "88.1%", label: "Completion Rate" },
