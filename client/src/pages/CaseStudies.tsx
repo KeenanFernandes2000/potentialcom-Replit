@@ -345,8 +345,8 @@ const caseStudies: CaseStudy[] = [
     stats: [{ value: "Oman", label: "Communities Reached" }, TBD, TBD],
   },
   {
-    industry: "Healthcare",
-    useCase: "Awards Program",
+    industry: "Government",
+    useCase: "Innovation",
     title: "TIP Healthcare Awards",
     logo: tipHealthcareLogo,
     logoClassName: "max-h-24 max-w-full object-contain",
