@@ -98,7 +98,7 @@ const heroStats: Stat[] = [
 const caseStudies: CaseStudy[] = [
   {
     industry: "Automotive",
-    useCase: "Marketing Campaign",
+    useCase: "Lead Generation",
     title: "AGMC BMW Email Campaign",
     logo: bmwLogo,
     intro:
