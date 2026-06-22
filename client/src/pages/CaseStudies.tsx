@@ -754,7 +754,7 @@ const CaseStudies = () => {
         </section>
 
         {/* Why Potential.com */}
-        <section className="py-16 md:py-24">
+        <section className="py-16 md:py-24 bg-muted/50">
           <div className="container">
             <FadeIn className="text-center mb-14">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
