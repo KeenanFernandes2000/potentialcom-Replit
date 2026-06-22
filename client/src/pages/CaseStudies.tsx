@@ -20,6 +20,7 @@ import dubaiSmeLogo from "@assets/dubai_sme_logo_1782107929025.jpeg";
 import tipHealthcareLogo from "@assets/DED_Logo_1782108260153.jpg";
 import innovationTheaterLogo from "@assets/motc_new_logo_1782108578573.png";
 import vxAcademyLogo from "@assets/DCT_logo_1782108989381.png";
+import moeLogo from "@assets/MOE_logo_1782111063727.png";
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
 import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
 import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
@@ -305,6 +306,20 @@ const caseStudies: CaseStudy[] = [
       { value: "100,000", label: "Target Frontliners" },
       { value: "88.1%", label: "Completion Rate" },
       { value: "135,205", label: "Hours Delivered So Far" },
+    ],
+  },
+  {
+    industry: "Government",
+    useCase: "Entrepreneurship",
+    title: "The Entrepreneurial Nation (TEN)",
+    logo: moeLogo,
+    logoClassName: "max-h-24 max-w-full object-contain",
+    intro:
+      "A national project for entrepreneurship and SMEs that features the biggest public-private partnerships of its kind, bringing together incubators, accelerators, funding entities and private corporations.",
+    stats: [
+      { value: "$1,000,000+", label: "Support Provided" },
+      { value: "5,000+", label: "Registered" },
+      { value: "20+", label: "International Partners" },
     ],
   },
   {
