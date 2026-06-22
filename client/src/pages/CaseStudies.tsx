@@ -18,7 +18,7 @@ import bmwLogo from "@assets/BMW_logo_1782107783038.png";
 import alAinMuseumLogo from "@assets/Al_Ain_Museum_logo_1782107849084.png";
 import dubaiSmeLogo from "@assets/dubai_sme_logo_1782107929025.jpeg";
 import tipHealthcareLogo from "@assets/DED_Logo_1782108260153.jpg";
-import innovationTheaterLogo from "@assets/motc_Qatar_logo_1782108520747.svg";
+import innovationTheaterLogo from "@assets/motc_new_logo_1782108578573.png";
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
 import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
 import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
