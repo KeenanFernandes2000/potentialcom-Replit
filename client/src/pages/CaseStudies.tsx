@@ -292,6 +292,7 @@ const caseStudies: CaseStudy[] = [
     useCase: "Certification",
     title: "Visitor Experience (VX) Academy",
     logo: vxAcademyLogo,
+    logoClassName: "max-h-24 max-w-full object-contain",
     intro:
       "AI-Powered Frontliner Empowerment and Certification program — An initiative by DCT - Abu Dhabi to elevate visitor experience standards in the Emirate.",
     stats: [
