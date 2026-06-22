@@ -298,10 +298,15 @@ const caseStudies: CaseStudy[] = [
   {
     industry: "Government",
     useCase: "Certification",
-    title: "Dubai Land Department (DREI)",
+    title: "Dubai Land Department Real Estate Certification",
     logo: dldLogo,
-    intro: "Online certification for real estate brokers.",
-    stats: [{ value: "100%", label: "Digital Certification" }, TBD, TBD],
+    intro:
+      "A platform qualify internationally certified real estate professionals to promote, market and sell Dubai real estate properties and developments.",
+    stats: [
+      { value: "1,000+", label: "Certified" },
+      { value: "SMART", label: "Exam" },
+      { value: "6+", label: "Languages" },
+    ],
   },
   {
     industry: "Government",
