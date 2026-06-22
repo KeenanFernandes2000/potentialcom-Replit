@@ -14,6 +14,7 @@ import {
   Building2,
 } from "lucide-react";
 
+import bmwLogo from "@assets/BMW_logo_1782107783038.png";
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
 import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
 import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
@@ -94,6 +95,7 @@ const caseStudies: CaseStudy[] = [
     industry: "Automotive",
     useCase: "Marketing Campaign",
     title: "AGMC BMW Email Campaign",
+    logo: bmwLogo,
     intro:
       "Email campaign promoting the BMW 5 Series Special Offer, delivering exceptional engagement and response.",
     stats: [
