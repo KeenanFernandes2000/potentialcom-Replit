@@ -383,7 +383,8 @@ const caseStudies: CaseStudy[] = [
     title: "TIP Healthcare Awards",
     logo: tipHealthcareLogo,
     logoClassName: "max-h-24 max-w-full object-contain",
-    intro: "Innovation awards for healthcare solutions.",
+    intro:
+      "A platform to develop the healthcare sector by attracting researchers to file patents in the UAE and startups to set up in Abu Dhabi.",
     stats: [
       { value: "300K+", label: "Reached" },
       { value: "1,000+", label: "Innovators" },
