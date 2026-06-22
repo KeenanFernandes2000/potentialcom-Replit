@@ -166,7 +166,7 @@ const caseStudies: CaseStudy[] = [
   },
   {
     industry: "Aerospace",
-    useCase: "Innovation Challenge",
+    useCase: "Innovation",
     title: "Airbus Entaliq Program in KSA",
     logo: airbusLogo,
     intro:
@@ -179,7 +179,7 @@ const caseStudies: CaseStudy[] = [
   },
   {
     industry: "Government",
-    useCase: "Innovation Challenge",
+    useCase: "Innovation",
     title: "Innovation Theater Qatar",
     logo: innovationTheaterLogo,
     logoClassName: "max-h-24 max-w-full object-contain",
@@ -193,7 +193,7 @@ const caseStudies: CaseStudy[] = [
   },
   {
     industry: "Technology",
-    useCase: "Innovation Challenge",
+    useCase: "Innovation",
     title: "Intel Business Challenge in KSA",
     logo: intelLogo,
     intro:
