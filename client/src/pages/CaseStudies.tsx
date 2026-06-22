@@ -14,20 +14,61 @@ import {
   Building2,
 } from "lucide-react";
 
-import pepsicoLogo from "@assets/Customer Logos/Pepsico logo.png";
-import dellLogo from "@assets/Customer Logos/Dell logo.png";
+import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
 import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
-import intelLogo from "@assets/Customer Logos/intel logo.png";
-import microsoftLogo from "@assets/Customer Logos/Microsoft logo.png";
-import hsbcLogo from "@assets/Customer Logos/HSBC logo.png";
-import cartierLogo from "@assets/Customer Logos/Cartier logo.png";
-import fordLogo from "@assets/Customer Logos/Ford logo.png";
-import unWomenLogo from "@assets/Customer Logos/UN Women logo.png";
-import dldLogo from "@assets/Customer Logos/DLD Logo.png";
-import govDubaiLogo from "@assets/Customer Logos/Government of Dubai logo.png";
 import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
+import cartierLogo from "@assets/Customer Logos/Cartier logo.png";
+import ciscoLogo from "@assets/Customer Logos/Cisco Logo.png";
+import dctLogo from "@assets/Customer Logos/DCT Logo.png";
+import dldLogo from "@assets/Customer Logos/DLD Logo.png";
+import dellLogo from "@assets/Customer Logos/Dell logo.png";
+import edbLogo from "@assets/Customer Logos/EDB logo.png";
+import fordLogo from "@assets/Customer Logos/Ford logo.png";
+import googleLogo from "@assets/Customer Logos/Google logo.png";
+import govAbuDhabiLogo from "@assets/Customer Logos/Government of Abu Dhabi logo.png";
+import govDubaiLogo from "@assets/Customer Logos/Government of Dubai logo.png";
+import hsbcLogo from "@assets/Customer Logos/HSBC logo.png";
+import inditexLogo from "@assets/Customer Logos/Inditex logo.png";
+import intelLogo from "@assets/Customer Logos/intel logo.png";
+import khalifaFundLogo from "@assets/Customer Logos/Khalifa Fund logo.png";
+import mbcLogo from "@assets/Customer Logos/MBC logo.png";
+import microsoftLogo from "@assets/Customer Logos/Microsoft logo.png";
+import nestleLogo from "@assets/Customer Logos/Nestle Logo.png";
+import pepsicoLogo from "@assets/Customer Logos/Pepsico logo.png";
+import unWomenLogo from "@assets/Customer Logos/UN Women logo.png";
+import unLogo from "@assets/Customer Logos/UN logo.png";
+import visaLogo from "@assets/Customer Logos/Visa logo.png";
+import wfzoLogo from "@assets/Customer Logos/WFZO logo.png";
 
 const CASE_STUDY_PDF = "/assets/pdfs/potential-case-studies.pdf";
+
+const clientLogos = [
+  { name: "ADGM", logo: adgmLogo },
+  { name: "Airbus", logo: airbusLogo },
+  { name: "Bank Muscat", logo: bankMuscatLogo },
+  { name: "Cartier", logo: cartierLogo },
+  { name: "Cisco", logo: ciscoLogo },
+  { name: "DCT", logo: dctLogo },
+  { name: "DLD", logo: dldLogo },
+  { name: "Dell", logo: dellLogo },
+  { name: "EDB", logo: edbLogo },
+  { name: "Ford", logo: fordLogo },
+  { name: "Google", logo: googleLogo },
+  { name: "Government of Abu Dhabi", logo: govAbuDhabiLogo },
+  { name: "Government of Dubai", logo: govDubaiLogo },
+  { name: "HSBC", logo: hsbcLogo },
+  { name: "Inditex", logo: inditexLogo },
+  { name: "Intel", logo: intelLogo },
+  { name: "Khalifa Fund", logo: khalifaFundLogo },
+  { name: "MBC", logo: mbcLogo },
+  { name: "Microsoft", logo: microsoftLogo },
+  { name: "Nestle", logo: nestleLogo },
+  { name: "PepsiCo", logo: pepsicoLogo },
+  { name: "UN Women", logo: unWomenLogo },
+  { name: "United Nations", logo: unLogo },
+  { name: "Visa", logo: visaLogo },
+  { name: "WFZO", logo: wfzoLogo },
+];
 
 type Stat = { value: string; label: string };
 type CaseStudy = {
@@ -329,6 +370,21 @@ const LogoOrFallback = ({
 };
 
 const CaseStudies = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    const checkDarkMode = () => {
+      setIsDarkMode(document.documentElement.classList.contains("dark"));
+    };
+    checkDarkMode();
+    const observer = new MutationObserver(checkDarkMode);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO
@@ -340,36 +396,84 @@ const CaseStudies = () => {
       <Header />
       <main>
         {/* Hero */}
-        <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
-          <div className="absolute inset-0 bg-grid-pattern opacity-60" />
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl -z-0" />
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary/20 rounded-full blur-3xl -z-0" />
+        <section className="relative pt-28 pb-12 md:pt-32 md:pb-16 overflow-hidden bg-gradient-to-br from-secondary via-primary to-secondary">
+          <div className="absolute inset-0 bg-grid-pattern opacity-20" />
+          <div className="absolute -top-10 -left-10 w-80 h-80 bg-primary/40 rounded-full blur-3xl" />
+          <div className="absolute -bottom-16 right-0 w-96 h-96 bg-fuchsia-500/30 rounded-full blur-3xl" />
+          <div className="absolute top-1/3 left-1/2 w-72 h-72 bg-white/10 rounded-full blur-3xl" />
 
           <div className="container relative z-10 text-center">
-            <span className="inline-block px-4 py-1.5 mb-6 rounded-full bg-primary/10 text-primary text-sm font-semibold">20+ Years of Empowerment</span>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-              Measurable Impact. <span className="gradient-text">Real Change.</span>
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 mb-5 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 text-white text-sm font-semibold">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              20+ Years of Empowerment
+            </span>
+            <h1 className="text-4xl md:text-6xl font-extrabold mb-4 leading-[1.05] text-white">
+              Measurable Impact.{" "}
+              <span className="bg-gradient-to-r from-amber-300 via-pink-200 to-white bg-clip-text text-transparent">
+                Real Change.
+              </span>
             </h1>
-            <p className="max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground mb-10">
-              From training and platforms to AI-powered programs and solutions,
-              Potential.com designs and delivers initiatives that empower people,
-              engage stakeholders, and create measurable outcomes.
+            <p className="max-w-2xl mx-auto text-base md:text-lg text-white/85 mb-8">
+              AI-powered programs and solutions that empower people, engage
+              stakeholders, and deliver measurable outcomes worldwide.
             </p>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-3xl mx-auto">
               {heroStats.map((stat) => (
                 <div
                   key={stat.label}
-                  className="rounded-2xl border border-border bg-card/60 backdrop-blur-sm p-5 shadow-sm"
+                  className="rounded-xl border border-white/15 bg-white/10 backdrop-blur-md px-3 py-4 text-center"
                 >
-                  <div className="text-2xl md:text-3xl font-bold gradient-text mb-1">
+                  <div className="text-2xl md:text-3xl font-extrabold text-white mb-0.5">
                     {stat.value}
                   </div>
-                  <div className="text-xs md:text-sm text-muted-foreground leading-snug">
+                  <div className="text-[11px] md:text-xs text-white/75 leading-snug">
                     {stat.label}
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Trusted By */}
+        <section className="py-10 border-b border-border bg-background">
+          <div className="container">
+            <h3 className="text-center text-muted-foreground uppercase text-sm tracking-wider mb-6">
+              Trusted for over 20 years by leading organizations around the world
+            </h3>
+            <div className="relative overflow-hidden">
+              <div
+                className="flex animate-scroll hover:pause-animation"
+                style={{ width: `${clientLogos.length * 2 * 120}px` }}
+              >
+                {clientLogos.map((client, i) => (
+                  <div
+                    key={`first-${i}`}
+                    className="flex-shrink-0 w-32 h-16 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity mx-4"
+                  >
+                    <img
+                      src={client.logo}
+                      alt={`${client.name} logo`}
+                      className="max-h-12 max-w-full object-contain"
+                      style={{ filter: isDarkMode ? "brightness(0) invert(1)" : "none" }}
+                    />
+                  </div>
+                ))}
+                {clientLogos.map((client, i) => (
+                  <div
+                    key={`second-${i}`}
+                    className="flex-shrink-0 w-32 h-16 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity mx-4"
+                  >
+                    <img
+                      src={client.logo}
+                      alt={`${client.name} logo`}
+                      className="max-h-12 max-w-full object-contain"
+                      style={{ filter: isDarkMode ? "brightness(0) invert(1)" : "none" }}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
