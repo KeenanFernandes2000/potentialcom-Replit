@@ -269,12 +269,17 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    industry: "Nonprofit & Development",
+    industry: "Nonprofit",
     useCase: "Women Empowerment",
-    title: "UN Women Financial Inclusion",
+    title: "AWLF Women Fund Managers Program",
     logo: unWomenLogo,
-    intro: "Advancing women in finance across Africa.",
-    stats: [{ value: "Thousands", label: "Women Reached" }, TBD, TBD],
+    intro:
+      "A technology platform that manages the identification, capacity building, mentorship, support, and investment in women investors and entrepreneurs at scale.",
+    stats: [
+      { value: "1,000+", label: "Women Empowered" },
+      { value: "100+", label: "Identified" },
+      { value: "10+", label: "Fund Managers" },
+    ],
   },
   {
     industry: "Government",
