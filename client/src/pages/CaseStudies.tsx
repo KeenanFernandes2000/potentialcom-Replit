@@ -19,6 +19,7 @@ import alAinMuseumLogo from "@assets/Al_Ain_Museum_logo_1782107849084.png";
 import dubaiSmeLogo from "@assets/dubai_sme_logo_1782107929025.jpeg";
 import tipHealthcareLogo from "@assets/DED_Logo_1782108260153.jpg";
 import innovationTheaterLogo from "@assets/motc_new_logo_1782108578573.png";
+import vxAcademyLogo from "@assets/DCT_logo_1782108989381.png";
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
 import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
 import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
@@ -287,12 +288,17 @@ const caseStudies: CaseStudy[] = [
     stats: [{ value: "Nationwide", label: "Brokers Certified" }, TBD, TBD],
   },
   {
-    industry: "Consumer Goods",
-    useCase: "Arts & Culture",
-    title: "PepsiCo Artists Program",
-    logo: pepsicoLogo,
-    intro: "Supporting local artists and creatives in the UAE.",
-    stats: [{ value: "UAE", label: "Artists Empowered" }, TBD, TBD],
+    industry: "Government",
+    useCase: "Certification",
+    title: "Visitor Experience (VX) Academy",
+    logo: vxAcademyLogo,
+    intro:
+      "AI-Powered Frontliner Empowerment and Certification program — An initiative by DCT - Abu Dhabi to elevate visitor experience standards in the Emirate.",
+    stats: [
+      { value: "100,000", label: "Target Frontliners" },
+      { value: "88.1%", label: "Completion Rate" },
+      { value: "135,205", label: "Hours Delivered So Far" },
+    ],
   },
   {
     industry: "Aerospace",
