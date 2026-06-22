@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 
 import bmwLogo from "@assets/BMW_logo_1782107783038.png";
+import alAinMuseumLogo from "@assets/Al_Ain_Museum_logo_1782107849084.png";
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
 import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
 import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
@@ -108,6 +109,7 @@ const caseStudies: CaseStudy[] = [
     industry: "Government & Public Sector",
     useCase: "AI Hiring",
     title: "Al Ain Museum AI-Powered Hiring",
+    logo: alAinMuseumLogo,
     intro:
       "An AI pre-screening bot streamlined hiring for heritage, archaeology, and museum practices.",
     stats: [
