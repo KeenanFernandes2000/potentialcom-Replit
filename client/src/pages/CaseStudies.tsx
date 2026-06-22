@@ -281,11 +281,17 @@ const caseStudies: CaseStudy[] = [
   },
   {
     industry: "Government",
-    useCase: "Professional Certification",
-    title: "Dubai Government Real Estate Program",
-    logo: govDubaiLogo,
-    intro: "Training and certification for real estate professionals.",
-    stats: [{ value: "Nationwide", label: "Brokers Certified" }, TBD, TBD],
+    useCase: "Certification",
+    title: "DCT Tourist Guide Certification Platform",
+    logo: vxAcademyLogo,
+    logoClassName: "max-h-24 max-w-full object-contain",
+    intro:
+      "An official certification platform for DCT Abu Dhabi for individuals who aspire to become licensed tourist guides in the Emirate of Abu Dhabi.",
+    stats: [
+      { value: "1,000+", label: "Certified Guides" },
+      { value: "PAID", label: "Certification" },
+      { value: "SMART", label: "Exam" },
+    ],
   },
   {
     industry: "Government",
