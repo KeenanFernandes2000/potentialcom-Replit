@@ -484,11 +484,13 @@ const CaseStudies = () => {
   const [activeIndustry, setActiveIndustry] = useState("All");
   const [activeUseCase, setActiveUseCase] = useState("All");
 
-  const filteredCaseStudies = caseStudies.filter(
-    (cs) =>
-      (activeIndustry === "All" || cs.industry === activeIndustry) &&
-      (activeUseCase === "All" || cs.useCase === activeUseCase),
-  );
+  const filteredCaseStudies = caseStudies
+    .filter(
+      (cs) =>
+        (activeIndustry === "All" || cs.industry === activeIndustry) &&
+        (activeUseCase === "All" || cs.useCase === activeUseCase),
+    )
+    .sort((a, b) => a.title.localeCompare(b.title));
 
   useEffect(() => {
     const checkDarkMode = () => {
