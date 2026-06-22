@@ -779,8 +779,8 @@ const CaseStudies = () => {
                     size="lg"
                     className="bg-white text-primary hover:bg-white/90"
                   >
-                    <UTMLink href="/book">
-                      Book a Consultation
+                    <UTMLink href="/ayla">
+                      Talk to Ayla
                       <ArrowRight className="ml-2 w-4 h-4" />
                     </UTMLink>
                   </Button>
