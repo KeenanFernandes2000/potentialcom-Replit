@@ -30,6 +30,7 @@ import dctTouristGuidePdf from "@assets/DCT_Tourist_Guide_Case_Study_17821141025
 import dctLearnPdf from "@assets/DCT_Learn_Case_Study_1782114125320.pdf";
 import tenPdf from "@assets/Potential.com_-_Ministry_of_Economy_Case_Study_1782114200465.pdf";
 import tipPdf from "@assets/Potential.com_-_TIP_Case_Study_1782114261510.pdf";
+import tatawwarPdf from "@assets/Tatawwar_Case_Study_1782114335023.pdf";
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
 import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
 import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
@@ -248,6 +249,7 @@ const caseStudies: CaseStudy[] = [
     useCase: "Youth Development",
     title: "HSBC Tatawwar Youth Program",
     logo: hsbcLogo,
+    pdf: tatawwarPdf,
     intro:
       "Empowering youth to innovate on UN SDGs through learning, mentorship and incubation.",
     stats: [
