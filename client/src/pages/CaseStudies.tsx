@@ -103,7 +103,7 @@ type CaseStudy = {
 const TBD: Stat = { value: "—", label: "To be added" };
 
 const heroStats: Stat[] = [
-  { value: "2M+", label: "People Reached Across 80+ Countries" },
+  { value: "2M+", label: "People Reached" },
   { value: "500+", label: "Partners, Sponsors & Organizations" },
   { value: "1000+", label: "Programs & Initiatives Delivered" },
   { value: "80+", label: "Countries" },
