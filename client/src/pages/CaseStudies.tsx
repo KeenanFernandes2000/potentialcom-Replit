@@ -313,7 +313,7 @@ const caseStudies: CaseStudy[] = [
     useCase: "Certification",
     title: "DCT Tourist Guide Certification Platform",
     logo: vxAcademyLogo,
-    logoClassName: "max-h-24 max-w-full object-contain",
+    logoClassName: "max-h-20 max-w-full object-contain",
     intro:
       "An official certification platform for DCT Abu Dhabi for individuals who aspire to become licensed tourist guides in the Emirate of Abu Dhabi.",
     stats: [
@@ -327,7 +327,7 @@ const caseStudies: CaseStudy[] = [
     useCase: "Certification",
     title: "Visitor Experience (VX) Academy",
     logo: vxAcademyLogo,
-    logoClassName: "max-h-24 max-w-full object-contain",
+    logoClassName: "max-h-20 max-w-full object-contain",
     intro:
       "AI-Powered Frontliner Empowerment and Certification Academy to elevate visitor experience standards in the Emirate.",
     stats: [
@@ -355,7 +355,7 @@ const caseStudies: CaseStudy[] = [
     useCase: "HR",
     title: "DCT Learn Platform",
     logo: vxAcademyLogo,
-    logoClassName: "max-h-24 max-w-full object-contain",
+    logoClassName: "max-h-20 max-w-full object-contain",
     intro:
       "A unified Knowledge-Sharing Hub designed to empower internal teams & external partners across the culture & tourism ecosystem.",
     stats: [
