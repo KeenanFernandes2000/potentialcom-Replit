@@ -113,7 +113,7 @@ const caseStudies: CaseStudy[] = [
   },
   {
     industry: "Government",
-    useCase: "AI Hiring",
+    useCase: "HR",
     title: "Al Ain Museum AI-Powered Hiring",
     logo: alAinMuseumLogo,
     intro:
