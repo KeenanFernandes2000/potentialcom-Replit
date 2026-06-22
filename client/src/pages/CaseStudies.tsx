@@ -29,6 +29,7 @@ import alAinHiringPdf from "@assets/Al_Ain_AI_hiring_Case_Study_1782113992249.pd
 import dctTouristGuidePdf from "@assets/DCT_Tourist_Guide_Case_Study_1782114102548.pdf";
 import dctLearnPdf from "@assets/DCT_Learn_Case_Study_1782114125320.pdf";
 import tenPdf from "@assets/Potential.com_-_Ministry_of_Economy_Case_Study_1782114200465.pdf";
+import tipPdf from "@assets/Potential.com_-_TIP_Case_Study_1782114261510.pdf";
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
 import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
 import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
@@ -398,6 +399,7 @@ const caseStudies: CaseStudy[] = [
     title: "TIP Healthcare Awards",
     logo: tipHealthcareLogo,
     logoClassName: "max-h-24 max-w-full object-contain",
+    pdf: tipPdf,
     intro:
       "A platform to develop the healthcare sector by attracting researchers to file patents in the UAE and startups to set up in Abu Dhabi.",
     stats: [
