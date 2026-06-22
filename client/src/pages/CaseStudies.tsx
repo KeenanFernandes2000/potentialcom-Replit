@@ -81,6 +81,7 @@ type CaseStudy = {
   useCase: string;
   title: string;
   logo?: string;
+  logoClassName?: string;
   intro: string;
   stats: Stat[];
 };
@@ -178,6 +179,7 @@ const caseStudies: CaseStudy[] = [
     useCase: "Innovation Challenge",
     title: "Innovation Theater Qatar",
     logo: innovationTheaterLogo,
+    logoClassName: "max-h-24 max-w-full object-contain",
     intro:
       "A flagship initiative to inspire, educate and empower entrepreneurs with digital solutions.",
     stats: [
@@ -369,16 +371,18 @@ const FadeIn = ({
 const LogoOrFallback = ({
   logo,
   title,
+  logoClassName,
 }: {
   logo?: string;
   title: string;
+  logoClassName?: string;
 }) => {
   if (logo) {
     return (
       <img
         src={logo}
         alt={`${title} logo`}
-        className="max-h-20 max-w-[200px] object-contain"
+        className={logoClassName ?? "max-h-20 max-w-[200px] object-contain"}
       />
     );
   }
@@ -616,7 +620,11 @@ const CaseStudies = () => {
                     </div>
 
                     <div className="h-28 flex items-center justify-center mb-6 rounded-xl bg-white border border-border p-4">
-                      <LogoOrFallback logo={cs.logo} title={cs.title} />
+                      <LogoOrFallback
+                        logo={cs.logo}
+                        title={cs.title}
+                        logoClassName={cs.logoClassName}
+                      />
                     </div>
 
                     <h3 className="text-xl font-bold mb-3">{cs.title}</h3>
