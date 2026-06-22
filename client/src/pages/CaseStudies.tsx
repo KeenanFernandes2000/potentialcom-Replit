@@ -72,13 +72,14 @@ const clientLogos = [
 
 type Stat = { value: string; label: string };
 type CaseStudy = {
-  number: number;
   category: string;
   title: string;
   logo?: string;
   intro: string;
   stats: Stat[];
 };
+
+const TBD: Stat = { value: "—", label: "To be added" };
 
 const heroStats: Stat[] = [
   { value: "2M+", label: "People Reached Across 80+ Countries" },
@@ -89,7 +90,6 @@ const heroStats: Stat[] = [
 
 const caseStudies: CaseStudy[] = [
   {
-    number: 1,
     category: "Automotive",
     title: "AGMC BMW Email Campaign",
     intro:
@@ -101,7 +101,6 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    number: 2,
     category: "AI Hiring",
     title: "Al Ain Museum AI-Powered Hiring",
     intro:
@@ -113,7 +112,6 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    number: 3,
     category: "Community & Culture",
     title: "PepsiCo Art of Zayed",
     logo: pepsicoLogo,
@@ -126,7 +124,6 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    number: 4,
     category: "Channel Development",
     title: "Dell EMC VMware Partner Academy",
     logo: dellLogo,
@@ -139,7 +136,6 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    number: 5,
     category: "Entrepreneurship",
     title: "Dubai SME Young Entrepreneurs Competition",
     intro:
@@ -151,7 +147,6 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    number: 6,
     category: "Aerospace Innovation",
     title: "Airbus Entaliq Program in KSA",
     logo: airbusLogo,
@@ -164,7 +159,6 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    number: 7,
     category: "Innovation Theater",
     title: "Innovation Theater Qatar",
     intro:
@@ -176,7 +170,6 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    number: 8,
     category: "Student Innovation",
     title: "Intel Business Challenge in KSA",
     logo: intelLogo,
@@ -189,7 +182,6 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    number: 9,
     category: "Lead Generation",
     title: "Microsoft Lead Generation",
     logo: microsoftLogo,
@@ -202,7 +194,6 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    number: 10,
     category: "Youth Empowerment",
     title: "HSBC Tatawwar Youth Program",
     logo: hsbcLogo,
@@ -215,7 +206,6 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    number: 11,
     category: "Women Empowerment",
     title: "Cartier Women Initiative",
     logo: cartierLogo,
@@ -224,10 +214,10 @@ const caseStudies: CaseStudy[] = [
     stats: [
       { value: "6,000+", label: "Women Trained (Since 2015)" },
       { value: "$300K+", label: "Prize Money Awarded" },
+      TBD,
     ],
   },
   {
-    number: 12,
     category: "Women Empowerment",
     title: "PepsiCo empowerHER",
     logo: pepsicoLogo,
@@ -239,62 +229,64 @@ const caseStudies: CaseStudy[] = [
       { value: "2", label: "E-commerce Platforms Launched" },
     ],
   },
-];
-
-type Initiative = {
-  title: string;
-  logo?: string;
-  intro: string;
-  highlight: string;
-};
-
-const initiatives: Initiative[] = [
   {
+    category: "Student Innovation",
     title: "Ford College Community Challenge",
     logo: fordLogo,
     intro: "Empowering university students in the US.",
-    highlight: "100+ Teams Engaged",
+    stats: [{ value: "100+", label: "Teams Engaged" }, TBD, TBD],
   },
   {
+    category: "Women Empowerment",
     title: "UN Women Financial Inclusion",
     logo: unWomenLogo,
     intro: "Advancing women in finance across Africa.",
-    highlight: "Thousands of Women Reached",
+    stats: [{ value: "Thousands", label: "Women Reached" }, TBD, TBD],
   },
   {
+    category: "Real Estate",
     title: "Dubai Land Department (DREI)",
     logo: dldLogo,
     intro: "Online certification for real estate brokers.",
-    highlight: "100% Digital Certification",
+    stats: [{ value: "100%", label: "Digital Certification" }, TBD, TBD],
   },
   {
+    category: "Real Estate",
     title: "Dubai Government Real Estate Program",
     logo: govDubaiLogo,
     intro: "Training and certification for real estate professionals.",
-    highlight: "Brokers Nationwide",
+    stats: [{ value: "Nationwide", label: "Brokers Certified" }, TBD, TBD],
   },
   {
+    category: "Community & Culture",
     title: "PepsiCo Artists Program",
     logo: pepsicoLogo,
     intro: "Supporting local artists and creatives in the UAE.",
-    highlight: "Artists Empowered",
+    stats: [{ value: "UAE", label: "Artists Empowered" }, TBD, TBD],
   },
   {
+    category: "Aerospace Innovation",
     title: "Airbus Graduate Program",
     logo: airbusLogo,
     intro: "Connecting graduates with opportunities in aerospace.",
-    highlight: "Future Aerospace Talent",
+    stats: [{ value: "Future", label: "Aerospace Talent" }, TBD, TBD],
   },
   {
+    category: "Financial Literacy",
     title: "Bank Muscat Financial Literacy",
     logo: bankMuscatLogo,
     intro: "Driving financial literacy for the public in Oman.",
-    highlight: "Communities Reached",
+    stats: [{ value: "Oman", label: "Communities Reached" }, TBD, TBD],
   },
   {
+    category: "Healthcare",
     title: "TIP Healthcare Awards",
     intro: "Innovation awards for healthcare solutions.",
-    highlight: "300K+ Innovators · 100+ Inventions",
+    stats: [
+      { value: "300K+", label: "Reached" },
+      { value: "1,000+", label: "Innovators" },
+      { value: "100+", label: "Inventions" },
+    ],
   },
 ];
 
@@ -355,22 +347,33 @@ const LogoOrFallback = ({
       <img
         src={logo}
         alt={`${title} logo`}
-        className="max-h-12 max-w-[140px] object-contain"
+        className="max-h-20 max-w-[200px] object-contain"
       />
     );
   }
   return (
-    <div className="flex items-center gap-2 text-secondary dark:text-foreground">
-      <Building2 className="w-5 h-5 text-primary" />
-      <span className="text-sm font-bold uppercase tracking-wide">
+    <div className="flex flex-col items-center gap-2 text-secondary">
+      <Building2 className="w-8 h-8 text-primary" />
+      <span className="text-base font-bold uppercase tracking-wide text-center">
         {title.split(" ").slice(0, 2).join(" ")}
       </span>
     </div>
   );
 };
 
+const categories = [
+  "All",
+  ...Array.from(new Set(caseStudies.map((cs) => cs.category))),
+];
+
 const CaseStudies = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [activeFilter, setActiveFilter] = useState("All");
+
+  const filteredCaseStudies =
+    activeFilter === "All"
+      ? caseStudies
+      : caseStudies.filter((cs) => cs.category === activeFilter);
 
   useEffect(() => {
     const checkDarkMode = () => {
@@ -481,30 +484,46 @@ const CaseStudies = () => {
         {/* Featured Case Studies */}
         <section className="py-16 md:py-24">
           <div className="container">
-            <FadeIn className="text-center mb-14">
+            <FadeIn className="text-center mb-10">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Featured Case Studies
+                Explore Our Case Studies
               </h2>
               <p className="max-w-2xl mx-auto text-muted-foreground">
-                A selection of programs and campaigns we've delivered for leading
-                brands, governments, and organizations worldwide.
+                Programs and campaigns we've delivered for leading brands,
+                governments, and organizations worldwide. Filter by category to
+                explore.
               </p>
             </FadeIn>
 
+            {/* Filter */}
+            <div className="flex flex-wrap justify-center gap-2 mb-12">
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setActiveFilter(cat)}
+                  aria-pressed={activeFilter === cat}
+                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors border ${
+                    activeFilter === cat
+                      ? "bg-primary text-white border-primary"
+                      : "bg-card text-muted-foreground border-border hover:border-primary hover:text-primary"
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {caseStudies.map((cs, i) => (
-                <FadeIn key={cs.number} delay={(i % 3) * 100}>
+              {filteredCaseStudies.map((cs, i) => (
+                <FadeIn key={cs.title} delay={(i % 3) * 100}>
                   <div className="group h-full flex flex-col rounded-2xl border border-border bg-card p-6 card-hover">
-                    <div className="flex items-center justify-between mb-5">
+                    <div className="mb-5">
                       <span className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wide">
                         {cs.category}
                       </span>
-                      <span className="text-xs font-bold text-muted-foreground/50">
-                        {String(cs.number).padStart(2, "0")}
-                      </span>
                     </div>
 
-                    <div className="h-14 flex items-center mb-5">
+                    <div className="h-28 flex items-center justify-center mb-6 rounded-xl bg-white border border-border p-4">
                       <LogoOrFallback logo={cs.logo} title={cs.title} />
                     </div>
 
@@ -514,8 +533,8 @@ const CaseStudies = () => {
                     </p>
 
                     <div className="grid grid-cols-3 gap-3 mb-6 pt-4 border-t border-border">
-                      {cs.stats.map((stat) => (
-                        <div key={stat.label}>
+                      {cs.stats.map((stat, si) => (
+                        <div key={si}>
                           <div className="text-lg font-bold text-primary leading-tight">
                             {stat.value}
                           </div>
@@ -529,49 +548,7 @@ const CaseStudies = () => {
                     <a
                       href={CASE_STUDY_PDF}
                       download
-                      className="inline-flex items-center justify-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors mt-auto"
-                    >
-                      <Download className="w-4 h-4" />
-                      Download Case Study
-                    </a>
-                  </div>
-                </FadeIn>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Additional Impact Initiatives */}
-        <section className="py-16 md:py-24 bg-muted/40">
-          <div className="container">
-            <FadeIn className="text-center mb-14">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Additional Impact Initiatives
-              </h2>
-              <p className="max-w-2xl mx-auto text-muted-foreground">
-                More programs delivering real value across sectors, regions, and
-                communities.
-              </p>
-            </FadeIn>
-
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {initiatives.map((item, i) => (
-                <FadeIn key={item.title} delay={(i % 4) * 80}>
-                  <div className="h-full flex flex-col rounded-2xl border border-border bg-card p-6 card-hover">
-                    <div className="h-12 flex items-center mb-4">
-                      <LogoOrFallback logo={item.logo} title={item.title} />
-                    </div>
-                    <h3 className="text-base font-bold mb-2">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground mb-4 flex-grow">
-                      {item.intro}
-                    </p>
-                    <div className="text-sm font-semibold text-primary mb-4">
-                      {item.highlight}
-                    </div>
-                    <a
-                      href={CASE_STUDY_PDF}
-                      download
-                      className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors mt-auto"
+                      className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary/90 transition-colors mt-auto"
                     >
                       <Download className="w-4 h-4" />
                       Download Case Study
