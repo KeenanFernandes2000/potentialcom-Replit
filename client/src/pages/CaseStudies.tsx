@@ -72,7 +72,8 @@ const clientLogos = [
 
 type Stat = { value: string; label: string };
 type CaseStudy = {
-  category: string;
+  industry: string;
+  useCase: string;
   title: string;
   logo?: string;
   intro: string;
@@ -90,7 +91,8 @@ const heroStats: Stat[] = [
 
 const caseStudies: CaseStudy[] = [
   {
-    category: "Automotive",
+    industry: "Automotive",
+    useCase: "Marketing Campaign",
     title: "AGMC BMW Email Campaign",
     intro:
       "Email campaign promoting the BMW 5 Series Special Offer, delivering exceptional engagement and response.",
@@ -101,7 +103,8 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    category: "AI Hiring",
+    industry: "Government & Public Sector",
+    useCase: "AI Hiring",
     title: "Al Ain Museum AI-Powered Hiring",
     intro:
       "An AI pre-screening bot streamlined hiring for heritage, archaeology, and museum practices.",
@@ -112,7 +115,8 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    category: "Community & Culture",
+    industry: "Consumer Goods",
+    useCase: "Arts & Culture",
     title: "PepsiCo Art of Zayed",
     logo: pepsicoLogo,
     intro:
@@ -124,7 +128,8 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    category: "Channel Development",
+    industry: "Technology",
+    useCase: "Partner Enablement",
     title: "Dell EMC VMware Partner Academy",
     logo: dellLogo,
     intro:
@@ -136,7 +141,8 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    category: "Entrepreneurship",
+    industry: "Government & Public Sector",
+    useCase: "Entrepreneurship",
     title: "Dubai SME Young Entrepreneurs Competition",
     intro:
       "A national platform empowering young innovators and entrepreneurs.",
@@ -147,7 +153,8 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    category: "Aerospace Innovation",
+    industry: "Aerospace",
+    useCase: "Innovation Challenge",
     title: "Airbus Entaliq Program in KSA",
     logo: airbusLogo,
     intro:
@@ -159,7 +166,8 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    category: "Innovation Theater",
+    industry: "Government & Public Sector",
+    useCase: "Innovation Challenge",
     title: "Innovation Theater Qatar",
     intro:
       "A flagship initiative to inspire, educate and empower entrepreneurs with digital solutions.",
@@ -170,7 +178,8 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    category: "Student Innovation",
+    industry: "Technology",
+    useCase: "Innovation Challenge",
     title: "Intel Business Challenge in KSA",
     logo: intelLogo,
     intro:
@@ -182,7 +191,8 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    category: "Lead Generation",
+    industry: "Technology",
+    useCase: "Lead Generation",
     title: "Microsoft Lead Generation",
     logo: microsoftLogo,
     intro:
@@ -194,7 +204,8 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    category: "Youth Empowerment",
+    industry: "Banking & Finance",
+    useCase: "Youth Development",
     title: "HSBC Tatawwar Youth Program",
     logo: hsbcLogo,
     intro:
@@ -206,7 +217,8 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    category: "Women Empowerment",
+    industry: "Luxury & Retail",
+    useCase: "Women Empowerment",
     title: "Cartier Women Initiative",
     logo: cartierLogo,
     intro:
@@ -218,7 +230,8 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    category: "Women Empowerment",
+    industry: "Consumer Goods",
+    useCase: "Women Empowerment",
     title: "PepsiCo empowerHER",
     logo: pepsicoLogo,
     intro:
@@ -230,56 +243,64 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    category: "Student Innovation",
+    industry: "Automotive",
+    useCase: "Youth Development",
     title: "Ford College Community Challenge",
     logo: fordLogo,
     intro: "Empowering university students in the US.",
     stats: [{ value: "100+", label: "Teams Engaged" }, TBD, TBD],
   },
   {
-    category: "Women Empowerment",
+    industry: "Nonprofit & Development",
+    useCase: "Women Empowerment",
     title: "UN Women Financial Inclusion",
     logo: unWomenLogo,
     intro: "Advancing women in finance across Africa.",
     stats: [{ value: "Thousands", label: "Women Reached" }, TBD, TBD],
   },
   {
-    category: "Real Estate",
+    industry: "Government & Public Sector",
+    useCase: "Professional Certification",
     title: "Dubai Land Department (DREI)",
     logo: dldLogo,
     intro: "Online certification for real estate brokers.",
     stats: [{ value: "100%", label: "Digital Certification" }, TBD, TBD],
   },
   {
-    category: "Real Estate",
+    industry: "Government & Public Sector",
+    useCase: "Professional Certification",
     title: "Dubai Government Real Estate Program",
     logo: govDubaiLogo,
     intro: "Training and certification for real estate professionals.",
     stats: [{ value: "Nationwide", label: "Brokers Certified" }, TBD, TBD],
   },
   {
-    category: "Community & Culture",
+    industry: "Consumer Goods",
+    useCase: "Arts & Culture",
     title: "PepsiCo Artists Program",
     logo: pepsicoLogo,
     intro: "Supporting local artists and creatives in the UAE.",
     stats: [{ value: "UAE", label: "Artists Empowered" }, TBD, TBD],
   },
   {
-    category: "Aerospace Innovation",
+    industry: "Aerospace",
+    useCase: "Youth Development",
     title: "Airbus Graduate Program",
     logo: airbusLogo,
     intro: "Connecting graduates with opportunities in aerospace.",
     stats: [{ value: "Future", label: "Aerospace Talent" }, TBD, TBD],
   },
   {
-    category: "Financial Literacy",
+    industry: "Banking & Finance",
+    useCase: "Financial Literacy",
     title: "Bank Muscat Financial Literacy",
     logo: bankMuscatLogo,
     intro: "Driving financial literacy for the public in Oman.",
     stats: [{ value: "Oman", label: "Communities Reached" }, TBD, TBD],
   },
   {
-    category: "Healthcare",
+    industry: "Healthcare",
+    useCase: "Awards Program",
     title: "TIP Healthcare Awards",
     intro: "Innovation awards for healthcare solutions.",
     stats: [
@@ -361,19 +382,26 @@ const LogoOrFallback = ({
   );
 };
 
-const categories = [
+const industries = [
   "All",
-  ...Array.from(new Set(caseStudies.map((cs) => cs.category))),
+  ...Array.from(new Set(caseStudies.map((cs) => cs.industry))).sort(),
+];
+
+const useCases = [
+  "All",
+  ...Array.from(new Set(caseStudies.map((cs) => cs.useCase))).sort(),
 ];
 
 const CaseStudies = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [activeFilter, setActiveFilter] = useState("All");
+  const [activeIndustry, setActiveIndustry] = useState("All");
+  const [activeUseCase, setActiveUseCase] = useState("All");
 
-  const filteredCaseStudies =
-    activeFilter === "All"
-      ? caseStudies
-      : caseStudies.filter((cs) => cs.category === activeFilter);
+  const filteredCaseStudies = caseStudies.filter(
+    (cs) =>
+      (activeIndustry === "All" || cs.industry === activeIndustry) &&
+      (activeUseCase === "All" || cs.useCase === activeUseCase),
+  );
 
   useEffect(() => {
     const checkDarkMode = () => {
@@ -490,36 +518,86 @@ const CaseStudies = () => {
               </h2>
               <p className="max-w-2xl mx-auto text-muted-foreground">
                 Programs and campaigns we've delivered for leading brands,
-                governments, and organizations worldwide. Filter by category to
-                explore.
+                governments, and organizations worldwide. Filter by industry and
+                use case to explore.
               </p>
             </FadeIn>
 
-            {/* Filter */}
-            <div className="flex flex-wrap justify-center gap-2 mb-12">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setActiveFilter(cat)}
-                  aria-pressed={activeFilter === cat}
-                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors border ${
-                    activeFilter === cat
-                      ? "bg-primary text-white border-primary"
-                      : "bg-card text-muted-foreground border-border hover:border-primary hover:text-primary"
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
+            {/* Filters */}
+            <div className="max-w-4xl mx-auto mb-12 space-y-6">
+              <div>
+                <p className="text-center text-sm font-semibold uppercase tracking-wide text-muted-foreground mb-3">
+                  Filter by Industry
+                </p>
+                <div className="flex flex-wrap justify-center gap-2">
+                  {industries.map((ind) => (
+                    <button
+                      key={ind}
+                      onClick={() => setActiveIndustry(ind)}
+                      aria-pressed={activeIndustry === ind}
+                      className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors border ${
+                        activeIndustry === ind
+                          ? "bg-primary text-white border-primary"
+                          : "bg-card text-muted-foreground border-border hover:border-primary hover:text-primary"
+                      }`}
+                    >
+                      {ind}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <p className="text-center text-sm font-semibold uppercase tracking-wide text-muted-foreground mb-3">
+                  Filter by Use Case
+                </p>
+                <div className="flex flex-wrap justify-center gap-2">
+                  {useCases.map((uc) => (
+                    <button
+                      key={uc}
+                      onClick={() => setActiveUseCase(uc)}
+                      aria-pressed={activeUseCase === uc}
+                      className={`px-4 py-2 rounded-full text-sm font-semibold transition-colors border ${
+                        activeUseCase === uc
+                          ? "bg-primary text-white border-primary"
+                          : "bg-card text-muted-foreground border-border hover:border-primary hover:text-primary"
+                      }`}
+                    >
+                      {uc}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
+
+            {filteredCaseStudies.length === 0 && (
+              <div className="text-center py-16">
+                <p className="text-lg font-semibold mb-2">No case studies match these filters</p>
+                <p className="text-muted-foreground mb-6">
+                  Try a different industry or use case combination.
+                </p>
+                <button
+                  onClick={() => {
+                    setActiveIndustry("All");
+                    setActiveUseCase("All");
+                  }}
+                  className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary/90 transition-colors"
+                >
+                  Reset filters
+                </button>
+              </div>
+            )}
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredCaseStudies.map((cs, i) => (
                 <FadeIn key={cs.title} delay={(i % 3) * 100}>
                   <div className="group h-full flex flex-col rounded-2xl border border-border bg-card p-6 card-hover">
-                    <div className="mb-5">
+                    <div className="flex flex-wrap gap-2 mb-5">
                       <span className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wide">
-                        {cs.category}
+                        {cs.industry}
+                      </span>
+                      <span className="inline-flex items-center px-3 py-1 rounded-full border border-border text-muted-foreground text-xs font-semibold uppercase tracking-wide">
+                        {cs.useCase}
                       </span>
                     </div>
 
