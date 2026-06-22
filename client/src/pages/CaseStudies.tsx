@@ -27,6 +27,7 @@ import dubaiSmeYecPdf from "@assets/DubaiSME_YEC_Case_Study_1782113851598.pdf";
 import airbusEntaliqPdf from "@assets/Entaliq_with_Airbus_Case_Study_1782113953296.pdf";
 import alAinHiringPdf from "@assets/Al_Ain_AI_hiring_Case_Study_1782113992249.pdf";
 import dctTouristGuidePdf from "@assets/DCT_Tourist_Guide_Case_Study_1782114102548.pdf";
+import dctLearnPdf from "@assets/DCT_Learn_Case_Study_1782114125320.pdf";
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
 import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
 import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
@@ -367,6 +368,7 @@ const caseStudies: CaseStudy[] = [
     title: "DCT Learn Platform",
     logo: vxAcademyLogo,
     logoClassName: "max-h-20 max-w-[170px] object-contain",
+    pdf: dctLearnPdf,
     intro:
       "A unified Knowledge-Sharing Hub designed to empower internal teams & external partners across the culture & tourism ecosystem.",
     stats: [
