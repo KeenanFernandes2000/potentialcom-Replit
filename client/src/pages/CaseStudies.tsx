@@ -109,7 +109,7 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    industry: "Government & Public Sector",
+    industry: "Government",
     useCase: "AI Hiring",
     title: "Al Ain Museum AI-Powered Hiring",
     logo: alAinMuseumLogo,
@@ -148,7 +148,7 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    industry: "Government & Public Sector",
+    industry: "Government",
     useCase: "Entrepreneurship",
     title: "Dubai SME Young Entrepreneurs Competition",
     logo: dubaiSmeLogo,
@@ -174,7 +174,7 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    industry: "Government & Public Sector",
+    industry: "Government",
     useCase: "Innovation Challenge",
     title: "Innovation Theater Qatar",
     logo: innovationTheaterLogo,
@@ -268,7 +268,7 @@ const caseStudies: CaseStudy[] = [
     stats: [{ value: "Thousands", label: "Women Reached" }, TBD, TBD],
   },
   {
-    industry: "Government & Public Sector",
+    industry: "Government",
     useCase: "Professional Certification",
     title: "Dubai Land Department (DREI)",
     logo: dldLogo,
@@ -276,7 +276,7 @@ const caseStudies: CaseStudy[] = [
     stats: [{ value: "100%", label: "Digital Certification" }, TBD, TBD],
   },
   {
-    industry: "Government & Public Sector",
+    industry: "Government",
     useCase: "Professional Certification",
     title: "Dubai Government Real Estate Program",
     logo: govDubaiLogo,
@@ -394,7 +394,11 @@ const LogoOrFallback = ({
 
 const industries = [
   "All",
-  ...Array.from(new Set(caseStudies.map((cs) => cs.industry))).sort(),
+  ...Array.from(new Set(caseStudies.map((cs) => cs.industry)))
+    .sort()
+    .sort((a, b) =>
+      a === "Government" ? -1 : b === "Government" ? 1 : 0,
+    ),
 ];
 
 const useCases = [
