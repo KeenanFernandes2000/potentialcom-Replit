@@ -153,6 +153,7 @@ const caseStudies: CaseStudy[] = [
     useCase: "Entrepreneurship",
     title: "Dubai SME Young Entrepreneurs Competition",
     logo: dubaiSmeLogo,
+    logoClassName: "max-h-24 max-w-full object-contain",
     intro:
       "A national platform empowering young innovators and entrepreneurs.",
     stats: [
