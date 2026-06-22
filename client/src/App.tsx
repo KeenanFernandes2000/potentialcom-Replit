@@ -35,6 +35,7 @@ import AIAgents from "@/pages/AIAgents";
 import YearOfFamily from "@/pages/YearOfFamily";
 import NationalPrograms from "@/pages/NationalPrograms";
 import Book from "@/pages/Book";
+import CaseStudies from "@/pages/CaseStudies";
 
 function Router() {
   return (
@@ -57,6 +58,7 @@ function Router() {
       <Route path="/year-of-family" component={YearOfFamily} />
       <Route path="/launch-programs" component={NationalPrograms} />
       <Route path="/book" component={Book} />
+      <Route path="/case-studies" component={CaseStudies} />
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
       <Route path="/profile" component={Profile} />

@@ -1,0 +1,584 @@
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { SEO } from "@/components/SEO";
+import { Button } from "@/components/ui/button";
+import UTMLink from "@/components/UTMLink";
+import { useEffect, useRef, useState } from "react";
+import {
+  ArrowRight,
+  Download,
+  Globe,
+  Users,
+  Rocket,
+  BarChart3,
+  Building2,
+} from "lucide-react";
+
+import pepsicoLogo from "@assets/Customer Logos/Pepsico logo.png";
+import dellLogo from "@assets/Customer Logos/Dell logo.png";
+import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
+import intelLogo from "@assets/Customer Logos/intel logo.png";
+import microsoftLogo from "@assets/Customer Logos/Microsoft logo.png";
+import hsbcLogo from "@assets/Customer Logos/HSBC logo.png";
+import cartierLogo from "@assets/Customer Logos/Cartier logo.png";
+import fordLogo from "@assets/Customer Logos/Ford logo.png";
+import unWomenLogo from "@assets/Customer Logos/UN Women logo.png";
+import dldLogo from "@assets/Customer Logos/DLD Logo.png";
+import govDubaiLogo from "@assets/Customer Logos/Government of Dubai logo.png";
+import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
+
+const CASE_STUDY_PDF = "/assets/pdfs/potential-case-studies.pdf";
+
+type Stat = { value: string; label: string };
+type CaseStudy = {
+  number: number;
+  category: string;
+  title: string;
+  logo?: string;
+  intro: string;
+  stats: Stat[];
+};
+
+const heroStats: Stat[] = [
+  { value: "2M+", label: "People Reached Across 80+ Countries" },
+  { value: "500+", label: "Partners, Sponsors & Organizations" },
+  { value: "1000+", label: "Programs & Initiatives Delivered" },
+  { value: "20 Yrs", label: "Of Measurable Impact" },
+];
+
+const caseStudies: CaseStudy[] = [
+  {
+    number: 1,
+    category: "Automotive",
+    title: "AGMC BMW Email Campaign",
+    intro:
+      "Email campaign promoting the BMW 5 Series Special Offer, delivering exceptional engagement and response.",
+    stats: [
+      { value: "4,843", label: "Emails Delivered" },
+      { value: "28.0%", label: "Open Rate" },
+      { value: "4.9%", label: "Click-through Rate" },
+    ],
+  },
+  {
+    number: 2,
+    category: "AI Hiring",
+    title: "Al Ain Museum AI-Powered Hiring",
+    intro:
+      "An AI pre-screening bot streamlined hiring for heritage, archaeology, and museum practices.",
+    stats: [
+      { value: "200", label: "Candidates Screened" },
+      { value: "72 Hrs", label: "Screening Completed" },
+      { value: "246", label: "Successful Calls Logged" },
+    ],
+  },
+  {
+    number: 3,
+    category: "Community & Culture",
+    title: "PepsiCo Art of Zayed",
+    logo: pepsicoLogo,
+    intro:
+      "A pan-UAE program celebrating Sheikh Zayed's legacy through Art, Poetry & Music.",
+    stats: [
+      { value: "90,000+", label: "Social Media Reach" },
+      { value: "20,000+", label: "Online Impressions" },
+      { value: "$8,725", label: "Prize Pool Awarded" },
+    ],
+  },
+  {
+    number: 4,
+    category: "Channel Development",
+    title: "Dell EMC VMware Partner Academy",
+    logo: dellLogo,
+    intro:
+      "A regional enablement initiative that built partner capabilities and accelerated business impact.",
+    stats: [
+      { value: "75", label: "Participants" },
+      { value: "4", label: "Learning Tracks" },
+      { value: "75+", label: "Deliverables" },
+    ],
+  },
+  {
+    number: 5,
+    category: "Entrepreneurship",
+    title: "Dubai SME Young Entrepreneurs Competition",
+    intro:
+      "A national platform empowering young innovators and entrepreneurs.",
+    stats: [
+      { value: "3,000+", label: "Social Media Individuals" },
+      { value: "600+", label: "Registered Teams" },
+      { value: "23+", label: "Webinars Delivered" },
+    ],
+  },
+  {
+    number: 6,
+    category: "Aerospace Innovation",
+    title: "Airbus Entaliq Program in KSA",
+    logo: airbusLogo,
+    intro:
+      "Empowering Saudi innovators through aviation innovation, mentorship and incubation.",
+    stats: [
+      { value: "1,072", label: "Innovators Engaged" },
+      { value: "836", label: "Registered to Challenge" },
+      { value: "58", label: "Projects Received" },
+    ],
+  },
+  {
+    number: 7,
+    category: "Innovation Theater",
+    title: "Innovation Theater Qatar",
+    intro:
+      "A flagship initiative to inspire, educate and empower entrepreneurs with digital solutions.",
+    stats: [
+      { value: "500+", label: "Attendees" },
+      { value: "100+", label: "Registered Participants" },
+      { value: "20+", label: "Innovative Teams" },
+    ],
+  },
+  {
+    number: 8,
+    category: "Student Innovation",
+    title: "Intel Business Challenge in KSA",
+    logo: intelLogo,
+    intro:
+      "A global competition inspiring university students to develop innovative business ideas.",
+    stats: [
+      { value: "31,555+", label: "Website Unique Visitors" },
+      { value: "2,324", label: "Total Registrations" },
+      { value: "331", label: "Team Registrations" },
+    ],
+  },
+  {
+    number: 9,
+    category: "Lead Generation",
+    title: "Microsoft Lead Generation",
+    logo: microsoftLogo,
+    intro:
+      "A 360° campaign for Office 365 reaching SMEs across the UAE and driving high-quality leads.",
+    stats: [
+      { value: "20,000+", label: "Professionals Reached" },
+      { value: "400+", label: "Leads Generated" },
+      { value: "2 Weeks", label: "Campaign Duration" },
+    ],
+  },
+  {
+    number: 10,
+    category: "Youth Empowerment",
+    title: "HSBC Tatawwar Youth Program",
+    logo: hsbcLogo,
+    intro:
+      "Empowering youth to innovate on UN SDGs through learning, mentorship and incubation.",
+    stats: [
+      { value: "15,000+", label: "Youth Trained (Since 2019)" },
+      { value: "3,000+", label: "Innovations Developed" },
+      { value: "8", label: "International Awards" },
+    ],
+  },
+  {
+    number: 11,
+    category: "Women Empowerment",
+    title: "Cartier Women Initiative",
+    logo: cartierLogo,
+    intro:
+      "Supporting women entrepreneurs across MENA to grow, access funding and scale.",
+    stats: [
+      { value: "6,000+", label: "Women Trained (Since 2015)" },
+      { value: "$300K+", label: "Prize Money Awarded" },
+    ],
+  },
+  {
+    number: 12,
+    category: "Women Empowerment",
+    title: "PepsiCo empowerHER",
+    logo: pepsicoLogo,
+    intro:
+      "Developing women-led businesses in rural communities across MEA and the Indian Subcontinent.",
+    stats: [
+      { value: "30,000+", label: "Women Trained" },
+      { value: "100+", label: "Startups Set Up" },
+      { value: "2", label: "E-commerce Platforms Launched" },
+    ],
+  },
+];
+
+type Initiative = {
+  title: string;
+  logo?: string;
+  intro: string;
+  highlight: string;
+};
+
+const initiatives: Initiative[] = [
+  {
+    title: "Ford College Community Challenge",
+    logo: fordLogo,
+    intro: "Empowering university students in the US.",
+    highlight: "100+ Teams Engaged",
+  },
+  {
+    title: "UN Women Financial Inclusion",
+    logo: unWomenLogo,
+    intro: "Advancing women in finance across Africa.",
+    highlight: "Thousands of Women Reached",
+  },
+  {
+    title: "Dubai Land Department (DREI)",
+    logo: dldLogo,
+    intro: "Online certification for real estate brokers.",
+    highlight: "100% Digital Certification",
+  },
+  {
+    title: "Dubai Government Real Estate Program",
+    logo: govDubaiLogo,
+    intro: "Training and certification for real estate professionals.",
+    highlight: "Brokers Nationwide",
+  },
+  {
+    title: "PepsiCo Artists Program",
+    logo: pepsicoLogo,
+    intro: "Supporting local artists and creatives in the UAE.",
+    highlight: "Artists Empowered",
+  },
+  {
+    title: "Airbus Graduate Program",
+    logo: airbusLogo,
+    intro: "Connecting graduates with opportunities in aerospace.",
+    highlight: "Future Aerospace Talent",
+  },
+  {
+    title: "Bank Muscat Financial Literacy",
+    logo: bankMuscatLogo,
+    intro: "Driving financial literacy for the public in Oman.",
+    highlight: "Communities Reached",
+  },
+  {
+    title: "TIP Healthcare Awards",
+    intro: "Innovation awards for healthcare solutions.",
+    highlight: "300K+ Innovators · 100+ Inventions",
+  },
+];
+
+const useInView = (options?: IntersectionObserverInit) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.15, ...options },
+    );
+
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return { ref, isVisible };
+};
+
+const FadeIn = ({
+  children,
+  className = "",
+  delay = 0,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+}) => {
+  const { ref, isVisible } = useInView();
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-700 ease-out ${
+        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+      } ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+};
+
+const LogoOrFallback = ({
+  logo,
+  title,
+}: {
+  logo?: string;
+  title: string;
+}) => {
+  if (logo) {
+    return (
+      <img
+        src={logo}
+        alt={`${title} logo`}
+        className="max-h-12 max-w-[140px] object-contain"
+      />
+    );
+  }
+  return (
+    <div className="flex items-center gap-2 text-secondary dark:text-foreground">
+      <Building2 className="w-5 h-5 text-primary" />
+      <span className="text-sm font-bold uppercase tracking-wide">
+        {title.split(" ").slice(0, 2).join(" ")}
+      </span>
+    </div>
+  );
+};
+
+const CaseStudies = () => {
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <SEO
+        title="Case Studies - Real Impact, Measurable Results | Potential.com"
+        description="Explore Potential.com case studies across AI, entrepreneurship, women empowerment, youth innovation and more. Real programs delivering measurable impact for global brands and governments."
+        keywords="Potential.com case studies, AI programs, empowerment, impact, BMW, PepsiCo, Microsoft, HSBC, Cartier, Airbus, Dell, Intel"
+        url="https://www.potential.com/case-studies"
+      />
+      <Header />
+
+      <main>
+        {/* Hero */}
+        <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
+          <div className="absolute inset-0 bg-grid-pattern opacity-60" />
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl -z-0" />
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary/20 rounded-full blur-3xl -z-0" />
+
+          <div className="container relative z-10 text-center">
+            <span className="inline-block px-4 py-1.5 mb-6 rounded-full bg-primary/10 text-primary text-sm font-semibold">
+              20 Years of Empowerment
+            </span>
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+              Measurable Impact. <span className="gradient-text">Real Change.</span>
+            </h1>
+            <p className="max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground mb-10">
+              From training and platforms to AI-powered programs and solutions,
+              Potential.com designs and delivers initiatives that empower people,
+              engage stakeholders, and create measurable outcomes.
+            </p>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto">
+              {heroStats.map((stat) => (
+                <div
+                  key={stat.label}
+                  className="rounded-2xl border border-border bg-card/60 backdrop-blur-sm p-5 shadow-sm"
+                >
+                  <div className="text-2xl md:text-3xl font-bold gradient-text mb-1">
+                    {stat.value}
+                  </div>
+                  <div className="text-xs md:text-sm text-muted-foreground leading-snug">
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Featured Case Studies */}
+        <section className="py-16 md:py-24">
+          <div className="container">
+            <FadeIn className="text-center mb-14">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Featured Case Studies
+              </h2>
+              <p className="max-w-2xl mx-auto text-muted-foreground">
+                A selection of programs and campaigns we've delivered for leading
+                brands, governments, and organizations worldwide.
+              </p>
+            </FadeIn>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {caseStudies.map((cs, i) => (
+                <FadeIn key={cs.number} delay={(i % 3) * 100}>
+                  <div className="group h-full flex flex-col rounded-2xl border border-border bg-card p-6 card-hover">
+                    <div className="flex items-center justify-between mb-5">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wide">
+                        {cs.category}
+                      </span>
+                      <span className="text-xs font-bold text-muted-foreground/50">
+                        {String(cs.number).padStart(2, "0")}
+                      </span>
+                    </div>
+
+                    <div className="h-14 flex items-center mb-5">
+                      <LogoOrFallback logo={cs.logo} title={cs.title} />
+                    </div>
+
+                    <h3 className="text-xl font-bold mb-3">{cs.title}</h3>
+                    <p className="text-sm text-muted-foreground mb-6 flex-grow">
+                      {cs.intro}
+                    </p>
+
+                    <div className="grid grid-cols-3 gap-3 mb-6 pt-4 border-t border-border">
+                      {cs.stats.map((stat) => (
+                        <div key={stat.label}>
+                          <div className="text-lg font-bold text-primary leading-tight">
+                            {stat.value}
+                          </div>
+                          <div className="text-[11px] text-muted-foreground leading-snug mt-1">
+                            {stat.label}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <a
+                      href={CASE_STUDY_PDF}
+                      download
+                      className="inline-flex items-center justify-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors mt-auto"
+                    >
+                      <Download className="w-4 h-4" />
+                      Download Case Study
+                    </a>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Additional Impact Initiatives */}
+        <section className="py-16 md:py-24 bg-muted/40">
+          <div className="container">
+            <FadeIn className="text-center mb-14">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Additional Impact Initiatives
+              </h2>
+              <p className="max-w-2xl mx-auto text-muted-foreground">
+                More programs delivering real value across sectors, regions, and
+                communities.
+              </p>
+            </FadeIn>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {initiatives.map((item, i) => (
+                <FadeIn key={item.title} delay={(i % 4) * 80}>
+                  <div className="h-full flex flex-col rounded-2xl border border-border bg-card p-6 card-hover">
+                    <div className="h-12 flex items-center mb-4">
+                      <LogoOrFallback logo={item.logo} title={item.title} />
+                    </div>
+                    <h3 className="text-base font-bold mb-2">{item.title}</h3>
+                    <p className="text-sm text-muted-foreground mb-4 flex-grow">
+                      {item.intro}
+                    </p>
+                    <div className="text-sm font-semibold text-primary mb-4">
+                      {item.highlight}
+                    </div>
+                    <a
+                      href={CASE_STUDY_PDF}
+                      download
+                      className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors mt-auto"
+                    >
+                      <Download className="w-4 h-4" />
+                      Download Case Study
+                    </a>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Why Potential.com */}
+        <section className="py-16 md:py-24">
+          <div className="container">
+            <FadeIn className="text-center mb-14">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Why Potential.com — Built on Experience. Powered by AI.
+              </h2>
+            </FadeIn>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+              {[
+                {
+                  icon: Users,
+                  title: "Deep Expertise",
+                  text: "20 years designing and delivering empowerment, innovation and stakeholder engagement programs.",
+                },
+                {
+                  icon: Rocket,
+                  title: "End-to-End Capability",
+                  text: "From strategy and content to engagement, delivery, mentorship, selection, marketplace and reporting.",
+                },
+                {
+                  icon: BarChart3,
+                  title: "Measurable Outcomes",
+                  text: "Data-driven insights, behaviour change and impact reporting that demonstrate real value.",
+                },
+                {
+                  icon: Globe,
+                  title: "Global Reach",
+                  text: "Proven programs implemented in 80+ countries with localized impact.",
+                },
+                {
+                  icon: Building2,
+                  title: "Ecosystem Approach",
+                  text: "Strong networks of partners, sponsors, experts, mentors and enablers across sectors and geographies.",
+                },
+                {
+                  icon: Rocket,
+                  title: "AI-Enabled Advantage",
+                  text: "Unlock scale, speed, personalization and measurable impact across every stage of the participant journey.",
+                },
+              ].map((item, i) => (
+                <FadeIn key={item.title} delay={(i % 3) * 100}>
+                  <div className="h-full rounded-2xl border border-border bg-card p-6 card-hover">
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                      <item.icon className="w-6 h-6 text-primary" />
+                    </div>
+                    <h3 className="text-lg font-bold mb-2">{item.title}</h3>
+                    <p className="text-sm text-muted-foreground">{item.text}</p>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="py-16 md:py-24">
+          <div className="container">
+            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-primary to-secondary p-10 md:p-16 text-center text-white">
+              <div className="absolute top-0 right-0 w-72 h-72 bg-white/10 rounded-full blur-3xl" />
+              <div className="relative z-10">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                  Let's Scale Your Impact Together
+                </h2>
+                <p className="max-w-2xl mx-auto text-white/85 mb-8 text-lg">
+                  Partner with us to design and deliver AI-enabled programs and
+                  solutions that unlock potential and create measurable outcomes.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="bg-white text-primary hover:bg-white/90"
+                  >
+                    <UTMLink href="/book">
+                      Book a Consultation
+                      <ArrowRight className="ml-2 w-4 h-4" />
+                    </UTMLink>
+                  </Button>
+                  <Button
+                    asChild
+                    size="lg"
+                    variant="outline"
+                    className="border-white text-white hover:bg-white/10 bg-transparent"
+                  >
+                    <a href="mailto:empower@potential.com">empower@potential.com</a>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default CaseStudies;
