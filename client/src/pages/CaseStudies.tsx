@@ -301,12 +301,18 @@ const caseStudies: CaseStudy[] = [
     ],
   },
   {
-    industry: "Aerospace",
-    useCase: "Youth Development",
-    title: "Airbus Graduate Program",
-    logo: airbusLogo,
-    intro: "Connecting graduates with opportunities in aerospace.",
-    stats: [{ value: "Future", label: "Aerospace Talent" }, TBD, TBD],
+    industry: "Government",
+    useCase: "HR",
+    title: "DCT Learn Platform",
+    logo: vxAcademyLogo,
+    logoClassName: "max-h-24 max-w-full object-contain",
+    intro:
+      "A unified Knowledge-Sharing and Learning Hub designed to empower internal teams and external stakeholders across the culture and tourism ecosystem.",
+    stats: [
+      { value: "10+", label: "Programs Launched" },
+      { value: "1,000+", label: "Learners Engaged" },
+      { value: "1,000+", label: "Training Hours Delivered" },
+    ],
   },
   {
     industry: "Banking & Finance",
