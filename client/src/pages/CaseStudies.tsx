@@ -28,6 +28,7 @@ import airbusEntaliqPdf from "@assets/Entaliq_with_Airbus_Case_Study_17821139532
 import alAinHiringPdf from "@assets/Al_Ain_AI_hiring_Case_Study_1782113992249.pdf";
 import dctTouristGuidePdf from "@assets/DCT_Tourist_Guide_Case_Study_1782114102548.pdf";
 import dctLearnPdf from "@assets/DCT_Learn_Case_Study_1782114125320.pdf";
+import tenPdf from "@assets/Potential.com_-_Ministry_of_Economy_Case_Study_1782114200465.pdf";
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
 import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
 import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
@@ -354,6 +355,7 @@ const caseStudies: CaseStudy[] = [
     title: "The Entrepreneurial Nation (TEN)",
     logo: moeLogo,
     logoClassName: "max-h-24 max-w-full object-contain",
+    pdf: tenPdf,
     intro:
       "A national project for startups and SMEs that features the biggest public-private partnerships of its kind, bringing together all stakeholders.",
     stats: [
