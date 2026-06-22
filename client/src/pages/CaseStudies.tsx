@@ -239,7 +239,7 @@ const caseStudies: CaseStudy[] = [
     stats: [
       { value: "6,000+", label: "Women Trained (Since 2015)" },
       { value: "$300K+", label: "Prize Money Awarded" },
-      TBD,
+      { value: "20+", label: "Regional Partners" },
     ],
   },
   {
