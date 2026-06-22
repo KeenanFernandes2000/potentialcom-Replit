@@ -128,6 +128,7 @@ const caseStudies: CaseStudy[] = [
     useCase: "Entrepreneurship",
     title: "Future Entrepreneurs Programme",
     logo: adgmFepLogo,
+    logoClassName: "max-h-24 max-w-[260px] object-contain",
     intro:
       "An AI-powered cornerstone initiative committed to empowering UAE Nationals and job seekers with entrepreneurial potential across the business landscape.",
     stats: [
