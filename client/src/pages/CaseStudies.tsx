@@ -31,6 +31,7 @@ import dctLearnPdf from "@assets/DCT_Learn_Case_Study_1782114125320.pdf";
 import tenPdf from "@assets/Potential.com_-_Ministry_of_Economy_Case_Study_1782114200465.pdf";
 import tipPdf from "@assets/Potential.com_-_TIP_Case_Study_1782114261510.pdf";
 import tatawwarPdf from "@assets/Tatawwar_Case_Study_1782114335023.pdf";
+import cartierPdf from "@assets/Cartier_Case_Study_1782114419701.pdf";
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
 import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
 import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
@@ -263,6 +264,7 @@ const caseStudies: CaseStudy[] = [
     useCase: "Women Empowerment",
     title: "Cartier Women Initiative",
     logo: cartierLogo,
+    pdf: cartierPdf,
     intro:
       "Supporting women entrepreneurs across MENA to grow, access funding and scale.",
     stats: [
