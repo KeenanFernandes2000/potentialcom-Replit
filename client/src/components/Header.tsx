@@ -124,10 +124,10 @@ const Header = () => {
             )}
           </div>
           <UTMLink
-            href="/usecases"
+            href="/case-studies"
             className="text-foreground/80 hover:text-primary font-medium transition-colors"
           >
-            Use Cases
+            Case Studies
           </UTMLink>
           <UTMLink
             href="/about"
@@ -215,11 +215,11 @@ const Header = () => {
             </div>
           </div>
           <UTMLink
-            href="/usecases"
+            href="/case-studies"
             className="py-3 text-foreground hover:text-primary font-medium transition-colors"
             onClick={() => setIsMenuOpen(false)}
           >
-            Use Cases
+            Case Studies
           </UTMLink>
           <UTMLink
             href="/about"
