@@ -343,10 +343,15 @@ const caseStudies: CaseStudy[] = [
   {
     industry: "Banking & Finance",
     useCase: "Financial Literacy",
-    title: "Bank Muscat Financial Literacy",
+    title: "Maliyat Financial Literacy Program",
     logo: bankMuscatLogo,
-    intro: "Driving financial literacy for the public in Oman.",
-    stats: [{ value: "Oman", label: "Communities Reached" }, TBD, TBD],
+    intro:
+      "An AI-Powered platform driving financial literacy for various age groups in Oman.",
+    stats: [
+      { value: "20,000+", label: "Engaged" },
+      { value: "3", label: "Age Groups" },
+      { value: "6+", label: "AI Tools" },
+    ],
   },
   {
     industry: "Government",
