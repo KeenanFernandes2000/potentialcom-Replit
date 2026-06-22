@@ -106,7 +106,7 @@ const heroStats: Stat[] = [
   { value: "2M+", label: "People Reached Across 80+ Countries" },
   { value: "500+", label: "Partners, Sponsors & Organizations" },
   { value: "1000+", label: "Programs & Initiatives Delivered" },
-  { value: "20 Yrs", label: "Of Measurable Impact" },
+  { value: "80+", label: "Countries" },
 ];
 
 const caseStudies: CaseStudy[] = [
