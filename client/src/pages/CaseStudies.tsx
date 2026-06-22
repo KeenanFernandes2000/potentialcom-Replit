@@ -262,7 +262,11 @@ const caseStudies: CaseStudy[] = [
     title: "Ford College Community Challenge",
     logo: fordLogo,
     intro: "Empowering university students in the US.",
-    stats: [{ value: "100+", label: "Teams Engaged" }, TBD, TBD],
+    stats: [
+      { value: "100+", label: "Teams Engaged" },
+      { value: "100+", label: "Innovations" },
+      { value: "5", label: "Scholarships Granted" },
+    ],
   },
   {
     industry: "Nonprofit & Development",
