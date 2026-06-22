@@ -343,7 +343,7 @@ const caseStudies: CaseStudy[] = [
     logo: moeLogo,
     logoClassName: "max-h-24 max-w-full object-contain",
     intro:
-      "A national project for entrepreneurship and SMEs that features the biggest public-private partnerships of its kind, bringing together incubators, accelerators, funding entities and private corporations.",
+      "A national project for startups and SMEs that features the biggest public-private partnerships of its kind, bringing together all stakeholders.",
     stats: [
       { value: "$1,000,000+", label: "Support Provided" },
       { value: "5,000+", label: "Registered" },
