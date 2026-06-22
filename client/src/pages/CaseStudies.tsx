@@ -22,6 +22,7 @@ import innovationTheaterLogo from "@assets/motc_new_logo_1782108578573.png";
 import vxAcademyLogo from "@assets/DCT_logo_1782108989381.png";
 import moeLogo from "@assets/MOE_logo_1782111063727.png";
 import adgmFepLogo from "@assets/ADGM_logo_1782112596349.jpeg";
+import vxAcademyPdf from "@assets/DCT_VX_Academy_Case_Study_1782113750466.pdf";
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
 import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
 import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
@@ -87,6 +88,7 @@ type CaseStudy = {
   logoClassName?: string;
   intro: string;
   stats: Stat[];
+  pdf?: string;
 };
 
 const TBD: Stat = { value: "—", label: "To be added" };
@@ -328,6 +330,7 @@ const caseStudies: CaseStudy[] = [
     title: "Visitor Experience (VX) Academy",
     logo: vxAcademyLogo,
     logoClassName: "max-h-20 max-w-[170px] object-contain",
+    pdf: vxAcademyPdf,
     intro:
       "AI-Powered Frontliner Empowerment and Certification Academy to elevate visitor experience standards in the Emirate.",
     stats: [
@@ -718,7 +721,7 @@ const CaseStudies = () => {
                     </div>
 
                     <a
-                      href={CASE_STUDY_PDF}
+                      href={cs.pdf ?? CASE_STUDY_PDF}
                       download
                       className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary/90 transition-colors mt-auto"
                     >
