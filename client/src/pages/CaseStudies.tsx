@@ -21,6 +21,7 @@ import tipHealthcareLogo from "@assets/DED_Logo_1782108260153.jpg";
 import innovationTheaterLogo from "@assets/motc_new_logo_1782108578573.png";
 import vxAcademyLogo from "@assets/DCT_logo_1782108989381.png";
 import moeLogo from "@assets/MOE_logo_1782111063727.png";
+import adgmFepLogo from "@assets/ADGM_logo_1782112596349.jpeg";
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
 import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
 import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
@@ -109,6 +110,19 @@ const caseStudies: CaseStudy[] = [
       { value: "4,843", label: "Emails Delivered" },
       { value: "28.0%", label: "Open Rate" },
       { value: "4.9%", label: "Click-through Rate" },
+    ],
+  },
+  {
+    industry: "Government",
+    useCase: "Entrepreneurship",
+    title: "Future Entrepreneurs Programme",
+    logo: adgmFepLogo,
+    intro:
+      "An AI-powered cornerstone initiative committed to empowering UAE Nationals and job seekers with entrepreneurial potential across the business landscape.",
+    stats: [
+      { value: "600+", label: "Emiratis Empowered" },
+      { value: "Hybrid", label: "Model" },
+      { value: "AI-Powered", label: "User Journeys" },
     ],
   },
   {
