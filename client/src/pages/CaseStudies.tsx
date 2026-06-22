@@ -25,6 +25,7 @@ import adgmFepLogo from "@assets/ADGM_logo_1782112596349.jpeg";
 import vxAcademyPdf from "@assets/DCT_VX_Academy_Case_Study_1782113750466.pdf";
 import dubaiSmeYecPdf from "@assets/DubaiSME_YEC_Case_Study_1782113851598.pdf";
 import airbusEntaliqPdf from "@assets/Entaliq_with_Airbus_Case_Study_1782113953296.pdf";
+import alAinHiringPdf from "@assets/Al_Ain_AI_hiring_Case_Study_1782113992249.pdf";
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
 import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
 import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
@@ -134,6 +135,7 @@ const caseStudies: CaseStudy[] = [
     useCase: "HR",
     title: "Al Ain Museum AI-Powered Hiring",
     logo: alAinMuseumLogo,
+    pdf: alAinHiringPdf,
     intro:
       "An AI pre-screening bot streamlined hiring for heritage, archaeology, and museum practices.",
     stats: [
