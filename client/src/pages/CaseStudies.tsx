@@ -314,7 +314,7 @@ const caseStudies: CaseStudy[] = [
     logo: vxAcademyLogo,
     logoClassName: "max-h-24 max-w-full object-contain",
     intro:
-      "A unified Knowledge-Sharing and Learning Hub designed to empower internal teams and external stakeholders across the culture and tourism ecosystem.",
+      "A unified Knowledge-Sharing Hub designed to empower internal teams & external partners across the culture & tourism ecosystem.",
     stats: [
       { value: "10+", label: "Programs Launched" },
       { value: "1,000+", label: "Learners Engaged" },
