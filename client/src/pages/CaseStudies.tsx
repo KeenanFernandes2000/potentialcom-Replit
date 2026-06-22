@@ -16,6 +16,7 @@ import {
 
 import bmwLogo from "@assets/BMW_logo_1782107783038.png";
 import alAinMuseumLogo from "@assets/Al_Ain_Museum_logo_1782107849084.png";
+import dubaiSmeLogo from "@assets/dubai_sme_logo_1782107929025.jpeg";
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
 import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
 import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
@@ -148,6 +149,7 @@ const caseStudies: CaseStudy[] = [
     industry: "Government & Public Sector",
     useCase: "Entrepreneurship",
     title: "Dubai SME Young Entrepreneurs Competition",
+    logo: dubaiSmeLogo,
     intro:
       "A national platform empowering young innovators and entrepreneurs.",
     stats: [
