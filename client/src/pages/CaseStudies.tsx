@@ -321,6 +321,7 @@ const caseStudies: CaseStudy[] = [
     useCase: "Awards Program",
     title: "TIP Healthcare Awards",
     logo: tipHealthcareLogo,
+    logoClassName: "max-h-24 max-w-full object-contain",
     intro: "Innovation awards for healthcare solutions.",
     stats: [
       { value: "300K+", label: "Reached" },
