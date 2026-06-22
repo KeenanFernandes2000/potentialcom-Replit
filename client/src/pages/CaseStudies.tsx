@@ -278,7 +278,7 @@ const caseStudies: CaseStudy[] = [
   },
   {
     industry: "Government",
-    useCase: "Professional Certification",
+    useCase: "Certification",
     title: "Dubai Land Department (DREI)",
     logo: dldLogo,
     intro: "Online certification for real estate brokers.",
