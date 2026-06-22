@@ -12,7 +12,10 @@ import {
   Rocket,
   BarChart3,
   Building2,
+  MessageSquare,
 } from "lucide-react";
+
+import aylaHeroImg from "@assets/2.png";
 
 import bmwLogo from "@assets/BMW_logo_1782107783038.png";
 import alAinMuseumLogo from "@assets/Al_Ain_Museum_logo_1782107849084.png";
@@ -809,37 +812,47 @@ const CaseStudies = () => {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="py-16 md:py-24">
-          <div className="container">
-            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-primary to-secondary p-10 md:p-16 text-center text-white">
-              <div className="absolute top-0 right-0 w-72 h-72 bg-white/10 rounded-full blur-3xl" />
-              <div className="relative z-10">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                  Let's Scale Your Impact Together
+        {/* Talk to Ayla */}
+        <section className="py-24 relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-accent/10">
+          <div className="absolute top-0 left-0 w-72 h-72 bg-primary/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl translate-x-1/3 translate-y-1/3" />
+          <div className="container relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+              <div className="order-2 lg:order-1 flex justify-center">
+                <div className="relative w-full max-w-md">
+                  <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 to-accent/20 rounded-3xl blur-2xl" />
+                  <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-primary/10">
+                    <img
+                      src={aylaHeroImg}
+                      alt="Ayla - Your AI Empowerment Advisor"
+                      className="w-full h-auto"
+                    />
+                  </div>
+                  <div className="absolute -bottom-3 -right-3 bg-primary text-white rounded-full p-3 shadow-lg">
+                    <MessageSquare className="h-6 w-6" />
+                  </div>
+                </div>
+              </div>
+
+              <div className="order-1 lg:order-2 space-y-6">
+                <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium">
+                  Meet Ayla
+                </div>
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
+                  Talk to <span className="text-primary">Ayla</span>, Your AI Empowerment Advisor
                 </h2>
-                <p className="max-w-2xl mx-auto text-white/85 mb-8 text-lg">
-                  Partner with us to design and deliver AI-enabled programs and
-                  solutions that unlock potential and create measurable outcomes.
+                <p className="text-lg text-muted-foreground leading-relaxed max-w-lg">
+                  Have a conversation with Ayla to explore how to launch, scale, or improve your programs and initiatives — completely free. Get personalized AI-powered guidance in minutes.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <div className="flex flex-col sm:flex-row gap-4 pt-2">
                   <Button
                     asChild
                     size="lg"
-                    className="bg-white text-primary hover:bg-white/90"
+                    className="rounded-full bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg shadow-lg shadow-primary/25"
                   >
                     <UTMLink href="/ayla">
-                      Talk to Ayla
-                      <ArrowRight className="ml-2 w-4 h-4" />
+                      Talk to Ayla <ArrowRight className="ml-2 h-5 w-5" />
                     </UTMLink>
-                  </Button>
-                  <Button
-                    asChild
-                    size="lg"
-                    variant="outline"
-                    className="border-white text-white hover:bg-white/10 bg-transparent"
-                  >
-                    <a href="mailto:empower@potential.com">empower@potential.com</a>
                   </Button>
                 </div>
               </div>
