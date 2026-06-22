@@ -305,7 +305,7 @@ const caseStudies: CaseStudy[] = [
     useCase: "HR",
     title: "DCT Learn Platform",
     logo: vxAcademyLogo,
-    logoClassName: "max-h-16 max-w-full object-contain",
+    logoClassName: "max-h-24 max-w-full object-contain",
     intro:
       "A unified Knowledge-Sharing and Learning Hub designed to empower internal teams and external stakeholders across the culture and tourism ecosystem.",
     stats: [
