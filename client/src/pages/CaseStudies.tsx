@@ -510,13 +510,29 @@ const CaseStudies = () => {
   const [activeIndustry, setActiveIndustry] = useState("All");
   const [activeUseCase, setActiveUseCase] = useState("All");
 
+  const priorityOrder = [
+    "HSBC Tatawwar Youth Program",
+    "Airbus Entaliq Program in KSA",
+    "The Entrepreneurial Nation (TEN)",
+    "Visitor Experience (VX) Academy",
+    "PepsiCo Art of Zayed",
+    "Cartier Women Initiative",
+  ];
+
   const filteredCaseStudies = caseStudies
     .filter(
       (cs) =>
         (activeIndustry === "All" || cs.industry === activeIndustry) &&
         (activeUseCase === "All" || cs.useCase === activeUseCase),
     )
-    .sort((a, b) => a.title.localeCompare(b.title));
+    .sort((a, b) => {
+      const ai = priorityOrder.indexOf(a.title);
+      const bi = priorityOrder.indexOf(b.title);
+      if (ai !== -1 && bi !== -1) return ai - bi;
+      if (ai !== -1) return -1;
+      if (bi !== -1) return 1;
+      return a.title.localeCompare(b.title);
+    });
 
   useEffect(() => {
     const checkDarkMode = () => {
