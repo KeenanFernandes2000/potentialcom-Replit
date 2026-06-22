@@ -23,6 +23,7 @@ import vxAcademyLogo from "@assets/DCT_logo_1782108989381.png";
 import moeLogo from "@assets/MOE_logo_1782111063727.png";
 import adgmFepLogo from "@assets/ADGM_logo_1782112596349.jpeg";
 import vxAcademyPdf from "@assets/DCT_VX_Academy_Case_Study_1782113750466.pdf";
+import dubaiSmeYecPdf from "@assets/DubaiSME_YEC_Case_Study_1782113851598.pdf";
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
 import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
 import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
@@ -172,6 +173,7 @@ const caseStudies: CaseStudy[] = [
     title: "Dubai SME Young Entrepreneurs Competition",
     logo: dubaiSmeLogo,
     logoClassName: "max-h-24 max-w-full object-contain",
+    pdf: dubaiSmeYecPdf,
     intro:
       "A national platform empowering young innovators and entrepreneurs.",
     stats: [
