@@ -338,7 +338,6 @@ const CaseStudies = () => {
         url="https://www.potential.com/case-studies"
       />
       <Header />
-
       <main>
         {/* Hero */}
         <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
@@ -347,9 +346,7 @@ const CaseStudies = () => {
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-secondary/20 rounded-full blur-3xl -z-0" />
 
           <div className="container relative z-10 text-center">
-            <span className="inline-block px-4 py-1.5 mb-6 rounded-full bg-primary/10 text-primary text-sm font-semibold">
-              20 Years of Empowerment
-            </span>
+            <span className="inline-block px-4 py-1.5 mb-6 rounded-full bg-primary/10 text-primary text-sm font-semibold">20+ Years of Empowerment</span>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
               Measurable Impact. <span className="gradient-text">Real Change.</span>
             </h1>
@@ -575,7 +572,6 @@ const CaseStudies = () => {
           </div>
         </section>
       </main>
-
       <Footer />
     </div>
   );
