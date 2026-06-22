@@ -258,7 +258,7 @@ const caseStudies: CaseStudy[] = [
     intro:
       "Empowering youth to innovate on UN SDGs through learning, mentorship and incubation.",
     stats: [
-      { value: "15,000+", label: "Youth Trained (Since 2019)" },
+      { value: "25,000+", label: "Youth Empowered" },
       { value: "3,000+", label: "Innovations Developed" },
       { value: "8", label: "International Awards" },
     ],
