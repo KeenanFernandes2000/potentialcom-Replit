@@ -17,6 +17,7 @@ import {
 import bmwLogo from "@assets/BMW_logo_1782107783038.png";
 import alAinMuseumLogo from "@assets/Al_Ain_Museum_logo_1782107849084.png";
 import dubaiSmeLogo from "@assets/dubai_sme_logo_1782107929025.jpeg";
+import tipHealthcareLogo from "@assets/DED_logo_1782108140644.webp";
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
 import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
 import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
@@ -308,6 +309,7 @@ const caseStudies: CaseStudy[] = [
     industry: "Healthcare",
     useCase: "Awards Program",
     title: "TIP Healthcare Awards",
+    logo: tipHealthcareLogo,
     intro: "Innovation awards for healthcare solutions.",
     stats: [
       { value: "300K+", label: "Reached" },
