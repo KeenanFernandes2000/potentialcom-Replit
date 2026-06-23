@@ -239,8 +239,15 @@ const PrivacyPolicy = () => {
               features you requested inside your own assistant, and is processed
               per-user. Your Google access and refresh tokens are{" "}
               <strong>encrypted at rest</strong> and transmitted over TLS. We do not
-              sell or transfer your Google user data to third parties, and we do not
-              use it for advertising. You can disconnect Google at any time from your
+              sell your Google user data, and we do not use it for advertising. We do
+              not use your Google user data — including Gmail or Google Calendar
+              content — to develop, improve, or train generalized or non-personalized
+              AI or machine-learning models. We share your Google user data only with
+              the service providers necessary to operate this feature (for example, our
+              AI processing provider, which processes your message and calendar content
+              to generate the assistant's replies); they act on our behalf under
+              confidentiality obligations and may not use it for any other purpose. You
+              can disconnect Google at any time from your
               Connections page, which immediately revokes our access and deletes the
               stored tokens; you may also revoke access at{" "}
               <a
