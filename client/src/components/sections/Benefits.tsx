@@ -34,7 +34,7 @@ const Benefits = () => {
       icon: <Scale className="h-10 w-10" />,
       title: "Modular & Scalable",
       description:
-        "Pricing grows with use-cases, allowing you to scale at your own pace.",
+        "The platform can expand across use cases as your needs evolve.",
     },
     {
       icon: <BookOpen className="h-10 w-10" />,

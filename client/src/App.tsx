@@ -10,7 +10,6 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import Offerings from "@/pages/Offerings";
 import Resources from "@/pages/Resources";
-import Pricing from "@/pages/Pricing";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import Profile from "@/pages/Profile";
@@ -45,7 +44,6 @@ function Router() {
       <Route path="/platform" component={Platform} />
       <Route path="/solutions" component={Offerings} />
       <Route path="/resources" component={Resources} />
-      <Route path="/pricing" component={Pricing} />
       <Route path="/partner" component={Partner} />
       <Route path="/about" component={About} />
       <Route path="/vera" component={Vera} />

@@ -42,8 +42,7 @@ const Footer = () => {
               <FooterLogo height={36} />
             </div>
             <p className="mb-4">
-              Empowering organizations through AI tools that help them in turn
-              empower their stakeholders.
+              Build capability. Engage people. Prove what changed.
             </p>
             <div className="flex items-center space-x-2 mt-6">
               <ThemeToggle />
@@ -57,18 +56,10 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <a
-                  href="/solutions"
+                  href="/platform"
                   className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
                 >
-                  Solutions
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/pricing"
-                  className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
-                >
-                  Pricing
+                  Platform
                 </a>
               </li>
               <li>
@@ -77,6 +68,30 @@ const Footer = () => {
                   className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
                 >
                   Use Cases
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/case-studies"
+                  className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
+                >
+                  Case Studies
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/about"
+                  className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
+                >
+                  About
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/ayla"
+                  className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
+                >
+                  Talk to Ayla
                 </a>
               </li>
               <li>
@@ -101,14 +116,6 @@ const Footer = () => {
                   className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
                 >
                   Blog
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/login"
-                  className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
-                >
-                  Login / Register
                 </a>
               </li>
             </ul>

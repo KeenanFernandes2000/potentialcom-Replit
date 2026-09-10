@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 import { Logo } from "./Logo";
@@ -8,9 +8,6 @@ import UTMLink from "@/components/UTMLink";
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isSolutionsDropdownOpen, setIsSolutionsDropdownOpen] = useState(false);
-  const [isAgentsSubOpen, setIsAgentsSubOpen] = useState(false);
-  const [isMobileAgentsOpen, setIsMobileAgentsOpen] = useState(false);
 
   // Handle scroll to update header styling
   useEffect(() => {
@@ -21,20 +18,6 @@ const Header = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Handle smooth scrolling to sections
-  const scrollToSection = (sectionId: string) => {
-    setIsMenuOpen(false);
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const offsetTop =
-        element.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({
-        top: offsetTop,
-        behavior: "smooth",
-      });
-    }
-  };
 
   return (
     <header
@@ -52,77 +35,18 @@ const Header = () => {
         </div>
 
         <nav className="hidden md:flex items-center space-x-8">
-          <div
-            className="relative"
-            onMouseEnter={() => setIsSolutionsDropdownOpen(true)}
-            onMouseLeave={() => setIsSolutionsDropdownOpen(false)}
+          <UTMLink
+            href="/platform"
+            className="text-foreground/80 hover:text-primary font-medium transition-colors"
           >
-            <button
-              className="text-foreground/80 hover:text-primary font-medium transition-colors flex items-center gap-1"
-              onClick={() =>
-                setIsSolutionsDropdownOpen(!isSolutionsDropdownOpen)
-              }
-            >
-              Solutions
-              <ChevronDown
-                className={`h-4 w-4 transition-transform ${
-                  isSolutionsDropdownOpen ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-
-            {isSolutionsDropdownOpen && (
-              <div className="absolute top-full left-0 pt-2 w-48 z-50">
-                <div className="bg-background/95 backdrop-blur-sm border border-border rounded-lg shadow-lg">
-                  <div className="py-2">
-                    <UTMLink
-                      href="/ai-for-csr"
-                      className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
-                    >
-                      AI for CSR
-                    </UTMLink>
-                    <div
-                      className="relative"
-                      onMouseEnter={() => setIsAgentsSubOpen(true)}
-                      onMouseLeave={() => setIsAgentsSubOpen(false)}
-                    >
-                      <UTMLink
-                        href="/ai-agents"
-                        className="flex items-center justify-between px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
-                      >
-                        AI Agents
-                        <ChevronDown className="h-3 w-3 -rotate-90" />
-                      </UTMLink>
-                      {isAgentsSubOpen && (
-                        <div className="absolute left-full top-0 pl-2 w-48 z-50">
-                          <div className="bg-background/95 backdrop-blur-sm border border-border rounded-lg shadow-lg py-2">
-                            <UTMLink
-                              href="/voice"
-                              className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
-                            >
-                              AI Voice Agents
-                            </UTMLink>
-                            <UTMLink
-                              href="/chatbot"
-                              className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
-                            >
-                              AI Chatbot
-                            </UTMLink>
-                            <UTMLink
-                              href="/solutions"
-                              className="block px-4 py-2 text-sm text-foreground/80 hover:text-primary hover:bg-muted/50 transition-colors"
-                            >
-                              All AI Solutions
-                            </UTMLink>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+            Platform
+          </UTMLink>
+          <UTMLink
+            href="/usecases"
+            className="text-foreground/80 hover:text-primary font-medium transition-colors"
+          >
+            Use Cases
+          </UTMLink>
           <UTMLink
             href="/case-studies"
             className="text-foreground/80 hover:text-primary font-medium transition-colors"
@@ -133,11 +57,11 @@ const Header = () => {
             href="/about"
             className="text-foreground/80 hover:text-primary font-medium transition-colors"
           >
-            About Us
+            About
           </UTMLink>
           <UTMLink
             href="/ayla"
-            className="text-foreground/80 hover:text-primary font-medium transition-colors"
+            className="inline-flex items-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
           >
             Talk to Ayla
           </UTMLink>
@@ -166,54 +90,20 @@ const Header = () => {
       </div>
       {isMenuOpen && (
         <div className="mobile-nav flex flex-col glass-effect w-full py-6 px-6 md:hidden shadow-md">
-          <div className="mb-2">
-            <div className="py-3 text-foreground font-medium">Solutions</div>
-            <div className="ml-4 space-y-2">
-              <UTMLink
-                href="/ai-for-csr"
-                className="block py-2 text-foreground/80 hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                AI for CSR
-              </UTMLink>
-              <div>
-                <button
-                  className="flex items-center justify-between w-full py-2 text-foreground/80 hover:text-primary transition-colors"
-                  onClick={() => setIsMobileAgentsOpen(!isMobileAgentsOpen)}
-                >
-                  AI Agents
-                  <ChevronDown
-                    className={`h-3 w-3 transition-transform ${isMobileAgentsOpen ? "rotate-180" : ""}`}
-                  />
-                </button>
-                {isMobileAgentsOpen && (
-                  <div className="ml-4 space-y-2">
-                    <UTMLink
-                      href="/voice"
-                      className="block py-2 text-foreground/80 hover:text-primary transition-colors"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      AI Voice Agents
-                    </UTMLink>
-                    <UTMLink
-                      href="/chatbot"
-                      className="block py-2 text-foreground/80 hover:text-primary transition-colors"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      AI Chatbot
-                    </UTMLink>
-                    <UTMLink
-                      href="/solutions"
-                      className="block py-2 text-foreground/80 hover:text-primary transition-colors"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      All AI Solutions
-                    </UTMLink>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
+          <UTMLink
+            href="/platform"
+            className="py-3 text-foreground hover:text-primary font-medium transition-colors"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Platform
+          </UTMLink>
+          <UTMLink
+            href="/usecases"
+            className="py-3 text-foreground hover:text-primary font-medium transition-colors"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Use Cases
+          </UTMLink>
           <UTMLink
             href="/case-studies"
             className="py-3 text-foreground hover:text-primary font-medium transition-colors"
@@ -226,11 +116,11 @@ const Header = () => {
             className="py-3 text-foreground hover:text-primary font-medium transition-colors"
             onClick={() => setIsMenuOpen(false)}
           >
-            About Us
+            About
           </UTMLink>
           <UTMLink
             href="/ayla"
-            className="py-3 text-foreground hover:text-primary font-medium transition-colors"
+            className="mt-3 rounded-full bg-primary px-5 py-3 text-center font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
             onClick={() => setIsMenuOpen(false)}
           >
             Talk to Ayla

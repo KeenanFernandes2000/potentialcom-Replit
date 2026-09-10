@@ -256,11 +256,14 @@ export default function Ayla() {
               <div className="space-y-8">
                 <div className="space-y-6">
                   <h1 className="text-4xl lg:text-6xl font-bold text-foreground leading-tight">
-                    Hello, I'm Ayla,
+                     Start with Ayla,
                     <br />
-                    <span className="text-primary">Your AI Empowerment Advisor</span>
+                     <span className="text-primary">Your AI Initiative Advisor</span>
                   </h1>
-                  <p className="text-xl text-muted-foreground leading-relaxed max-w-lg">Talk to me and I’ll help you explore how to launch, scale, or improve your programs and initiatives—completely free!</p>
+                   <p className="text-xl text-muted-foreground leading-relaxed max-w-lg">
+                     Tell me about your organisation, mandate and audience. I’ll help
+                     you understand the most relevant next step for your initiative.
+                   </p>
                 </div>
 
                 <Button
@@ -268,7 +271,7 @@ export default function Ayla() {
                   size="lg"
                   className="bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-6 text-lg gtm-vera-get-started"
                 >
-                  Get Started with Ayla
+                     Discuss Your Initiative
                 </Button>
               </div>
 
@@ -492,7 +495,7 @@ export default function Ayla() {
           <div className="container mx-auto px-4">
             <div className="text-center space-y-4 mb-16">
               <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
-                How Can I Help You?
+                 Understand the Relevant Next Step
               </h2>
             </div>
 
@@ -500,21 +503,21 @@ export default function Ayla() {
               {[
                 {
                   icon: Search,
-                  title: "Understand Your Needs",
+                   title: "Clarify the Mandate",
                   description:
-                    "I'll help you clarify what you're trying to achieve and what you need.",
+                     "Share the outcome your organisation needs to achieve and who the initiative must serve.",
                 },
                 {
                   icon: Users,
-                  title: "Explore the Right Approach",
+                   title: "Explore the Right Journey",
                   description:
-                    "I'll guide you on how to design or improve your initiative or program.",
+                     "Consider the learning, engagement and support your audience may need.",
                 },
                 {
                   icon: Calendar,
-                  title: "Schedule a Meeting",
+                   title: "Identify the Next Step",
                   description:
-                    "Need expert advice? I can set up a call with a human consultant.",
+                     "Where there is a fit, I can help connect you with the Potential team.",
                 },
                 {
                   icon: MessageSquare,
@@ -589,18 +592,21 @@ export default function Ayla() {
                 <div className="space-y-6">
                   <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
                     Meet Ayla:{" "}
-                    <span className="text-primary">Your Empowerment Advisor</span>
+                     <span className="text-primary">Your Initiative Advisor</span>
                   </h2>
-                  <p className="text-lg text-muted-foreground leading-relaxed">I’m Ayla, your AI-powered advisor here to help you explore how to design, launch, and scale impactful initiatives and programs.</p>
+                   <p className="text-lg text-muted-foreground leading-relaxed">
+                     I’m Ayla, Potential’s AI-powered starting point for organisations
+                     exploring a learning, engagement or capability initiative.
+                   </p>
                 </div>
 
                 <div className="space-y-4">
                   {[
-                    "Design and launch impactful programs",
-                    "Support and engage your target audience at scale",
-                    "Improve participation, outcomes, and impact",
-                    "Bring everything into one unified platform",
-                    "Move from ideas to execution faster",
+                     "Clarify your mandate and intended outcomes",
+                     "Consider the needs of your audience",
+                     "Explore relevant platform capabilities",
+                     "Identify practical next steps",
+                     "Connect with the Potential team where appropriate",
                   ].map((benefit, index) => (
                     <div key={index} className="flex items-center space-x-3">
                       <div className="flex-shrink-0 w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center">
@@ -613,13 +619,13 @@ export default function Ayla() {
 
                 <div className="pt-4">
                   <p className="text-lg font-semibold text-foreground mb-4">
-                    Best of all? My consultation is completely free!
+                     Start by sharing a few details about your organisation.
                   </p>
                   <Button
                     onClick={scrollToForm}
                     className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-8 py-3 gtm-vera-start-consultation"
                   >
-                    Start Your Free Consultation →
+                     Discuss Your Initiative →
                   </Button>
                 </div>
               </div>

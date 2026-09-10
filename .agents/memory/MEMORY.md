@@ -1,1 +1,2 @@
 - [Blocked dependency install](blocked-dependency-install.md) — a security-firewall-blocked dep (CVE) aborts the whole npm install, silently leaving other declared deps uninstalled and breaking builds.
+- [Protect Ayla call flow](ayla-call-flow.md) — treat the Ayla form and immediate post-submit AI voice-call startup as a protected integration.
