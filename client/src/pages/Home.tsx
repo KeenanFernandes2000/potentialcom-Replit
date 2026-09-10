@@ -728,6 +728,30 @@ const Home = () => {
                 Designed around your workflow,{" "}
                 <span className="text-primary">not a generic portal.</span>
               </h2>
+              <div className="mt-8 max-w-3xl">
+                <h3 className="text-2xl font-bold text-foreground md:text-3xl">
+                  Built for considered, <span className="text-primary">phased delivery.</span>
+                </h3>
+                <p className="mt-3 text-lg text-muted-foreground">
+                  Deployment choices and operating controls for government and enterprise environments.
+                </p>
+              </div>
+            </div>
+
+            <div className="mb-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {scaleItems.map((item, index) => (
+                <div
+                  key={item.label}
+                  className="glass-effect card-hover flex items-start gap-4 rounded-xl border border-border p-6"
+                  data-aos="fade-up"
+                  data-aos-delay={index * 80}
+                >
+                  <div className="inline-flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <item.icon className="h-6 w-6" />
+                  </div>
+                  <p className="pt-2 font-medium text-foreground">{item.label}</p>
+                </div>
+              ))}
             </div>
 
             <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start">
@@ -748,55 +772,6 @@ const Home = () => {
                   alt="AI-powered learning and engagement journey from learning and connection to growth, measurable outcomes, and a bigger tomorrow"
                   className="h-[390px] w-full rounded-3xl object-cover shadow-2xl"
                 />
-              </div>
-            </div>
-
-            {/* Built for Scale & Speed */}
-            <div className="mt-24 border-t border-border/60 pt-24">
-              <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-16" data-aos="fade-up">
-                <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-                  Built for Scale & Speed
-                </div>
-                <h2 className="section-title text-center mb-6">
-                  Built for considered,{" "}
-                  <span className="text-primary">phased delivery.</span>
-                </h2>
-                <p className="text-lg text-muted-foreground">
-                  Deployment choices and operating controls for government and enterprise environments.
-                </p>
-              </div>
-
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                {scaleItems.map((item, index) => (
-                  <div
-                    key={index}
-                    className="glass-effect border border-border p-6 rounded-xl card-hover flex items-start gap-4"
-                    data-aos="fade-up"
-                    data-aos-delay={index * 80}
-                  >
-                    <div className="inline-flex items-center justify-center h-12 w-12 rounded-lg bg-primary/10 text-primary flex-shrink-0">
-                      <item.icon className="h-6 w-6" />
-                    </div>
-                    <p className="text-foreground font-medium pt-2">{item.label}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="relative text-center mt-16" data-aos="fade-up">
-                <div className="relative inline-block rounded-2xl p-10 overflow-hidden" style={{ background: "linear-gradient(135deg, #0B1846 0%, #1a2a6c 40%, #8844DD 100%)" }}>
-                  <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full blur-2xl -mr-20 -mt-20" />
-                  <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -ml-16 -mb-16" />
-                  <div className="relative z-10">
-                    <p className="text-2xl md:text-3xl font-bold text-white mb-2">
-                      Start with the priority.
-                    </p>
-                    <p className="text-xl md:text-2xl text-white/70 font-medium">
-                      Expand the journey in phases.
-                    </p>
-                  </div>
-                </div>
-              </div>
               </div>
             </div>
           </div>
