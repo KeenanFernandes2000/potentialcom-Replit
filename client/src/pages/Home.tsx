@@ -587,9 +587,9 @@ const Home = () => {
         <CTABanner />
 
         {/* Talk to Ayla */}
-        <section className="py-24 relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-accent/10">
-          <div className="absolute top-0 left-0 w-72 h-72 bg-primary/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl translate-x-1/3 translate-y-1/3" />
+        <section className="py-24 relative overflow-hidden bg-gradient-to-br from-primary/20 via-background to-accent/25">
+          <div className="absolute top-0 left-0 w-72 h-72 bg-primary/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/20 rounded-full blur-3xl translate-x-1/3 translate-y-1/3" />
           <div className="container relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               <div className="order-2 lg:order-1 flex justify-center" data-aos="fade-right">
