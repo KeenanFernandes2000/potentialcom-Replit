@@ -263,7 +263,7 @@ const Platform = () => {
                     Talk to Ayla <ArrowRight className="h-5 w-5" />
                   </Button>
                   <a href="#capabilities" className="group inline-flex items-center justify-center gap-2 px-3 py-3 font-semibold text-secondary transition-colors hover:text-primary">
-                    Explore the platform <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    Explore Capabilities <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </a>
                 </div>
                 <p className="mt-4 max-w-xl text-sm leading-6 text-muted-foreground">

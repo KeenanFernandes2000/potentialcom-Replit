@@ -252,7 +252,7 @@ const UseCases = () => {
                   <Button onClick={talkToAyla} size="lg" className="rounded-full bg-white px-8 py-6 text-base font-semibold text-secondary shadow-lg shadow-black/10 hover:bg-white/90">
                     Talk to Ayla <ArrowRight className="h-5 w-5" aria-hidden="true" />
                   </Button>
-                  <a href="#library" className="group inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 font-semibold text-secondary transition-colors hover:bg-white/90">
+                  <a href="#library" className="group inline-flex items-center justify-center gap-2 px-3 py-3 font-semibold text-white transition-colors hover:text-white/75">
                     Explore the use cases <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                   </a>
                 </div>
