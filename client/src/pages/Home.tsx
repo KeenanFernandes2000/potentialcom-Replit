@@ -472,6 +472,53 @@ const Home = () => {
           </div>
         </section>
 
+        {/* How to Start */}
+        <section id="home-how-to-start" className="py-24 bg-muted/50 dark:bg-secondary/10 md:py-32">
+          <div className="container">
+            <div className="mx-auto max-w-3xl text-center" data-aos="fade-up">
+              <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+                How to start
+              </div>
+              <h2 className="section-title text-center mb-6">
+                Start with the need, then{" "}
+                <span className="text-primary">shape the first release.</span>
+              </h2>
+              <p className="text-lg leading-8 text-muted-foreground">
+                A strong platform journey starts with clarity. Personalised interactive previews
+                are prepared for qualified organisations and initiatives.
+              </p>
+            </div>
+
+            <div
+              className="relative mx-auto mt-12 max-w-6xl overflow-hidden rounded-[2rem] bg-gradient-to-br from-secondary via-[#18245a] to-primary p-6 shadow-2xl md:mt-16 md:p-10"
+              data-aos="fade-up"
+            >
+              <div className="absolute -right-20 -top-24 h-72 w-72 rounded-full bg-white/10 blur-3xl" aria-hidden="true" />
+              <div className="absolute -bottom-32 left-1/4 h-80 w-80 rounded-full bg-primary/30 blur-3xl" aria-hidden="true" />
+              <div className="relative grid gap-4 md:grid-cols-4 md:gap-5">
+                {startSteps.map(([number, title, description], index) => (
+                  <div
+                    key={number}
+                    className="relative rounded-2xl border border-white/15 bg-white/[.08] p-5 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-white/[.12] motion-reduce:transition-none md:p-6"
+                  >
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/20 bg-white/10 text-xl font-bold text-white shadow-lg shadow-black/20">
+                      {number}
+                    </div>
+                    <h3 className="mt-6 text-lg font-semibold text-white">{title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-white/65">{description}</p>
+                    {index < startSteps.length - 1 && (
+                      <ArrowRight
+                        className="absolute -right-4 top-12 z-10 hidden h-8 w-8 rounded-full border border-white/20 bg-[#253475] p-1.5 text-[#d2b4ff] md:block"
+                        aria-hidden="true"
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* What You Get */}
         <section id="capabilities" className="py-24 bg-background">
           <div className="container">
