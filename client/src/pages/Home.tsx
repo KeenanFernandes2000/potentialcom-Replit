@@ -182,7 +182,7 @@ const aylaSteps = [
 ];
 
 const CTABanner = () => (
-  <section id="programme-cta" className="bg-background py-24 md:py-32">
+  <section id="programme-cta" className="bg-background py-24 md:py-32 pt-[40px] pb-[40px]">
     <div className="container">
       <div
         className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-secondary via-[#1c2c70] to-primary p-8 text-white md:p-16"
