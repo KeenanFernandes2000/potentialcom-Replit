@@ -373,6 +373,72 @@ const Home = () => {
           </div>
         </section>
 
+        {/* Who It's For */}
+        <section id="audiences" className="py-24 bg-background">
+          <div className="container">
+            <div className="mb-10" data-aos="fade-up">
+              <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+                Who It's For
+              </div>
+              <h2 className="section-title">
+                Built for organisations with a mandate to{" "}
+                <span className="text-primary">develop or engage people.</span>
+              </h2>
+            </div>
+
+            <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start">
+              <div className="lg:w-5/12" data-aos="fade-right">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+                  {audiences.map((item, index) => (
+                    <div
+                      key={index}
+                      className="group glass-effect border border-border p-3 md:p-4 rounded-2xl card-hover flex items-center gap-3 min-h-[72px]"
+                      data-aos="fade-up"
+                      data-aos-delay={index * 80}
+                    >
+                      <div className="inline-flex items-center justify-center h-10 w-10 rounded-xl bg-primary/10 text-primary shrink-0 transition-colors group-hover:bg-primary group-hover:text-white">
+                        <item.icon className="h-5 w-5" />
+                      </div>
+                      <p className="text-foreground font-semibold text-xs sm:text-sm leading-snug">{item.label}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="rounded-xl border-l-4 border-primary bg-primary/5 p-5">
+                  <p className="text-lg font-semibold text-primary">
+                    For public-sector mandates, enterprise capability priorities, and programme
+                    owners leading innovation, community, sustainability or CSR initiatives.
+                  </p>
+                </div>
+              </div>
+
+              <div className="lg:w-7/12 relative" data-aos="fade-up" data-aos-delay="200">
+                <div className="relative mx-auto overflow-hidden rounded-3xl border border-border shadow-2xl">
+                  <img
+                    src={globalPeopleVisualImg}
+                    alt="A diverse group of professionals representing different roles and industries"
+                    className="h-[430px] w-full object-cover"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-secondary/90 via-secondary/10 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-6 md:p-8">
+                    <div className="mb-4 flex items-center gap-2 text-white/65">
+                      <Globe className="h-4 w-4" />
+                      <span className="text-xs font-semibold uppercase tracking-[0.2em]">One platform, many contexts</span>
+                    </div>
+                    <p className="max-w-md text-xl font-semibold leading-snug text-white md:text-2xl">
+                      Different mandates. Shared momentum. Measurable progress.
+                    </p>
+                  </div>
+                  <div className="absolute right-5 top-5 rounded-full border border-white/25 bg-white/15 px-3 py-1.5 text-xs text-white backdrop-blur-md">
+                    Built for the world
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* What You Get */}
         <section id="capabilities" className="py-24 bg-background">
           <div className="container">
@@ -629,72 +695,6 @@ const Home = () => {
                     <p className="text-xl md:text-2xl text-white/70 font-medium">
                       Expand the journey in phases.
                     </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Who It's For */}
-        <section id="audiences" className="py-24 bg-background">
-          <div className="container">
-            <div className="mb-10" data-aos="fade-up">
-              <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-                Who It's For
-              </div>
-              <h2 className="section-title">
-                Built for organisations with a mandate to{" "}
-                <span className="text-primary">develop or engage people.</span>
-              </h2>
-            </div>
-
-            <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start">
-              <div className="lg:w-5/12" data-aos="fade-right">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-                  {audiences.map((item, index) => (
-                    <div
-                      key={index}
-                      className="group glass-effect border border-border p-3 md:p-4 rounded-2xl card-hover flex items-center gap-3 min-h-[72px]"
-                      data-aos="fade-up"
-                      data-aos-delay={index * 80}
-                    >
-                      <div className="inline-flex items-center justify-center h-10 w-10 rounded-xl bg-primary/10 text-primary shrink-0 transition-colors group-hover:bg-primary group-hover:text-white">
-                        <item.icon className="h-5 w-5" />
-                      </div>
-                      <p className="text-foreground font-semibold text-xs sm:text-sm leading-snug">{item.label}</p>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="rounded-xl border-l-4 border-primary bg-primary/5 p-5">
-                  <p className="text-lg font-semibold text-primary">
-                    For public-sector mandates, enterprise capability priorities, and programme
-                    owners leading innovation, community, sustainability or CSR initiatives.
-                  </p>
-                </div>
-              </div>
-
-              <div className="lg:w-7/12 relative" data-aos="fade-up" data-aos-delay="200">
-                <div className="relative mx-auto overflow-hidden rounded-3xl border border-border shadow-2xl">
-                  <img
-                    src={globalPeopleVisualImg}
-                    alt="A diverse group of professionals representing different roles and industries"
-                    className="h-[430px] w-full object-cover"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-secondary/90 via-secondary/10 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 p-6 md:p-8">
-                    <div className="mb-4 flex items-center gap-2 text-white/65">
-                      <Globe className="h-4 w-4" />
-                      <span className="text-xs font-semibold uppercase tracking-[0.2em]">One platform, many contexts</span>
-                    </div>
-                    <p className="max-w-md text-xl font-semibold leading-snug text-white md:text-2xl">
-                      Different mandates. Shared momentum. Measurable progress.
-                    </p>
-                  </div>
-                  <div className="absolute right-5 top-5 rounded-full border border-white/25 bg-white/15 px-3 py-1.5 text-xs text-white backdrop-blur-md">
-                    Built for the world
                   </div>
                 </div>
               </div>
