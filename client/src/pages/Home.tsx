@@ -703,21 +703,30 @@ const Home = () => {
         </section>
 
         {/* Final CTA */}
-        <section className="py-24 bg-gradient-to-br from-primary/5 via-background to-accent/10">
+        <section className="bg-background py-24 md:py-32">
           <div className="container">
-            <div className="max-w-4xl mx-auto text-center" data-aos="fade-up">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-                What does your organisation need{" "}
-                <span className="text-primary">people to do next?</span>
-              </h2>
-              <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto">
-                Tell Ayla about your mandate, audience and challenge. She will help identify
-                the most relevant path and connect you with our team where there is a fit.
-              </p>
-              <div className="flex flex-wrap gap-4 justify-center">
+            <div
+              className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-secondary via-[#1c2c70] to-primary p-8 text-white md:p-16"
+              data-aos="fade-up"
+            >
+              <div
+                className="absolute right-0 top-0 h-72 w-72 translate-x-1/3 -translate-y-1/3 rounded-full bg-white/10 blur-3xl"
+                aria-hidden="true"
+              />
+              <div className="relative max-w-3xl">
+                <p className="text-sm font-semibold uppercase tracking-[.2em] text-[#d2b4ff]">
+                  The next conversation
+                </p>
+                <h2 className="mt-5 text-4xl font-bold tracking-tight md:text-6xl">
+                  What does your organisation need people to do next?
+                </h2>
+                <p className="mt-6 max-w-2xl text-lg leading-8 text-white/70">
+                  Tell Ayla about your mandate, audience and challenge. She will help identify
+                  the most relevant path and connect you with our team where there is a fit.
+                </p>
                 <Button
                   size="lg"
-                  className="rounded-full bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg"
+                  className="mt-9 rounded-full bg-white px-8 py-6 text-secondary hover:bg-white/90"
                   onClick={() => navigateWithUTM("/ayla")}
                 >
                   Talk to Ayla <ArrowRight className="ml-2 h-5 w-5" />
