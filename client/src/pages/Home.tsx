@@ -63,6 +63,7 @@ import intelLogo from "@assets/Customer Logos/intel logo.png";
 import aylaHeroImg from "@assets/2.png";
 import globalCollaborationImg from "@/assets/potential-global-collaboration.jpg";
 import journeyVisualImg from "@assets/ChatGPT_Image_Sep_10,_2026,_01_59_16_PM_1789034630381.png";
+import aiCoreVisualImg from "@assets/ChatGPT_Image_Sep_10,_2026,_02_14_52_PM_1789035344777.png";
 
 const clientLogos = [
   { name: "ADGM", logo: adgmLogo },
@@ -102,12 +103,12 @@ const ecosystemFeatures = [
 ];
 
 const aiCapabilities = [
-  { icon: Target, label: "Personalized learning" },
-  { icon: Bot, label: "AI coaching and guidance" },
-  { icon: Brain, label: "Content and knowledge support" },
-  { icon: Gamepad2, label: "Role-based practice" },
-  { icon: Zap, label: "Engagement insights" },
-  { icon: LineChart, label: "Leadership analysis" },
+  { icon: Target, label: "Personalized learning", description: "Guide each person through the next most relevant step." },
+  { icon: Bot, label: "AI coaching and guidance", description: "Offer support, prompts and practice without losing the human context." },
+  { icon: Brain, label: "Content and knowledge support", description: "Make trusted knowledge easier to find, understand and use." },
+  { icon: Gamepad2, label: "Role-based practice", description: "Turn capability into action through realistic scenarios and simulation." },
+  { icon: Zap, label: "Engagement insights", description: "See where participation is building and where people need help." },
+  { icon: LineChart, label: "Leadership analysis", description: "Bring progress, adoption and evidence into one clearer view." },
 ];
 
 const scaleItems = [
@@ -539,46 +540,47 @@ const Home = () => {
         {/* AI at the Core */}
         <section id="ai-core" className="py-24 bg-background">
           <div className="container">
-            <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-16">
-                <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+            <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[.85fr_1.15fr] lg:gap-20">
+              <div data-aos="fade-right">
+                <div className="inline-flex rounded-full bg-primary/10 px-4 py-1 text-sm font-medium text-primary">
                   AI at the Core
                 </div>
-                <h2 className="section-title text-center mb-6">
+                <h2 className="section-title mt-5">
                   AI that supports{" "}
                   <span className="text-primary">the journey.</span>
                 </h2>
-                <p className="text-lg text-muted-foreground">
+                <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
                   Applied where it can improve the experience, support participants and give
-                  programme owners clearer insight.
+                  programme owners clearer insight. AI strengthens the journey without replacing
+                  the people, decisions and expertise that make it meaningful.
                 </p>
-              </div>
-
-              <div className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl border border-border bg-muted/30 min-h-0 md:min-h-[520px]">
-                <div className="absolute inset-0 bg-grid-pattern opacity-50" />
-                <div className="relative z-10 flex flex-col gap-6 p-5 md:hidden">
-                  <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-secondary text-white shadow-xl shadow-secondary/20 motion-safe:animate-pulse motion-reduce:animate-none">
-                    <div className="text-center">
-                      <Bot className="mx-auto mb-1 h-6 w-6 text-primary" />
-                      <span className="block text-[10px] font-semibold tracking-[0.16em]">AI CORE</span>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-1 gap-3">
-                    {aiCapabilities.map((item) => (
-                      <div key={item.label} className="group rounded-2xl border border-border bg-background/90 p-3 shadow-sm backdrop-blur-sm transition duration-300 hover:border-primary/50 motion-reduce:transition-none">
-                        <div className="flex items-center gap-3">
-                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
-                            <item.icon className="h-4 w-4" />
-                          </div>
-                          <p className="text-sm font-semibold leading-snug text-foreground">{item.label}</p>
-                        </div>
+                <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+                  {aiCapabilities.map((item) => (
+                    <div key={item.label} className="group flex gap-3 rounded-2xl border border-border bg-card p-4 transition duration-300 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10 motion-reduce:transition-none">
+                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+                        <item.icon className="h-4 w-4" />
                       </div>
-                    ))}
-                  </div>
-                  <p className="text-center text-xs text-muted-foreground">Six ways to make every journey more useful</p>
+                      <div>
+                        <p className="text-sm font-semibold text-foreground">{item.label}</p>
+                        <p className="mt-1 text-xs leading-5 text-muted-foreground">{item.description}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
-
+              <div className="relative" data-aos="fade-left">
+                <div className="absolute -inset-5 rounded-[2rem] bg-primary/15 blur-3xl" />
+                <div className="relative overflow-hidden rounded-3xl border border-border bg-muted/30 p-2 shadow-2xl">
+                  <img
+                    src={aiCoreVisualImg}
+                    alt="AI-powered learning and engagement platform supporting personalized learning, coaching, practice, insights and leadership analysis"
+                    className="w-full rounded-[1.35rem] object-cover"
+                  />
+                </div>
+                <p className="mt-4 text-center text-xs font-medium uppercase tracking-[.16em] text-muted-foreground">
+                  Human-led. AI-supported. Built for measurable progress.
+                </p>
+              </div>
             </div>
           </div>
         </section>
