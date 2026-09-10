@@ -12,10 +12,6 @@ import {
   Users,
   Bot,
   Gamepad2,
-  Languages,
-  Rocket,
-  Paintbrush,
-  Settings,
   Brain,
   Target,
   LineChart,
@@ -110,15 +106,6 @@ const aiCapabilities = [
   { icon: Gamepad2, label: "Role-based practice", description: "Turn capability into action through realistic scenarios and simulation." },
   { icon: Zap, label: "Engagement insights", description: "See where participation is building and where people need help." },
   { icon: LineChart, label: "Leadership analysis", description: "Bring progress, adoption and evidence into one clearer view." },
-];
-
-const scaleItems = [
-  { icon: Paintbrush, label: "Dedicated deployment" },
-  { icon: Languages, label: "Multilingual experiences" },
-  { icon: Settings, label: "Configurable journeys" },
-  { icon: Users, label: "Enterprise roles and administration" },
-  { icon: Building2, label: "Integration and deployment options" },
-  { icon: Rocket, label: "Phased launch" },
 ];
 
 const startSteps = [
@@ -728,30 +715,6 @@ const Home = () => {
                 Designed around your workflow,{" "}
                 <span className="text-primary">not a generic portal.</span>
               </h2>
-              <div className="mt-8 max-w-3xl">
-                <h3 className="text-2xl font-bold text-foreground md:text-3xl">
-                  Built for considered, <span className="text-primary">phased delivery.</span>
-                </h3>
-                <p className="mt-3 text-lg text-muted-foreground">
-                  Deployment choices and operating controls for government and enterprise environments.
-                </p>
-              </div>
-            </div>
-
-            <div className="mb-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {scaleItems.map((item, index) => (
-                <div
-                  key={item.label}
-                  className="glass-effect card-hover flex items-start gap-4 rounded-xl border border-border p-6"
-                  data-aos="fade-up"
-                  data-aos-delay={index * 80}
-                >
-                  <div className="inline-flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-                    <item.icon className="h-6 w-6" />
-                  </div>
-                  <p className="pt-2 font-medium text-foreground">{item.label}</p>
-                </div>
-              ))}
             </div>
 
             <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start">

@@ -366,7 +366,7 @@ const Platform = () => {
           </div>
         </section>
 
-        <section className="bg-background py-24 md:py-32">
+        <section className="bg-[#f6f4fb] py-24 md:py-32">
           <div className="container">
             <div className="grid items-center gap-14 lg:grid-cols-[1.1fr_.9fr]">
               <div data-aos="fade-right"><div className="mb-5 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary"><BrainCircuit className="h-4 w-4" /> The AI layer</div><h2 className="text-4xl font-bold tracking-tight text-secondary md:text-5xl">AI that supports the journey.</h2><p className="mt-5 max-w-xl text-lg leading-8 text-muted-foreground">AI is embedded where it adds value rather than treated as the product itself. Capabilities are selected and configured for each deployment.</p><div className="mt-8 grid gap-3 sm:grid-cols-2">{["Personalized learning and guidance", "AI coaches and role-play", "Content and knowledge support", "Role-based practice", "Engagement and progress insights", "Leadership analysis"].map((item) => <div key={item} className="flex items-center gap-3 rounded-xl border border-border bg-card p-4 text-sm font-medium text-secondary"><Check className="h-4 w-4 shrink-0 text-primary" />{item}</div>)}</div></div>
