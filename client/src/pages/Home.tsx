@@ -577,41 +577,6 @@ const Home = () => {
                   </div>
                   <p className="text-center text-xs text-muted-foreground">Six ways to make every journey more useful</p>
                 </div>
-                <div className="relative hidden min-h-[520px] md:block">
-                  <div className="absolute inset-0" />
-                  <div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/20 motion-safe:animate-[spin_32s_linear_infinite] motion-reduce:animate-none" />
-                  <div className="absolute left-1/2 top-1/2 h-44 w-44 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/20 border-dashed motion-safe:animate-[spin_22s_linear_infinite_reverse] motion-reduce:animate-none" />
-                  <div className="absolute left-1/2 top-1/2 z-10 flex h-32 w-32 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-secondary text-white shadow-xl shadow-secondary/20">
-                    <div className="text-center">
-                      <Bot className="mx-auto mb-2 h-7 w-7 text-primary" />
-                      <span className="block text-xs font-semibold tracking-[0.16em]">AI CORE</span>
-                      <span className="block mt-1 text-[10px] text-white/55">human-led, useful</span>
-                    </div>
-                  </div>
-                {aiCapabilities.map((item, index) => {
-                  const positions = [
-                    "left-5 top-6 md:left-12 md:top-12",
-                    "right-5 top-6 md:right-12 md:top-12",
-                    "left-5 top-1/2 -translate-y-1/2 md:left-8",
-                    "right-5 top-1/2 -translate-y-1/2 md:right-8",
-                    "left-5 bottom-6 md:left-12 md:bottom-12",
-                    "right-5 bottom-6 md:right-12 md:bottom-12",
-                  ];
-                  return (
-                    <div key={item.label} className={`group absolute ${positions[index]} z-20 w-48 rounded-2xl border border-border bg-background/90 p-3 md:p-4 shadow-lg backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-primary/10 motion-reduce:transition-none`} data-aos="fade-up" data-aos-delay={index * 80}>
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
-                          <item.icon className="h-4 w-4" />
-                        </div>
-                        <p className="text-xs md:text-sm font-semibold leading-snug text-foreground">{item.label}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-center text-xs text-muted-foreground">
-                  Six ways to make every journey more useful
-                </div>
-                </div>
               </div>
 
             </div>
