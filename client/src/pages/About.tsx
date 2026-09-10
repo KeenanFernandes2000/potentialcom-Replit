@@ -23,64 +23,82 @@ export default function About() {
       <Header />
       <main className="min-h-screen">
         {/* Hero Section */}
-        <section className="py-20 px-4 relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-background z-0"></div>
-          <div className="max-w-7xl mx-auto relative z-10">
-            <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">
+        <section className="relative overflow-hidden border-b border-white/10 bg-gradient-to-br from-secondary via-primary to-secondary px-4 pb-16 pt-28 md:pb-20 md:pt-32">
+          <div className="absolute inset-0 bg-grid-pattern opacity-20" aria-hidden="true" />
+          <div className="absolute -left-16 -top-16 h-80 w-80 rounded-full bg-primary/40 blur-3xl" aria-hidden="true" />
+          <div className="absolute -bottom-24 right-0 h-96 w-96 rounded-full bg-fuchsia-500/25 blur-3xl" aria-hidden="true" />
+          <div className="absolute left-1/2 top-1/3 h-72 w-72 -translate-x-1/2 rounded-full bg-white/10 blur-3xl" aria-hidden="true" />
+
+          <div className="container relative z-10">
+            <div className="mx-auto max-w-4xl text-center">
+              <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/15 px-4 py-1.5 text-sm font-semibold text-white backdrop-blur-sm">
+                <span className="h-2 w-2 rounded-full bg-emerald-400" />
                 About Potential.com
+              </span>
+              <h1 className="mb-5 text-4xl font-extrabold leading-[1.05] text-white md:text-6xl">
+                Building capability that helps organisations{" "}
+                <span className="bg-gradient-to-r from-amber-300 via-pink-200 to-white bg-clip-text text-transparent">
+                  move forward.
+                </span>
               </h1>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              <p className="mx-auto max-w-3xl text-base leading-7 text-white/85 md:text-lg">
                 For over 20 years, we have helped governments, enterprises and
                 communities build capability, engage people and create measurable progress.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-              <div>
-                <h2 className="text-3xl font-bold mb-6">Our Mission</h2>
-                <p className="text-lg mb-6">
+            <div className="mx-auto mt-12 grid max-w-6xl grid-cols-1 items-stretch gap-4 md:grid-cols-2 md:gap-5">
+              <div className="rounded-2xl border border-white/15 bg-white/10 p-6 shadow-2xl backdrop-blur-md md:p-8">
+                <div className="mb-6 flex items-center gap-3">
+                  <div className="h-10 w-1 rounded-full bg-amber-300" />
+                  <h2 className="text-2xl font-bold text-white md:text-3xl">Our Mission</h2>
+                </div>
+                <p className="mb-5 text-base leading-7 text-white/80 md:text-lg">
                   Driven by innovation and guided by a powerful mission—
-                  <span className="font-semibold">
+                  <span className="font-semibold text-white">
                     Empowering businesses and their stakeholders to thrive,
                     together
                   </span>
                   —we've continuously anticipated change rather than merely
                   adapting to it.
                 </p>
-                <p className="text-lg mb-6">
+                <p className="mb-5 text-base leading-7 text-white/80 md:text-lg">
                   Today, that experience is embedded in an AI-powered Learning &amp;
                   Engagement Platform for governments and enterprises — bringing
                   audience journeys, programme operations and evidence into one dedicated experience.
                 </p>
-                <p className="text-lg font-medium">
+                <p className="text-base font-medium leading-7 text-white md:text-lg">
                   Empowerment remains our mission. The platform helps organisations
                   turn that mission into structured learning, engagement and measurable outcomes.
                 </p>
               </div>
-              <div className="bg-muted/30 backdrop-blur-sm rounded-lg p-8 shadow-lg border border-border">
-                <h3 className="text-2xl font-bold mb-6">Key Highlights</h3>
+
+              <div className="rounded-2xl border border-white/15 bg-secondary/35 p-6 shadow-2xl backdrop-blur-md md:p-8">
+                <div className="mb-6 flex items-center justify-between gap-4">
+                  <h3 className="text-2xl font-bold text-white md:text-3xl">Key Highlights</h3>
+                  <span className="rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white/70">
+                    Our foundation
+                  </span>
+                </div>
                 <ul className="space-y-4">
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-primary mr-3 mt-1" />
+                  <li className="flex items-start gap-3 text-white/85">
+                    <Check className="mt-1 h-5 w-5 shrink-0 text-emerald-300" />
                     <span>20+ years empowering organizations globally</span>
                   </li>
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-primary mr-3 mt-1" />
+                  <li className="flex items-start gap-3 text-white/85">
+                    <Check className="mt-1 h-5 w-5 shrink-0 text-emerald-300" />
                     <span>AI-powered learning and engagement journeys</span>
                   </li>
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-primary mr-3 mt-1" />
-                    <span>
-                      Worked with Fortune 500 companies and governments
-                    </span>
+                  <li className="flex items-start gap-3 text-white/85">
+                    <Check className="mt-1 h-5 w-5 shrink-0 text-emerald-300" />
+                    <span>Worked with Fortune 500 companies and governments</span>
                   </li>
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-primary mr-3 mt-1" />
+                  <li className="flex items-start gap-3 text-white/85">
+                    <Check className="mt-1 h-5 w-5 shrink-0 text-emerald-300" />
                     <span>Continuously innovating to anticipate change</span>
                   </li>
-                  <li className="flex items-start">
-                    <Check className="h-5 w-5 text-primary mr-3 mt-1" />
+                  <li className="flex items-start gap-3 text-white/85">
+                    <Check className="mt-1 h-5 w-5 shrink-0 text-emerald-300" />
                     <span>Committed to sustainable growth and impact</span>
                   </li>
                 </ul>

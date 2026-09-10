@@ -174,22 +174,25 @@ const UseCases = () => {
       />
       <Header />
       <main>
-        <section className="relative overflow-hidden border-b border-border/60 bg-[#f6f3fb] pt-32 pb-20 md:pt-40 md:pb-28">
-          <div className="absolute inset-0 bg-grid-pattern opacity-40" aria-hidden="true" />
-          <div className="absolute -right-40 top-16 h-[30rem] w-[30rem] rounded-full bg-primary/10 blur-3xl" aria-hidden="true" />
-          <div className="absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-[#f1c77f]/20 blur-3xl" aria-hidden="true" />
-          <div className="container relative">
+        <section className="relative overflow-hidden border-b border-white/10 bg-gradient-to-br from-secondary via-primary to-secondary pb-16 pt-28 md:pb-20 md:pt-32">
+          <div className="absolute inset-0 bg-grid-pattern opacity-20" aria-hidden="true" />
+          <div className="absolute -left-16 -top-16 h-80 w-80 rounded-full bg-primary/40 blur-3xl" aria-hidden="true" />
+          <div className="absolute -bottom-24 right-0 h-96 w-96 rounded-full bg-fuchsia-500/25 blur-3xl" aria-hidden="true" />
+          <div className="absolute left-1/2 top-1/3 h-72 w-72 -translate-x-1/2 rounded-full bg-white/10 blur-3xl" aria-hidden="true" />
+          <div className="container relative z-10">
             <div className="grid items-center gap-14 lg:grid-cols-[1fr_.82fr] lg:gap-20">
               <div data-aos="fade-right">
-                <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background/80 px-4 py-2 text-sm font-semibold text-primary">
+                <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/15 px-4 py-1.5 text-sm font-semibold text-white backdrop-blur-sm">
                   <Sparkles className="h-4 w-4" aria-hidden="true" />
-                   Use Cases
+                  Use Cases
                 </div>
-                <h1 className="max-w-3xl text-4xl font-bold leading-[1.06] tracking-[-0.045em] text-secondary md:text-6xl lg:text-7xl">
+                <h1 className="max-w-3xl text-4xl font-extrabold leading-[1.05] tracking-[-0.045em] text-white md:text-6xl lg:text-7xl">
                   Built around the outcomes your organisation{" "}
-                  <span className="text-primary">needs to deliver.</span>
+                  <span className="bg-gradient-to-r from-amber-300 via-pink-200 to-white bg-clip-text text-transparent">
+                    needs to deliver.
+                  </span>
                 </h1>
-                <p className="mt-7 max-w-2xl text-lg leading-8 text-muted-foreground md:text-xl">
+                <p className="mt-7 max-w-2xl text-lg leading-8 text-white/85 md:text-xl">
                   Potential helps governments and enterprises create dedicated learning and
                   engagement platforms around specific mandates — from AI capability and
                   certification to innovation, mentorship, workforce development and community programmes.
@@ -198,17 +201,17 @@ const UseCases = () => {
                   <Button onClick={talkToAyla} size="lg" className="rounded-full px-8 py-6 text-base shadow-lg shadow-primary/20">
                     Talk to Ayla <ArrowRight className="h-5 w-5" aria-hidden="true" />
                   </Button>
-                  <a href="#library" className="group inline-flex items-center justify-center gap-2 px-3 py-3 font-semibold text-secondary hover:text-primary">
+                  <a href="#library" className="group inline-flex items-center justify-center gap-2 px-3 py-3 font-semibold text-white hover:text-white/75">
                     Explore the use cases <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                   </a>
                 </div>
-                <p className="mt-4 max-w-xl text-sm leading-6 text-muted-foreground">
+                <p className="mt-4 max-w-xl text-sm leading-6 text-white/60">
                   Tell Ayla what you are trying to achieve. She will help identify the most relevant path.
                 </p>
               </div>
               <div className="relative" data-aos="fade-up" data-aos-delay="140">
-                <div className="absolute -inset-5 rounded-[2rem] bg-gradient-to-br from-primary/20 via-transparent to-[#e6b86e]/30 blur-2xl" aria-hidden="true" />
-                <div className="relative overflow-hidden rounded-[1.8rem] border border-white/70 bg-secondary p-2 shadow-2xl">
+                <div className="absolute -inset-5 rounded-[2rem] bg-gradient-to-br from-primary/40 via-transparent to-[#e6b86e]/30 blur-2xl" aria-hidden="true" />
+                <div className="relative overflow-hidden rounded-[1.8rem] border border-white/15 bg-secondary/80 p-2 shadow-2xl">
                   <div className="rounded-[1.35rem] border border-white/10 bg-[#151e52] p-5 md:p-7">
                     <div className="flex items-center justify-between border-b border-white/10 pb-5">
                       <div className="flex items-center gap-2 text-sm font-semibold text-white">
