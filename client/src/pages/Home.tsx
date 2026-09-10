@@ -650,46 +650,68 @@ const Home = () => {
         {/* AI at the Core */}
         <section id="ai-core" className="py-24 bg-background">
           <div className="container">
-            <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[.85fr_1.15fr] lg:gap-20">
-              <div data-aos="fade-right">
-                <div className="inline-flex rounded-full bg-primary/10 px-4 py-1 text-sm font-medium text-primary">
-                  AI at the Core
-                </div>
-                <h2 className="section-title mt-5">
-                  AI that supports{" "}
-                  <span className="text-primary">the journey.</span>
-                </h2>
-                <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
-                  Applied where it can improve the experience, support participants and give
-                  programme owners clearer insight. AI strengthens the journey without replacing
-                  the people, decisions and expertise that make it meaningful.
-                </p>
-                <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-                  {aiCapabilities.map((item) => (
-                    <div key={item.label} className="group flex gap-3 rounded-2xl border border-border bg-card p-4 transition duration-300 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10 motion-reduce:transition-none">
-                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
-                        <item.icon className="h-4 w-4" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-semibold text-foreground">{item.label}</p>
-                        <p className="mt-1 text-xs leading-5 text-muted-foreground">{item.description}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+            <div className="mx-auto max-w-4xl text-center" data-aos="fade-up">
+              <div className="inline-flex rounded-full bg-primary/10 px-4 py-1 text-sm font-medium text-primary">
+                AI at the Core
               </div>
-              <div className="relative" data-aos="fade-left">
-                <div className="absolute -inset-5 rounded-[2rem] bg-primary/15 blur-3xl" />
-                <div className="relative overflow-hidden rounded-3xl border border-border bg-muted/30 p-2 shadow-2xl">
+              <h2 className="section-title mt-5">
+                AI that supports{" "}
+                <span className="text-primary">the journey.</span>
+              </h2>
+              <p className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground">
+                Applied where it can improve the experience, support participants and give
+                programme owners clearer insight. AI strengthens the journey without replacing
+                the people, decisions and expertise that make it meaningful.
+              </p>
+            </div>
+
+            <div className="mx-auto mt-14 grid max-w-7xl items-center gap-8 lg:grid-cols-[1fr_auto_1fr] lg:gap-10">
+              <div className="grid gap-4" data-aos="fade-right">
+                {aiCapabilities.slice(0, 3).map((item) => (
+                  <div
+                    key={item.label}
+                    className="group flex gap-3 rounded-2xl border border-border bg-card p-4 transition duration-300 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10 motion-reduce:transition-none"
+                  >
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+                      <item.icon className="h-4 w-4" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-foreground">{item.label}</p>
+                      <p className="mt-1 text-xs leading-5 text-muted-foreground">{item.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="relative order-first mx-auto w-full max-w-[22rem] lg:order-none" data-aos="zoom-in">
+                <div className="absolute -inset-5 rounded-[2rem] bg-primary/20 blur-3xl" aria-hidden="true" />
+                <div className="relative overflow-hidden rounded-[2rem] border border-border bg-muted/30 p-2 shadow-2xl">
                   <img
                     src={aiCoreVisualImg}
                     alt="AI-powered learning and engagement platform supporting personalized learning, coaching, practice, insights and leadership analysis"
-                    className="w-full rounded-[1.35rem] object-cover"
+                    className="aspect-[4/3] w-full rounded-[1.5rem] object-cover"
                   />
                 </div>
                 <p className="mt-4 text-center text-xs font-medium uppercase tracking-[.16em] text-muted-foreground">
                   Human-led. AI-supported. Built for measurable progress.
                 </p>
+              </div>
+
+              <div className="grid gap-4" data-aos="fade-left">
+                {aiCapabilities.slice(3).map((item) => (
+                  <div
+                    key={item.label}
+                    className="group flex gap-3 rounded-2xl border border-border bg-card p-4 transition duration-300 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/10 motion-reduce:transition-none"
+                  >
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+                      <item.icon className="h-4 w-4" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-foreground">{item.label}</p>
+                      <p className="mt-1 text-xs leading-5 text-muted-foreground">{item.description}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
