@@ -488,11 +488,11 @@ const Home = () => {
         {/* How to Start */}
         <section id="home-how-to-start" className="py-24 bg-muted/50 dark:bg-secondary/10 md:py-32">
           <div className="container">
-            <div className="mx-auto max-w-3xl text-center" data-aos="fade-up">
+            <div className="mx-auto max-w-5xl text-center" data-aos="fade-up">
               <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
                 How to start
               </div>
-              <h2 className="section-title text-center mb-6">
+              <h2 className="section-title mb-6 md:whitespace-nowrap">
                 Start with the need, then{" "}
                 <span className="text-primary">shape the first release.</span>
               </h2>
