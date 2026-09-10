@@ -28,9 +28,10 @@ export const useSEO = (customSEO?: Partial<SEOData>): SEOData => {
     }
 
     // Get page-specific SEO or fall back to defaults
-    const pageSEO =
-      seoConfig.pages[matchedRoute as keyof typeof seoConfig.pages] || {};
-    const defaultSEO = seoConfig.defaultSEO;
+    const pageSEO = (seoConfig.pages[
+      matchedRoute as keyof typeof seoConfig.pages
+    ] || {}) as Partial<SEOData>;
+    const defaultSEO = seoConfig.defaultSEO as SEOData;
 
     // Generate full URL
     const fullUrl = customSEO?.url || `${defaultSEO.url}${location}`;
