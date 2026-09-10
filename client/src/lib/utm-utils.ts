@@ -1,3 +1,5 @@
+import { navigate } from "wouter/use-browser-location";
+
 /**
  * UTM Parameter Utilities
  * Handles preservation of UTM parameters across navigation
@@ -108,7 +110,13 @@ export function addUTMToUrl(
  */
 export function navigateWithUTM(url: string): void {
   const urlWithUTM = addUTMToUrl(url);
-  window.location.href = urlWithUTM;
+
+  if (isInternalUrl(url)) {
+    navigate(urlWithUTM);
+    return;
+  }
+
+  window.location.href = url;
 }
 
 /**
