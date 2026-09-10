@@ -4,6 +4,31 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { navigateWithUTM } from "@/lib/utm-utils";
+import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
+import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
+import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
+import cartierLogo from "@assets/Customer Logos/Cartier logo.png";
+import ciscoLogo from "@assets/Customer Logos/Cisco Logo.png";
+import dctLogo from "@assets/Customer Logos/DCT Logo.png";
+import dldLogo from "@assets/Customer Logos/DLD Logo.png";
+import dellLogo from "@assets/Customer Logos/Dell logo.png";
+import edbLogo from "@assets/Customer Logos/EDB logo.png";
+import fordLogo from "@assets/Customer Logos/Ford logo.png";
+import googleLogo from "@assets/Customer Logos/Google logo.png";
+import govAbuDhabiLogo from "@assets/Customer Logos/Government of Abu Dhabi logo.png";
+import govDubaiLogo from "@assets/Customer Logos/Government of Dubai logo.png";
+import hsbcLogo from "@assets/Customer Logos/HSBC logo.png";
+import inditexLogo from "@assets/Customer Logos/Inditex logo.png";
+import intelLogo from "@assets/Customer Logos/intel logo.png";
+import khalifaFundLogo from "@assets/Customer Logos/Khalifa Fund logo.png";
+import mbcLogo from "@assets/Customer Logos/MBC logo.png";
+import microsoftLogo from "@assets/Customer Logos/Microsoft logo.png";
+import nestleLogo from "@assets/Customer Logos/Nestle Logo.png";
+import pepsicoLogo from "@assets/Customer Logos/Pepsico logo.png";
+import unWomenLogo from "@assets/Customer Logos/UN Women logo.png";
+import unLogo from "@assets/Customer Logos/UN logo.png";
+import visaLogo from "@assets/Customer Logos/Visa logo.png";
+import wfzoLogo from "@assets/Customer Logos/WFZO logo.png";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -31,6 +56,34 @@ import {
   TrendingUp,
 } from "lucide-react";
 import aylaImage from "@assets/2.png";
+
+const clientLogos = [
+  { name: "ADGM", logo: adgmLogo },
+  { name: "Airbus", logo: airbusLogo },
+  { name: "Bank Muscat", logo: bankMuscatLogo },
+  { name: "Cartier", logo: cartierLogo },
+  { name: "Cisco", logo: ciscoLogo },
+  { name: "DCT", logo: dctLogo },
+  { name: "DLD", logo: dldLogo },
+  { name: "Dell", logo: dellLogo },
+  { name: "EDB", logo: edbLogo },
+  { name: "Ford", logo: fordLogo },
+  { name: "Google", logo: googleLogo },
+  { name: "Government of Abu Dhabi", logo: govAbuDhabiLogo },
+  { name: "Government of Dubai", logo: govDubaiLogo },
+  { name: "HSBC", logo: hsbcLogo },
+  { name: "Inditex", logo: inditexLogo },
+  { name: "Intel", logo: intelLogo },
+  { name: "Khalifa Fund", logo: khalifaFundLogo },
+  { name: "MBC", logo: mbcLogo },
+  { name: "Microsoft", logo: microsoftLogo },
+  { name: "Nestle", logo: nestleLogo },
+  { name: "PepsiCo", logo: pepsicoLogo },
+  { name: "UN Women", logo: unWomenLogo },
+  { name: "United Nations", logo: unLogo },
+  { name: "Visa", logo: visaLogo },
+  { name: "WFZO", logo: wfzoLogo },
+];
 
 const impactJourney = [
   {
@@ -329,6 +382,47 @@ const Platform = () => {
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="platform-trusted" className="bg-background">
+          <div className="relative z-10 w-full">
+            <div className="client-logos py-8" data-aos="fade-up" data-aos-delay="100">
+              <h3 className="mb-6 text-center text-sm uppercase tracking-wider text-muted-foreground">
+                Trusted for over 20 years by leading organizations around the world
+              </h3>
+              <div className="relative overflow-hidden">
+                <div
+                  className="flex animate-scroll hover:pause-animation"
+                  style={{ width: `${clientLogos.length * 2 * 120}px` }}
+                >
+                  {clientLogos.map((client, index) => (
+                    <div
+                      key={`first-${index}`}
+                      className="mx-4 flex h-16 w-32 flex-shrink-0 items-center justify-center opacity-70 transition-opacity hover:opacity-100"
+                    >
+                      <img
+                        src={client.logo}
+                        alt={`${client.name} logo`}
+                        className="max-h-12 max-w-full object-contain dark:brightness-0 dark:invert"
+                      />
+                    </div>
+                  ))}
+                  {clientLogos.map((client, index) => (
+                    <div
+                      key={`second-${index}`}
+                      className="mx-4 flex h-16 w-32 flex-shrink-0 items-center justify-center opacity-70 transition-opacity hover:opacity-100"
+                    >
+                      <img
+                        src={client.logo}
+                        alt={`${client.name} logo`}
+                        className="max-h-12 max-w-full object-contain dark:brightness-0 dark:invert"
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
