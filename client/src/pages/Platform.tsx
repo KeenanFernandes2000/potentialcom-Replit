@@ -163,9 +163,9 @@ const deploymentItems = [
 ];
 
 const startSteps = [
-  ["01", "Discover", "Define the need, audience and buying path."],
-  ["02", "Shape", "Agree the first journey, roles and success measures."],
-  ["03", "Preview", "For qualified initiatives, review a personalised interactive preview."],
+  ["01", "Discover", "Define the need, audience and path."],
+  ["02", "Blueprint", "Agree the first journey, roles and success measures."],
+  ["03", "Mockup", "Preview a personalised interactive mockup platform."],
   ["04", "Launch & Prove", "Deploy the agreed first phase, measure, improve and expand."],
 ];
 
@@ -456,8 +456,23 @@ const Platform = () => {
 
         <section className="bg-background py-24 md:py-32">
           <div className="container">
-            <div className="mx-auto max-w-3xl text-center" data-aos="fade-up"><p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">How to start</p><h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary md:text-5xl">Start with the need, then shape the first release.</h2><p className="mt-5 text-lg leading-8 text-muted-foreground">A strong platform journey starts with clarity. Personalised interactive previews are prepared for qualified organisations and initiatives.</p></div>
-            <div className="relative mx-auto mt-16 grid max-w-6xl gap-5 md:grid-cols-4" data-aos="fade-up">{startSteps.map(([number, title, description], index) => <div key={number} className="relative rounded-2xl border border-border bg-card p-6"><span className="text-sm font-mono text-primary">{number}</span><h3 className="mt-7 text-lg font-semibold text-secondary">{title}</h3><p className="mt-2 text-sm leading-6 text-muted-foreground">{description}</p>{index < startSteps.length - 1 && <ArrowRight className="absolute -right-4 top-12 z-10 hidden h-7 w-7 rounded-full border border-border bg-background p-1 text-primary md:block" />}</div>)}</div>
+             <div className="mx-auto max-w-3xl text-center" data-aos="fade-up"><p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">How to start</p><h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary md:text-5xl">Start with the need, then shape the first release.</h2><p className="mt-5 text-lg leading-8 text-muted-foreground">A strong platform journey starts with clarity. Personalised interactive previews are prepared for qualified organisations and initiatives.</p></div>
+             <div className="relative mx-auto mt-16 max-w-6xl overflow-hidden rounded-[2rem] bg-gradient-to-br from-secondary via-[#18245a] to-primary p-6 shadow-2xl md:p-10" data-aos="fade-up">
+               <div className="absolute -right-20 -top-24 h-72 w-72 rounded-full bg-white/10 blur-3xl" aria-hidden="true" />
+               <div className="absolute -bottom-32 left-1/4 h-80 w-80 rounded-full bg-primary/30 blur-3xl" aria-hidden="true" />
+               <div className="relative grid gap-4 md:grid-cols-4 md:gap-5">
+                 {startSteps.map(([number, title, description], index) => (
+                   <div key={number} className="relative rounded-2xl border border-white/15 bg-white/[.08] p-5 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-white/[.12] motion-reduce:transition-none md:p-6">
+                     <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/20 bg-white/10 text-xl font-bold text-white shadow-lg shadow-black/20">
+                       {number}
+                     </div>
+                     <h3 className="mt-6 text-lg font-semibold text-white">{title}</h3>
+                     <p className="mt-2 text-sm leading-6 text-white/65">{description}</p>
+                     {index < startSteps.length - 1 && <ArrowRight className="absolute -right-4 top-12 z-10 hidden h-8 w-8 rounded-full border border-white/20 bg-[#253475] p-1.5 text-[#d2b4ff] md:block" aria-hidden="true" />}
+                   </div>
+                 ))}
+               </div>
+             </div>
           </div>
         </section>
 
