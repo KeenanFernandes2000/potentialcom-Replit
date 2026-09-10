@@ -750,13 +750,10 @@ const Home = () => {
                 />
               </div>
             </div>
-          </div>
-        </section>
 
-        {/* Built for Scale & Speed */}
-        <section className="py-24 bg-muted/50 dark:bg-secondary/10">
-          <div className="container">
-            <div className="max-w-4xl mx-auto">
+            {/* Built for Scale & Speed */}
+            <div className="mt-24 border-t border-border/60 pt-24">
+              <div className="max-w-4xl mx-auto">
               <div className="text-center mb-16" data-aos="fade-up">
                 <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
                   Built for Scale & Speed
@@ -799,6 +796,7 @@ const Home = () => {
                     </p>
                   </div>
                 </div>
+              </div>
               </div>
             </div>
           </div>
