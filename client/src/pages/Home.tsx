@@ -121,6 +121,13 @@ const scaleItems = [
   { icon: Rocket, label: "Phased launch" },
 ];
 
+const startSteps = [
+  ["01", "Discover", "Define the need, audience and path."],
+  ["02", "Blueprint", "Agree the first journey, roles and success measures."],
+  ["03", "Mockup", "Preview a personalised interactive mockup platform."],
+  ["04", "Launch & Prove", "Deploy the agreed first phase, measure, improve and expand."],
+];
+
 const audiences = [
   { icon: Landmark, label: "Governments & Public Sector" },
   { icon: Building2, label: "Banks & Financial Services" },
