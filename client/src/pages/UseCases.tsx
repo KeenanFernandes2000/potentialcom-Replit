@@ -278,7 +278,7 @@ const UseCases = () => {
           <div className="container">
             <div className="max-w-3xl" data-aos="fade-up">
               <p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">Use-case library</p>
-              <h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary md:text-5xl">What organisations use Potential for</h2>
+              <h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary dark:text-white md:text-5xl">What organisations use Potential for</h2>
               <p className="mt-5 text-lg leading-8 text-muted-foreground">
                 Start with the mandate, audience and outcome. Configure the platform around the journey required to deliver it.
               </p>
@@ -289,11 +289,11 @@ const UseCases = () => {
                 return (
                   <article key={item.number} className="group flex min-h-[250px] flex-col rounded-2xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10" data-aos="fade-up" data-aos-delay={Math.min(index * 35, 240)}>
                     <div className="flex items-start justify-between">
-                      <div className={`rounded-xl p-3 ${item.tint}`}><Icon className="h-6 w-6" aria-hidden="true" /></div>
+                      <div className={`rounded-xl p-3 ${item.tint} dark:bg-primary/20 dark:text-[#eadfff]`}><Icon className="h-6 w-6" aria-hidden="true" /></div>
                       <span className="font-mono text-sm text-muted-foreground">{item.number}</span>
                     </div>
                     <p className="mt-6 text-xs font-semibold uppercase tracking-[.16em] text-primary">{item.signal}</p>
-                    <h3 className="mt-2 text-xl font-semibold leading-snug text-secondary">{item.title}</h3>
+                    <h3 className="mt-2 text-xl font-semibold leading-snug text-secondary dark:text-white">{item.title}</h3>
                     <p className="mt-3 text-sm leading-6 text-muted-foreground">{item.description}</p>
                   </article>
                 );

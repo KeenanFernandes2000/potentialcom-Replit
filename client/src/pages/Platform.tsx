@@ -239,7 +239,7 @@ const Platform = () => {
       />
       <Header />
       <main>
-        <section className="relative overflow-hidden border-b border-border/60 bg-[#f6f4fb] pt-32 pb-20 md:pt-40 md:pb-28">
+        <section className="relative overflow-hidden border-b border-border/60 bg-[#f6f4fb] pt-32 pb-20 dark:bg-[#10172c] md:pt-40 md:pb-28">
           <div className="absolute inset-0 bg-grid-pattern opacity-40" />
           <div className="absolute -right-40 top-20 h-[30rem] w-[30rem] rounded-full bg-primary/10 blur-3xl" />
           <div className="absolute -left-40 bottom-0 h-80 w-80 rounded-full bg-[#f4c98a]/20 blur-3xl" />
@@ -249,7 +249,7 @@ const Platform = () => {
                 <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background/75 px-4 py-2 text-sm font-semibold text-primary">
                   <Sparkles className="h-4 w-4" /> AI-powered Learning &amp; Engagement Platform
                 </div>
-                <h1 className="max-w-4xl text-4xl font-bold leading-[1.05] tracking-[-0.04em] text-secondary md:text-6xl lg:text-7xl">
+                <h1 className="max-w-4xl text-4xl font-bold leading-[1.05] tracking-[-0.04em] text-secondary dark:text-white md:text-6xl lg:text-7xl">
                   One platform. Many ways to build capability{" "}
                   <span className="text-primary">and engage people.</span>
                 </h1>
@@ -262,14 +262,14 @@ const Platform = () => {
                   <Button onClick={talkToAyla} size="lg" className="rounded-full px-8 py-6 text-base shadow-lg shadow-primary/20">
                     Talk to Ayla <ArrowRight className="h-5 w-5" />
                   </Button>
-                  <a href="#capabilities" className="group inline-flex items-center justify-center gap-2 px-3 py-3 font-semibold text-secondary transition-colors hover:text-primary">
+                  <a href="#capabilities" className="group inline-flex items-center justify-center gap-2 px-3 py-3 font-semibold text-secondary transition-colors hover:text-primary dark:text-white">
                     Explore Capabilities <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </a>
                 </div>
                 <p className="mt-4 max-w-xl text-sm leading-6 text-muted-foreground">
                   Tell Ayla what you are trying to achieve and she will help identify the most relevant path.
                 </p>
-                <div className="mt-12 flex flex-wrap gap-x-8 gap-y-3 border-t border-secondary/10 pt-5 text-sm font-medium text-secondary/70">
+                <div className="mt-12 flex flex-wrap gap-x-8 gap-y-3 border-t border-secondary/10 pt-5 text-sm font-medium text-secondary/70 dark:border-white/15 dark:text-white/80">
                   <span className="flex items-center gap-2"><Landmark className="h-4 w-4 text-primary" /> Public-sector mandates</span>
                   <span className="flex items-center gap-2"><Building2 className="h-4 w-4 text-primary" /> Enterprise teams</span>
                   <span className="flex items-center gap-2"><BrainCircuit className="h-4 w-4 text-primary" /> AI-supported journeys</span>
@@ -345,46 +345,46 @@ const Platform = () => {
 
         <section id="capabilities" className="bg-background py-24 md:py-32">
           <div className="container">
-            <div className="max-w-3xl" data-aos="fade-up"><p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">Core capabilities</p><h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary md:text-5xl">Six capabilities. One connected experience.</h2><p className="mt-5 text-lg leading-8 text-muted-foreground">Use one capability or combine several into a dedicated platform for your initiative.</p></div>
+            <div className="max-w-3xl" data-aos="fade-up"><p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">Core capabilities</p><h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary dark:text-white md:text-5xl">Six capabilities. One connected experience.</h2><p className="mt-5 text-lg leading-8 text-muted-foreground">Use one capability or combine several into a dedicated platform for your initiative.</p></div>
             <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {capabilities.map((item, index) => { const Icon = item.icon; return <article key={item.number} className="group flex min-h-[275px] flex-col rounded-2xl border border-border bg-card p-7 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10" data-aos="fade-up" data-aos-delay={index * 60}><div className="flex items-start justify-between"><div className="rounded-xl bg-primary/10 p-3 text-primary"><Icon className="h-6 w-6" /></div><span className="font-mono text-sm text-muted-foreground">{item.number}</span></div><h3 className="mt-7 text-xl font-semibold text-secondary">{item.title}</h3><p className="mt-3 text-sm leading-6 text-muted-foreground">{item.description}</p><div className="mt-auto flex flex-wrap gap-2 pt-6">{item.tags.map(tag => <span key={tag} className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-secondary/70">{tag}</span>)}</div></article>; })}
+              {capabilities.map((item, index) => { const Icon = item.icon; return <article key={item.number} className="group flex min-h-[275px] flex-col rounded-2xl border border-border bg-card p-7 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10" data-aos="fade-up" data-aos-delay={index * 60}><div className="flex items-start justify-between"><div className="rounded-xl bg-primary/10 p-3 text-primary"><Icon className="h-6 w-6" /></div><span className="font-mono text-sm text-muted-foreground">{item.number}</span></div><h3 className="mt-7 text-xl font-semibold text-secondary dark:text-white">{item.title}</h3><p className="mt-3 text-sm leading-6 text-muted-foreground">{item.description}</p><div className="mt-auto flex flex-wrap gap-2 pt-6">{item.tags.map(tag => <span key={tag} className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-secondary/70 dark:text-white/75">{tag}</span>)}</div></article>; })}
             </div>
           </div>
         </section>
 
-        <section className="bg-[#f6f4fb] py-24 md:py-32">
+        <section className="bg-[#f6f4fb] py-24 dark:bg-[#10172c] md:py-32">
           <div className="container">
             <div className="grid gap-14 lg:grid-cols-[.8fr_1.2fr] lg:items-start">
-              <div data-aos="fade-right"><p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">Audience journeys</p><h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary md:text-5xl">Built around the people who use it.</h2><p className="mt-5 text-lg leading-8 text-muted-foreground">A coherent experience for the people participating, the teams operating the initiative and the leaders accountable for progress.</p></div>
-              <div className="space-y-4" data-aos="fade-up">{journeys.map((journey) => { const Icon = journey.icon; return <div key={journey.label} className="group grid gap-5 rounded-2xl border border-border bg-background p-6 transition-colors hover:border-primary/30 sm:grid-cols-[auto_1fr]"><div className={`flex h-12 w-12 items-center justify-center rounded-xl ${journey.accent}`}><Icon className="h-6 w-6" /></div><div><p className="text-xs font-semibold uppercase tracking-[.15em] text-primary">{journey.label}</p><h3 className="mt-2 text-xl font-semibold text-secondary">{journey.title}</h3><p className="mt-2 leading-7 text-muted-foreground">{journey.description}</p></div></div>; })}</div>
+              <div data-aos="fade-right"><p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">Audience journeys</p><h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary dark:text-white md:text-5xl">Built around the people who use it.</h2><p className="mt-5 text-lg leading-8 text-muted-foreground">A coherent experience for the people participating, the teams operating the initiative and the leaders accountable for progress.</p></div>
+              <div className="space-y-4" data-aos="fade-up">{journeys.map((journey) => { const Icon = journey.icon; return <div key={journey.label} className="group grid gap-5 rounded-2xl border border-border bg-background p-6 transition-colors hover:border-primary/30 sm:grid-cols-[auto_1fr]"><div className={`flex h-12 w-12 items-center justify-center rounded-xl ${journey.accent} dark:bg-primary/20 dark:text-[#eadfff]`}><Icon className="h-6 w-6" /></div><div><p className="text-xs font-semibold uppercase tracking-[.15em] text-primary">{journey.label}</p><h3 className="mt-2 text-xl font-semibold text-secondary dark:text-white">{journey.title}</h3><p className="mt-2 leading-7 text-muted-foreground">{journey.description}</p></div></div>; })}</div>
             </div>
           </div>
         </section>
 
-        <section className="bg-[#f6f4fb] py-24 md:py-32">
+        <section className="bg-[#f6f4fb] py-24 dark:bg-[#10172c] md:py-32">
           <div className="container">
             <div className="grid items-center gap-14 lg:grid-cols-[1.1fr_.9fr]">
-              <div data-aos="fade-right"><div className="mb-5 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary"><BrainCircuit className="h-4 w-4" /> The AI layer</div><h2 className="text-4xl font-bold tracking-tight text-secondary md:text-5xl">AI that supports the journey.</h2><p className="mt-5 max-w-xl text-lg leading-8 text-muted-foreground">AI is embedded where it adds value rather than treated as the product itself. Capabilities are selected and configured for each deployment.</p><div className="mt-8 grid gap-3 sm:grid-cols-2">{["Personalized learning and guidance", "AI coaches and role-play", "Content and knowledge support", "Role-based practice", "Engagement and progress insights", "Leadership analysis"].map((item) => <div key={item} className="flex items-center gap-3 rounded-xl border border-border bg-card p-4 text-sm font-medium text-secondary"><Check className="h-4 w-4 shrink-0 text-primary" />{item}</div>)}</div></div>
-              <div className="relative" data-aos="fade-left"><div className="absolute inset-5 rounded-full bg-primary/15 blur-3xl" /><div className="relative overflow-hidden rounded-[2rem] border border-border bg-[#f7f3ff] p-5 shadow-xl"><img src={aylaImage} alt="Ayla, Potential's AI empowerment advisor" className="w-full rounded-[1.35rem] object-cover" /><div className="absolute bottom-9 left-9 right-9 rounded-xl border border-white/70 bg-background/90 p-4 shadow-lg backdrop-blur"><div className="flex items-center gap-3"><div className="rounded-lg bg-primary p-2 text-white"><MessageSquare className="h-4 w-4" /></div><div><p className="text-xs font-semibold uppercase tracking-wider text-primary">Ayla</p><p className="text-sm font-medium text-secondary">Your challenge is a good place to start.</p></div></div></div></div></div>
+              <div data-aos="fade-right"><div className="mb-5 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary"><BrainCircuit className="h-4 w-4" /> The AI layer</div><h2 className="text-4xl font-bold tracking-tight text-secondary dark:text-white md:text-5xl">AI that supports the journey.</h2><p className="mt-5 max-w-xl text-lg leading-8 text-muted-foreground">AI is embedded where it adds value rather than treated as the product itself. Capabilities are selected and configured for each deployment.</p><div className="mt-8 grid gap-3 sm:grid-cols-2">{["Personalized learning and guidance", "AI coaches and role-play", "Content and knowledge support", "Role-based practice", "Engagement and progress insights", "Leadership analysis"].map((item) => <div key={item} className="flex items-center gap-3 rounded-xl border border-border bg-card p-4 text-sm font-medium text-secondary dark:text-white"><Check className="h-4 w-4 shrink-0 text-primary" />{item}</div>)}</div></div>
+              <div className="relative" data-aos="fade-left"><div className="absolute inset-5 rounded-full bg-primary/15 blur-3xl" /><div className="relative overflow-hidden rounded-[2rem] border border-border bg-[#f7f3ff] p-5 shadow-xl dark:bg-[#151d38]"><img src={aylaImage} alt="Ayla, Potential's AI empowerment advisor" className="w-full rounded-[1.35rem] object-cover" /><div className="absolute bottom-9 left-9 right-9 rounded-xl border border-white/70 bg-background/90 p-4 shadow-lg backdrop-blur"><div className="flex items-center gap-3"><div className="rounded-lg bg-primary p-2 text-white"><MessageSquare className="h-4 w-4" /></div><div><p className="text-xs font-semibold uppercase tracking-wider text-primary">Ayla</p><p className="text-sm font-medium text-secondary dark:text-white">Your challenge is a good place to start.</p></div></div></div></div></div>
             </div>
           </div>
         </section>
 
-        <section className="border-y border-border bg-[#fcfaf5] py-24 md:py-28">
+        <section className="border-y border-border bg-[#fcfaf5] py-24 dark:bg-[#10172c] md:py-28">
           <div className="container">
             <div className="grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
-              <div data-aos="fade-right"><p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">Measurement and evidence</p><h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary md:text-5xl">Show what changed, and the evidence behind it.</h2><p className="mt-5 text-lg leading-8 text-muted-foreground">Define success before launch, then connect participation and learning with practical milestones, adoption and client-validated outcomes. Leadership gains a clear view of progress and impact reporting without treating reporting as guaranteed causation.</p><div className="mt-7 flex flex-wrap gap-3">{["Participation", "Learning", "Application", "Adoption", "Impact reporting"].map(item => <span key={item} className="rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-sm font-semibold text-secondary">{item}</span>)}</div></div>
+              <div data-aos="fade-right"><p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">Measurement and evidence</p><h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary dark:text-white md:text-5xl">Show what changed, and the evidence behind it.</h2><p className="mt-5 text-lg leading-8 text-muted-foreground">Define success before launch, then connect participation and learning with practical milestones, adoption and client-validated outcomes. Leadership gains a clear view of progress and impact reporting without treating reporting as guaranteed causation.</p><div className="mt-7 flex flex-wrap gap-3">{["Participation", "Learning", "Application", "Adoption", "Impact reporting"].map(item => <span key={item} className="rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-sm font-semibold text-secondary dark:text-white">{item}</span>)}</div></div>
               <div className="relative overflow-hidden rounded-2xl border border-border bg-background p-3 shadow-lg" data-aos="fade-up">
-                <div className="relative min-h-[440px] overflow-hidden rounded-xl bg-[#f7f3ff] p-5 md:p-7">
+                <div className="relative min-h-[440px] overflow-hidden rounded-xl bg-[#f7f3ff] p-5 dark:bg-[#151d38] md:p-7">
                   <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-primary/15 blur-3xl" />
                   <div className="absolute -bottom-32 -left-20 h-72 w-72 rounded-full bg-[#f0b85f]/20 blur-3xl" />
                   <div className="relative z-10">
                     <div className="flex items-start justify-between gap-4">
                       <div>
                         <p className="text-[10px] font-semibold uppercase tracking-[.2em] text-primary">Impact journey / illustrative view</p>
-                        <h3 className="mt-2 text-xl font-semibold tracking-tight text-secondary">See where momentum builds — and where it needs support.</h3>
+                        <h3 className="mt-2 text-xl font-semibold tracking-tight text-secondary dark:text-white">See where momentum builds — and where it needs support.</h3>
                       </div>
-                      <div className="flex shrink-0 items-center gap-2 rounded-full border border-primary/20 bg-white/70 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-primary">
+                      <div className="flex shrink-0 items-center gap-2 rounded-full border border-primary/20 bg-white/70 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-primary dark:border-white/15 dark:bg-white/10 dark:text-[#eadfff]">
                         <Activity className="h-3.5 w-3.5" /> Journey map
                       </div>
                     </div>
@@ -405,17 +405,17 @@ const Platform = () => {
                           const Icon = step.icon;
                           const isDropoff = step.status === "Drop-off";
                           return (
-                            <div key={step.stage} className={`relative z-10 rounded-2xl border p-3 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md motion-reduce:transition-none md:pt-4 ${isDropoff ? "border-amber-300 bg-amber-50/90" : "border-border bg-white/90"}`}>
+                            <div key={step.stage} className={`relative z-10 rounded-2xl border p-3 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md motion-reduce:transition-none md:pt-4 ${isDropoff ? "border-amber-300 bg-amber-50/90 dark:border-amber-400/40 dark:bg-amber-950/45" : "border-border bg-white/90 dark:bg-[#1a2340]/90"}`}>
                               <div className="flex items-center justify-between gap-2">
-                                <div className={`flex h-9 w-9 items-center justify-center rounded-xl ${isDropoff ? "bg-amber-200/70 text-amber-700" : "bg-primary/10 text-primary"}`}>
+                                <div className={`flex h-9 w-9 items-center justify-center rounded-xl ${isDropoff ? "bg-amber-200/70 text-amber-700 dark:bg-amber-400/20 dark:text-amber-200" : "bg-primary/10 text-primary"}`}>
                                   <Icon className="h-4 w-4" />
                                 </div>
-                                <span className={`text-[10px] font-semibold uppercase tracking-wider ${isDropoff ? "text-amber-700" : "text-muted-foreground"}`}>{step.stage}</span>
+                                <span className={`text-[10px] font-semibold uppercase tracking-wider ${isDropoff ? "text-amber-700 dark:text-amber-200" : "text-muted-foreground"}`}>{step.stage}</span>
                               </div>
-                              <p className="mt-5 text-2xl font-semibold tracking-tight text-secondary">{step.metric}</p>
-                              <p className="mt-1 text-xs font-semibold text-secondary">{step.title}</p>
+                              <p className="mt-5 text-2xl font-semibold tracking-tight text-secondary dark:text-white">{step.metric}</p>
+                              <p className="mt-1 text-xs font-semibold text-secondary dark:text-white">{step.title}</p>
                               <p className="mt-1 text-[10px] leading-4 text-muted-foreground">{step.detail}</p>
-                              <span className={`mt-3 inline-flex rounded-full px-2 py-1 text-[9px] font-semibold uppercase tracking-wider ${isDropoff ? "bg-amber-200/70 text-amber-800" : "bg-primary/10 text-primary"}`}>{step.status}</span>
+                              <span className={`mt-3 inline-flex rounded-full px-2 py-1 text-[9px] font-semibold uppercase tracking-wider ${isDropoff ? "bg-amber-200/70 text-amber-800 dark:bg-amber-400/20 dark:text-amber-200" : "bg-primary/10 text-primary"}`}>{step.status}</span>
                               {index < impactJourney.length - 1 && <div className="absolute -bottom-3 left-1/2 h-3 w-px bg-primary/25 md:hidden" />}
                             </div>
                           );
@@ -424,13 +424,13 @@ const Platform = () => {
                     </div>
 
                     <div className="mt-5 grid gap-3 sm:grid-cols-2">
-                      <div className="flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50/80 p-4">
-                        <div className="rounded-xl bg-amber-200/70 p-2 text-amber-700"><AlertCircle className="h-4 w-4" /></div>
-                        <div><p className="text-xs font-semibold text-amber-900">Drop-off detected</p><p className="mt-1 text-[11px] leading-4 text-amber-800/75">Practise → Adopt is the moment to add reinforcement and coaching.</p></div>
+                      <div className="flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50/80 p-4 dark:border-amber-400/30 dark:bg-amber-950/35">
+                        <div className="rounded-xl bg-amber-200/70 p-2 text-amber-700 dark:bg-amber-400/20 dark:text-amber-200"><AlertCircle className="h-4 w-4" /></div>
+                        <div><p className="text-xs font-semibold text-amber-900 dark:text-amber-100">Drop-off detected</p><p className="mt-1 text-[11px] leading-4 text-amber-800/75 dark:text-amber-100/70">Practise → Adopt is the moment to add reinforcement and coaching.</p></div>
                       </div>
                       <div className="flex items-start gap-3 rounded-2xl border border-primary/15 bg-primary/5 p-4">
                         <div className="rounded-xl bg-primary/10 p-2 text-primary"><Sparkles className="h-4 w-4" /></div>
-                        <div><p className="text-xs font-semibold text-secondary">Enhancement opportunity</p><p className="mt-1 text-[11px] leading-4 text-muted-foreground">Use nudges, role-play and peer support before momentum fades.</p></div>
+                        <div><p className="text-xs font-semibold text-secondary dark:text-white">Enhancement opportunity</p><p className="mt-1 text-[11px] leading-4 text-muted-foreground">Use nudges, role-play and peer support before momentum fades.</p></div>
                       </div>
                     </div>
                   </div>
@@ -451,7 +451,7 @@ const Platform = () => {
 
         <section className="bg-background py-24 md:py-32">
           <div className="container">
-             <div className="mx-auto max-w-3xl text-center" data-aos="fade-up"><p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">How to start</p><h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary md:text-5xl">Start with the need, then shape the first release.</h2><p className="mt-5 text-lg leading-8 text-muted-foreground">A strong platform journey starts with clarity. Personalised interactive previews are prepared for qualified organisations and initiatives.</p></div>
+             <div className="mx-auto max-w-3xl text-center" data-aos="fade-up"><p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">How to start</p><h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary dark:text-white md:text-5xl">Start with the need, then shape the first release.</h2><p className="mt-5 text-lg leading-8 text-muted-foreground">A strong platform journey starts with clarity. Personalised interactive previews are prepared for qualified organisations and initiatives.</p></div>
              <div className="relative mx-auto mt-16 max-w-6xl overflow-hidden rounded-[2rem] bg-gradient-to-br from-secondary via-[#18245a] to-primary p-6 shadow-2xl md:p-10" data-aos="fade-up">
                <div className="absolute -right-20 -top-24 h-72 w-72 rounded-full bg-white/10 blur-3xl" aria-hidden="true" />
                <div className="absolute -bottom-32 left-1/4 h-80 w-80 rounded-full bg-primary/30 blur-3xl" aria-hidden="true" />
