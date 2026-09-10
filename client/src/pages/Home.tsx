@@ -584,42 +584,6 @@ const Home = () => {
           </div>
         </section>
 
-        {/* Why It's Different */}
-        <section id="difference" className="py-24 bg-muted/50 dark:bg-secondary/10">
-          <div className="container">
-            <div className="mb-10" data-aos="fade-up">
-              <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-                Why It's Different
-              </div>
-              <h2 className="section-title">
-                Designed around your workflow,{" "}
-                <span className="text-primary">not a generic portal.</span>
-              </h2>
-            </div>
-
-            <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start">
-              <div className="lg:w-5/12" data-aos="fade-right">
-                <div className="space-y-4">
-                  {differentiators.map((item) => (
-                    <div key={item.title} className="glass-effect border border-border rounded-xl p-5">
-                      <p className="text-foreground font-semibold mb-1">{item.title}</p>
-                      <p className="text-muted-foreground text-sm">{item.description}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="lg:w-7/12 relative min-h-[390px] flex items-center" data-aos="fade-up" data-aos-delay="200">
-                <img
-                  src={journeyVisualImg}
-                  alt="AI-powered learning and engagement journey from learning and connection to growth, measurable outcomes, and a bigger tomorrow"
-                  className="h-[390px] w-full rounded-3xl object-cover shadow-2xl"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
         <CTABanner />
 
         {/* Talk to Ayla */}
@@ -726,6 +690,42 @@ const Home = () => {
                 <p className="mt-4 text-center text-xs font-medium uppercase tracking-[.16em] text-muted-foreground">
                   Human-led. AI-supported. Built for measurable progress.
                 </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Why It's Different */}
+        <section id="difference" className="py-24 bg-muted/50 dark:bg-secondary/10">
+          <div className="container">
+            <div className="mb-10" data-aos="fade-up">
+              <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+                Why It's Different
+              </div>
+              <h2 className="section-title">
+                Designed around your workflow,{" "}
+                <span className="text-primary">not a generic portal.</span>
+              </h2>
+            </div>
+
+            <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start">
+              <div className="lg:w-5/12" data-aos="fade-right">
+                <div className="space-y-4">
+                  {differentiators.map((item) => (
+                    <div key={item.title} className="glass-effect border border-border rounded-xl p-5">
+                      <p className="text-foreground font-semibold mb-1">{item.title}</p>
+                      <p className="text-muted-foreground text-sm">{item.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="lg:w-7/12 relative min-h-[390px] flex items-center" data-aos="fade-up" data-aos-delay="200">
+                <img
+                  src={journeyVisualImg}
+                  alt="AI-powered learning and engagement journey from learning and connection to growth, measurable outcomes, and a bigger tomorrow"
+                  className="h-[390px] w-full rounded-3xl object-cover shadow-2xl"
+                />
               </div>
             </div>
           </div>
