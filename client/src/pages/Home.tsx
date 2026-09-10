@@ -12,7 +12,6 @@ import {
   Users,
   Bot,
   Gamepad2,
-  BarChart3,
   Languages,
   Rocket,
   Paintbrush,
@@ -23,7 +22,6 @@ import {
   Zap,
   Building2,
   Landmark,
-  Banknote,
   Lightbulb,
   Globe,
   Briefcase,
@@ -89,104 +87,104 @@ const clientLogos = [
 ];
 
 const ecosystemFeatures = [
-  { icon: GraduationCap, label: "Structured learning journeys & certifications" },
-  { icon: Trophy, label: "Applications, challenges & innovation programs" },
-  { icon: Users, label: "Mentorship & expert engagement" },
-  { icon: Bot, label: "AI coaches & practical AI tools" },
-  { icon: Gamepad2, label: "Gamification & performance tracking" },
-  { icon: BarChart3, label: "Real-time dashboards & impact analytics" },
-  { icon: Languages, label: "Multi-language and audience segmentation" },
+  { icon: GraduationCap, label: "Academy & Courses" },
+  { icon: CheckCircle, label: "Certification & Licensing" },
+  { icon: Trophy, label: "Competitions & Challenges" },
+  { icon: Users, label: "Mentorship & Coaching" },
+  { icon: Globe, label: "Community & Events" },
+  { icon: Lightbulb, label: "Innovation & Ideas" },
 ];
 
 const aiCapabilities = [
-  { icon: Target, label: "Personalize learning and engagement paths" },
-  { icon: ArrowRight, label: "Guide participants from awareness to execution" },
-  { icon: Bot, label: "Provide AI coaches and smart tools" },
-  { icon: LineChart, label: "Analyze engagement and predict outcomes" },
-  { icon: Zap, label: "Reduce operational complexity" },
+  { icon: Target, label: "Personalized learning" },
+  { icon: Bot, label: "AI coaching and guidance" },
+  { icon: Brain, label: "Content and knowledge support" },
+  { icon: Gamepad2, label: "Role-based practice" },
+  { icon: Zap, label: "Engagement insights" },
+  { icon: LineChart, label: "Leadership analysis" },
 ];
 
 const scaleItems = [
-  { icon: Paintbrush, label: "Full branding & customization" },
-  { icon: Settings, label: "Program architecture & workflows" },
-  { icon: Brain, label: "AI configuration aligned to your goals" },
-  { icon: BarChart3, label: "KPIs & reporting frameworks" },
-  { icon: Languages, label: "Localization & segmentation" },
+  { icon: Paintbrush, label: "Dedicated deployment" },
+  { icon: Languages, label: "Arabic & English experiences" },
+  { icon: Settings, label: "Configurable journeys" },
+  { icon: Users, label: "Enterprise roles and administration" },
+  { icon: Building2, label: "Integration and deployment options" },
+  { icon: Rocket, label: "Phased launch" },
 ];
 
 const audiences = [
-  { icon: Landmark, label: "Governments" },
-  { icon: Globe, label: "CSR & Sustainability Leaders" },
-  { icon: Banknote, label: "Banks & Financial Institutions" },
-  { icon: Lightbulb, label: "National Innovation Programs" },
-  { icon: Building2, label: "Economic Development Authorities" },
-  { icon: Briefcase, label: "Large Enterprises" },
+  { icon: Landmark, label: "Government" },
+  { icon: Building2, label: "Banks & Major Enterprises" },
+  { icon: Briefcase, label: "Programme & Initiative Owners" },
 ];
 
-const CTABanner = ({ message, onBookDemo }: { message: string; onBookDemo: () => void }) => (
+const differentiators = [
+  {
+    title: "Dedicated experience",
+    description: "A focused environment shaped around your organisation, audience and mandate.",
+  },
+  {
+    title: "AI where it adds value",
+    description: "Practical support for guidance, personalization, practice and analysis.",
+  },
+  {
+    title: "Built around application",
+    description: "Journeys that help people practise, contribute, qualify and take meaningful action.",
+  },
+  {
+    title: "Evidence for leadership",
+    description: "Participation, engagement, outcome and impact reporting for informed decisions.",
+  },
+];
+
+const aylaSteps = [
+  {
+    number: "1",
+    title: "Tell us about your initiative",
+    description: "Complete a short introductory form.",
+  },
+  {
+    number: "2",
+    title: "Talk to Ayla",
+    description: "Ayla asks questions about the need, audience, timing and requirements.",
+  },
+  {
+    number: "3",
+    title: "Get the right next step",
+    description: "Explore a relevant platform journey or approach.",
+  },
+  {
+    number: "4",
+    title: "Meet our team",
+    description: "Where there is a strong fit, book a conversation directly with Potential.",
+  },
+];
+
+const CTABanner = () => (
   <section className="py-16 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #0B1846 0%, #1a2a6c 40%, #8844DD 100%)" }}>
     <div className="container relative z-10">
       <div className="max-w-3xl mx-auto text-center" data-aos="fade-up">
-        <p className="text-xl md:text-2xl font-semibold text-white mb-8">
-          {message}
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+          Have a programme or initiative in mind?
+        </h2>
+        <p className="text-lg text-white/75 mb-8">
+          Describe what you are trying to achieve and Ayla will help identify the most relevant next step.
         </p>
         <Button
           size="lg"
           className="rounded-full bg-white text-[#0B1846] hover:bg-white/90 font-semibold px-10 py-6 text-lg shadow-lg"
-          onClick={onBookDemo}
+          onClick={() => navigateWithUTM("/ayla")}
         >
-          Request Free Demo <ArrowRight className="ml-2 h-5 w-5" />
+          Talk to Ayla <ArrowRight className="ml-2 h-5 w-5" />
         </Button>
       </div>
     </div>
   </section>
 );
 
-const BookingModal = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
-  return (
-    <div
-      className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-opacity duration-200 ${open ? 'bg-black/60 opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
-      style={{ visibility: open ? 'visible' : 'hidden' }}
-    >
-      <div className="bg-card rounded-2xl border border-border shadow-2xl w-full max-w-4xl h-[85vh] relative flex flex-col overflow-hidden">
-        <div className="flex items-center justify-between p-6 border-b border-border">
-          <div>
-            <h3 className="text-2xl font-bold text-foreground">
-              Book Your Free Strategy Consultation
-            </h3>
-            <p className="text-muted-foreground mt-1">
-              Select a time that works best for you
-            </p>
-          </div>
-          <button
-            onClick={onClose}
-            className="w-10 h-10 rounded-full bg-muted/50 hover:bg-muted flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <span className="sr-only">Close</span>
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-        <div className="flex-1 bg-white overflow-hidden">
-          <iframe
-            src="https://meetings-eu1.hubspot.com/rawzaba?embed=true"
-            width="100%"
-            height="100%"
-            frameBorder="0"
-            style={{ border: 0, minHeight: '100%' }}
-            title="Book a consultation"
-            allow="microphone; camera"
-          />
-        </div>
-      </div>
-    </div>
-  );
-};
-
 const Home = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [showBookingModal, setShowBookingModal] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined" && (window as any).AOS) {
@@ -249,25 +247,33 @@ const Home = () => {
             <div className="flex flex-col md:flex-row gap-12 lg:gap-16 items-center mb-16">
               <div className="md:w-1/2" data-aos="fade-right">
                 <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-                  <Sparkles className="h-4 w-4 mr-2" /> AI-Powered Empowerment Platform
+                  <Sparkles className="h-4 w-4 mr-2" /> AI-powered Learning &amp; Engagement Platform
                 </div>
 
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                  Deliver Measurable Impact at Scale —{" "}
-                  <span className="text-primary">Without the Operational Burden</span>
+                  Build capability. Engage people.{" "}
+                  <span className="text-primary">Prove what changed.</span>
                 </h1>
 
-                <p className="text-xl text-muted-foreground mb-10">We help governments, enterprises, and CSR leaders build scalable empowerment platform to run their programs and drives measurable social, economic, and workforce impact.</p>
+                <p className="text-xl text-muted-foreground mb-8">
+                  Potential helps governments and enterprises build dedicated platforms for learning,
+                  certification, mentorship, communities, innovation and AI-enabled capability
+                  development — bringing the audience journey, engagement and evidence into one experience.
+                </p>
 
                 <div className="flex flex-wrap gap-4">
                   <Button
                     size="lg"
                     className="rounded-full bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg"
-                    onClick={() => setShowBookingModal(true)}
+                    onClick={() => navigateWithUTM("/ayla")}
                   >
-                    Request Free Demo <ArrowRight className="ml-2 h-5 w-5" />
+                    Talk to Ayla <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </div>
+                <p className="text-sm text-muted-foreground mt-4 max-w-xl">
+                  Tell Ayla what you are trying to achieve. She will help shape the right approach and,
+                  where there is a fit, connect you with our team.
+                </p>
               </div>
 
               <div className="md:w-1/2 relative" data-aos="fade-up" data-aos-delay="200">
@@ -343,22 +349,14 @@ const Home = () => {
                 What We Do
               </div>
               <h2 className="section-title text-center mb-6">
-                We Turn Programs Into{" "}
-                <span className="text-primary">Scalable Impact Infrastructure</span>
+                One platform around the{" "}
+                <span className="text-primary">journey you need to deliver.</span>
               </h2>
               <p className="text-lg text-muted-foreground mb-6">
-                Potential.com is an AI-powered empowerment platform that enables
-                organizations to design, launch, and manage large-scale initiatives —
-                efficiently and at scale.
+                Organisations can build a dedicated experience around their audience and mandate,
+                helping people learn, practise, contribute, qualify or connect while programme
+                owners manage participation, engagement and outcomes.
               </p>
-              <p className="text-lg text-muted-foreground mb-8">
-                From entrepreneurship and financial literacy to innovation, workforce
-                development, and CSR programs — we provide the digital ecosystem that
-                turns strategy into measurable results.
-              </p>
-              <div className="inline-flex px-6 py-3 rounded-xl bg-primary/10 text-primary font-semibold text-lg">
-                Fully branded. Fully customized. Ready in weeks.
-              </div>
             </div>
           </div>
         </section>
@@ -371,11 +369,12 @@ const Home = () => {
                 What You Get
               </div>
               <h2 className="section-title text-center mb-6">
-                A Complete Digital{" "}
-                <span className="text-primary">Empowerment Ecosystem</span>
+                Core capabilities for{" "}
+                <span className="text-primary">learning and engagement</span>
               </h2>
               <p className="text-lg text-muted-foreground">
-                Your customized platform can include:
+                Use one capability or combine several into a dedicated learning and engagement
+                platform shaped around your initiative.
               </p>
             </div>
 
@@ -401,10 +400,10 @@ const Home = () => {
                 <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -ml-16 -mb-16" />
                 <div className="relative z-10">
                   <p className="text-white/70 text-lg mb-2">
-                    This is not just software access.
+                    One connected audience journey.
                   </p>
                   <p className="text-white font-bold text-2xl md:text-3xl">
-                    It is a fully built, AI-powered program aligned to your objectives.
+                    Learning, participation, engagement and evidence in one experience.
                   </p>
                 </div>
               </div>
@@ -420,32 +419,20 @@ const Home = () => {
                 Why It's Different
               </div>
               <h2 className="section-title whitespace-nowrap">
-                Most Platforms Manage.{" "}
-                <span className="text-primary">We Empower.</span>
+                Designed around your workflow,{" "}
+                <span className="text-primary">not a generic portal.</span>
               </h2>
             </div>
 
             <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start">
               <div className="lg:w-5/12" data-aos="fade-right">
-                <div className="space-y-4 mb-8">
-                  <div className="glass-effect border border-border rounded-xl p-5">
-                    <div className="text-muted-foreground text-xs uppercase tracking-wider mb-1">Traditional</div>
-                    <p className="text-foreground font-medium">Learning platforms deliver courses.</p>
-                  </div>
-                  <div className="glass-effect border border-border rounded-xl p-5">
-                    <div className="text-muted-foreground text-xs uppercase tracking-wider mb-1">Traditional</div>
-                    <p className="text-foreground font-medium">CRMs manage contacts.</p>
-                  </div>
-                  <div className="glass-effect border border-border rounded-xl p-5">
-                    <div className="text-muted-foreground text-xs uppercase tracking-wider mb-1">Traditional</div>
-                    <p className="text-foreground font-medium">Competition tools select winners.</p>
-                  </div>
-                </div>
-
-                <div className="rounded-xl border-l-4 border-primary bg-primary/5 p-5 mt-2">
-                  <p className="text-lg font-semibold text-primary">
-                    Real impact requires more than isolated tools.
-                  </p>
+                <div className="space-y-4">
+                  {differentiators.map((item) => (
+                    <div key={item.title} className="glass-effect border border-border rounded-xl p-5">
+                      <p className="text-foreground font-semibold mb-1">{item.title}</p>
+                      <p className="text-muted-foreground text-sm">{item.description}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
 
@@ -466,7 +453,7 @@ const Home = () => {
           </div>
         </section>
 
-        <CTABanner message="We unify education, engagement, AI guidance, performance tracking, and ecosystem collaboration into one intelligent platform." onBookDemo={() => setShowBookingModal(true)} />
+        <CTABanner />
 
         {/* Talk to Ayla */}
         <section className="py-24 relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-accent/10">
@@ -495,11 +482,26 @@ const Home = () => {
                   Meet Ayla
                 </div>
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
-                  Talk to <span className="text-primary">Ayla</span>, Your AI Empowerment Advisor
+                  Start with your challenge,{" "}
+                  <span className="text-primary">not a product demo.</span>
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed max-w-lg">
-                  Have a conversation with Ayla to explore how to launch, scale, or improve your programs and initiatives — completely free. Get personalized AI-powered guidance in minutes.
+                  Ayla is Potential’s AI advisor. She asks about your organisation, audience,
+                  initiative, timing and requirements to help determine the most relevant next step.
                 </p>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {aylaSteps.map((step) => (
+                    <div key={step.number} className="rounded-xl border border-border bg-background/70 p-4">
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white font-bold text-sm">
+                          {step.number}
+                        </span>
+                        <p className="font-semibold text-foreground">{step.title}</p>
+                      </div>
+                      <p className="text-sm text-muted-foreground pl-11">{step.description}</p>
+                    </div>
+                  ))}
+                </div>
                 <div className="flex flex-col sm:flex-row gap-4 pt-2">
                   <Button
                     size="lg"
@@ -523,11 +525,12 @@ const Home = () => {
                   AI at the Core
                 </div>
                 <h2 className="section-title text-center mb-6">
-                  Intelligence Embedded{" "}
-                  <span className="text-primary">Across the Entire Journey</span>
+                  AI that supports{" "}
+                  <span className="text-primary">the journey.</span>
                 </h2>
                 <p className="text-lg text-muted-foreground">
-                  AI is integrated throughout the platform to:
+                  Applied where it can improve the experience, support participants and give
+                  programme owners clearer insight.
                 </p>
               </div>
 
@@ -551,8 +554,6 @@ const Home = () => {
           </div>
         </section>
 
-        <CTABanner message="Run national or enterprise-scale initiatives with lean teams — without sacrificing quality." onBookDemo={() => setShowBookingModal(true)} />
-
         {/* Built for Scale & Speed */}
         <section className="py-24 bg-muted/50 dark:bg-secondary/10">
           <div className="container">
@@ -562,10 +563,12 @@ const Home = () => {
                   Built for Scale & Speed
                 </div>
                 <h2 className="section-title text-center mb-6">
-                  Launch in Weeks,{" "}
-                  <span className="text-primary">Not Months</span>
+                  Built for considered,{" "}
+                  <span className="text-primary">phased delivery.</span>
                 </h2>
-                <p className="text-lg text-muted-foreground">We handle:</p>
+                <p className="text-lg text-muted-foreground">
+                  Deployment choices and operating controls for government and enterprise environments.
+                </p>
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
@@ -590,10 +593,10 @@ const Home = () => {
                   <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -ml-16 -mb-16" />
                   <div className="relative z-10">
                     <p className="text-2xl md:text-3xl font-bold text-white mb-2">
-                      You focus on impact.
+                      Start with the priority.
                     </p>
                     <p className="text-xl md:text-2xl text-white/70 font-medium">
-                      We handle the infrastructure.
+                      Expand the journey in phases.
                     </p>
                   </div>
                 </div>
@@ -610,8 +613,8 @@ const Home = () => {
                 Who It's For
               </div>
               <h2 className="section-title">
-                Designed for Organizations That Need{" "}
-                <span className="text-primary">Measurable Impact at Scale</span>
+                Built for organisations with a mandate to{" "}
+                <span className="text-primary">develop or engage people.</span>
               </h2>
             </div>
 
@@ -635,7 +638,8 @@ const Home = () => {
 
                 <div className="rounded-xl border-l-4 border-primary bg-primary/5 p-5">
                   <p className="text-lg font-semibold text-primary">
-                    If your objective is structured, scalable empowerment — this platform was built for you.
+                    For public-sector mandates, enterprise capability priorities, and programme
+                    owners leading innovation, community, sustainability or CSR initiatives.
                   </p>
                 </div>
               </div>
@@ -657,33 +661,30 @@ const Home = () => {
           </div>
         </section>
 
-        <CTABanner message="LMS platforms teach. CRMs manage. Potential.com builds AI-powered empowerment ecosystems." onBookDemo={() => setShowBookingModal(true)} />
-
         {/* Final CTA */}
         <section className="py-24 bg-gradient-to-br from-primary/5 via-background to-accent/10">
           <div className="container">
             <div className="max-w-4xl mx-auto text-center" data-aos="fade-up">
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-                Ready to Transform Your Programs Into{" "}
-                <span className="text-primary">Measurable Impact?</span>
+                What does your organisation need{" "}
+                <span className="text-primary">people to do next?</span>
               </h2>
               <p className="text-lg text-muted-foreground mb-10 max-w-2xl mx-auto">
-                Let's design a fully customized AI-powered platform aligned with your
-                strategic goals.
+                Tell Ayla about your mandate, audience and challenge. She will help identify
+                the most relevant path and connect you with our team where there is a fit.
               </p>
               <div className="flex flex-wrap gap-4 justify-center">
                 <Button
                   size="lg"
                   className="rounded-full bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg"
-                  onClick={() => setShowBookingModal(true)}
+                  onClick={() => navigateWithUTM("/ayla")}
                 >
-                  Request Free Demo <ArrowRight className="ml-2 h-5 w-5" />
+                  Talk to Ayla <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </div>
             </div>
           </div>
         </section>
-        <BookingModal open={showBookingModal} onClose={() => setShowBookingModal(false)} />
       </main>
       <Footer />
     </div>
