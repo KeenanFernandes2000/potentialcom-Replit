@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SEO } from "@/components/SEO";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -7,25 +7,27 @@ import { navigateWithUTM } from "@/lib/utm-utils";
 import {
   ArrowRight,
   ArrowUpRight,
+  Activity,
   BookOpen,
+  BarChart3,
   BrainCircuit,
   Building2,
   Check,
   ChevronRight,
   CircleUserRound,
+  Gauge,
   Handshake,
   Landmark,
   Layers3,
   LineChart,
   MessageSquare,
   Network,
-  Orbit,
   PanelsTopLeft,
   Route,
   ShieldCheck,
   Sparkles,
   Target,
-  UsersRound,
+  TrendingUp,
 } from "lucide-react";
 import aylaImage from "@assets/2.png";
 import platformInfographic from "@assets/Pitch_Infographic_2_1770795115206.png";
@@ -124,11 +126,55 @@ const startSteps = [
   ["04", "Launch & Prove", "Deploy the agreed first phase, measure, improve and expand."],
 ];
 
+const impactSnapshots = [
+  {
+    period: "This quarter",
+    participants: 2480,
+    growth: "+18.4%",
+    completion: 76,
+    application: 68,
+    outcomes: 42,
+    chart: [38, 46, 43, 56, 52, 68, 64, 78, 86],
+    signal: "Participation is building momentum across active cohorts.",
+  },
+  {
+    period: "Last 30 days",
+    participants: 2916,
+    growth: "+24.1%",
+    completion: 81,
+    application: 73,
+    outcomes: 49,
+    chart: [44, 48, 58, 55, 64, 72, 69, 82, 94],
+    signal: "Practice activity is translating into stronger follow-through.",
+  },
+  {
+    period: "Year to date",
+    participants: 3642,
+    growth: "+31.7%",
+    completion: 87,
+    application: 79,
+    outcomes: 57,
+    chart: [46, 54, 62, 60, 72, 76, 81, 88, 98],
+    signal: "Leadership has a clearer view of capability and outcomes.",
+  },
+];
+
 const Platform = () => {
+  const [impactIndex, setImpactIndex] = useState(0);
+  const impact = impactSnapshots[impactIndex];
+
   useEffect(() => {
     if (typeof window !== "undefined" && (window as any).AOS) {
       (window as any).AOS.refresh();
     }
+  }, []);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setImpactIndex((current) => (current + 1) % impactSnapshots.length);
+    }, 3200);
+
+    return () => window.clearInterval(timer);
   }, []);
 
   const talkToAyla = () => navigateWithUTM("/ayla");
@@ -181,23 +227,66 @@ const Platform = () => {
               <div className="relative" data-aos="fade-up" data-aos-delay="150">
                 <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-primary/20 via-transparent to-[#f0b85f]/30 blur-2xl" />
                 <div className="relative overflow-hidden rounded-[1.75rem] border border-white/70 bg-secondary p-2 shadow-2xl">
-                  <div className="rounded-[1.25rem] border border-white/10 bg-[#161f55] p-5 md:p-7">
-                    <div className="mb-8 flex items-center justify-between">
-                      <div className="flex items-center gap-2 text-sm font-semibold text-white"><Orbit className="h-5 w-5 text-[#cda8ff]" /> Potential / command view</div>
-                      <span className="rounded-full bg-white/10 px-3 py-1 text-xs text-white/70">Illustrative view</span>
-                    </div>
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="col-span-2 rounded-2xl bg-white/10 p-5">
-                        <div className="flex items-end justify-between"><div><p className="text-xs uppercase tracking-[.18em] text-white/50">Journey overview</p><p className="mt-2 text-4xl font-semibold text-white">In view</p></div><div className="rounded-xl bg-[#d9c1ff]/15 p-3 text-[#d9c1ff]"><LineChart className="h-6 w-6" /></div></div>
-                        <div className="mt-5 flex h-20 items-end gap-2">{[32, 42, 38, 57, 51, 69, 82, 76, 94].map((height, index) => <div key={index} className="flex-1 rounded-t-md bg-gradient-to-t from-primary to-[#d6b8ff]" style={{ height: `${height}%`, opacity: 0.45 + index / 20 }} />)}</div>
+                  <div className="relative overflow-hidden rounded-[1.25rem] border border-white/10 bg-[#101946] p-5 text-white md:p-7">
+                    <div className="absolute -right-20 -top-24 h-64 w-64 rounded-full bg-primary/25 blur-3xl" />
+                    <div className="absolute -bottom-32 -left-16 h-72 w-72 rounded-full bg-[#f0b85f]/15 blur-3xl" />
+                    <div className="relative">
+                      <div className="mb-7 flex items-start justify-between gap-4">
+                        <div>
+                          <p className="text-[10px] font-semibold uppercase tracking-[.2em] text-white/45">Impact programme / illustrative view</p>
+                          <div className="mt-2 flex items-center gap-2 text-sm font-semibold"><Activity className="h-4 w-4 text-[#d2b4ff]" /> Workforce readiness</div>
+                        </div>
+                        <div className="flex shrink-0 items-center gap-2 rounded-full border border-emerald-300/20 bg-emerald-300/10 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-emerald-200">
+                          <span className="h-1.5 w-1.5 rounded-full bg-emerald-300 motion-safe:animate-pulse" /> Looping view
+                        </div>
                       </div>
-                    <div className="rounded-2xl bg-white/10 p-4"><UsersRound className="mb-5 h-5 w-5 text-[#f3c57a]" /><p className="text-2xl font-semibold text-white">Cross-role</p><p className="mt-1 text-xs text-white/50">Participant experience</p></div>
-                    <div className="rounded-2xl bg-white/10 p-4"><Route className="mb-5 h-5 w-5 text-[#8ee0d1]" /><p className="text-2xl font-semibold text-white">Connected</p><p className="mt-1 text-xs text-white/50">Programme workflows</p></div>
+
+                      <div className="rounded-2xl border border-white/10 bg-white/[.09] p-5 shadow-inner shadow-white/[.03]">
+                        <div className="flex items-start justify-between gap-3">
+                          <div>
+                            <p className="text-xs uppercase tracking-[.16em] text-white/45">People moving forward</p>
+                            <div className="mt-3 flex items-end gap-3">
+                              <span key={impactIndex} className="text-4xl font-semibold tracking-tight text-white transition-all duration-500 md:text-5xl">{impact.participants.toLocaleString()}</span>
+                              <span className="mb-1 flex items-center gap-1 text-xs font-semibold text-emerald-200"><TrendingUp className="h-3.5 w-3.5" />{impact.growth}</span>
+                            </div>
+                            <p className="mt-1 text-xs text-white/45">{impact.period} · active participants</p>
+                          </div>
+                          <div className="rounded-xl bg-[#d9c1ff]/15 p-3 text-[#d9c1ff]"><BarChart3 className="h-5 w-5" /></div>
+                        </div>
+                        <div className="mt-6 flex h-20 items-end gap-1.5">
+                          {impact.chart.map((height, index) => (
+                            <div key={`${impactIndex}-${index}`} className="flex-1 rounded-t-md bg-gradient-to-t from-primary to-[#d6b8ff] transition-all duration-700 ease-out" style={{ height: `${height}%`, opacity: 0.45 + index / 20 }} />
+                          ))}
+                        </div>
+                        <div className="mt-3 flex justify-between text-[10px] text-white/35"><span>Discover</span><span>Practise</span><span>Apply</span><span>Progress</span></div>
+                      </div>
+
+                      <div className="mt-3 grid grid-cols-3 gap-3">
+                        <div className="rounded-2xl border border-white/10 bg-white/[.07] p-3">
+                          <Gauge className="mb-4 h-4 w-4 text-[#f3c57a]" />
+                          <p className="text-2xl font-semibold">{impact.completion}%</p>
+                          <p className="mt-1 text-[10px] leading-4 text-white/45">Journey completion</p>
+                        </div>
+                        <div className="rounded-2xl border border-white/10 bg-white/[.07] p-3">
+                          <Route className="mb-4 h-4 w-4 text-[#8ee0d1]" />
+                          <p className="text-2xl font-semibold">{impact.application}%</p>
+                          <p className="mt-1 text-[10px] leading-4 text-white/45">Practice applied</p>
+                        </div>
+                        <div className="rounded-2xl border border-white/10 bg-white/[.07] p-3">
+                          <LineChart className="mb-4 h-4 w-4 text-[#d2b4ff]" />
+                          <p className="text-2xl font-semibold">{impact.outcomes}%</p>
+                          <p className="mt-1 text-[10px] leading-4 text-white/45">Outcomes evidenced</p>
+                        </div>
+                      </div>
+
+                      <div className="mt-3 flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[.06] p-4">
+                        <div className="rounded-full bg-primary/80 p-2 text-white"><Sparkles className="h-4 w-4" /></div>
+                        <div className="min-w-0"><p className="text-[10px] uppercase tracking-wider text-white/40">Ayla signal</p><p className="mt-1 truncate text-xs text-white/80">{impact.signal}</p></div>
+                        <ArrowUpRight className="ml-auto h-4 w-4 shrink-0 text-white/45" />
+                      </div>
                     </div>
-                    <div className="mt-3 flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[.06] p-4"><div className="h-9 w-9 rounded-full bg-primary/80 p-2 text-white"><MessageSquare className="h-5 w-5" /></div><div><p className="text-xs text-white/50">Ayla insight</p><p className="text-sm text-white/85">Your next best action is ready to review.</p></div><ArrowUpRight className="ml-auto h-4 w-4 text-white/50" /></div>
                   </div>
                 </div>
-                <div className="absolute -bottom-6 -left-6 hidden rounded-2xl border border-border bg-background p-4 shadow-xl sm:block"><p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Built for</p><p className="mt-1 font-semibold text-secondary">The whole journey</p></div>
               </div>
             </div>
           </div>
