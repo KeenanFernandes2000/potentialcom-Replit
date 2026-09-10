@@ -321,6 +321,16 @@ body {
     animation-delay: 0.5s;
   }
 
+  @keyframes journey-dash {
+    to {
+      stroke-dashoffset: -180;
+    }
+  }
+
+  .journey-path {
+    animation: journey-dash 3s linear infinite;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     #capabilities [data-aos],
     #difference [data-aos],
@@ -329,6 +339,10 @@ body {
       opacity: 1 !important;
       transform: none !important;
       transition: none !important;
+    }
+
+    .journey-path {
+      animation: none !important;
     }
   }
 

@@ -8,6 +8,7 @@ import {
   ArrowRight,
   ArrowUpRight,
   Activity,
+  AlertCircle,
   BookOpen,
   BarChart3,
   BrainCircuit,
@@ -30,7 +31,49 @@ import {
   TrendingUp,
 } from "lucide-react";
 import aylaImage from "@assets/2.png";
-import platformInfographic from "@assets/Pitch_Infographic_2_1770795115206.png";
+
+const impactJourney = [
+  {
+    stage: "Reach",
+    metric: "100%",
+    title: "People enter",
+    detail: "Interest and intent",
+    icon: CircleUserRound,
+    status: "Baseline",
+  },
+  {
+    stage: "Learn",
+    metric: "82%",
+    title: "Learning active",
+    detail: "Content and guidance",
+    icon: BookOpen,
+    status: "Healthy",
+  },
+  {
+    stage: "Practise",
+    metric: "68%",
+    title: "Practice applied",
+    detail: "Role-based action",
+    icon: Target,
+    status: "Opportunity",
+  },
+  {
+    stage: "Adopt",
+    metric: "51%",
+    title: "Behaviour sustained",
+    detail: "Habit and adoption",
+    icon: Route,
+    status: "Drop-off",
+  },
+  {
+    stage: "Prove",
+    metric: "42%",
+    title: "Outcomes evidenced",
+    detail: "Impact reporting",
+    icon: LineChart,
+    status: "Measure",
+  },
+];
 
 const capabilities = [
   {
@@ -336,7 +379,68 @@ const Platform = () => {
           <div className="container">
             <div className="grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
               <div data-aos="fade-right"><p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">Measurement and evidence</p><h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary md:text-5xl">Show what changed, and the evidence behind it.</h2><p className="mt-5 text-lg leading-8 text-muted-foreground">Define success before launch, then connect participation and learning with practical milestones, adoption and client-validated outcomes. Leadership gains a clear view of progress and impact reporting without treating reporting as guaranteed causation.</p><div className="mt-7 flex flex-wrap gap-3">{["Participation", "Learning", "Application", "Adoption", "Impact reporting"].map(item => <span key={item} className="rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-sm font-semibold text-secondary">{item}</span>)}</div></div>
-              <div className="relative overflow-hidden rounded-2xl border border-border bg-background p-3 shadow-lg" data-aos="fade-up"><img src={platformInfographic} alt="Potential platform ecosystem and impact overview" className="w-full rounded-xl" /><div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-secondary/5" /></div>
+              <div className="relative overflow-hidden rounded-2xl border border-border bg-background p-3 shadow-lg" data-aos="fade-up">
+                <div className="relative min-h-[440px] overflow-hidden rounded-xl bg-[#f7f3ff] p-5 md:p-7">
+                  <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-primary/15 blur-3xl" />
+                  <div className="absolute -bottom-32 -left-20 h-72 w-72 rounded-full bg-[#f0b85f]/20 blur-3xl" />
+                  <div className="relative z-10">
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <p className="text-[10px] font-semibold uppercase tracking-[.2em] text-primary">Impact journey / illustrative view</p>
+                        <h3 className="mt-2 text-xl font-semibold tracking-tight text-secondary">See where momentum builds — and where it needs support.</h3>
+                      </div>
+                      <div className="flex shrink-0 items-center gap-2 rounded-full border border-primary/20 bg-white/70 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-primary">
+                        <Activity className="h-3.5 w-3.5" /> Journey map
+                      </div>
+                    </div>
+
+                    <div className="relative mt-8">
+                      <svg className="pointer-events-none absolute left-[8%] top-12 hidden h-20 w-[84%] md:block" viewBox="0 0 800 100" fill="none" aria-hidden="true">
+                        <path className="journey-path" d="M20 58 C130 8 190 88 300 45 S470 10 570 52 S700 88 780 38" stroke="url(#journey-gradient)" strokeWidth="4" strokeLinecap="round" strokeDasharray="8 14" />
+                        <defs>
+                          <linearGradient id="journey-gradient" x1="20" y1="50" x2="780" y2="50" gradientUnits="userSpaceOnUse">
+                            <stop stopColor="#8844DD" stopOpacity=".3" />
+                            <stop offset=".5" stopColor="#8844DD" />
+                            <stop offset="1" stopColor="#e9a84e" />
+                          </linearGradient>
+                        </defs>
+                      </svg>
+                      <div className="grid gap-3 md:grid-cols-5">
+                        {impactJourney.map((step, index) => {
+                          const Icon = step.icon;
+                          const isDropoff = step.status === "Drop-off";
+                          return (
+                            <div key={step.stage} className={`relative z-10 rounded-2xl border p-3 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-md motion-reduce:transition-none md:pt-4 ${isDropoff ? "border-amber-300 bg-amber-50/90" : "border-border bg-white/90"}`}>
+                              <div className="flex items-center justify-between gap-2">
+                                <div className={`flex h-9 w-9 items-center justify-center rounded-xl ${isDropoff ? "bg-amber-200/70 text-amber-700" : "bg-primary/10 text-primary"}`}>
+                                  <Icon className="h-4 w-4" />
+                                </div>
+                                <span className={`text-[10px] font-semibold uppercase tracking-wider ${isDropoff ? "text-amber-700" : "text-muted-foreground"}`}>{step.stage}</span>
+                              </div>
+                              <p className="mt-5 text-2xl font-semibold tracking-tight text-secondary">{step.metric}</p>
+                              <p className="mt-1 text-xs font-semibold text-secondary">{step.title}</p>
+                              <p className="mt-1 text-[10px] leading-4 text-muted-foreground">{step.detail}</p>
+                              <span className={`mt-3 inline-flex rounded-full px-2 py-1 text-[9px] font-semibold uppercase tracking-wider ${isDropoff ? "bg-amber-200/70 text-amber-800" : "bg-primary/10 text-primary"}`}>{step.status}</span>
+                              {index < impactJourney.length - 1 && <div className="absolute -bottom-3 left-1/2 h-3 w-px bg-primary/25 md:hidden" />}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                      <div className="flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50/80 p-4">
+                        <div className="rounded-xl bg-amber-200/70 p-2 text-amber-700"><AlertCircle className="h-4 w-4" /></div>
+                        <div><p className="text-xs font-semibold text-amber-900">Drop-off detected</p><p className="mt-1 text-[11px] leading-4 text-amber-800/75">Practise → Adopt is the moment to add reinforcement and coaching.</p></div>
+                      </div>
+                      <div className="flex items-start gap-3 rounded-2xl border border-primary/15 bg-primary/5 p-4">
+                        <div className="rounded-xl bg-primary/10 p-2 text-primary"><Sparkles className="h-4 w-4" /></div>
+                        <div><p className="text-xs font-semibold text-secondary">Enhancement opportunity</p><p className="mt-1 text-[11px] leading-4 text-muted-foreground">Use nudges, role-play and peer support before momentum fades.</p></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>

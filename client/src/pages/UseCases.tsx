@@ -269,39 +269,6 @@ const UseCases = () => {
           </div>
         </section>
 
-        <section className="bg-secondary py-24 text-white md:py-28">
-          <div className="container">
-            <div className="grid gap-12 lg:grid-cols-[.78fr_1.22fr] lg:items-start">
-              <div data-aos="fade-right">
-                <p className="text-sm font-semibold uppercase tracking-[.2em] text-[#d2b4ff]">Platform foundation</p>
-                <h2 className="mt-4 text-4xl font-bold tracking-tight md:text-5xl">One platform. Different journeys.</h2>
-                <p className="mt-5 text-lg leading-8 text-white/65">Use cases are not separate products. The same platform capabilities can be configured around different audiences, workflows and outcomes.</p>
-              </div>
-              <div className="grid gap-3 sm:grid-cols-2" data-aos="fade-up">
-                {capabilities.map(([title, description, Icon], index) => (
-                  <div key={title} className="rounded-2xl border border-white/10 bg-white/[.06] p-5">
-                    <div className="flex items-start justify-between"><Icon className="h-5 w-5 text-[#d3b7ff]" aria-hidden="true" /><span className="font-mono text-xs text-white/35">0{index + 1}</span></div>
-                    <h3 className="mt-6 font-semibold">{title}</h3>
-                    <p className="mt-2 text-sm leading-6 text-white/55">{description}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="relative overflow-hidden bg-[#f2edff] py-20 md:py-24">
-          <div className="absolute -right-20 -top-32 h-80 w-80 rounded-full bg-primary/15 blur-3xl" aria-hidden="true" />
-          <div className="container relative flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">Start with the mandate</p>
-              <h2 className="mt-3 max-w-2xl text-3xl font-bold tracking-tight text-secondary md:text-4xl">Start with the mandate that matters now.</h2>
-              <p className="mt-3 max-w-2xl text-muted-foreground">Begin with one focused use case, establish adoption and evidence, then expand as additional departmental needs emerge.</p>
-            </div>
-            <Button onClick={talkToAyla} size="lg" className="shrink-0 rounded-full px-8 py-6">Talk to Ayla <ArrowRight className="h-5 w-5" aria-hidden="true" /></Button>
-          </div>
-        </section>
-
         <section className="bg-background py-24 md:py-32">
           <div className="container">
             <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-secondary via-[#1c2c70] to-primary p-8 text-white md:p-16" data-aos="fade-up">
