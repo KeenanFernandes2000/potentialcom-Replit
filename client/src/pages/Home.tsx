@@ -113,7 +113,7 @@ const aiCapabilities = [
 
 const scaleItems = [
   { icon: Paintbrush, label: "Dedicated deployment" },
-  { icon: Languages, label: "Arabic & English experiences" },
+  { icon: Languages, label: "Multilingual experiences" },
   { icon: Settings, label: "Configurable journeys" },
   { icon: Users, label: "Enterprise roles and administration" },
   { icon: Building2, label: "Integration and deployment options" },
