@@ -182,22 +182,35 @@ const aylaSteps = [
 ];
 
 const CTABanner = () => (
-  <section className="py-16 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #0B1846 0%, #1a2a6c 40%, #8844DD 100%)" }}>
-    <div className="container relative z-10">
-      <div className="max-w-3xl mx-auto text-center" data-aos="fade-up">
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-          Have a programme or initiative in mind?
-        </h2>
-        <p className="text-lg text-white/75 mb-8">
-          Describe what you are trying to achieve and Ayla will help identify the most relevant next step.
-        </p>
-        <Button
-          size="lg"
-          className="rounded-full bg-white text-[#0B1846] hover:bg-white/90 font-semibold px-10 py-6 text-lg shadow-lg"
-          onClick={() => navigateWithUTM("/ayla")}
-        >
-          Talk to Ayla <ArrowRight className="ml-2 h-5 w-5" />
-        </Button>
+  <section id="programme-cta" className="bg-background py-24 md:py-32">
+    <div className="container">
+      <div
+        className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-secondary via-[#1c2c70] to-primary p-8 text-white md:p-16"
+        data-aos="fade-up"
+      >
+        <div
+          className="absolute right-0 top-0 h-72 w-72 translate-x-1/3 -translate-y-1/3 rounded-full bg-white/10 blur-3xl"
+          aria-hidden="true"
+        />
+        <div className="relative max-w-3xl">
+          <p className="text-sm font-semibold uppercase tracking-[.2em] text-[#d2b4ff]">
+            The next conversation
+          </p>
+          <h2 className="mt-5 text-4xl font-bold tracking-tight md:text-6xl">
+            Have a programme or initiative in mind?
+          </h2>
+          <p className="mt-6 max-w-2xl text-lg leading-8 text-white/70">
+            Describe what you are trying to achieve and Ayla will help identify the most relevant
+            next step.
+          </p>
+          <Button
+            size="lg"
+            className="mt-9 rounded-full bg-white px-8 py-6 text-secondary hover:bg-white/90"
+            onClick={() => navigateWithUTM("/ayla")}
+          >
+            Talk to Ayla <ArrowRight className="ml-2 h-5 w-5" />
+          </Button>
+        </div>
       </div>
     </div>
   </section>
