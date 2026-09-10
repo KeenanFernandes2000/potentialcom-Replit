@@ -62,6 +62,7 @@ import wfzoLogo from "@assets/Customer Logos/WFZO logo.png";
 import intelLogo from "@assets/Customer Logos/intel logo.png";
 import aylaHeroImg from "@assets/2.png";
 import globalCollaborationImg from "@/assets/potential-global-collaboration.jpg";
+import journeyVisualImg from "@assets/ChatGPT_Image_Sep_10,_2026,_01_59_16_PM_1789034630381.png";
 
 const clientLogos = [
   { name: "ADGM", logo: adgmLogo },
@@ -462,35 +463,11 @@ const Home = () => {
               </div>
 
               <div className="lg:w-7/12 relative min-h-[390px] flex items-center" data-aos="fade-up" data-aos-delay="200">
-                <div className="relative w-full h-[390px] rounded-3xl overflow-hidden border border-primary/20 bg-secondary shadow-2xl">
-                  <div className="absolute inset-0 bg-grid-pattern opacity-20" />
-                  <div className="absolute -top-20 -right-16 h-64 w-64 rounded-full bg-primary/30 blur-3xl" />
-                  <div className="absolute -bottom-24 -left-12 h-56 w-56 rounded-full bg-accent/30 blur-3xl" />
-                  <div className="absolute left-1/2 top-1/2 h-px w-[72%] -translate-x-1/2 bg-gradient-to-r from-transparent via-primary/70 to-transparent" />
-                  <div className="absolute left-1/2 top-1/2 w-px h-[68%] -translate-y-1/2 bg-gradient-to-b from-transparent via-primary/60 to-transparent" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="relative flex h-28 w-28 items-center justify-center rounded-full border border-white/30 bg-white/10 text-center shadow-lg backdrop-blur-md motion-safe:animate-pulse motion-reduce:animate-none">
-                      <div>
-                        <Network className="mx-auto h-7 w-7 text-white" />
-                        <span className="mt-1 block text-[11px] font-semibold tracking-wide text-white">POTENTIAL</span>
-                      </div>
-                    </div>
-                  </div>
-                  {[
-                    { label: "People", icon: Users, pos: "left-6 top-8" },
-                    { label: "Practice", icon: Target, pos: "right-6 top-8" },
-                    { label: "Participation", icon: HeartHandshake, pos: "left-6 bottom-8" },
-                    { label: "Outcomes", icon: LineChart, pos: "right-6 bottom-8" },
-                  ].map((node, index) => (
-                    <div key={node.label} className={`absolute ${node.pos} flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-3 py-2 text-white backdrop-blur-md transition-transform duration-300 hover:scale-105 motion-reduce:transition-none`} style={{ animationDelay: `${index * 180}ms` }}>
-                      <node.icon className="h-4 w-4 text-primary-foreground" />
-                      <span className="text-xs font-semibold">{node.label}</span>
-                    </div>
-                  ))}
-                  <div className="absolute bottom-4 left-1/2 hidden -translate-x-1/2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] tracking-wide text-white/70 backdrop-blur-md md:block">
-                    from intention → evidence
-                  </div>
-                </div>
+                <img
+                  src={journeyVisualImg}
+                  alt="AI-powered learning and engagement journey from learning and connection to growth, measurable outcomes, and a bigger tomorrow"
+                  className="h-[390px] w-full rounded-3xl object-cover shadow-2xl"
+                />
               </div>
             </div>
           </div>
