@@ -321,4 +321,15 @@ body {
     animation-delay: 0.5s;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    #capabilities [data-aos],
+    #difference [data-aos],
+    #ai-core [data-aos],
+    #audiences [data-aos] {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+
 }

@@ -26,6 +26,12 @@ import {
   Globe,
   Briefcase,
   CheckCircle,
+  Network,
+  HeartHandshake,
+  ShieldCheck,
+  Factory,
+  School,
+  Handshake,
 } from "lucide-react";
 import { navigateWithUTM } from "@/lib/utm-utils";
 
@@ -54,9 +60,8 @@ import unLogo from "@assets/Customer Logos/UN logo.png";
 import visaLogo from "@assets/Customer Logos/Visa logo.png";
 import wfzoLogo from "@assets/Customer Logos/WFZO logo.png";
 import intelLogo from "@assets/Customer Logos/intel logo.png";
-import pitchInfographic from "@assets/Pitch_Infographic_1_1770792455350.png";
-import pitchInfographic2 from "@assets/Pitch_Infographic_2_1770795115206.png";
 import aylaHeroImg from "@assets/2.png";
+import globalCollaborationImg from "@/assets/potential-global-collaboration.jpg";
 
 const clientLogos = [
   { name: "ADGM", logo: adgmLogo },
@@ -114,8 +119,13 @@ const scaleItems = [
 ];
 
 const audiences = [
-  { icon: Landmark, label: "Government" },
-  { icon: Building2, label: "Banks & Major Enterprises" },
+  { icon: Landmark, label: "Governments & Public Sector" },
+  { icon: Building2, label: "Banks & Financial Services" },
+  { icon: Factory, label: "Multinationals & Global Enterprises" },
+  { icon: HeartHandshake, label: "Foundations & Philanthropy" },
+  { icon: School, label: "Educational Institutions" },
+  { icon: ShieldCheck, label: "Non-Profits & NGOs" },
+  { icon: Handshake, label: "Industry Associations & Professional Bodies" },
   { icon: Briefcase, label: "Programme & Initiative Owners" },
 ];
 
@@ -362,7 +372,7 @@ const Home = () => {
         </section>
 
         {/* What You Get */}
-        <section className="py-24 bg-background">
+        <section id="capabilities" className="py-24 bg-background">
           <div className="container">
             <div className="max-w-3xl mx-auto text-center mb-16" data-aos="fade-up">
               <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
@@ -382,29 +392,44 @@ const Home = () => {
               {ecosystemFeatures.map((feature, index) => (
                 <div
                   key={index}
-                  className="glass-effect border border-border p-6 rounded-xl card-hover flex items-start gap-4"
+                  className="group relative overflow-hidden glass-effect border border-border p-6 rounded-2xl card-hover flex items-start gap-4"
                   data-aos="fade-up"
                   data-aos-delay={index * 80}
                 >
+                  <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary/80 via-primary/20 to-transparent opacity-60" />
                   <div className="inline-flex items-center justify-center h-12 w-12 rounded-lg bg-primary/10 text-primary flex-shrink-0">
                     <feature.icon className="h-6 w-6" />
                   </div>
-                  <p className="text-foreground font-medium pt-2">{feature.label}</p>
+                  <div>
+                    <p className="text-foreground font-semibold pt-1">{feature.label}</p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      A purposeful layer in the journey.
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
 
-            <div className="max-w-3xl mx-auto text-center mt-4" data-aos="fade-up">
-              <div className="relative rounded-2xl p-10 overflow-hidden" style={{ background: "linear-gradient(135deg, #0B1846 0%, #1a2a6c 40%, #8844DD 100%)" }}>
-                <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full blur-2xl -mr-20 -mt-20" />
-                <div className="absolute bottom-0 left-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -ml-16 -mb-16" />
+            <div className="max-w-4xl mx-auto mt-4" data-aos="fade-up">
+              <div className="relative rounded-3xl p-8 md:p-10 overflow-hidden bg-secondary text-secondary-foreground">
+                <div className="absolute inset-0 bg-grid-pattern opacity-20" />
                 <div className="relative z-10">
-                  <p className="text-white/70 text-lg mb-2">
-                    One connected audience journey.
-                  </p>
-                  <p className="text-white font-bold text-2xl md:text-3xl">
-                    Learning, participation, engagement and evidence in one experience.
-                  </p>
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div>
+                      <p className="text-white/60 text-sm uppercase tracking-[0.18em] mb-2">Explore the platform</p>
+                      <p className="text-white font-bold text-2xl md:text-3xl max-w-xl">
+                        One connected audience journey, built for what comes next.
+                      </p>
+                    </div>
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="shrink-0 rounded-full border-white/30 bg-white/10 text-white hover:bg-white hover:text-secondary"
+                      onClick={() => navigateWithUTM("/platform")}
+                    >
+                      Explore All Capabilities <ArrowRight className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -412,13 +437,13 @@ const Home = () => {
         </section>
 
         {/* Why It's Different */}
-        <section className="py-24 bg-muted/50 dark:bg-secondary/10">
+        <section id="difference" className="py-24 bg-muted/50 dark:bg-secondary/10">
           <div className="container">
             <div className="mb-10" data-aos="fade-up">
               <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
                 Why It's Different
               </div>
-              <h2 className="section-title whitespace-nowrap">
+              <h2 className="section-title">
                 Designed around your workflow,{" "}
                 <span className="text-primary">not a generic portal.</span>
               </h2>
@@ -436,16 +461,34 @@ const Home = () => {
                 </div>
               </div>
 
-              <div className="lg:w-7/12 relative" data-aos="fade-up" data-aos-delay="200">
-                <div className="relative mx-auto">
-                  <div className="absolute -top-5 -left-5 w-20 h-20 bg-primary/30 rounded-full blur-xl"></div>
-                  <div className="absolute -bottom-8 -right-8 w-28 h-28 bg-secondary/30 rounded-full blur-xl"></div>
-                  <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border border-border">
-                    <img
-                      src={pitchInfographic}
-                      alt="Potential.com - The AI-Powered Empowerment Revolution"
-                      className="w-full h-auto"
-                    />
+              <div className="lg:w-7/12 relative min-h-[390px] flex items-center" data-aos="fade-up" data-aos-delay="200">
+                <div className="relative w-full h-[390px] rounded-3xl overflow-hidden border border-primary/20 bg-secondary shadow-2xl">
+                  <div className="absolute inset-0 bg-grid-pattern opacity-20" />
+                  <div className="absolute -top-20 -right-16 h-64 w-64 rounded-full bg-primary/30 blur-3xl" />
+                  <div className="absolute -bottom-24 -left-12 h-56 w-56 rounded-full bg-accent/30 blur-3xl" />
+                  <div className="absolute left-1/2 top-1/2 h-px w-[72%] -translate-x-1/2 bg-gradient-to-r from-transparent via-primary/70 to-transparent" />
+                  <div className="absolute left-1/2 top-1/2 w-px h-[68%] -translate-y-1/2 bg-gradient-to-b from-transparent via-primary/60 to-transparent" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="relative flex h-28 w-28 items-center justify-center rounded-full border border-white/30 bg-white/10 text-center shadow-lg backdrop-blur-md motion-safe:animate-pulse motion-reduce:animate-none">
+                      <div>
+                        <Network className="mx-auto h-7 w-7 text-white" />
+                        <span className="mt-1 block text-[11px] font-semibold tracking-wide text-white">POTENTIAL</span>
+                      </div>
+                    </div>
+                  </div>
+                  {[
+                    { label: "People", icon: Users, pos: "left-6 top-8" },
+                    { label: "Practice", icon: Target, pos: "right-6 top-8" },
+                    { label: "Participation", icon: HeartHandshake, pos: "left-6 bottom-8" },
+                    { label: "Outcomes", icon: LineChart, pos: "right-6 bottom-8" },
+                  ].map((node, index) => (
+                    <div key={node.label} className={`absolute ${node.pos} flex items-center gap-2 rounded-xl border border-white/15 bg-white/10 px-3 py-2 text-white backdrop-blur-md transition-transform duration-300 hover:scale-105 motion-reduce:transition-none`} style={{ animationDelay: `${index * 180}ms` }}>
+                      <node.icon className="h-4 w-4 text-primary-foreground" />
+                      <span className="text-xs font-semibold">{node.label}</span>
+                    </div>
+                  ))}
+                  <div className="absolute bottom-4 left-1/2 hidden -translate-x-1/2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] tracking-wide text-white/70 backdrop-blur-md md:block">
+                    from intention → evidence
                   </div>
                 </div>
               </div>
@@ -517,10 +560,10 @@ const Home = () => {
         </section>
 
         {/* AI at the Core */}
-        <section className="py-24 bg-background">
+        <section id="ai-core" className="py-24 bg-background">
           <div className="container">
             <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-16" data-aos="fade-up">
+              <div className="text-center mb-16">
                 <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
                   AI at the Core
                 </div>
@@ -534,20 +577,64 @@ const Home = () => {
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-                {aiCapabilities.map((item, index) => (
-                  <div
-                    key={index}
-                    className="glass-effect border border-border p-6 rounded-xl card-hover flex items-start gap-4"
-                    data-aos="fade-up"
-                    data-aos-delay={index * 80}
-                  >
-                    <div className="inline-flex items-center justify-center h-12 w-12 rounded-lg bg-primary/10 text-primary flex-shrink-0">
-                      <item.icon className="h-6 w-6" />
+              <div className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl border border-border bg-muted/30 min-h-0 md:min-h-[520px]">
+                <div className="absolute inset-0 bg-grid-pattern opacity-50" />
+                <div className="relative z-10 flex flex-col gap-6 p-5 md:hidden">
+                  <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-secondary text-white shadow-xl shadow-secondary/20 motion-safe:animate-pulse motion-reduce:animate-none">
+                    <div className="text-center">
+                      <Bot className="mx-auto mb-1 h-6 w-6 text-primary" />
+                      <span className="block text-[10px] font-semibold tracking-[0.16em]">AI CORE</span>
                     </div>
-                    <p className="text-foreground font-medium pt-2">{item.label}</p>
                   </div>
-                ))}
+                  <div className="grid grid-cols-1 gap-3">
+                    {aiCapabilities.map((item) => (
+                      <div key={item.label} className="group rounded-2xl border border-border bg-background/90 p-3 shadow-sm backdrop-blur-sm transition duration-300 hover:border-primary/50 motion-reduce:transition-none">
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+                            <item.icon className="h-4 w-4" />
+                          </div>
+                          <p className="text-sm font-semibold leading-snug text-foreground">{item.label}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-center text-xs text-muted-foreground">Six ways to make every journey more useful</p>
+                </div>
+                <div className="relative hidden min-h-[520px] md:block">
+                  <div className="absolute inset-0" />
+                  <div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/20 motion-safe:animate-[spin_32s_linear_infinite] motion-reduce:animate-none" />
+                  <div className="absolute left-1/2 top-1/2 h-44 w-44 -translate-x-1/2 -translate-y-1/2 rounded-full border border-primary/20 border-dashed motion-safe:animate-[spin_22s_linear_infinite_reverse] motion-reduce:animate-none" />
+                  <div className="absolute left-1/2 top-1/2 z-10 flex h-32 w-32 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-secondary text-white shadow-xl shadow-secondary/20">
+                    <div className="text-center">
+                      <Bot className="mx-auto mb-2 h-7 w-7 text-primary" />
+                      <span className="block text-xs font-semibold tracking-[0.16em]">AI CORE</span>
+                      <span className="block mt-1 text-[10px] text-white/55">human-led, useful</span>
+                    </div>
+                  </div>
+                {aiCapabilities.map((item, index) => {
+                  const positions = [
+                    "left-5 top-6 md:left-12 md:top-12",
+                    "right-5 top-6 md:right-12 md:top-12",
+                    "left-5 top-1/2 -translate-y-1/2 md:left-8",
+                    "right-5 top-1/2 -translate-y-1/2 md:right-8",
+                    "left-5 bottom-6 md:left-12 md:bottom-12",
+                    "right-5 bottom-6 md:right-12 md:bottom-12",
+                  ];
+                  return (
+                    <div key={item.label} className={`group absolute ${positions[index]} z-20 w-48 rounded-2xl border border-border bg-background/90 p-3 md:p-4 shadow-lg backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-primary/10 motion-reduce:transition-none`} data-aos="fade-up" data-aos-delay={index * 80}>
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+                          <item.icon className="h-4 w-4" />
+                        </div>
+                        <p className="text-xs md:text-sm font-semibold leading-snug text-foreground">{item.label}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-center text-xs text-muted-foreground">
+                  Six ways to make every journey more useful
+                </div>
+                </div>
               </div>
 
             </div>
@@ -606,7 +693,7 @@ const Home = () => {
         </section>
 
         {/* Who It's For */}
-        <section className="py-24 bg-background">
+        <section id="audiences" className="py-24 bg-background">
           <div className="container">
             <div className="mb-10" data-aos="fade-up">
               <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
@@ -620,18 +707,18 @@ const Home = () => {
 
             <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 items-start">
               <div className="lg:w-5/12" data-aos="fade-right">
-                <div className="grid grid-cols-2 gap-4 mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
                   {audiences.map((item, index) => (
                     <div
                       key={index}
-                      className="glass-effect border border-border p-5 rounded-xl card-hover text-center"
+                      className="group glass-effect border border-border p-3 md:p-4 rounded-2xl card-hover flex items-center gap-3 min-h-[72px]"
                       data-aos="fade-up"
                       data-aos-delay={index * 80}
                     >
-                      <div className="inline-flex items-center justify-center h-12 w-12 rounded-xl bg-primary/10 text-primary mb-3">
-                        <item.icon className="h-6 w-6" />
+                      <div className="inline-flex items-center justify-center h-10 w-10 rounded-xl bg-primary/10 text-primary shrink-0 transition-colors group-hover:bg-primary group-hover:text-white">
+                        <item.icon className="h-5 w-5" />
                       </div>
-                      <p className="text-foreground font-semibold text-sm">{item.label}</p>
+                      <p className="text-foreground font-semibold text-xs sm:text-sm leading-snug">{item.label}</p>
                     </div>
                   ))}
                 </div>
@@ -645,15 +732,25 @@ const Home = () => {
               </div>
 
               <div className="lg:w-7/12 relative" data-aos="fade-up" data-aos-delay="200">
-                <div className="relative mx-auto">
-                  <div className="absolute -top-5 -left-5 w-20 h-20 bg-primary/30 rounded-full blur-xl"></div>
-                  <div className="absolute -bottom-8 -right-8 w-28 h-28 bg-secondary/30 rounded-full blur-xl"></div>
-                  <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border border-border">
-                    <img
-                      src={pitchInfographic2}
-                      alt="Potential.com - Empowering People and Organizations at Scale"
-                      className="w-full h-auto"
-                    />
+                <div className="relative mx-auto overflow-hidden rounded-3xl border border-border shadow-2xl">
+                  <img
+                    src={globalCollaborationImg}
+                    alt="Diverse professionals collaborating across an international organisation"
+                    className="h-[430px] w-full object-cover"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-secondary/90 via-secondary/10 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 p-6 md:p-8">
+                    <div className="mb-4 flex items-center gap-2 text-white/65">
+                      <Globe className="h-4 w-4" />
+                      <span className="text-xs font-semibold uppercase tracking-[0.2em]">One platform, many contexts</span>
+                    </div>
+                    <p className="max-w-md text-xl font-semibold leading-snug text-white md:text-2xl">
+                      Different mandates. Shared momentum. Measurable progress.
+                    </p>
+                  </div>
+                  <div className="absolute right-5 top-5 rounded-full border border-white/25 bg-white/15 px-3 py-1.5 text-xs text-white backdrop-blur-md">
+                    Built for the world
                   </div>
                 </div>
               </div>
