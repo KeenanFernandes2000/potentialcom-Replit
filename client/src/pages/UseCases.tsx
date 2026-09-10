@@ -343,7 +343,7 @@ const UseCases = () => {
 
         <section className="bg-background py-24 md:py-32 pt-[40px] pb-[40px]">
           <div className="container">
-            <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-secondary via-[#1c2c70] to-primary p-8 text-white md:p-16" data-aos="fade-up">
+            <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-secondary via-[#1c2c70] to-primary px-8 py-10 text-white md:px-16 md:py-10" data-aos="fade-up">
               <div className="absolute right-0 top-0 h-72 w-72 translate-x-1/3 -translate-y-1/3 rounded-full bg-white/10 blur-3xl" aria-hidden="true" />
               <div className="relative max-w-3xl">
                 <p className="text-sm font-semibold uppercase tracking-[.2em] text-[#d2b4ff]">The next conversation</p>
