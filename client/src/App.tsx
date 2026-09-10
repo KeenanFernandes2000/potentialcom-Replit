@@ -36,11 +36,13 @@ import YearOfFamily from "@/pages/YearOfFamily";
 import NationalPrograms from "@/pages/NationalPrograms";
 import Book from "@/pages/Book";
 import CaseStudies from "@/pages/CaseStudies";
+import Platform from "@/pages/Platform";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/platform" component={Platform} />
       <Route path="/solutions" component={Offerings} />
       <Route path="/resources" component={Resources} />
       <Route path="/pricing" component={Pricing} />
