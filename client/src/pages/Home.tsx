@@ -357,39 +357,41 @@ const Home = () => {
         {/* What We Do */}
         <section id="what-we-do" className="py-24 bg-muted/50 dark:bg-secondary/10">
           <div className="container">
-            <div className="max-w-4xl mx-auto text-center" data-aos="fade-up">
-              <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-                What We Do
+            <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[.8fr_1.2fr] lg:gap-16">
+              <div className="max-w-xl" data-aos="fade-right">
+                <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+                  What We Do
+                </div>
+                <h2 className="section-title mb-6">
+                  One platform around the{" "}
+                  <span className="text-primary">journey you need to deliver.</span>
+                </h2>
+                <p className="text-lg leading-relaxed text-muted-foreground">
+                  Organisations can build a dedicated experience around their audience and mandate,
+                  helping people learn, practise, contribute, qualify or connect while programme
+                  owners manage participation, engagement and outcomes.
+                </p>
               </div>
-              <h2 className="section-title text-center mb-6">
-                One platform around the{" "}
-                <span className="text-primary">journey you need to deliver.</span>
-              </h2>
-              <p className="text-lg text-muted-foreground mb-6">
-                Organisations can build a dedicated experience around their audience and mandate,
-                helping people learn, practise, contribute, qualify or connect while programme
-                owners manage participation, engagement and outcomes.
-              </p>
-            </div>
 
-            <div className="relative mx-auto mt-12 max-w-6xl" data-aos="fade-up">
-              <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-primary/25 via-transparent to-accent/25 blur-2xl" aria-hidden="true" />
-              <div className="relative overflow-hidden rounded-[2rem] border border-border bg-secondary p-2 shadow-2xl md:p-3">
-                <div className="relative overflow-hidden rounded-[1.5rem]">
-                  <img
-                    src={whatWeDoVisualImg}
-                    alt="Connected learning and engagement journeys for learning, practice, contribution, qualification, connection, and measurable outcomes"
-                    className="aspect-[16/9] w-full object-cover"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-secondary/85 via-secondary/20 to-transparent px-5 pb-5 pt-16 md:px-8 md:pb-7" aria-hidden="true" />
-                  <div className="absolute bottom-5 left-5 right-5 flex flex-wrap items-center justify-between gap-3 md:bottom-7 md:left-8 md:right-8">
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/80 md:text-sm">
-                      One connected journey
-                    </p>
-                    <span className="rounded-full border border-white/25 bg-white/15 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-md">
-                      Learn · Practise · Progress
-                    </span>
+              <div className="relative w-full lg:max-w-2xl lg:justify-self-end" data-aos="fade-left">
+                <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-primary/25 via-transparent to-accent/25 blur-2xl" aria-hidden="true" />
+                <div className="relative overflow-hidden rounded-[2rem] border border-border bg-secondary p-2 shadow-2xl md:p-3">
+                  <div className="relative overflow-hidden rounded-[1.5rem]">
+                    <img
+                      src={whatWeDoVisualImg}
+                      alt="Connected learning and engagement journeys for learning, practice, contribution, qualification, connection, and measurable outcomes"
+                      className="aspect-[16/9] w-full object-cover"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-secondary/85 via-secondary/20 to-transparent px-5 pb-5 pt-16 md:px-6 md:pb-6" aria-hidden="true" />
+                    <div className="absolute bottom-5 left-5 right-5 flex flex-wrap items-center justify-between gap-3 md:bottom-6 md:left-6 md:right-6">
+                      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/80">
+                        One connected journey
+                      </p>
+                      <span className="rounded-full border border-white/25 bg-white/15 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-md">
+                        Learn · Practise · Progress
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
