@@ -61,9 +61,9 @@ import visaLogo from "@assets/Customer Logos/Visa logo.png";
 import wfzoLogo from "@assets/Customer Logos/WFZO logo.png";
 import intelLogo from "@assets/Customer Logos/intel logo.png";
 import aylaHeroImg from "@assets/2.png";
-import globalCollaborationImg from "@/assets/potential-global-collaboration.jpg";
 import journeyVisualImg from "@assets/ChatGPT_Image_Sep_10,_2026,_01_59_16_PM_1789034630381.png";
 import aiCoreVisualImg from "@assets/ChatGPT_Image_Sep_10,_2026,_02_14_52_PM_1789035344777.png";
+import globalPeopleVisualImg from "@assets/ChatGPT_Image_Sep_10,_2026,_02_20_30_PM_1789035666637.png";
 
 const clientLogos = [
   { name: "ADGM", logo: adgmLogo },
@@ -678,8 +678,8 @@ const Home = () => {
               <div className="lg:w-7/12 relative" data-aos="fade-up" data-aos-delay="200">
                 <div className="relative mx-auto overflow-hidden rounded-3xl border border-border shadow-2xl">
                   <img
-                    src={globalCollaborationImg}
-                    alt="Diverse professionals collaborating across an international organisation"
+                    src={globalPeopleVisualImg}
+                    alt="A diverse group of professionals representing different roles and industries"
                     className="h-[430px] w-full object-cover"
                     loading="lazy"
                   />
