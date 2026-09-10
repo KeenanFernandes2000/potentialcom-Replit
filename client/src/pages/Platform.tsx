@@ -476,14 +476,6 @@ const Platform = () => {
           </div>
         </section>
 
-        <section className="relative overflow-hidden bg-[#f2edff] py-20 md:py-24">
-          <div className="absolute -right-20 -top-32 h-80 w-80 rounded-full bg-primary/15 blur-3xl" />
-          <div className="container relative flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
-            <div><h2 className="max-w-2xl text-3xl font-bold tracking-tight text-secondary md:text-4xl">Have an initiative in mind?</h2><p className="mt-3 max-w-2xl text-muted-foreground">Tell Ayla about the audience, mandate and challenge. She will help identify the most relevant platform approach and connect you with our team where there is a fit.</p></div>
-            <Button onClick={talkToAyla} size="lg" className="shrink-0 rounded-full px-8 py-6">Talk to Ayla <ArrowRight className="h-5 w-5" /></Button>
-          </div>
-        </section>
-
         <section className="bg-background py-24 md:py-32">
           <div className="container">
             <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-secondary via-[#1c2c70] to-primary p-8 text-white md:p-16" data-aos="fade-up">
