@@ -571,28 +571,15 @@ const Home = () => {
               ))}
             </div>
 
-            <div className="max-w-4xl mx-auto mt-4" data-aos="fade-up">
-              <div className="relative rounded-3xl p-8 md:p-10 overflow-hidden bg-secondary text-secondary-foreground">
-                <div className="absolute inset-0 bg-grid-pattern opacity-20" />
-                <div className="relative z-10">
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                    <div>
-                      <p className="text-white/60 text-sm uppercase tracking-[0.18em] mb-2">Explore the platform</p>
-                      <p className="text-white font-bold text-2xl md:text-3xl max-w-xl">
-                        One connected audience journey, built for what comes next.
-                      </p>
-                    </div>
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      className="shrink-0 rounded-full border-white/30 bg-white/10 text-white hover:bg-white hover:text-secondary"
-                      onClick={() => navigateWithUTM("/platform")}
-                    >
-                      Explore All Capabilities <ArrowRight className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              </div>
+            <div className="mt-8 flex justify-center" data-aos="fade-up">
+              <Button
+                size="lg"
+                variant="outline"
+                className="rounded-full border-border bg-muted px-8 text-muted-foreground hover:bg-muted/80 hover:text-foreground"
+                onClick={() => navigateWithUTM("/platform")}
+              >
+                Explore All Capabilities <ArrowRight className="h-4 w-4" />
+              </Button>
             </div>
           </div>
         </section>
