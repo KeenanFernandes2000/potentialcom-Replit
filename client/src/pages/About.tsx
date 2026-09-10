@@ -31,9 +31,8 @@ export default function About() {
                 About Potential.com
               </h1>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                For over 20 years, we've been empowering millions
-                globally—helping businesses, governments, and communities
-                unleash their full potential.
+                For over 20 years, we have helped governments, enterprises and
+                communities build capability, engage people and create measurable progress.
               </p>
             </div>
 
@@ -50,13 +49,13 @@ export default function About() {
                   adapting to it.
                 </p>
                 <p className="text-lg mb-6">
-                  Today, we're revolutionizing industries through practical,
-                  rapidly-deployable AI Agents, instantly expanding teams,
-                  boosting productivity, and redefining possibilities.
+                  Today, that experience is embedded in an AI-powered Learning &amp;
+                  Engagement Platform for governments and enterprises — bringing
+                  audience journeys, programme operations and evidence into one dedicated experience.
                 </p>
                 <p className="text-lg font-medium">
-                  At Potential.com, the future isn't coming—it's already here.
-                  Join us, and unlock your limitless potential.
+                  Empowerment remains our mission. The platform helps organisations
+                  turn that mission into structured learning, engagement and measurable outcomes.
                 </p>
               </div>
               <div className="bg-muted/30 backdrop-blur-sm rounded-lg p-8 shadow-lg border border-border">
@@ -68,7 +67,7 @@ export default function About() {
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-primary mr-3 mt-1" />
-                    <span>Practical and rapidly-deployable AI solutions</span>
+                    <span>AI-powered learning and engagement journeys</span>
                   </li>
                   <li className="flex items-start">
                     <Check className="h-5 w-5 text-primary mr-3 mt-1" />
@@ -109,10 +108,8 @@ export default function About() {
                 </div>
                 <h3 className="text-xl font-bold mb-3">Practical Solutions</h3>
                 <p className="text-muted-foreground">
-                  Effective empowerment starts with solutions that are easy to
-                  understand, quick to implement, and deliver measurable
-                  results. We focus on practical applications that drive real
-                  value.
+                   Effective empowerment starts with clear audience needs,
+                   practical journeys and evidence that programme owners can use.
                 </p>
               </div>
 
@@ -151,19 +148,18 @@ export default function About() {
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold mb-4">
-                Amplifying Potential with AI
+                 AI Embedded Where It Adds Value
               </h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Today, we're leveraging our proven methodology to empower
-                organizations through the most transformative technology yet:
-                Artificial Intelligence
+                 AI supports learning, engagement, guidance, personalization and
+                 analysis across the platform journey.
               </p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
               <div>
                 <h3 className="text-2xl font-bold mb-6">
-                  How We Amplify Intelligence
+                   How AI Supports the Platform
                 </h3>
                 <div className="space-y-6">
                   <div className="flex items-start">
@@ -172,12 +168,11 @@ export default function About() {
                     </div>
                     <div>
                       <h4 className="font-semibold mb-1">
-                        Amplify Human Capabilities
+                         Personalized Learning
                       </h4>
                       <p className="text-muted-foreground">
-                        Our AI agents work alongside human teams, automating
-                        routine tasks and freeing employees for strategic,
-                        high-value activities.
+                         Tailor guidance, content and next steps to role, context
+                         and progress where appropriate.
                       </p>
                     </div>
                   </div>
@@ -188,12 +183,11 @@ export default function About() {
                     </div>
                     <div>
                       <h4 className="font-semibold mb-1">
-                        Instant Productivity Gains
+                         Coaching and Guidance
                       </h4>
                       <p className="text-muted-foreground">
-                        AI-driven chat and voice bots dramatically enhance
-                        internal and external communication, delivering
-                        immediate productivity boosts.
+                         Give participants contextual support, practice and
+                         feedback alongside human-led learning and coaching.
                       </p>
                     </div>
                   </div>
@@ -203,11 +197,10 @@ export default function About() {
                       <Award className="h-6 w-6 text-primary" />
                     </div>
                     <div>
-                      <h4 className="font-semibold mb-1">Process Automation</h4>
+                       <h4 className="font-semibold mb-1">Engagement Insights</h4>
                       <p className="text-muted-foreground">
-                        Rapid and accurate process automation reduces
-                        operational costs, increases operational accuracy, and
-                        enables faster decision-making.
+                         Help programme teams understand participation, progress
+                         and where timely intervention may be useful.
                       </p>
                     </div>
                   </div>
@@ -218,12 +211,11 @@ export default function About() {
                     </div>
                     <div>
                       <h4 className="font-semibold mb-1">
-                        Innovation Acceleration
+                         Leadership Analysis
                       </h4>
                       <p className="text-muted-foreground">
-                        AI's rapid prototyping capabilities allow organizations
-                        to validate new ideas swiftly, reducing traditional
-                        development cycles from months to days.
+                         Support interpretation of programme evidence, outcome
+                         signals and impact reporting for informed decisions.
                       </p>
                     </div>
                   </div>
@@ -232,42 +224,30 @@ export default function About() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="bg-muted/50 backdrop-blur-sm rounded-lg p-6 shadow-md border border-border text-center">
-                  <div className="text-4xl font-bold text-primary mb-2">
-                    51%
-                  </div>
+                  <div className="text-2xl font-bold text-primary mb-2">Learning</div>
                   <p className="text-muted-foreground">
-                    of consumers prefer interactions with AI due to 24/7
-                    availability and quicker resolutions
+                    Personalised pathways, content support and role-relevant practice.
                   </p>
                 </div>
 
                 <div className="bg-muted/50 backdrop-blur-sm rounded-lg p-6 shadow-md border border-border text-center">
-                  <div className="text-4xl font-bold text-primary mb-2">
-                    30%
-                  </div>
+                  <div className="text-2xl font-bold text-primary mb-2">Guidance</div>
                   <p className="text-muted-foreground">
-                    reduction in operational costs reported by companies using
-                    AI-driven automation
+                    AI coaching and knowledge support configured around the initiative.
                   </p>
                 </div>
 
                 <div className="bg-muted/50 backdrop-blur-sm rounded-lg p-6 shadow-md border border-border text-center">
-                  <div className="text-4xl font-bold text-primary mb-2">
-                    77%
-                  </div>
+                  <div className="text-2xl font-bold text-primary mb-2">Engagement</div>
                   <p className="text-muted-foreground">
-                    of organizations recognize the importance of AI for
-                    organizational success
+                    Timely prompts and insights that help programme teams support participation.
                   </p>
                 </div>
 
                 <div className="bg-muted/50 backdrop-blur-sm rounded-lg p-6 shadow-md border border-border text-center">
-                  <div className="text-4xl font-bold text-primary mb-2">
-                    20-30%
-                  </div>
+                  <div className="text-2xl font-bold text-primary mb-2">Evidence</div>
                   <p className="text-muted-foreground">
-                    productivity loss from manual tasks that can be automated
-                    with AI solutions
+                    Analysis that helps leadership interpret progress, outcomes and impact reporting.
                   </p>
                 </div>
               </div>
@@ -315,12 +295,19 @@ export default function About() {
             </div>
 
             <div className="text-center">
+              <h3 className="text-2xl font-bold mb-3">
+                What mandate is your organisation working on?
+              </h3>
+              <p className="text-muted-foreground max-w-2xl mx-auto mb-6">
+                Tell Ayla about your audience and initiative. She will help identify
+                the most relevant path and connect you with our team where there is a fit.
+              </p>
               <Button
                 size="lg"
                 className="rounded-full px-8 gtm-about-partner-with-us"
-                onClick={() => navigateWithUTM("/partner")}
+                 onClick={() => navigateWithUTM("/ayla")}
               >
-                Partner With Us
+                 Talk to Ayla
               </Button>
             </div>
           </div>

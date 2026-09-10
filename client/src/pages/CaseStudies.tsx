@@ -550,9 +550,9 @@ const CaseStudies = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO
-        title="Case Studies - Real Impact, Measurable Results | Potential.com"
-        description="Explore Potential.com case studies across AI, entrepreneurship, women empowerment, youth innovation and more. Real programs delivering measurable impact for global brands and governments."
-        keywords="Potential.com case studies, AI programs, empowerment, impact, BMW, PepsiCo, Microsoft, HSBC, Cartier, Airbus, Dell, Intel"
+        title="Case Studies - Delivered Learning & Engagement Initiatives | Potential.com"
+        description="Explore initiatives Potential has delivered across learning, certification, engagement, innovation, mentorship and capability development for governments and enterprises."
+        keywords="Potential.com case studies, learning and engagement platform, certification, innovation, mentorship, capability development, governments, enterprises"
         url="https://www.potential.com/case-studies"
       />
       <Header />
@@ -567,17 +567,17 @@ const CaseStudies = () => {
           <div className="container relative z-10 text-center">
             <span className="inline-flex items-center gap-2 px-4 py-1.5 mb-5 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 text-white text-sm font-semibold">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              20+ Years of Empowerment
+              20+ Years of Delivered Initiatives
             </span>
             <h1 className="text-4xl md:text-6xl font-extrabold mb-4 leading-[1.05] text-white">
-              Measurable Impact.{" "}
+              Delivered Initiatives.{" "}
               <span className="bg-gradient-to-r from-amber-300 via-pink-200 to-white bg-clip-text text-transparent">
-                Real Change.
+                Credible Evidence.
               </span>
             </h1>
             <p className="max-w-2xl mx-auto text-base md:text-lg text-white/85 mb-8">
-              AI-powered programs and solutions that empower people, engage
-              stakeholders, and deliver measurable outcomes worldwide.
+              Evidence from learning, certification, engagement, innovation,
+              mentorship and capability initiatives delivered for governments and enterprises.
             </p>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-3xl mx-auto">
@@ -645,12 +645,11 @@ const CaseStudies = () => {
           <div className="container">
             <FadeIn className="text-center mb-10">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Explore Our Case Studies
+                Evidence from Delivered Initiatives
               </h2>
               <p className="max-w-2xl mx-auto text-muted-foreground">
-                Programs and campaigns we've delivered for leading brands,
-                governments, and organizations worldwide. Filter by industry and
-                use case to explore.
+                Explore platforms, programmes and campaigns delivered for leading
+                governments and enterprises. Filter by industry and use case.
               </p>
             </FadeIn>
 
@@ -778,7 +777,7 @@ const CaseStudies = () => {
           <div className="container">
             <FadeIn className="text-center mb-14">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Why Potential.com — Built on Experience. Powered by AI.
+                 Experience Across the Learning & Engagement Journey
               </h2>
             </FadeIn>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
@@ -786,17 +785,17 @@ const CaseStudies = () => {
                 {
                   icon: Users,
                   title: "Deep Expertise",
-                  text: "20 years designing and delivering empowerment, innovation and stakeholder engagement programs.",
+                   text: "20 years designing and delivering learning, capability, innovation and stakeholder engagement programmes.",
                 },
                 {
                   icon: Rocket,
                   title: "End-to-End Capability",
-                  text: "From strategy and content to engagement, delivery, mentorship, selection, marketplace and reporting.",
+                   text: "Experience across learning, certification, engagement, mentorship, selection, communities and reporting.",
                 },
                 {
                   icon: BarChart3,
                   title: "Measurable Outcomes",
-                  text: "Data-driven insights, behaviour change and impact reporting that demonstrate real value.",
+                   text: "Participation, progress, outcome and impact reporting that gives programme owners and leadership clearer evidence.",
                 },
                 {
                   icon: Globe,
@@ -811,7 +810,7 @@ const CaseStudies = () => {
                 {
                   icon: Rocket,
                   title: "AI-Enabled Advantage",
-                  text: "Unlock scale, speed, personalization and measurable impact across every stage of the participant journey.",
+                   text: "AI support for guidance, personalization and analysis where it adds value across the participant journey.",
                 },
               ].map((item, i) => (
                 <FadeIn key={item.title} delay={(i % 3) * 100}>
@@ -840,7 +839,7 @@ const CaseStudies = () => {
                   <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-primary/10">
                     <img
                       src={aylaHeroImg}
-                      alt="Ayla - Your AI Empowerment Advisor"
+                      alt="Ayla - Potential's AI advisor"
                       className="w-full h-auto"
                     />
                   </div>
@@ -855,10 +854,11 @@ const CaseStudies = () => {
                   Meet Ayla
                 </div>
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
-                  Talk to <span className="text-primary">Ayla</span>, Your AI Empowerment Advisor
+                  Planning a similar <span className="text-primary">initiative?</span>
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed max-w-lg">
-                  Have a conversation with Ayla to explore how to launch, scale, or improve your programs and initiatives — completely free. Get personalized AI-powered guidance in minutes.
+                  Tell Ayla about your mandate, audience and timing. She will help identify
+                  the most relevant Potential journey and connect you with our team where there is a fit.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 pt-2">
                   <Button
