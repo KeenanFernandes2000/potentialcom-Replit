@@ -138,7 +138,7 @@ const useCases = [
   },
   {
     number: "13",
-    title: "Return-to-Work / Employability",
+    title: "Employability",
     description:
       "Combine learning, coaching, mentorship, events, applications and employability milestones in one participant journey.",
     icon: Rocket,
@@ -272,7 +272,7 @@ const UseCases = () => {
           </div>
         </section>
 
-        <section className="bg-background py-24 md:py-32">
+        <section className="bg-background py-24 md:py-32 pt-[40px] pb-[40px]">
           <div className="container">
             <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-secondary via-[#1c2c70] to-primary p-8 text-white md:p-16" data-aos="fade-up">
               <div className="absolute right-0 top-0 h-72 w-72 translate-x-1/3 -translate-y-1/3 rounded-full bg-white/10 blur-3xl" aria-hidden="true" />
