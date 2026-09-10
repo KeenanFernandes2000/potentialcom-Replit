@@ -4,21 +4,44 @@ import Footer from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { navigateWithUTM } from "@/lib/utm-utils";
+import useCasesHeroImage from "@assets/ChatGPT_Image_Sep_10,_2026,_04_09_31_PM_1789042210041.png";
+import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
+import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
+import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
+import cartierLogo from "@assets/Customer Logos/Cartier logo.png";
+import ciscoLogo from "@assets/Customer Logos/Cisco Logo.png";
+import dctLogo from "@assets/Customer Logos/DCT Logo.png";
+import dldLogo from "@assets/Customer Logos/DLD Logo.png";
+import dellLogo from "@assets/Customer Logos/Dell logo.png";
+import edbLogo from "@assets/Customer Logos/EDB logo.png";
+import fordLogo from "@assets/Customer Logos/Ford logo.png";
+import googleLogo from "@assets/Customer Logos/Google logo.png";
+import govAbuDhabiLogo from "@assets/Customer Logos/Government of Abu Dhabi logo.png";
+import govDubaiLogo from "@assets/Customer Logos/Government of Dubai logo.png";
+import hsbcLogo from "@assets/Customer Logos/HSBC logo.png";
+import inditexLogo from "@assets/Customer Logos/Inditex logo.png";
+import intelLogo from "@assets/Customer Logos/intel logo.png";
+import khalifaFundLogo from "@assets/Customer Logos/Khalifa Fund logo.png";
+import mbcLogo from "@assets/Customer Logos/MBC logo.png";
+import microsoftLogo from "@assets/Customer Logos/Microsoft logo.png";
+import nestleLogo from "@assets/Customer Logos/Nestle Logo.png";
+import pepsicoLogo from "@assets/Customer Logos/Pepsico logo.png";
+import unWomenLogo from "@assets/Customer Logos/UN Women logo.png";
+import unLogo from "@assets/Customer Logos/UN logo.png";
+import visaLogo from "@assets/Customer Logos/Visa logo.png";
+import wfzoLogo from "@assets/Customer Logos/WFZO logo.png";
 import {
   ArrowRight,
-  ArrowUpRight,
   Award,
   Banknote,
   BookOpen,
   Building2,
-  Check,
   ChevronRight,
   ClipboardCheck,
   GraduationCap,
   Handshake,
   HeartPulse,
   Lightbulb,
-  LineChart,
   Network,
   Rocket,
   ShieldCheck,
@@ -26,6 +49,34 @@ import {
   Target,
   UsersRound,
 } from "lucide-react";
+
+const clientLogos = [
+  { name: "ADGM", logo: adgmLogo },
+  { name: "Airbus", logo: airbusLogo },
+  { name: "Bank Muscat", logo: bankMuscatLogo },
+  { name: "Cartier", logo: cartierLogo },
+  { name: "Cisco", logo: ciscoLogo },
+  { name: "DCT", logo: dctLogo },
+  { name: "DLD", logo: dldLogo },
+  { name: "Dell", logo: dellLogo },
+  { name: "EDB", logo: edbLogo },
+  { name: "Ford", logo: fordLogo },
+  { name: "Google", logo: googleLogo },
+  { name: "Government of Abu Dhabi", logo: govAbuDhabiLogo },
+  { name: "Government of Dubai", logo: govDubaiLogo },
+  { name: "HSBC", logo: hsbcLogo },
+  { name: "Inditex", logo: inditexLogo },
+  { name: "Intel", logo: intelLogo },
+  { name: "Khalifa Fund", logo: khalifaFundLogo },
+  { name: "MBC", logo: mbcLogo },
+  { name: "Microsoft", logo: microsoftLogo },
+  { name: "Nestle", logo: nestleLogo },
+  { name: "PepsiCo", logo: pepsicoLogo },
+  { name: "UN Women", logo: unWomenLogo },
+  { name: "United Nations", logo: unLogo },
+  { name: "Visa", logo: visaLogo },
+  { name: "WFZO", logo: wfzoLogo },
+];
 
 const useCases = [
   {
@@ -212,32 +263,11 @@ const UseCases = () => {
               <div className="relative" data-aos="fade-up" data-aos-delay="140">
                 <div className="absolute -inset-5 rounded-[2rem] bg-gradient-to-br from-primary/40 via-transparent to-[#e6b86e]/30 blur-2xl" aria-hidden="true" />
                 <div className="relative overflow-hidden rounded-[1.8rem] border border-white/15 bg-secondary/80 p-2 shadow-2xl">
-                  <div className="rounded-[1.35rem] border border-white/10 bg-[#151e52] p-5 md:p-7">
-                    <div className="flex items-center justify-between border-b border-white/10 pb-5">
-                      <div className="flex items-center gap-2 text-sm font-semibold text-white">
-                        <LineChart className="h-5 w-5 text-[#d3b7ff]" aria-hidden="true" />
-                        Initiative overview
-                      </div>
-                      <span className="rounded-full bg-white/10 px-3 py-1 text-xs text-white/60">Illustrative</span>
-                    </div>
-                    <div className="mt-6 rounded-2xl bg-white/[.08] p-5">
-                      <p className="text-xs uppercase tracking-[.18em] text-white/45">Priority journey</p>
-                      <p className="mt-2 text-2xl font-semibold text-white">Capability to impact</p>
-                      <div className="mt-7 flex items-end gap-2" aria-label="Illustrative progress chart">
-                        {[34, 47, 42, 60, 56, 74, 68, 86, 92].map((height, index) => (
-                          <div key={height + index} className="flex-1 rounded-t-md bg-gradient-to-t from-primary to-[#d7bcff]" style={{ height: `${height}px`, opacity: 0.45 + index / 20 }} />
-                        ))}
-                      </div>
-                    </div>
-                    <div className="mt-3 grid grid-cols-2 gap-3">
-                      <div className="rounded-2xl bg-white/[.08] p-4"><Building2 className="mb-5 h-5 w-5 text-[#f3c57a]" aria-hidden="true" /><p className="text-lg font-semibold text-white">Dedicated</p><p className="mt-1 text-xs text-white/50">To your mandate</p></div>
-                      <div className="rounded-2xl bg-white/[.08] p-4"><Check className="mb-5 h-5 w-5 text-[#8ee0d1]" aria-hidden="true" /><p className="text-lg font-semibold text-white">Connected</p><p className="mt-1 text-xs text-white/50">Across the journey</p></div>
-                    </div>
-                    <div className="mt-3 flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[.06] p-4">
-                      <div className="rounded-xl bg-primary p-2 text-white"><ArrowUpRight className="h-4 w-4" aria-hidden="true" /></div>
-                      <p className="text-sm text-white/80">Choose the priority. Design the next step.</p>
-                    </div>
-                  </div>
+                  <img
+                    src={useCasesHeroImage}
+                    alt="People from different backgrounds connected across learning, work, technology and global communities"
+                    className="aspect-square w-full rounded-[1.35rem] object-cover"
+                  />
                 </div>
               </div>
             </div>
@@ -271,6 +301,45 @@ const UseCases = () => {
             </div>
           </div>
         </section>
+
+        <div className="relative z-10 w-full">
+          <div className="client-logos py-8" data-aos="fade-up" data-aos-delay="100">
+            <h3 className="mb-6 text-center text-sm uppercase tracking-wider text-muted-foreground">
+              Trusted for over 20 years by leading organizations around the world
+            </h3>
+            <div className="relative overflow-hidden">
+              <div
+                className="flex animate-scroll hover:pause-animation"
+                style={{ width: `${clientLogos.length * 2 * 120}px` }}
+              >
+                {clientLogos.map((client, index) => (
+                  <div
+                    key={`first-${index}`}
+                    className="mx-4 flex h-16 w-32 flex-shrink-0 items-center justify-center opacity-70 transition-opacity hover:opacity-100"
+                  >
+                    <img
+                      src={client.logo}
+                      alt={`${client.name} logo`}
+                      className="max-h-12 max-w-full object-contain dark:brightness-0 dark:invert"
+                    />
+                  </div>
+                ))}
+                {clientLogos.map((client, index) => (
+                  <div
+                    key={`second-${index}`}
+                    className="mx-4 flex h-16 w-32 flex-shrink-0 items-center justify-center opacity-70 transition-opacity hover:opacity-100"
+                  >
+                    <img
+                      src={client.logo}
+                      alt={`${client.name} logo`}
+                      className="max-h-12 max-w-full object-contain dark:brightness-0 dark:invert"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
 
         <section className="bg-background py-24 md:py-32 pt-[40px] pb-[40px]">
           <div className="container">
