@@ -78,7 +78,7 @@ const YearOfFamily = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Year of Family | Launch a National Digital Empowerment Initiative | Potential.com"
+        title="Potential.com - Year of Family"
         description="Lead the Year of Family with a measurable, AI-powered digital initiative that empowers UAE families at national scale. Launch your branded platform or sponsor the national digital ecosystem."
         keywords="Year of Family UAE, family empowerment, national initiative, AI platform, digital infrastructure, ESG, UAE families, community impact"
       />

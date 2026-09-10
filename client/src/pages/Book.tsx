@@ -22,7 +22,7 @@ export default function Book() {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Book a Meeting | Potential.com"
+        title="Potential.com - Book a Meeting"
         description="Schedule a free consultation to design and launch impactful National Resilience Programs"
       />
       <Header />

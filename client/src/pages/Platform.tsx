@@ -233,7 +233,7 @@ const Platform = () => {
   return (
     <div className="min-h-screen overflow-x-hidden bg-background">
       <SEO
-        title="The Potential Platform | Learning & Engagement at Scale"
+        title="Potential.com - The Platform"
         description="A dedicated AI-powered learning and engagement platform for governments, banks and major enterprises."
         keywords="AI learning platform, enterprise engagement platform, government capability development, Potential.com platform"
       />

@@ -221,7 +221,7 @@ const AIForCSR = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="AI for CSR | Corporate Social Responsibility Technology Platform"
+        title="Potential.com - AI for CSR"
         description="Supercharge your social impact with AI-powered empowerment tools. Transform community challenges into measurable innovation opportunities with our modular CSR platform."
         keywords="CSR technology, corporate social responsibility, AI for sustainability, impact measurement, ESG reporting, stakeholder engagement, social impact"
       />

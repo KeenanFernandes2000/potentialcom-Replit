@@ -550,7 +550,7 @@ const CaseStudies = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SEO
-        title="Case Studies - Delivered Learning & Engagement Initiatives | Potential.com"
+        title="Potential.com - Platform Case Studies"
         description="Explore initiatives Potential has delivered across learning, certification, engagement, innovation, mentorship and capability development for governments and enterprises."
         keywords="Potential.com case studies, learning and engagement platform, certification, innovation, mentorship, capability development, governments, enterprises"
         url="https://www.potential.com/case-studies"

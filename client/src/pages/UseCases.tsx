@@ -219,7 +219,7 @@ const UseCases = () => {
   return (
     <div className="min-h-screen overflow-x-hidden bg-background">
       <SEO
-        title="Use Cases | Potential Learning & Engagement Platform"
+        title="Potential.com - Platform Use Cases"
         description="Explore the initiatives governments, banks and major enterprises can deliver with Potential's AI-powered learning and engagement platform."
         keywords="government capability development, enterprise learning platform, financial literacy, workforce upskilling, Potential use cases"
       />

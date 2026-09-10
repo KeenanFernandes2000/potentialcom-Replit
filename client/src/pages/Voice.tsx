@@ -207,7 +207,7 @@ const Voice = () => {
   return (
     <>
       <SEO 
-        title="AI Voice Agents - Never Miss a Sales Call Again | Potential.com"
+        title="Potential.com - AI Voice Agents"
         description="Enhance your customer support and call operations with AI Voice Agents—human-like voice assistants that handle calls and answer questions. Cut costs, save time, and close more deals."
         keywords="AI voice agents, voice AI, automated calls, customer support, sales calls, voice assistants, AI phone agents"
       />

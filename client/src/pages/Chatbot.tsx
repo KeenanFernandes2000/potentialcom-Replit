@@ -334,7 +334,7 @@ const Chatbot = () => {
   return (
     <>
       <SEO
-        title="AI Chatbots - Transform Customer Conversations Instantly | Potential.com"
+        title="Potential.com - AI Chatbots"
         description="Revolutionize customer engagement with AI Chatbots that provide instant support, capture leads, and automate conversations. Boost satisfaction while reducing costs."
         keywords="AI chatbots, chatbot automation, customer service bots, conversational AI, chat support, automated customer service, AI customer support"
       />

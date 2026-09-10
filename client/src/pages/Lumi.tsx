@@ -432,7 +432,7 @@ const Lumi = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="AI Agent Demo - Lumi | Potential.com"
+        title="Potential.com - Lumi AI Agent Demo"
         description="Experience Lumi, our interactive AI agent demo. Try Chat, Voice, and Avatar interfaces for E-Commerce, Sales, Learning, Healthcare, and HR use cases."
       />
       <Header />

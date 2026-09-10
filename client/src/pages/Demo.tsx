@@ -187,7 +187,7 @@ const Demo = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="AI Agent Demo - Ruby | Potential.com"
+        title="Potential.com - AI Agent Demo"
         description="Experience Ruby, our interactive AI agent demo. Chat with Ruby to shop products, book beauty experts, learn, and get customer support — a live look at Potential.com AI agents."
       />
       <Header />
