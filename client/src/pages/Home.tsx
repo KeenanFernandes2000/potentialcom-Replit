@@ -68,6 +68,7 @@ import journeyVisualImg from "@assets/ChatGPT_Image_Sep_10,_2026,_01_59_16_PM_17
 import aiCoreVisualImg from "@assets/ChatGPT_Image_Sep_10,_2026,_02_14_52_PM_1789035344777.png";
 import globalPeopleVisualImg from "@assets/ChatGPT_Image_Sep_10,_2026,_02_20_30_PM_1789035666637.png";
 import whatWeDoVisualImg from "@assets/ChatGPT_Image_Sep_10,_2026,_03_35_02_PM_1789040155157.png";
+import participantJourneyVisualImg from "@assets/ChatGPT_Image_Sep_14,_2026,_01_57_54_PM_1789380291902.png";
 import workforceCapabilityCardImg from "@assets/ChatGPT_Image_Sep_14,_2026,_12_49_04_PM_1789375767695.png";
 import nationalCommunityCardImg from "@assets/ChatGPT_Image_Sep_14,_2026,_12_51_57_PM_1789375950622.png";
 import customerPartnerCardImg from "@assets/ChatGPT_Image_Sep_14,_2026,_12_52_59_PM_1789375998074.png";
@@ -138,7 +139,7 @@ const platformViews = [
     title: "Participant View",
     description:
       "Give each participant a clear journey from entry and learning through practice, assessment and the next relevant action.",
-    image: journeyVisualImg,
+    image: participantJourneyVisualImg,
     icon: Users,
   },
   {
