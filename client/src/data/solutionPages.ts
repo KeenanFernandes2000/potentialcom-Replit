@@ -127,7 +127,7 @@ export const solutionPages: Record<string, SolutionPageConfig> = {
       },
     ],
     leadLabel: "LEAD CONFIGURATION",
-    leadTitle: "Frontline Performance & Certification",
+    leadTitle: "Workforce Performance & Certification",
     leadCopy:
       "Create a dedicated capability journey for frontline and operational roles where readiness, standards and qualification matter. Connect role expectations to baseline assessment, learning, practice, certification, workplace application and renewal.",
     leadStages: [
