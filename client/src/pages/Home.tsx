@@ -505,11 +505,7 @@ const Home = () => {
               <h2 className="section-title mt-5">
                 Start with the initiative you need to deliver.
               </h2>
-              <p className="mt-6 text-lg leading-8 text-muted-foreground">
-                Potential combines learning, engagement, programme management and evidence around a
-                defined organisational mandate. Explore the three ways organisations most commonly
-                deploy the platform.
-              </p>
+              <p className="mt-6 text-lg leading-8 text-muted-foreground">Potential.com combines learning, engagement, programme management and evidence around a defined organisational mandate. Explore the three ways organisations most commonly deploy our platform.</p>
             </div>
 
             <div className="mx-auto mt-14 grid max-w-7xl gap-6 lg:grid-cols-3">
