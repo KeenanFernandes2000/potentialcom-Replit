@@ -186,7 +186,7 @@ export const solutionPages: Record<string, SolutionPageConfig> = {
     experiences: [
       {
         title: "VX Academy",
-        relevance: "Workforce capability and visitor-experience development",
+        relevance: "Frontliner capability and visitor-experience development",
         logo: vxAcademyLogo,
       },
       {
