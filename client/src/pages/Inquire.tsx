@@ -26,7 +26,6 @@ import { AutoSEO } from "@/components/SEO";
 import { ConsultationBookingModal } from "@/components/ConsultationBookingModal";
 import { useState } from "react";
 import { ArrowRight, MessageSquare, Users, Target } from "lucide-react";
-import inquireVisual from "@assets/2.png";
 
 const formSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -133,45 +132,38 @@ export default function Inquire() {
       <AutoSEO />
       <Header />
       <main>
-        <section className="relative overflow-hidden bg-gradient-to-br from-background via-background to-muted/20 py-20 lg:py-32">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:mx-[25px]">
-              <div className="space-y-8">
-                <div className="space-y-6">
-                  <p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">
-                    Human consultation
-                  </p>
-                  <h1 className="text-4xl font-bold leading-tight text-foreground lg:text-6xl">
-                    Discuss your{" "}
-                    <span className="text-primary">initiative</span> with our
-                    team.
-                  </h1>
-                  <p className="max-w-lg text-xl leading-relaxed text-muted-foreground">
-                    Share your organisation, mandate and audience. We&apos;ll
-                    help you shape the right next step for your people and your
-                    organisation.
-                  </p>
-                </div>
+        <section className="relative overflow-hidden bg-gradient-to-br from-secondary via-primary to-secondary pt-24 pb-10 md:pt-28 md:pb-12">
+          <div className="absolute inset-0 bg-grid-pattern opacity-20" />
+          <div className="absolute -top-10 -left-10 h-64 w-64 rounded-full bg-primary/40 blur-3xl" />
+          <div className="absolute -bottom-16 right-0 h-72 w-72 rounded-full bg-fuchsia-500/30 blur-3xl" />
+          <div className="absolute left-1/2 top-1/3 h-56 w-56 -translate-x-1/2 rounded-full bg-white/10 blur-3xl" />
 
-                <Button
-                  onClick={() => setShowBookingModal(true)}
-                  size="lg"
-                  className="bg-primary px-8 py-6 text-lg font-semibold text-white hover:bg-primary/90"
-                >
-                  Book Your Free Consultation Session
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </div>
+          <div className="container relative z-10 mx-auto px-4 text-center">
+            <div className="mx-auto max-w-4xl space-y-6">
+              <p className="text-sm font-semibold uppercase tracking-[.2em] text-white/80">
+                Human consultation
+              </p>
+              <h1 className="text-4xl font-bold leading-tight text-white lg:text-6xl">
+                Discuss your{" "}
+                <span className="bg-gradient-to-r from-amber-300 via-pink-200 to-white bg-clip-text text-transparent">
+                  initiative
+                </span>{" "}
+                with our team.
+              </h1>
+              <p className="mx-auto max-w-lg text-xl leading-relaxed text-white/85">
+                Share your organisation, mandate and audience. We&apos;ll help
+                you shape the right next step for your people and your
+                organisation.
+              </p>
 
-              <div className="flex justify-center lg:justify-end">
-                <div className="relative w-full max-w-lg">
-                  <img
-                    src={inquireVisual}
-                    alt="Potential.com consultation with a diverse team"
-                    className="h-auto w-full"
-                  />
-                </div>
-              </div>
+              <Button
+                onClick={() => setShowBookingModal(true)}
+                size="lg"
+                className="bg-primary px-8 py-6 text-lg font-semibold text-white hover:bg-primary/90"
+              >
+                Book Your Free Consultation Session
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
             </div>
           </div>
         </section>
