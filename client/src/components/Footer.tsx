@@ -17,7 +17,15 @@ import { SiX, SiWhatsapp } from "react-icons/si";
 import { QuickCallModal } from "./QuickCallModal";
 import UTMLink from "@/components/UTMLink";
 
-const Footer = () => {
+interface FooterProps {
+  newsletterTitle?: string;
+  newsletterDescription?: string;
+}
+
+const Footer = ({
+  newsletterTitle = "Stay Updated",
+  newsletterDescription = "Subscribe to our newsletter for the latest AI innovations.",
+}: FooterProps) => {
   const { toast } = useToast();
   const [showCallModal, setShowCallModal] = useState(false);
 
@@ -200,9 +208,9 @@ const Footer = () => {
 
           {/* Newsletter */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Stay Updated</h3>
+            <h3 className="text-lg font-semibold mb-4">{newsletterTitle}</h3>
             <p className="opacity-80 mb-4">
-              Subscribe to our newsletter for the latest AI innovations.
+              {newsletterDescription}
             </p>
             <form
               onSubmit={async (e) => {
