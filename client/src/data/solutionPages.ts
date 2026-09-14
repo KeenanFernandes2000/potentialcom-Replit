@@ -136,7 +136,7 @@ export const solutionPages: Record<string, SolutionPageConfig> = {
       "Learning & Practice",
       "Qualification",
       "Workplace Application",
-      "Renewal",
+      "Measurement",
     ],
     additionalTitle: "Adapt the same foundation to other workforce priorities.",
     additionalCards: [
