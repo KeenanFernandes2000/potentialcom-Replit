@@ -566,6 +566,51 @@ const Platform = () => {
           </div>
         </section>
 
+        <section className="bg-background py-24 md:py-32">
+          <div className="container">
+            <div className="relative overflow-hidden rounded-[2rem] border border-border bg-[#f6f4fb] p-8 dark:bg-[#10172c] md:p-14">
+              <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-primary/15 blur-3xl" aria-hidden="true" />
+              <div className="relative grid items-center gap-10 lg:grid-cols-[1fr_auto]">
+                <div className="max-w-3xl" data-aos="fade-right">
+                  <p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">Personalised Preview</p>
+                  <h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary dark:text-white md:text-5xl">
+                    See a proposed journey for your initiative before production starts.
+                  </h2>
+                  <p className="mt-5 text-lg leading-8 text-muted-foreground">
+                    For qualified organisations, we prepare an interactive preview around your
+                    audience and goals, including a participant experience and programme-owner view.
+                    We confirm the brief and delivery time before starting.
+                  </p>
+                  <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+                    <Button onClick={discussYourInitiative} size="lg" className="rounded-full px-8 py-6">
+                      Discuss Your Initiative <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </div>
+                </div>
+                <div className="relative mx-auto w-full max-w-sm" data-aos="fade-left">
+                  <div className="rounded-[1.5rem] border border-primary/15 bg-background p-4 shadow-xl">
+                    <div className="flex items-center justify-between border-b border-border pb-4">
+                      <div>
+                        <p className="text-[10px] font-semibold uppercase tracking-[.18em] text-primary">Demonstration data</p>
+                        <p className="mt-2 font-semibold text-secondary dark:text-white">Example initiative</p>
+                      </div>
+                      <PanelsTopLeft className="h-6 w-6 text-primary" />
+                    </div>
+                    <div className="mt-5 space-y-3">
+                      {["Participant experience", "Programme-owner view", "Evidence and outcomes"].map((item, index) => (
+                        <div key={item} className="flex items-center gap-3 rounded-xl border border-border bg-muted/50 p-3 dark:bg-secondary/20">
+                          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary/10 text-xs font-bold text-primary">0{index + 1}</span>
+                          <span className="text-sm font-medium text-secondary dark:text-white">{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="border-y border-border bg-[#fcfaf5] py-24 dark:bg-[#10172c] md:py-28">
           <div className="container">
             <div className="grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
@@ -641,51 +686,6 @@ const Platform = () => {
             <div className="grid gap-14 lg:grid-cols-[.8fr_1.2fr]">
               <div data-aos="fade-right"><p className="text-sm font-semibold uppercase tracking-[.2em] text-[#d2b4ff]">Deployment</p><h2 className="mt-4 text-4xl font-bold tracking-tight md:text-5xl">Dedicated to your organisation. Designed to scale.</h2><p className="mt-5 text-lg leading-8 text-white/65">Start from a proven platform foundation, with configuration and any required extensions scoped around your initiative. Language, integration and hosting requirements are agreed for the selected deployment.</p></div>
               <div className="grid gap-3 sm:grid-cols-2" data-aos="fade-up">{deploymentItems.map(([title, description], index) => <div key={title} className="rounded-2xl border border-white/10 bg-white/[.06] p-6"><span className="font-mono text-sm text-[#d2b4ff]">0{index + 1}</span><h3 className="mt-5 text-lg font-semibold">{title}</h3><p className="mt-2 text-sm leading-6 text-white/60">{description}</p></div>)}</div>
-            </div>
-          </div>
-        </section>
-
-        <section className="bg-background py-24 md:py-32">
-          <div className="container">
-            <div className="relative overflow-hidden rounded-[2rem] border border-border bg-[#f6f4fb] p-8 dark:bg-[#10172c] md:p-14">
-              <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-primary/15 blur-3xl" aria-hidden="true" />
-              <div className="relative grid items-center gap-10 lg:grid-cols-[1fr_auto]">
-                <div className="max-w-3xl" data-aos="fade-right">
-                  <p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">Personalised Preview</p>
-                  <h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary dark:text-white md:text-5xl">
-                    See a proposed journey for your initiative before production starts.
-                  </h2>
-                  <p className="mt-5 text-lg leading-8 text-muted-foreground">
-                    For qualified organisations, we prepare an interactive preview around your
-                    audience and goals, including a participant experience and programme-owner view.
-                    We confirm the brief and delivery time before starting.
-                  </p>
-                  <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-                    <Button onClick={discussYourInitiative} size="lg" className="rounded-full px-8 py-6">
-                      Discuss Your Initiative <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
-                  </div>
-                </div>
-                <div className="relative mx-auto w-full max-w-sm" data-aos="fade-left">
-                  <div className="rounded-[1.5rem] border border-primary/15 bg-background p-4 shadow-xl">
-                    <div className="flex items-center justify-between border-b border-border pb-4">
-                      <div>
-                        <p className="text-[10px] font-semibold uppercase tracking-[.18em] text-primary">Demonstration data</p>
-                        <p className="mt-2 font-semibold text-secondary dark:text-white">Example initiative</p>
-                      </div>
-                      <PanelsTopLeft className="h-6 w-6 text-primary" />
-                    </div>
-                    <div className="mt-5 space-y-3">
-                      {["Participant experience", "Programme-owner view", "Evidence and outcomes"].map((item, index) => (
-                        <div key={item} className="flex items-center gap-3 rounded-xl border border-border bg-muted/50 p-3 dark:bg-secondary/20">
-                          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary/10 text-xs font-bold text-primary">0{index + 1}</span>
-                          <span className="text-sm font-medium text-secondary dark:text-white">{item}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </section>
