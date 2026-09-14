@@ -61,6 +61,7 @@ import journeyVisualImg from "@assets/ChatGPT_Image_Sep_10,_2026,_01_59_16_PM_17
 import aiCoreVisualImg from "@assets/ChatGPT_Image_Sep_10,_2026,_02_14_52_PM_1789035344777.png";
 import globalPeopleVisualImg from "@assets/ChatGPT_Image_Sep_10,_2026,_02_20_30_PM_1789035666637.png";
 import whatWeDoVisualImg from "@assets/ChatGPT_Image_Sep_10,_2026,_03_35_02_PM_1789040155157.png";
+import workforceCapabilityCardImg from "@assets/ChatGPT_Image_Sep_14,_2026,_12_49_04_PM_1789375767695.png";
 
 const clientLogos = [
   { name: "ADGM", logo: adgmLogo },
@@ -96,7 +97,7 @@ const helpOffers = [
     description:
       "Develop the capability your workforce needs through connected learning, practice, coaching and certification — with a clear view of readiness and application.",
     tags: ["Learning", "Practice", "Certification", "Readiness"],
-    image: globalPeopleVisualImg,
+    image: workforceCapabilityCardImg,
     icon: GraduationCap,
     href: "/solutions/workforce-capability",
     cta: "Explore Workforce Capability",
