@@ -111,6 +111,71 @@ export default function About() {
           </div>
         </section>
 
+        {/* Mission and Foundation */}
+        <section className="relative overflow-hidden bg-gradient-to-br from-secondary via-primary to-secondary px-4 py-20 text-white md:py-24">
+          <div className="absolute inset-0 bg-grid-pattern opacity-20" aria-hidden="true" />
+          <div className="absolute -left-24 -top-24 h-80 w-80 rounded-full bg-fuchsia-500/25 blur-3xl" aria-hidden="true" />
+          <div className="absolute -bottom-32 right-0 h-96 w-96 rounded-full bg-primary/40 blur-3xl" aria-hidden="true" />
+
+          <div className="container relative z-10">
+            <div className="grid gap-5 lg:grid-cols-2">
+              <div
+                className="rounded-2xl border border-white/20 bg-white/[.14] p-7 shadow-xl backdrop-blur-md md:p-8"
+                data-aos="fade-right"
+              >
+                <div className="border-l-2 border-[#f0b85f] pl-4">
+                  <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Our Mission</h2>
+                </div>
+                <div className="mt-6 space-y-5 text-sm leading-6 text-white/80 md:text-base">
+                  <p>
+                    Driven by innovation and guided by a powerful mission—
+                    <strong className="text-white">
+                      {" "}
+                      Empowering businesses and their stakeholders to thrive, together
+                    </strong>
+                    —we&apos;ve continuously anticipated change rather than merely adapting to it.
+                  </p>
+                  <p>
+                    Today, that experience is embedded in an AI-powered Learning &amp; Engagement
+                    Platform for governments and enterprises — bringing audience journeys, programme
+                    operations and evidence into one dedicated experience.
+                  </p>
+                  <p className="font-semibold text-white">
+                    Empowerment remains our mission. The platform helps organisations turn that
+                    mission into structured learning, engagement and measurable outcomes.
+                  </p>
+                </div>
+              </div>
+
+              <div
+                className="rounded-2xl border border-white/20 bg-secondary/45 p-7 shadow-xl backdrop-blur-md md:p-8"
+                data-aos="fade-left"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Key Highlights</h2>
+                  <span className="shrink-0 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[.14em] text-white/70">
+                    Our foundation
+                  </span>
+                </div>
+                <ul className="mt-7 space-y-4">
+                  {[
+                    "20+ years empowering organizations globally",
+                    "AI-powered learning and engagement journeys",
+                    "Worked with Fortune 500 companies and governments",
+                    "Continuously innovating to anticipate change",
+                    "Committed to sustainable growth and impact",
+                  ].map((highlight) => (
+                    <li key={highlight} className="flex items-start gap-3 text-sm leading-6 text-white/80 md:text-base">
+                      <Check className="mt-1 h-4 w-4 shrink-0 text-emerald-300" aria-hidden="true" />
+                      <span>{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* From Experience to Platform */}
         <section className="bg-background px-4 py-24 md:py-32">
           <div className="mx-auto max-w-7xl">
