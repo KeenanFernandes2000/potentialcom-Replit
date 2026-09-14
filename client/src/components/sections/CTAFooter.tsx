@@ -1,15 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, MessageCircle, ChevronDown } from "lucide-react";
+import { navigateWithUTM } from "@/lib/utm-utils";
 
 const CTAFooter = () => {
   // Function to go to Rachel's page
-  const goToRachel = () => {
-    window.open(
-      "https://ai.potential.com/rachel",
-      "_blank",
-      "noopener,noreferrer"
-    );
-  };
+  const goToRachel = () => navigateWithUTM("/inquire");
 
   return (
     <section
@@ -58,7 +53,7 @@ const CTAFooter = () => {
               data-aos="fade-up"
               data-aos-delay="200"
             >
-              Talk to Rachel <ArrowRight className="ml-2 h-4 w-4" />
+              Discuss Your Initiative <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
 
             <Button
@@ -68,7 +63,7 @@ const CTAFooter = () => {
               data-aos="fade-up"
               data-aos-delay="250"
             >
-              Schedule a Demo
+              Discuss Your Initiative
             </Button>
           </div>
 

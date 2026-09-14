@@ -214,7 +214,7 @@ const UseCases = () => {
     }
   }, []);
 
-  const talkToAyla = () => navigateWithUTM("/ayla");
+  const discussYourInitiative = () => navigateWithUTM("/inquire");
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-background">
@@ -249,8 +249,8 @@ const UseCases = () => {
                   certification to innovation, mentorship, workforce development and community programmes.
                 </p>
                 <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <Button onClick={talkToAyla} size="lg" className="rounded-full bg-white px-8 py-6 text-base font-semibold text-secondary shadow-lg shadow-black/10 hover:bg-white/90">
-                    Talk to Ayla <ArrowRight className="h-5 w-5" aria-hidden="true" />
+                  <Button onClick={discussYourInitiative} size="lg" className="rounded-full bg-white px-8 py-6 text-base font-semibold text-secondary shadow-lg shadow-black/10 hover:bg-white/90">
+                    Discuss Your Initiative <ArrowRight className="h-5 w-5" aria-hidden="true" />
                   </Button>
                   <a href="#library" className="group inline-flex items-center justify-center gap-2 px-3 py-3 font-semibold text-white transition-colors hover:text-white/75">
                     Explore the use cases <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
@@ -349,7 +349,7 @@ const UseCases = () => {
                 <p className="text-sm font-semibold uppercase tracking-[.2em] text-[#d2b4ff]">The next conversation</p>
                 <h2 className="mt-5 text-4xl font-bold tracking-tight md:text-6xl">What are you trying to achieve?</h2>
                 <p className="mt-6 max-w-2xl text-lg leading-8 text-white/70">Tell Ayla about your audience, mandate and timing. She will help identify the most relevant Potential journey and, where there is a fit, connect you with our team.</p>
-                <Button onClick={talkToAyla} size="lg" className="mt-9 rounded-full bg-white px-8 py-6 text-secondary hover:bg-white/90">Talk to Ayla <ArrowRight className="h-5 w-5" aria-hidden="true" /></Button>
+                <Button onClick={discussYourInitiative} size="lg" className="mt-9 rounded-full bg-white px-8 py-6 text-secondary hover:bg-white/90">Discuss Your Initiative <ArrowRight className="h-5 w-5" aria-hidden="true" /></Button>
               </div>
             </div>
           </div>

@@ -25,6 +25,11 @@
     "/ayla": {
       "title": "Potential.com - Talk to Ayla"
     },
+    "/inquire": {
+      "title": "Potential.com - Discuss Your Initiative",
+      "description": "Book a free consultation with Potential.com to discuss your organisation, audience and next initiative.",
+      "keywords": "Potential consultation, discuss your initiative, learning and engagement platform, organisation consultation"
+    },
     "/ai-agents": {
       "title": "Potential.com - AI Agents"
     },

@@ -228,7 +228,7 @@ const Platform = () => {
     }
   }, []);
 
-  const talkToAyla = () => navigateWithUTM("/ayla");
+  const discussYourInitiative = () => navigateWithUTM("/inquire");
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-background">
@@ -259,8 +259,8 @@ const Platform = () => {
                   strategic initiatives — with AI support and evidence built into the journey.
                 </p>
                 <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <Button onClick={talkToAyla} size="lg" className="rounded-full px-8 py-6 text-base shadow-lg shadow-primary/20">
-                    Talk to Ayla <ArrowRight className="h-5 w-5" />
+                  <Button onClick={discussYourInitiative} size="lg" className="rounded-full px-8 py-6 text-base shadow-lg shadow-primary/20">
+                    Discuss Your Initiative <ArrowRight className="h-5 w-5" />
                   </Button>
                   <a href="#capabilities" className="group inline-flex items-center justify-center gap-2 px-3 py-3 font-semibold text-secondary transition-colors hover:text-primary dark:text-white">
                     Explore Capabilities <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -475,7 +475,7 @@ const Platform = () => {
           <div className="container">
             <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-secondary via-[#1c2c70] to-primary p-8 text-white md:p-16" data-aos="fade-up">
               <div className="absolute right-0 top-0 h-72 w-72 translate-x-1/3 -translate-y-1/3 rounded-full bg-white/10 blur-3xl" />
-              <div className="relative max-w-3xl"><p className="text-sm font-semibold uppercase tracking-[.2em] text-[#d2b4ff]">The next conversation</p><h2 className="mt-5 text-4xl font-bold tracking-tight md:text-6xl">What does your organisation need people to do next?</h2><p className="mt-6 max-w-2xl text-lg leading-8 text-white/70">Bring us the mandate, the audience and the challenge. Start with Ayla and explore the most relevant path for your organisation.</p><Button onClick={talkToAyla} size="lg" className="mt-9 rounded-full bg-white px-8 py-6 text-secondary hover:bg-white/90">Talk to Ayla <ArrowRight className="h-5 w-5" /></Button></div>
+              <div className="relative max-w-3xl"><p className="text-sm font-semibold uppercase tracking-[.2em] text-[#d2b4ff]">The next conversation</p><h2 className="mt-5 text-4xl font-bold tracking-tight md:text-6xl">What does your organisation need people to do next?</h2><p className="mt-6 max-w-2xl text-lg leading-8 text-white/70">Bring us the mandate, the audience and the challenge. Explore the most relevant path for your organisation with our team.</p><Button onClick={discussYourInitiative} size="lg" className="mt-9 rounded-full bg-white px-8 py-6 text-secondary hover:bg-white/90">Discuss Your Initiative <ArrowRight className="h-5 w-5" /></Button></div>
             </div>
           </div>
         </section>

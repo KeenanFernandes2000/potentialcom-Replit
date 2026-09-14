@@ -566,6 +566,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Human consultation form submission
+  app.post("/api/inquire/consultation", async (req, res) => {
+    try {
+      const validatedData = aylaConsultationSchema.parse(req.body);
+
+      // Reuse the existing consultation storage shape without invoking Ayla.
+      const consultation = await storage.submitAylaConsultation(validatedData);
+      await sendFormNotificationEmail("New Submission: Discuss Your Initiative", [
+        "New human consultation request received from the Potential.com inquiry form.",
+        "Source: /inquire",
+        "",
+        `First Name: ${validatedData.firstName}`,
+        `Last Name: ${validatedData.lastName}`,
+        `Email: ${validatedData.email}`,
+        `Phone Number: ${validatedData.countryCode} ${validatedData.phoneNumber}`,
+        `Company Name: ${validatedData.companyName}`,
+        `Company Website: ${validatedData.companyWebsite || "N/A"}`,
+        `Role: ${validatedData.role}`,
+      ]);
+
+      res.status(201).json({
+        message: "Consultation request submitted successfully",
+        consultation,
+      });
+    } catch (error) {
+      console.error("Inquiry consultation submission error:", error);
+      res.status(400).json({
+        message: "Invalid consultation data",
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
+  });
+
   // Protected API routes (require authentication)
 
   // Get current user

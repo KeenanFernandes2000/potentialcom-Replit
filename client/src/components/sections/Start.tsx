@@ -43,7 +43,7 @@ const Start = () => {
             </Button>
           </div>
 
-          {/* Option 2: Book a Demo */}
+          {/* Option 2: Discuss the initiative */}
           <div
             className="glass-effect rounded-2xl p-8 border border-border shadow-md text-center"
             data-aos="fade-up"
@@ -52,17 +52,17 @@ const Start = () => {
             <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mx-auto mb-6">
               <CalendarIcon className="h-7 w-7" />
             </div>
-            <h3 className="text-xl font-bold mb-3">Talk to AI Consultant</h3>
+            <h3 className="text-xl font-bold mb-3">Discuss Your Initiative</h3>
             <p className="text-muted-foreground mb-6">
-              Talk now with our AI consultant to explore how you can harness the
-              power of AI.
+              Talk with our team to explore the right platform path for your
+              organisation.
             </p>
             <Button
               className="rounded-full bg-primary hover:bg-primary/90 text-white font-semibold px-8 w-full gtm-start-talk-to-consultant"
               size="lg"
-              onClick={() => navigateWithUTM("/vera")}
+              onClick={() => navigateWithUTM("/inquire")}
             >
-              Talk to AI Consultant
+              Discuss Your Initiative
             </Button>
           </div>
 

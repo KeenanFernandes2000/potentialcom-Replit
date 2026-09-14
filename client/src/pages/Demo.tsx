@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { RubyChat } from "@/components/ruby/RubyChat";
 import { Button } from "@/components/ui/button";
+import { navigateWithUTM } from "@/lib/utm-utils";
 import {
   Check,
   ShoppingBag,
@@ -647,10 +648,10 @@ const Demo = () => {
               <Button
                 size="lg"
                 className="rounded-full bg-white text-[#0B1846] hover:bg-white/90 font-semibold px-10 py-6 text-lg shadow-lg"
-                onClick={() => (window.location.href = "/book")}
+                onClick={() => navigateWithUTM("/inquire")}
                 data-testid="cta-book-demo"
               >
-                Book a Demo
+                Discuss Your Initiative
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
               <Button

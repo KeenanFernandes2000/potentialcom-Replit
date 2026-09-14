@@ -83,11 +83,11 @@ const Benefits = () => {
                 {benefit.description}
               </p>
               <a
-                href="/vera"
+                href="/inquire"
                 className="text-primary font-medium flex items-center group hover:underline text-sm"
                 onClick={(e) => {
                   e.preventDefault();
-                  navigateWithUTM("/vera");
+                  navigateWithUTM("/inquire");
                 }}
               >
                 Learn more{" "}
@@ -101,9 +101,9 @@ const Benefits = () => {
           <Button
             className="rounded-full bg-primary hover:bg-primary/90 text-white font-medium px-8 py-6 gtm-benefits-explore-features"
             size="lg"
-            onClick={() => navigateWithUTM("/vera")}
+            onClick={() => navigateWithUTM("/inquire")}
           >
-            Explore All Features
+            Discuss Your Initiative
           </Button>
         </div>
       </div>

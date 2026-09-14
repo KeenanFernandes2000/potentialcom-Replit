@@ -89,9 +89,9 @@ const Solutions = () => {
           <Button
             className="rounded-full bg-primary hover:bg-primary/90 text-white font-medium px-6 py-6 gtm-solutions-schedule-consultation"
             size="lg"
-            onClick={() => navigateWithUTM("/vera")}
+            onClick={() => navigateWithUTM("/inquire")}
           >
-            Schedule a Consultation <ChevronRight className="ml-2 h-4 w-4" />
+            Discuss Your Initiative <ChevronRight className="ml-2 h-4 w-4" />
           </Button>
         </div>
       </div>

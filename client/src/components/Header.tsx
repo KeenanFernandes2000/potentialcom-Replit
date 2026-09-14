@@ -60,10 +60,10 @@ const Header = () => {
             About
           </UTMLink>
           <UTMLink
-            href="/ayla"
+            href="/inquire"
             className="inline-flex items-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
           >
-            Talk to Ayla
+            Discuss Your Initiative
           </UTMLink>
 
           <div className="pl-4">
@@ -119,11 +119,11 @@ const Header = () => {
             About
           </UTMLink>
           <UTMLink
-            href="/ayla"
+            href="/inquire"
             className="mt-3 rounded-full bg-primary px-5 py-3 text-center font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
             onClick={() => setIsMenuOpen(false)}
           >
-            Talk to Ayla
+            Discuss Your Initiative
           </UTMLink>
         </div>
       )}

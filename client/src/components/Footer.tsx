@@ -15,6 +15,7 @@ import { FooterLogo } from "./FooterLogo";
 import { useToast } from "@/hooks/use-toast";
 import { SiX, SiWhatsapp } from "react-icons/si";
 import { QuickCallModal } from "./QuickCallModal";
+import UTMLink from "@/components/UTMLink";
 
 const Footer = () => {
   const { toast } = useToast();
@@ -85,6 +86,14 @@ const Footer = () => {
                 >
                   About
                 </a>
+              </li>
+              <li>
+                <UTMLink
+                  href="/inquire"
+                  className="font-semibold text-primary hover:opacity-100 transition-colors"
+                >
+                  Discuss Your Initiative
+                </UTMLink>
               </li>
               <li>
                 <a

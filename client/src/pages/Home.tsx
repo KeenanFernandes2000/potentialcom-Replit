@@ -193,9 +193,9 @@ const CTABanner = () => (
           <Button
             size="lg"
             className="mt-9 rounded-full bg-white px-8 py-6 text-secondary hover:bg-white/90"
-            onClick={() => navigateWithUTM("/ayla")}
+            onClick={() => navigateWithUTM("/inquire")}
           >
-            Talk to Ayla <ArrowRight className="ml-2 h-5 w-5" />
+            Discuss Your Initiative <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
         </div>
       </div>
@@ -285,9 +285,9 @@ const Home = () => {
                   <Button
                     size="lg"
                     className="rounded-full bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg"
-                    onClick={() => navigateWithUTM("/ayla")}
+                    onClick={() => navigateWithUTM("/inquire")}
                   >
-                    Talk to Ayla <ArrowRight className="ml-2 h-5 w-5" />
+                    Discuss Your Initiative <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </div>
                 <p className="text-sm text-muted-foreground mt-4 max-w-xl">
@@ -765,9 +765,9 @@ const Home = () => {
                 <Button
                   size="lg"
                   className="mt-9 rounded-full bg-white px-8 py-6 text-secondary hover:bg-white/90"
-                  onClick={() => navigateWithUTM("/ayla")}
+                  onClick={() => navigateWithUTM("/inquire")}
                 >
-                  Talk to Ayla <ArrowRight className="ml-2 h-5 w-5" />
+                  Discuss Your Initiative <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </div>
             </div>

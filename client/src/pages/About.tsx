@@ -323,9 +323,9 @@ export default function About() {
               <Button
                 size="lg"
                 className="rounded-full px-8 gtm-about-partner-with-us"
-                 onClick={() => navigateWithUTM("/ayla")}
+                 onClick={() => navigateWithUTM("/inquire")}
               >
-                 Talk to Ayla
+                 Discuss Your Initiative
               </Button>
             </div>
           </div>

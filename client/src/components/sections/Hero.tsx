@@ -248,9 +248,9 @@ const Hero = () => {
                 variant="outline"
                 className="rounded-full border-primary text-primary hover:bg-primary/10 gtm-hero-talk-to-consultant"
                 size="lg"
-                onClick={() => navigateWithUTM("/vera")}
+                onClick={() => navigateWithUTM("/inquire")}
               >
-                Talk to AI Consultant <ArrowRight className="ml-2 h-4 w-4" />
+                Discuss Your Initiative <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
           </div>
