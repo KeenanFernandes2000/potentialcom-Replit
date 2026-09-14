@@ -400,7 +400,7 @@ const Platform = () => {
           </div>
         </section>
 
-        <section className="bg-background py-24 md:py-32">
+        <section className="bg-[#f6f4fb] py-24 dark:bg-[#10172c] md:py-32">
           <div className="container">
             <div className="mx-auto max-w-3xl text-center" data-aos="fade-up">
               <p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">
