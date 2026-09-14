@@ -26,7 +26,6 @@ import cartierLogo from "@assets/Customer Logos/Cartier logo.png";
 import dellLogo from "@assets/Customer Logos/Dell logo.png";
 import hsbcLogo from "@assets/Customer Logos/HSBC logo.png";
 import moeLogo from "@assets/MOE_logo_1782111063727.png";
-import pepsicoLogo from "@assets/Customer Logos/Pepsico logo.png";
 import vxAcademyLogo from "@assets/DCT_logo_1782108989381.png";
 import dldLogo from "@assets/Customer Logos/DLD Logo.png";
 
@@ -337,11 +336,6 @@ export const solutionPages: Record<string, SolutionPageConfig> = {
         title: "Cartier Women’s Initiative",
         relevance: "Women entrepreneurs, growth and access to support",
         logo: cartierLogo,
-      },
-      {
-        title: "PepsiCo empowerHER",
-        relevance: "Women-led business development and practical support",
-        logo: pepsicoLogo,
       },
     ],
   },
