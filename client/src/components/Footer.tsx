@@ -47,29 +47,6 @@ const Footer = ({
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              <li className="pb-1 text-xs font-semibold uppercase tracking-[.16em] text-primary">
-                Solutions
-              </li>
-              <li>
-                <UTMLink href="/solutions/workforce-capability" className="pl-3 opacity-80 hover:opacity-100 hover:text-primary transition-colors">
-                  Workforce Capability
-                </UTMLink>
-              </li>
-              <li>
-                <UTMLink href="/solutions/national-community-empowerment" className="pl-3 opacity-80 hover:opacity-100 hover:text-primary transition-colors">
-                  National &amp; Community Empowerment
-                </UTMLink>
-              </li>
-              <li>
-                <UTMLink href="/solutions/customer-partner-enablement" className="pl-3 opacity-80 hover:opacity-100 hover:text-primary transition-colors">
-                  Customer &amp; Partner Enablement
-                </UTMLink>
-              </li>
-              <li>
-                <UTMLink href="/usecases" className="pl-3 opacity-80 hover:opacity-100 hover:text-primary transition-colors">
-                  Use Cases
-                </UTMLink>
-              </li>
               <li>
                 <UTMLink href="/platform" className="opacity-80 hover:opacity-100 hover:text-primary transition-colors">
                   Platform
@@ -83,11 +60,6 @@ const Footer = ({
               <li>
                 <UTMLink href="/about" className="opacity-80 hover:opacity-100 hover:text-primary transition-colors">
                   About
-                </UTMLink>
-              </li>
-              <li>
-                <UTMLink href="/inquire" className="font-semibold text-primary hover:opacity-100 transition-colors">
-                  Discuss Your Initiative
                 </UTMLink>
               </li>
               <li>
