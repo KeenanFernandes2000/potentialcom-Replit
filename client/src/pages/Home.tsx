@@ -61,7 +61,9 @@ import journeyVisualImg from "@assets/ChatGPT_Image_Sep_10,_2026,_01_59_16_PM_17
 import aiCoreVisualImg from "@assets/ChatGPT_Image_Sep_10,_2026,_02_14_52_PM_1789035344777.png";
 import globalPeopleVisualImg from "@assets/ChatGPT_Image_Sep_10,_2026,_02_20_30_PM_1789035666637.png";
 import whatWeDoVisualImg from "@assets/ChatGPT_Image_Sep_10,_2026,_03_35_02_PM_1789040155157.png";
-import workforceCapabilityCardImg from "@assets/ChatGPT_Image_Sep_14,_2026,_12_52_59_PM_1789375998074.png";
+import workforceCapabilityCardImg from "@assets/ChatGPT_Image_Sep_14,_2026,_12_49_04_PM_1789375767695.png";
+import nationalCommunityCardImg from "@assets/ChatGPT_Image_Sep_14,_2026,_12_51_57_PM_1789375950622.png";
+import customerPartnerCardImg from "@assets/ChatGPT_Image_Sep_14,_2026,_12_52_59_PM_1789375998074.png";
 
 const clientLogos = [
   { name: "ADGM", logo: adgmLogo },
@@ -107,7 +109,7 @@ const helpOffers = [
     description:
       "Bring learning, mentoring, challenges and engagement together around a defined public or stakeholder mandate, with practical milestones and measurable progress.",
     tags: ["Entrepreneurship", "Financial Capability", "Youth", "Community"],
-    image: whatWeDoVisualImg,
+    image: nationalCommunityCardImg,
     icon: Globe,
     href: "/solutions/national-community-empowerment",
     cta: "Explore National & Community",
@@ -117,7 +119,7 @@ const helpOffers = [
     description:
       "Help customers get more from your products and services, and help partners build confidence through onboarding, product learning, qualification and ongoing engagement.",
     tags: ["Onboarding", "Product Learning", "Certification", "Adoption"],
-    image: aiCoreVisualImg,
+    image: customerPartnerCardImg,
     icon: Briefcase,
     href: "/solutions/customer-partner-enablement",
     cta: "Explore Customer & Partner",
