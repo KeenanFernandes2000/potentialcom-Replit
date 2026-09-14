@@ -150,7 +150,7 @@ export default function Inquire() {
                 </span>{" "}
                 with our team.
               </h1>
-              <p className="mx-auto max-w-lg text-xl leading-relaxed text-white/85">
+              <p className="mx-auto max-w-3xl text-xl leading-relaxed text-white/85">
                 Share your organisation, mandate and audience. We&apos;ll help
                 you shape the right next step for your people and your
                 organisation.
