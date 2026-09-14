@@ -201,7 +201,7 @@ export const solutionPages: Record<string, SolutionPageConfig> = {
       },
       {
         title: "Dubai Land Department Real Estate Certification",
-        relevance: "Professional qualification",
+        relevance: "Professional Real Estate Agent Certification",
         logo: dldLogo,
       },
     ],
