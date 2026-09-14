@@ -31,7 +31,6 @@ export type SolutionView = {
   title: string;
   description: string;
   icon: LucideIcon;
-  stages: string[];
 };
 
 export type SolutionPageConfig = {
@@ -148,21 +147,18 @@ export const solutionPages: Record<string, SolutionPageConfig> = {
         description:
           "Role profile, personalised pathway, practice, assessment and next action.",
         icon: CircleUserRound,
-        stages: ["Role Profile", "Pathway", "Practice", "Assessment", "Next Action"],
       },
       {
         title: "Programme Owner View",
         description:
           "Cohorts, readiness gaps, approvals, interventions and renewal activity.",
         icon: Network,
-        stages: ["Cohorts", "Readiness Gaps", "Approvals", "Interventions", "Renewal"],
       },
       {
         title: "Leadership View",
         description:
           "Baseline, progress, qualification and agreed workforce capability measures.",
         icon: ChartNoAxesCombined,
-        stages: ["Baseline", "Progress", "Qualification", "Capability Measures"],
       },
     ],
   },
@@ -259,21 +255,18 @@ export const solutionPages: Record<string, SolutionPageConfig> = {
         description:
           "Eligibility, assessment, personalised pathway, mentoring, milestone and next step.",
         icon: CircleUserRound,
-        stages: ["Eligibility", "Assessment", "Pathway", "Mentoring", "Next Step"],
       },
       {
         title: "Programme Owner View",
         description:
           "Applications, cohorts, mentor activity, interventions, milestone progress and follow-up.",
         icon: Network,
-        stages: ["Applications", "Cohorts", "Mentor Activity", "Milestones", "Follow-up"],
       },
       {
         title: "Leadership View",
         description:
           "Participation, capability development, milestone progression and agreed outcome measures.",
         icon: ChartNoAxesCombined,
-        stages: ["Participation", "Capability", "Milestones", "Outcome Measures"],
       },
     ],
   },
@@ -363,21 +356,18 @@ export const solutionPages: Record<string, SolutionPageConfig> = {
         description:
           "Onboarding, product pathway, practice, assessment, certification and resources.",
         icon: CircleUserRound,
-        stages: ["Onboarding", "Product Pathway", "Practice", "Certification", "Resources"],
       },
       {
         title: "Programme Owner View",
         description:
           "Partner cohorts, progress, qualification status, interventions and ongoing engagement.",
         icon: Network,
-        stages: ["Cohorts", "Progress", "Qualification", "Interventions", "Engagement"],
       },
       {
         title: "Leadership View",
         description:
           "Engagement, proficiency, qualification and agreed adoption measures.",
         icon: ChartNoAxesCombined,
-        stages: ["Engagement", "Proficiency", "Qualification", "Adoption Measures"],
       },
     ],
   },
