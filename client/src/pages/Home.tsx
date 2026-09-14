@@ -154,7 +154,7 @@ const platformViews = [
   {
     title: "Leadership View",
     description:
-      "Turn participation and progress into decision-ready evidence for leadership and programme reporting.",
+      "Turn participation, progress and impact into decision-ready evidence for leadership and programme reporting.",
     image: leadershipViewVisualImg,
     icon: LineChart,
   },
