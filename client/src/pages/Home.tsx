@@ -61,7 +61,7 @@ import journeyVisualImg from "@assets/ChatGPT_Image_Sep_10,_2026,_01_59_16_PM_17
 import aiCoreVisualImg from "@assets/ChatGPT_Image_Sep_10,_2026,_02_14_52_PM_1789035344777.png";
 import globalPeopleVisualImg from "@assets/ChatGPT_Image_Sep_10,_2026,_02_20_30_PM_1789035666637.png";
 import whatWeDoVisualImg from "@assets/ChatGPT_Image_Sep_10,_2026,_03_35_02_PM_1789040155157.png";
-import workforceCapabilityCardImg from "@assets/ChatGPT_Image_Sep_14,_2026,_12_51_57_PM_1789375950622.png";
+import workforceCapabilityCardImg from "@assets/ChatGPT_Image_Sep_14,_2026,_12_52_59_PM_1789375998074.png";
 
 const clientLogos = [
   { name: "ADGM", logo: adgmLogo },
