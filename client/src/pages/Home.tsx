@@ -70,6 +70,7 @@ import globalPeopleVisualImg from "@assets/ChatGPT_Image_Sep_10,_2026,_02_20_30_
 import whatWeDoVisualImg from "@assets/ChatGPT_Image_Sep_10,_2026,_03_35_02_PM_1789040155157.png";
 import participantJourneyVisualImg from "@assets/ChatGPT_Image_Sep_14,_2026,_01_57_54_PM_1789380291902.png";
 import programmeOwnerVisualImg from "@assets/ChatGPT_Image_Sep_14,_2026,_02_00_44_PM_1789380387671.png";
+import leadershipViewVisualImg from "@assets/ChatGPT_Image_Sep_14,_2026,_02_05_14_PM_1789380407708.png";
 import workforceCapabilityCardImg from "@assets/ChatGPT_Image_Sep_14,_2026,_12_49_04_PM_1789375767695.png";
 import nationalCommunityCardImg from "@assets/ChatGPT_Image_Sep_14,_2026,_12_51_57_PM_1789375950622.png";
 import customerPartnerCardImg from "@assets/ChatGPT_Image_Sep_14,_2026,_12_52_59_PM_1789375998074.png";
@@ -154,7 +155,7 @@ const platformViews = [
     title: "Leadership View",
     description:
       "Turn participation and progress into decision-ready evidence for leadership and programme reporting.",
-    image: whatWeDoVisualImg,
+    image: leadershipViewVisualImg,
     icon: LineChart,
   },
 ];
