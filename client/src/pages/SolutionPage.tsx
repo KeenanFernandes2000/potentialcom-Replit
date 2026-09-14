@@ -1,8 +1,6 @@
 import type { CSSProperties } from "react";
 import {
   ArrowRight,
-  ArrowUpRight,
-  BriefcaseBusiness,
   ChevronRight,
   CircleDot,
   Orbit,
@@ -13,7 +11,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { navigateWithUTM } from "@/lib/utm-utils";
-import UTMLink from "@/components/UTMLink";
 import type { SolutionPageConfig } from "@/data/solutionPages";
 
 function SolutionHeroVisual({ config }: { config: SolutionPageConfig }) {
@@ -296,40 +293,6 @@ function SolutionPage({ config }: { config: SolutionPageConfig }) {
                   </div>
                 );
               })}
-            </div>
-          </div>
-        </section>
-
-        <section className="bg-[#f6f4fb] py-24 dark:bg-[#10172c] md:py-32">
-          <div className="container">
-            <SectionIntro label="RELEVANT EXPERIENCE" title={config.experienceTitle} />
-            <div className={`mx-auto mt-14 grid max-w-6xl gap-5 ${config.experiences.length === 1 ? "max-w-4xl" : "md:grid-cols-2 lg:grid-cols-4"}`}>
-              {config.experiences.map((experience, index) => (
-                <UTMLink
-                  key={experience.title}
-                  href="/case-studies"
-                  className={`group relative overflow-hidden rounded-2xl border border-border bg-background p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 motion-reduce:transition-none ${config.experiences.length === 1 ? "md:flex md:items-center md:gap-8 md:p-8" : ""}`}
-                  data-aos="fade-up"
-                  data-aos-delay={index * 70}
-                >
-                  <div className="flex h-16 items-center justify-start rounded-xl border border-border bg-muted/40 px-4 dark:bg-secondary/20 md:w-full">
-                    {experience.logo ? (
-                      <img src={experience.logo} alt="" className="max-h-10 max-w-[150px] object-contain dark:brightness-0 dark:invert" />
-                    ) : (
-                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                        <BriefcaseBusiness className="h-5 w-5" />
-                      </div>
-                    )}
-                  </div>
-                  <div className="mt-5 md:mt-6">
-                    <h3 className="text-lg font-semibold text-secondary dark:text-white">{experience.title}</h3>
-                    <p className="mt-2 text-sm leading-6 text-muted-foreground">{experience.relevance}</p>
-                    <span className="mt-5 inline-flex items-center text-sm font-semibold text-primary">
-                      View relevant case studies <ArrowUpRight className="ml-1.5 h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </span>
-                  </div>
-                </UTMLink>
-              ))}
             </div>
           </div>
         </section>
