@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
-import UTMLink from "@/components/UTMLink";
+import { navigateWithUTM } from "@/lib/utm-utils";
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
@@ -12,10 +12,7 @@ import {
   Rocket,
   BarChart3,
   Building2,
-  MessageSquare,
 } from "lucide-react";
-
-import aylaHeroImg from "@assets/2.png";
 
 import bmwLogo from "@assets/BMW_logo_1782107783038.png";
 import alAinMuseumLogo from "@assets/Al_Ain_Museum_logo_1782107849084.png";
@@ -827,50 +824,35 @@ const CaseStudies = () => {
           </div>
         </section>
 
-        {/* Talk to Ayla */}
-        <section className="py-24 relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-accent/10">
-          <div className="absolute top-0 left-0 w-72 h-72 bg-primary/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl translate-x-1/3 translate-y-1/3" />
-          <div className="container relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-              <div className="order-2 lg:order-1 flex justify-center">
-                <div className="relative w-full max-w-md">
-                  <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 to-accent/20 rounded-3xl blur-2xl" />
-                  <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-primary/10">
-                    <img
-                      src={aylaHeroImg}
-                      alt="Ayla - Potential's AI advisor"
-                      className="w-full h-auto"
-                    />
-                  </div>
-                  <div className="absolute -bottom-3 -right-3 bg-primary text-white rounded-full p-3 shadow-lg">
-                    <MessageSquare className="h-6 w-6" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="order-1 lg:order-2 space-y-6">
-                <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium">
-                  Meet Ayla
-                </div>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
-                  Planning a similar <span className="text-primary">initiative?</span>
-                </h2>
-                <p className="text-lg text-muted-foreground leading-relaxed max-w-lg">
-                  Tell Ayla about your mandate, audience and timing. She will help identify
-                  the most relevant Potential journey and connect you with our team where there is a fit.
+        {/* Standard CTA */}
+        <section className="bg-muted/50 py-10 dark:bg-secondary/10">
+          <div className="container">
+            <div
+              className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-secondary via-[#1c2c70] to-primary px-8 py-10 text-white md:px-16"
+              data-aos="fade-up"
+            >
+              <div
+                className="absolute right-0 top-0 h-72 w-72 translate-x-1/3 -translate-y-1/3 rounded-full bg-white/10 blur-3xl"
+                aria-hidden="true"
+              />
+              <div className="relative max-w-3xl">
+                <p className="text-sm font-semibold uppercase tracking-[.2em] text-[#d2b4ff]">
+                  The next conversation
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 pt-2">
-                  <Button
-                    asChild
-                    size="lg"
-                    className="rounded-full bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg shadow-lg shadow-primary/25"
-                  >
-                    <UTMLink href="/ayla">
-                      Talk to Ayla <ArrowRight className="ml-2 h-5 w-5" />
-                    </UTMLink>
-                  </Button>
-                </div>
+                <h2 className="mt-5 text-4xl font-bold tracking-tight md:text-6xl">
+                  Have a programme or initiative in mind?
+                </h2>
+                <p className="mt-6 max-w-2xl text-lg leading-8 text-white/70">
+                  Describe what you are trying to achieve and we will help identify the most relevant
+                  next step.
+                </p>
+                <Button
+                  size="lg"
+                  className="mt-9 rounded-full bg-white px-8 py-6 text-secondary hover:bg-white/90"
+                  onClick={() => navigateWithUTM("/inquire")}
+                >
+                  Discuss Your Initiative <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
               </div>
             </div>
           </div>
