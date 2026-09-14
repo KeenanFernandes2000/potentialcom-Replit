@@ -244,33 +244,6 @@ const platformViews = [
   },
 ];
 
-const journeys = [
-  {
-    label: "Participants / Learners",
-    title: "Discover, learn, practise, submit, connect and progress.",
-    description:
-      "People see what matters to them, receive the right prompt at the right time and build momentum through learning, practice and contribution.",
-    icon: CircleUserRound,
-    accent: "bg-violet-100 text-violet-700",
-  },
-  {
-    label: "Programme Owners / Administrators",
-    title: "Configure, manage, communicate, review and intervene.",
-    description:
-      "Design cohorts, publish content, orchestrate engagement and understand where people are progressing or getting stuck.",
-    icon: PanelsTopLeft,
-    accent: "bg-amber-100 text-amber-700",
-  },
-  {
-    label: "Leadership",
-    title: "See participation, capability, application, outcomes and impact reporting.",
-    description:
-      "See participation, engagement, capability and outcome signals together, with the context needed for better decisions.",
-    icon: LineChart,
-    accent: "bg-teal-100 text-teal-700",
-  },
-];
-
 const deploymentItems = [
   ["Dedicated deployment", "Start from a proven platform foundation configured around your initiative."],
   ["Configurable journeys and roles", "Shape participant pathways, permissions and programme-owner workflows."],
@@ -580,15 +553,6 @@ const Platform = () => {
                   </button>
                 );
               })}
-            </div>
-          </div>
-        </section>
-
-        <section className="bg-[#f6f4fb] py-24 dark:bg-[#10172c] md:py-32">
-          <div className="container">
-            <div className="grid gap-14 lg:grid-cols-[.8fr_1.2fr] lg:items-start">
-              <div data-aos="fade-right"><p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">Audience journeys</p><h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary dark:text-white md:text-5xl">Built around the people who use it.</h2><p className="mt-5 text-lg leading-8 text-muted-foreground">A coherent experience for the people participating, the teams operating the initiative and the leaders accountable for progress.</p></div>
-              <div className="space-y-4" data-aos="fade-up">{journeys.map((journey) => { const Icon = journey.icon; return <div key={journey.label} className="group grid gap-5 rounded-2xl border border-border bg-background p-6 transition-colors hover:border-primary/30 sm:grid-cols-[auto_1fr]"><div className={`flex h-12 w-12 items-center justify-center rounded-xl ${journey.accent} dark:bg-primary/20 dark:text-[#eadfff]`}><Icon className="h-6 w-6" /></div><div><p className="text-xs font-semibold uppercase tracking-[.15em] text-primary">{journey.label}</p><h3 className="mt-2 text-xl font-semibold text-secondary dark:text-white">{journey.title}</h3><p className="mt-2 leading-7 text-muted-foreground">{journey.description}</p></div></div>; })}</div>
             </div>
           </div>
         </section>
