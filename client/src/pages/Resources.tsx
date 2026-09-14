@@ -16,6 +16,7 @@ import {
   Network,
   Route,
   ShieldCheck,
+  Users,
 } from "lucide-react";
 
 const Resources = () => {
