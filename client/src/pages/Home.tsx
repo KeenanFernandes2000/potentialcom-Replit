@@ -126,24 +126,6 @@ const helpOffers = [
   },
 ];
 
-const dctPlatforms = [
-  {
-    title: "VX Academy",
-    description: "Workforce capability and visitor-experience development",
-    icon: GraduationCap,
-  },
-  {
-    title: "DCT Learn",
-    description: "Learning and mentorship journey",
-    icon: Users,
-  },
-  {
-    title: "Tourist Guide Certification",
-    description: "Eligibility, qualification and renewal",
-    icon: ShieldCheck,
-  },
-];
-
 const platformViews = [
   {
     title: "Participant View",
@@ -554,58 +536,6 @@ const Home = () => {
                   </div>
                 </div>
               ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Expansion in Practice */}
-        <section id="expansion-in-practice" className="py-24 bg-muted/50 dark:bg-secondary/10">
-          <div className="container">
-            <div className="mx-auto max-w-3xl text-center" data-aos="fade-up">
-              <div className="inline-flex rounded-full bg-primary/10 px-4 py-1 text-sm font-medium uppercase tracking-[.12em] text-primary">
-                Expansion in Practice
-              </div>
-              <h2 className="section-title mt-5">
-                One relationship. Three distinct platforms supporting different priorities.
-              </h2>
-              <p className="mt-6 text-lg leading-8 text-muted-foreground">
-                Potential’s work with the Department of Culture and Tourism Abu Dhabi demonstrates
-                how one client relationship can expand across distinct mandates, audiences and
-                operational needs.
-              </p>
-            </div>
-
-            <div className="mx-auto mt-14 grid max-w-6xl gap-4 md:grid-cols-3">
-              {dctPlatforms.map((platform, index) => (
-                <div
-                  key={platform.title}
-                  className="relative overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-sm"
-                  data-aos="fade-up"
-                  data-aos-delay={index * 100}
-                >
-                  <div className="absolute right-0 top-0 h-24 w-24 translate-x-1/3 -translate-y-1/3 rounded-full bg-primary/15 blur-2xl" />
-                  <div className="relative flex items-center justify-between gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                      <platform.icon className="h-6 w-6" />
-                    </div>
-                    {index === 0 && (
-                      <img src={dctLogo} alt="DCT logo" className="h-8 w-auto object-contain opacity-70 dark:brightness-0 dark:invert" />
-                    )}
-                  </div>
-                  <h3 className="relative mt-8 text-xl font-semibold text-foreground">{platform.title}</h3>
-                  <p className="relative mt-2 text-sm leading-6 text-muted-foreground">{platform.description}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-10 flex justify-center" data-aos="fade-up">
-              <Button
-                size="lg"
-                className="rounded-full bg-primary px-8 py-6 text-white hover:bg-primary/90"
-                onClick={() => navigateWithUTM("/inquire")}
-              >
-                Discuss an Expansion Opportunity <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
             </div>
           </div>
         </section>
