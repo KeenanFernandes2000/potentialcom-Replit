@@ -440,19 +440,6 @@ const Platform = () => {
           </div>
         </section>
 
-        <section className="bg-secondary py-20 text-white md:py-24" data-aos="fade-up">
-          <div className="container">
-            <div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
-              <div><p className="text-sm font-semibold uppercase tracking-[.2em] text-[#d2b4ff]">Platform overview</p><h2 className="mt-4 text-3xl font-semibold leading-tight md:text-4xl">A platform shaped around your mandate.</h2><p className="mt-5 leading-7 text-white/65">Start with the audience journey that matters now, then combine capabilities as needed. Each platform is dedicated to the client’s brand, audience, roles, workflow, content and success measures.</p></div>
-              <div className="grid gap-5 text-base leading-7 text-white/70 sm:grid-cols-3">
-                <p><span className="mb-2 block text-2xl font-semibold text-white">Audience experience</span>One clear place to learn, connect, contribute and progress.</p>
-                <p><span className="mb-2 block text-2xl font-semibold text-white">Programme owner</span>Manage participation, workflows, communication and intervention.</p>
-                <p><span className="mb-2 block text-2xl font-semibold text-white">Leadership evidence</span>See progress, outcomes and impact reporting against the mandate.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
         <section className="bg-background py-24 md:py-32">
           <div className="container">
             <div className="mx-auto max-w-3xl text-center" data-aos="fade-up">
