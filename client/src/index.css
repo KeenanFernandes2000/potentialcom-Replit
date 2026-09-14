@@ -331,6 +331,32 @@ body {
     animation: journey-dash 3s linear infinite;
   }
 
+  @keyframes solution-dash {
+    to {
+      stroke-dashoffset: -52;
+    }
+  }
+
+  .solution-path {
+    animation: solution-dash 4s linear infinite;
+  }
+
+  @keyframes solution-rise {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .solution-node {
+    animation: solution-rise 700ms ease-out both;
+    animation-delay: var(--solution-delay);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     #capabilities [data-aos],
     #difference [data-aos],
@@ -342,6 +368,11 @@ body {
     }
 
     .journey-path {
+      animation: none !important;
+    }
+
+    .solution-path,
+    .solution-node {
       animation: none !important;
     }
   }

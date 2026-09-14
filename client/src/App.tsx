@@ -37,12 +37,18 @@ import NationalPrograms from "@/pages/NationalPrograms";
 import Book from "@/pages/Book";
 import CaseStudies from "@/pages/CaseStudies";
 import Platform from "@/pages/Platform";
+import WorkforceCapability from "@/pages/WorkforceCapability";
+import NationalCommunityEmpowerment from "@/pages/NationalCommunityEmpowerment";
+import CustomerPartnerEnablement from "@/pages/CustomerPartnerEnablement";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/platform" component={Platform} />
+      <Route path="/solutions/workforce-capability" component={WorkforceCapability} />
+      <Route path="/solutions/national-community-empowerment" component={NationalCommunityEmpowerment} />
+      <Route path="/solutions/customer-partner-enablement" component={CustomerPartnerEnablement} />
       <Route path="/solutions" component={Offerings} />
       <Route path="/resources" component={Resources} />
       <Route path="/partner" component={Partner} />
