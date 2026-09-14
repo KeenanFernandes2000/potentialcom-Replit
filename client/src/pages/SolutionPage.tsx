@@ -238,7 +238,7 @@ function SolutionPage({ config }: { config: SolutionPageConfig }) {
                       </span>
                       <div className="md:mt-7">
                         <p className="text-sm font-semibold leading-5 text-white">{stage}</p>
-                        <p className="mt-1 text-[10px] uppercase tracking-wider text-white/40">Journey stage</p>
+                        <p className="mt-1 text-[10px] uppercase tracking-wider text-white/40">Report progress</p>
                       </div>
                     </div>
                   ))}
