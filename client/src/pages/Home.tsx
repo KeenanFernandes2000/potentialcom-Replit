@@ -90,6 +90,81 @@ const clientLogos = [
   { name: "WFZO", logo: wfzoLogo },
 ];
 
+const helpOffers = [
+  {
+    title: "Workforce Capability",
+    description:
+      "Develop the capability your workforce needs through connected learning, practice, coaching and certification — with a clear view of readiness and application.",
+    tags: ["Learning", "Practice", "Certification", "Readiness"],
+    image: globalPeopleVisualImg,
+    icon: GraduationCap,
+    href: "/solutions/workforce-capability",
+    cta: "Explore Workforce Capability",
+  },
+  {
+    title: "National & Community Empowerment",
+    description:
+      "Bring learning, mentoring, challenges and engagement together around a defined public or stakeholder mandate, with practical milestones and measurable progress.",
+    tags: ["Entrepreneurship", "Financial Capability", "Youth", "Community"],
+    image: whatWeDoVisualImg,
+    icon: Globe,
+    href: "/solutions/national-community-empowerment",
+    cta: "Explore National & Community",
+  },
+  {
+    title: "Customer & Partner Enablement",
+    description:
+      "Help customers get more from your products and services, and help partners build confidence through onboarding, product learning, qualification and ongoing engagement.",
+    tags: ["Onboarding", "Product Learning", "Certification", "Adoption"],
+    image: aiCoreVisualImg,
+    icon: Briefcase,
+    href: "/solutions/customer-partner-enablement",
+    cta: "Explore Customer & Partner",
+  },
+];
+
+const dctPlatforms = [
+  {
+    title: "VX Academy",
+    description: "Workforce capability and visitor-experience development",
+    icon: GraduationCap,
+  },
+  {
+    title: "DCT Learn",
+    description: "Learning and mentorship journey",
+    icon: Users,
+  },
+  {
+    title: "Tourist Guide Certification",
+    description: "Eligibility, qualification and renewal",
+    icon: ShieldCheck,
+  },
+];
+
+const platformViews = [
+  {
+    title: "Participant View",
+    description:
+      "Give each participant a clear journey from entry and learning through practice, assessment and the next relevant action.",
+    stages: ["Entry", "Personalised Pathway", "Practice", "Assessment", "Next Step"],
+    icon: Users,
+  },
+  {
+    title: "Programme Owner View",
+    description:
+      "Manage cohorts, approvals, interventions, exceptions and follow-up without losing sight of individual progress.",
+    stages: ["Cohorts", "Approvals", "Interventions", "Exceptions", "Follow-up"],
+    icon: Network,
+  },
+  {
+    title: "Leadership View",
+    description:
+      "Turn participation and progress into decision-ready evidence for leadership and programme reporting.",
+    stages: ["Baseline", "Progress", "Qualification", "Outcome Measures"],
+    icon: LineChart,
+  },
+];
+
 const ecosystemFeatures = [
   { icon: GraduationCap, label: "Academy & Courses" },
   { icon: CheckCircle, label: "Certification & Licensing" },
@@ -109,10 +184,27 @@ const aiCapabilities = [
 ];
 
 const startSteps = [
-  ["01", "Discover", "Define the need, audience and path."],
-  ["02", "Blueprint", "Agree the first journey, roles and success measures."],
-  ["03", "Mockup", "Preview a personalised interactive mockup platform."],
-  ["04", "Launch & Prove", "Deploy the agreed first phase, measure, improve and expand."],
+  {
+    number: "01",
+    title: "Discover",
+    description: "Define the need, audience and path.",
+    support: true,
+  },
+  {
+    number: "02",
+    title: "Blueprint",
+    description: "Agree the first journey, roles and success measures.",
+  },
+  {
+    number: "03",
+    title: "Mockup",
+    description: "Preview a personalised interactive mockup platform.",
+  },
+  {
+    number: "04",
+    title: "Launch & Prove",
+    description: "Deploy the agreed first phase, measure, improve and expand.",
+  },
 ];
 
 const audiences = [
