@@ -16,29 +16,6 @@ import { navigateWithUTM } from "@/lib/utm-utils";
 import UTMLink from "@/components/UTMLink";
 import type { SolutionPageConfig } from "@/data/solutionPages";
 
-const startSteps = [
-  {
-    number: "01",
-    title: "Discover",
-    description: "Define the need, audience and path.",
-  },
-  {
-    number: "02",
-    title: "Blueprint",
-    description: "Agree the first journey, roles and success measures.",
-  },
-  {
-    number: "03",
-    title: "Mockup",
-    description: "Preview a personalised interactive mockup platform.",
-  },
-  {
-    number: "04",
-    title: "Launch & Prove",
-    description: "Deploy the agreed first phase, measure, improve and expand.",
-  },
-];
-
 function SolutionHeroVisual({ config }: { config: SolutionPageConfig }) {
   return (
     <div className="relative min-h-[430px] overflow-hidden rounded-[2rem] border border-white/70 bg-secondary p-4 shadow-2xl dark:border-white/10 sm:min-h-[500px] sm:p-6">
@@ -353,33 +330,6 @@ function SolutionPage({ config }: { config: SolutionPageConfig }) {
                   </div>
                 </UTMLink>
               ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="bg-background py-24 md:py-32">
-          <div className="container">
-            <SectionIntro
-              label="HOW TO START"
-              title="From a defined need to a measurable first phase."
-              copy="A strong first journey starts with clarity. Shape the audience, roles and evidence before the platform expands."
-            />
-            <div className="relative mx-auto mt-16 max-w-6xl overflow-hidden rounded-[2rem] bg-gradient-to-br from-secondary via-[#18245a] to-primary p-6 shadow-2xl md:p-10" data-aos="fade-up">
-              <div className="absolute -right-20 -top-24 h-72 w-72 rounded-full bg-white/10 blur-3xl" aria-hidden="true" />
-              <div className="relative grid gap-4 md:grid-cols-4 md:gap-5">
-                {startSteps.map((step, index) => (
-                  <div key={step.number} className="relative rounded-2xl border border-white/15 bg-white/[.08] p-5 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-white/[.12] motion-reduce:transition-none md:p-6">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/20 bg-white/10 text-xl font-bold text-white shadow-lg shadow-black/20">
-                      {step.number}
-                    </div>
-                    <h3 className="mt-6 text-lg font-semibold text-white">{step.title}</h3>
-                    <p className="mt-2 text-sm leading-6 text-white/65">{step.description}</p>
-                    {index < startSteps.length - 1 && (
-                      <ArrowRight className="absolute -right-4 top-12 z-10 hidden h-8 w-8 rounded-full border border-white/20 bg-[#253475] p-1.5 text-[#d2b4ff] md:block" aria-hidden="true" />
-                    )}
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
         </section>
