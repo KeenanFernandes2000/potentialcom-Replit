@@ -15,7 +15,7 @@ const ROUTE_DEFAULTS = {
   auth: { priority: "0.3", changefreq: "yearly" }, // login, register, etc.
   legal: { priority: "0.4", changefreq: "yearly" }, // terms, privacy, etc.
   blog: { priority: "0.7", changefreq: "daily" },
-  high: { priority: "0.9", changefreq: "monthly" }, // about, pricing, etc.
+  high: { priority: "0.9", changefreq: "monthly" }, // about and other core pages
   medium: { priority: "0.8", changefreq: "weekly" }, // offerings, resources, etc.
   default: { priority: "0.5", changefreq: "monthly" },
 };
@@ -60,7 +60,7 @@ function getRouteConfig(routePath: string): {
   }
 
   // High priority pages
-  if (["about", "pricing"].some((high) => routePath.includes(high))) {
+  if (["about"].some((high) => routePath.includes(high))) {
     return ROUTE_DEFAULTS.high;
   }
 
@@ -321,7 +321,8 @@ async function extractStaticRoutes(): Promise<StaticRoute[]> {
           !routePath ||
           routePath.includes(":") ||
           routePath.includes("*") ||
-          routePath === ""
+          routePath === "" ||
+          routePath === "/pricing"
         ) {
           continue;
         }

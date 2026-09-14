@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Facebook,
   Linkedin,
@@ -7,14 +6,12 @@ import {
   MapPin,
   Phone,
   Youtube,
-  MessageCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 import { FooterLogo } from "./FooterLogo";
 import { useToast } from "@/hooks/use-toast";
 import { SiX, SiWhatsapp } from "react-icons/si";
-import { QuickCallModal } from "./QuickCallModal";
 import UTMLink from "@/components/UTMLink";
 
 interface FooterProps {
@@ -27,19 +24,6 @@ const Footer = ({
   newsletterDescription = "Subscribe to our newsletter for the latest AI innovations.",
 }: FooterProps) => {
   const { toast } = useToast();
-  const [showCallModal, setShowCallModal] = useState(false);
-
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const offsetTop =
-        element.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({
-        top: offsetTop,
-        behavior: "smooth",
-      });
-    }
-  };
 
   return (
     <footer className="py-12 bg-secondary/95 text-secondary-foreground">
@@ -63,69 +47,58 @@ const Footer = ({
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              <li>
-                <a
-                  href="/platform"
-                  className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
-                >
-                  Platform
-                </a>
+              <li className="pb-1 text-xs font-semibold uppercase tracking-[.16em] text-primary">
+                Solutions
               </li>
               <li>
-                <a
-                  href="/usecases"
-                  className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
-                >
+                <UTMLink href="/solutions/workforce-capability" className="pl-3 opacity-80 hover:opacity-100 hover:text-primary transition-colors">
+                  Workforce Capability
+                </UTMLink>
+              </li>
+              <li>
+                <UTMLink href="/solutions/national-community-empowerment" className="pl-3 opacity-80 hover:opacity-100 hover:text-primary transition-colors">
+                  National &amp; Community Empowerment
+                </UTMLink>
+              </li>
+              <li>
+                <UTMLink href="/solutions/customer-partner-enablement" className="pl-3 opacity-80 hover:opacity-100 hover:text-primary transition-colors">
+                  Customer &amp; Partner Enablement
+                </UTMLink>
+              </li>
+              <li>
+                <UTMLink href="/usecases" className="pl-3 opacity-80 hover:opacity-100 hover:text-primary transition-colors">
                   Use Cases
-                </a>
+                </UTMLink>
               </li>
               <li>
-                <a
-                  href="/case-studies"
-                  className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
-                >
+                <UTMLink href="/platform" className="opacity-80 hover:opacity-100 hover:text-primary transition-colors">
+                  Platform
+                </UTMLink>
+              </li>
+              <li>
+                <UTMLink href="/case-studies" className="opacity-80 hover:opacity-100 hover:text-primary transition-colors">
                   Case Studies
-                </a>
+                </UTMLink>
               </li>
               <li>
-                <a
-                  href="/about"
-                  className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
-                >
+                <UTMLink href="/about" className="opacity-80 hover:opacity-100 hover:text-primary transition-colors">
                   About
-                </a>
+                </UTMLink>
               </li>
               <li>
-                <UTMLink
-                  href="/inquire"
-                  className="font-semibold text-primary hover:opacity-100 transition-colors"
-                >
+                <UTMLink href="/inquire" className="font-semibold text-primary hover:opacity-100 transition-colors">
                   Discuss Your Initiative
                 </UTMLink>
               </li>
               <li>
-                <a
-                  href="/ayla"
-                  className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
-                >
-                  Talk to Ayla
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/resources"
-                  className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
-                >
+                <UTMLink href="/resources" className="opacity-80 hover:opacity-100 hover:text-primary transition-colors">
                   Resources
-                </a>
+                </UTMLink>
               </li>
               <li>
-                <a
-                  href="/partner"
-                  className="opacity-80 hover:opacity-100 hover:text-primary transition-colors"
-                >
+                <UTMLink href="/partner" className="opacity-80 hover:opacity-100 hover:text-primary transition-colors">
                   Partner with us
-                </a>
+                </UTMLink>
               </li>
               <li>
                 <a
@@ -134,6 +107,11 @@ const Footer = ({
                 >
                   Blog
                 </a>
+              </li>
+              <li>
+                <UTMLink href="/ayla" className="opacity-80 hover:opacity-100 hover:text-primary transition-colors">
+                  Talk to Ayla
+                </UTMLink>
               </li>
             </ul>
           </div>
@@ -171,19 +149,13 @@ const Footer = ({
                   +971 4 369 3663
                 </a>
               </li>
-              {/* Interactive Web Call Card */}
+              {/* Ayla remains available as an intentional footer link. */}
               <li className="mt-4 -ml-2">
-                <div
-                  onClick={() => setShowCallModal(true)}
-                  className="group relative cursor-pointer rounded-lg bg-gradient-to-r from-primary/10 to-primary/5 hover:from-primary/20 hover:to-primary/10 p-4 transition-all duration-300 border border-primary/20 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/20 gtm-footer-webcall-vera"
+                <UTMLink
+                  href="/ayla"
+                  className="group relative block rounded-lg bg-gradient-to-r from-primary/10 to-primary/5 hover:from-primary/20 hover:to-primary/10 p-4 transition-all duration-300 border border-primary/20 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/20"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="relative">
-                      <div className="absolute inset-0 bg-primary/20 rounded-full blur-md group-hover:blur-lg transition-all"></div>
-                      <div className="relative bg-primary rounded-full p-2.5 group-hover:scale-110 transition-transform">
-                        <MessageCircle className="h-5 w-5 text-primary-foreground" />
-                      </div>
-                    </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
                         <span className="font-semibold text-sm">Talk to Ayla</span>
@@ -201,7 +173,7 @@ const Footer = ({
                       </svg>
                     </div>
                   </div>
-                </div>
+                </UTMLink>
               </li>
             </ul>
           </div>
@@ -357,12 +329,6 @@ const Footer = ({
         </div>
       </div>
 
-      {/* Quick Call Modal */}
-      <QuickCallModal
-        isOpen={showCallModal}
-        onClose={() => setShowCallModal(false)}
-        assistantId="32d7022b-8c96-4498-bd94-60dfd4171e4f"
-      />
     </footer>
   );
 };

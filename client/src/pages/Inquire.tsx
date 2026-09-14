@@ -154,11 +154,7 @@ export default function Inquire() {
                 </div>
 
                 <Button
-                  onClick={() =>
-                    document
-                      .getElementById("inquire-form")
-                      ?.scrollIntoView({ behavior: "smooth", block: "start" })
-                  }
+                  onClick={() => setShowBookingModal(true)}
                   size="lg"
                   className="bg-primary px-8 py-6 text-lg font-semibold text-white hover:bg-primary/90"
                 >

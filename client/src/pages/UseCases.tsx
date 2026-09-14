@@ -219,9 +219,10 @@ const UseCases = () => {
   return (
     <div className="min-h-screen overflow-x-hidden bg-background">
       <SEO
-        title="Potential.com - Platform Use Cases"
-        description="Explore the initiatives governments, banks and major enterprises can deliver with Potential's AI-powered learning and engagement platform."
+        title="Learning & Engagement Use Cases | Potential"
+        description="Explore workforce, national empowerment, customer education and partner enablement use cases built on Potential’s learning and engagement platform."
         keywords="government capability development, enterprise learning platform, financial literacy, workforce upskilling, Potential use cases"
+        url="https://potential.com/usecases"
       />
       <Header />
       <main>
@@ -257,7 +258,7 @@ const UseCases = () => {
                   </a>
                 </div>
                 <p className="mt-4 max-w-xl text-sm leading-6 text-white/60">
-                  Tell Ayla what you are trying to achieve. She will help identify the most relevant path.
+                  Start with the use-case library below to identify the most relevant path.
                 </p>
               </div>
               <div className="relative" data-aos="fade-up" data-aos-delay="140">
@@ -348,7 +349,7 @@ const UseCases = () => {
               <div className="relative max-w-3xl">
                 <p className="text-sm font-semibold uppercase tracking-[.2em] text-[#d2b4ff]">The next conversation</p>
                 <h2 className="mt-5 text-4xl font-bold tracking-tight md:text-6xl">What are you trying to achieve?</h2>
-                <p className="mt-6 max-w-2xl text-lg leading-8 text-white/70">Tell Ayla about your audience, mandate and timing. She will help identify the most relevant Potential journey and, where there is a fit, connect you with our team.</p>
+                <p className="mt-6 max-w-2xl text-lg leading-8 text-white/70">Tell us about your audience, mandate and timing. We’ll help identify the most relevant Potential journey and the right next step.</p>
                 <Button onClick={discussYourInitiative} size="lg" className="mt-9 rounded-full bg-white px-8 py-6 text-secondary hover:bg-white/90">Discuss Your Initiative <ArrowRight className="h-5 w-5" aria-hidden="true" /></Button>
               </div>
             </div>

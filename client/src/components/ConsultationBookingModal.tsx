@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 interface ConsultationBookingModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -7,6 +9,17 @@ export function ConsultationBookingModal({
   isOpen,
   onClose,
 }: ConsultationBookingModalProps) {
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
+
   return (
     <div
       className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-opacity duration-200 ${
@@ -16,11 +29,21 @@ export function ConsultationBookingModal({
       }`}
       style={{ visibility: isOpen ? "visible" : "hidden" }}
       aria-hidden={!isOpen}
+      role="presentation"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) onClose();
+      }}
     >
-      <div className="bg-card rounded-2xl border border-border shadow-2xl w-full max-w-4xl h-[85vh] relative flex flex-col overflow-hidden">
+      <div
+        className="bg-card rounded-2xl border border-border shadow-2xl w-full max-w-4xl h-[85vh] relative flex flex-col overflow-hidden"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="consultation-booking-title"
+        onMouseDown={(event) => event.stopPropagation()}
+      >
         <div className="flex items-center justify-between p-6 border-b border-border">
           <div>
-            <h3 className="text-2xl font-bold text-foreground">
+            <h3 id="consultation-booking-title" className="text-2xl font-bold text-foreground">
               Book Free Demo
             </h3>
             <p className="text-muted-foreground mt-1">

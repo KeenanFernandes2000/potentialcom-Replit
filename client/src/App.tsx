@@ -1,4 +1,4 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from "react-helmet-async";
@@ -41,10 +41,21 @@ import WorkforceCapability from "@/pages/WorkforceCapability";
 import NationalCommunityEmpowerment from "@/pages/NationalCommunityEmpowerment";
 import CustomerPartnerEnablement from "@/pages/CustomerPartnerEnablement";
 
+function LegacyPricingRedirect() {
+  const [, navigate] = useLocation();
+
+  useEffect(() => {
+    navigate("/inquire", { replace: true });
+  }, [navigate]);
+
+  return null;
+}
+
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/pricing" component={LegacyPricingRedirect} />
       <Route path="/platform" component={Platform} />
       <Route path="/solutions/workforce-capability" component={WorkforceCapability} />
       <Route path="/solutions/national-community-empowerment" component={NationalCommunityEmpowerment} />

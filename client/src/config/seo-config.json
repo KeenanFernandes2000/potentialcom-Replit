@@ -1,33 +1,41 @@
 {
   "defaultSEO": {
-    "title": "Potential.com - AI-powered Learning & Engagement Platform",
-    "description": "Deploy powerful AI team members that seamlessly integrate with your existing systems. Get started with AI agents backed by dedicated support.",
-    "keywords": "AI agents, business automation, artificial intelligence, business growth, AI team members, automation tools",
+    "title": "AI-powered Learning & Engagement Platform | Potential",
+    "description": "Build workforce capability, deliver empowerment programmes and enable customers and partners with Potential’s learning and engagement platform.",
+    "keywords": "learning and engagement platform, workforce capability, empowerment programmes, customer enablement, partner enablement",
     "author": "Potential.com",
     "image": "/og-image.jpg",
     "url": "https://potential.com"
   },
   "pages": {
     "/": {
-      "title": "Potential.com - AI-powered Learning & Engagement Platform",
-      "description": "Deploy powerful AI team members that seamlessly integrate with your existing systems. Get started with AI agents backed by dedicated support.",
-      "keywords": "AI agents, business automation, artificial intelligence, business growth, AI team members, automation tools, intelligent automation"
+      "title": "AI-powered Learning & Engagement Platform | Potential",
+      "description": "Build workforce capability, deliver empowerment programmes and enable customers and partners with Potential’s learning and engagement platform.",
+      "keywords": "learning and engagement platform, workforce capability, empowerment programmes, customer enablement, partner enablement"
     },
     "/platform": {
-      "title": "Potential.com - The Platform"
+      "title": "Learning & Engagement Platform | Potential",
+      "description": "Connect learning, certification, coaching, communities and innovation with programme administration and outcome evidence.",
+      "keywords": "learning platform, certification, coaching, communities, innovation management, programme administration"
     },
     "/usecases": {
-      "title": "Potential.com - Platform Use Cases"
+      "title": "Learning & Engagement Use Cases | Potential",
+      "description": "Explore workforce, national empowerment, customer education and partner enablement use cases built on Potential’s learning and engagement platform.",
+      "keywords": "workforce capability, national empowerment, customer education, partner enablement, learning platform"
     },
     "/case-studies": {
-      "title": "Potential.com - Platform Case Studies"
+      "title": "Case Studies | Potential",
+      "description": "Explore delivered initiatives and programme experience from Potential’s learning and engagement work.",
+      "keywords": "Potential case studies, learning programmes, empowerment programmes, engagement initiatives"
     },
     "/ayla": {
-      "title": "Potential.com - Talk to Ayla"
+      "title": "Talk to Ayla | Potential",
+      "description": "Talk to Ayla, Potential’s AI advisor, to explore your initiative, audience and priorities during the discovery stage.",
+      "keywords": "Ayla, initiative discovery, AI advisor, Potential.com"
     },
     "/inquire": {
-      "title": "Potential.com - Discuss Your Initiative",
-      "description": "Book a free consultation with Potential.com to discuss your organisation, audience and next initiative.",
+      "title": "Discuss Your Initiative | Potential",
+      "description": "Discuss your initiative with Potential and book a consultation to explore the right learning and engagement platform approach for your organisation.",
       "keywords": "Potential consultation, discuss your initiative, learning and engagement platform, organisation consultation"
     },
     "/ai-agents": {
@@ -38,20 +46,35 @@
       "description": "Explore cutting-edge AI solutions tailored for your business needs. Transform operations with intelligent automation and AI-powered workflows.",
       "keywords": "AI solutions, business solutions, AI services, intelligent automation, enterprise AI, AI implementation"
     },
+    "/solutions/workforce-capability": {
+      "title": "Workforce Capability | Potential",
+      "description": "Develop workforce capability through learning, practice and certification, with evidence of readiness and application.",
+      "keywords": "workforce capability, learning, practice, certification, readiness, Potential"
+    },
+    "/solutions/national-community-empowerment": {
+      "title": "National & Community Empowerment | Potential",
+      "description": "Deliver entrepreneurship, financial capability and community programmes with connected learning, mentoring and progress reporting.",
+      "keywords": "national empowerment, community empowerment, entrepreneurship, financial capability, mentoring, Potential"
+    },
+    "/solutions/customer-partner-enablement": {
+      "title": "Customer & Partner Enablement | Potential",
+      "description": "Help customers and partners adopt products and build proficiency through dedicated learning, onboarding and certification journeys.",
+      "keywords": "customer enablement, partner enablement, onboarding, product learning, certification, Potential"
+    },
     "/resources": {
-      "title": "Potential.com - Resources & Documentation",
-      "description": "Access comprehensive resources, guides, and documentation to help you get the most out of our AI agents and automation tools.",
-      "keywords": "AI resources, documentation, guides, tutorials, AI implementation, automation guides, AI best practices"
+      "title": "Resources | Potential",
+      "description": "Practical guidance for designing workforce capability, certification, empowerment and engagement programmes with measurable outcomes.",
+      "keywords": "workforce capability resources, certification programmes, empowerment programmes, engagement programmes, outcome evidence"
     },
     "/partner": {
-      "title": "Potential.com - Partner Program",
-      "description": "Join our partner program and help businesses transform with AI. Exclusive revenue-sharing benefits, support, and opportunities for growth partners.",
-      "keywords": "AI partner program, business partnerships, AI reseller, channel partners, partnership opportunities, AI affiliate"
+      "title": "Partner with Potential | Potential",
+      "description": "Partner with Potential to deliver learning and engagement programmes through mandate access, specialist expertise, implementation capability or referrals.",
+      "keywords": "Potential partners, programme delivery, learning platform partners, implementation partners, referral partners"
     },
     "/about": {
-      "title": "Potential.com - About Us",
-      "description": "Learn about our mission to empower businesses with AI agents and our commitment to innovation, excellence, and transformative technology.",
-      "keywords": "about potential, AI company, business automation company, AI team, AI innovation, artificial intelligence leaders"
+      "title": "About Potential | Potential",
+      "description": "Learn how Potential combines experience in empowerment programmes with a proven learning and engagement platform for government and enterprise initiatives.",
+      "keywords": "about Potential, learning and engagement platform, empowerment programmes, government initiatives, enterprise initiatives"
     },
     "/vera": {
       "title": "Potential.com - Vera AI Advisor",

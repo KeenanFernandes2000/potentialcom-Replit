@@ -812,15 +812,6 @@ const Home = () => {
                     </div>
                     <h3 className="mt-6 text-lg font-semibold text-white">{step.title}</h3>
                     <p className="mt-2 text-sm leading-6 text-white/65">{step.description}</p>
-                    {step.support && (
-                      <button
-                        type="button"
-                        className="mt-4 inline-flex items-center text-left text-sm font-semibold text-[#d2b4ff] transition-colors hover:text-white"
-                        onClick={() => navigateWithUTM("/ayla")}
-                      >
-                        Ayla can support you during discovery. <ArrowRight className="ml-1.5 h-4 w-4" />
-                      </button>
-                    )}
                     {index < startSteps.length - 1 && (
                       <ArrowRight
                         className="absolute -right-4 top-12 z-10 hidden h-8 w-8 rounded-full border border-white/20 bg-[#253475] p-1.5 text-[#d2b4ff] md:block"

@@ -15,6 +15,12 @@ app.get("/health", (_req, res) => {
   res.status(200).send("ok");
 });
 
+// Keep obsolete commercial URLs out of the public site while preserving a
+// relevant destination for existing bookmarks and campaign links.
+app.get("/pricing", (_req, res) => {
+  res.redirect(301, "/inquire");
+});
+
 // Force HTTPS in production
 if (process.env.NODE_ENV === "production") {
   app.use((req, res, next) => {

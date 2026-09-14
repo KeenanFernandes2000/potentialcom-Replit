@@ -60,7 +60,6 @@ import {
   Target,
   TrendingUp,
 } from "lucide-react";
-import aylaImage from "@assets/2.png";
 import platformHeroImage from "@assets/ChatGPT_Image_Sep_10,_2026,_04_17_48_PM_1789042683557.png";
 
 const clientLogos = [
@@ -301,9 +300,10 @@ const Platform = () => {
   return (
     <div className="min-h-screen overflow-x-hidden bg-background">
       <SEO
-        title="Potential.com - The Platform"
-        description="A dedicated AI-powered learning and engagement platform for governments, banks and major enterprises."
+        title="Learning & Engagement Platform | Potential"
+        description="Connect learning, certification, coaching, communities and innovation with programme administration and outcome evidence."
         keywords="AI learning platform, enterprise engagement platform, government capability development, Potential.com platform"
+        url="https://potential.com/platform"
       />
       <Header />
       <main>
@@ -480,15 +480,6 @@ const Platform = () => {
                     </div>
                     <h3 className="mt-6 text-lg font-semibold text-white">{step.title}</h3>
                     <p className="mt-2 text-sm leading-6 text-white/65">{step.description}</p>
-                    {step.support && (
-                      <button
-                        type="button"
-                        className="mt-4 inline-flex items-center text-left text-sm font-semibold text-[#d2b4ff] transition-colors hover:text-white"
-                        onClick={() => navigateWithUTM("/ayla")}
-                      >
-                        Ayla can support you during discovery. <ArrowRight className="ml-1.5 h-4 w-4" />
-                      </button>
-                    )}
                     {index < startSteps.length - 1 && (
                       <ArrowRight
                         className="absolute -right-4 top-12 z-10 hidden h-8 w-8 rounded-full border border-white/20 bg-[#253475] p-1.5 text-[#d2b4ff] md:block"
@@ -619,7 +610,7 @@ const Platform = () => {
           <div className="container">
             <div className="grid items-center gap-14 lg:grid-cols-[1.1fr_.9fr]">
               <div data-aos="fade-right"><div className="mb-5 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary"><BrainCircuit className="h-4 w-4" /> The AI layer</div><h2 className="text-4xl font-bold tracking-tight text-secondary dark:text-white md:text-5xl">AI that supports the journey.</h2><p className="mt-5 max-w-xl text-lg leading-8 text-muted-foreground">AI is embedded where it adds value rather than treated as the product itself. Capabilities are selected and configured for each deployment.</p><div className="mt-8 grid gap-3 sm:grid-cols-2">{["Personalized learning and guidance", "AI coaches and role-play", "Content and knowledge support", "Role-based practice", "Engagement and progress insights", "Leadership analysis"].map((item) => <div key={item} className="flex items-center gap-3 rounded-xl border border-border bg-card p-4 text-sm font-medium text-secondary dark:text-white"><Check className="h-4 w-4 shrink-0 text-primary" />{item}</div>)}</div></div>
-              <div className="relative" data-aos="fade-left"><div className="absolute inset-5 rounded-full bg-primary/15 blur-3xl" /><div className="relative overflow-hidden rounded-[2rem] border border-border bg-[#f7f3ff] p-5 shadow-xl dark:bg-[#151d38]"><img src={aylaImage} alt="Ayla, Potential's AI empowerment advisor" className="w-full rounded-[1.35rem] object-cover" /><div className="absolute bottom-9 left-9 right-9 rounded-xl border border-white/70 bg-background/90 p-4 shadow-lg backdrop-blur"><div className="flex items-center gap-3"><div className="rounded-lg bg-primary p-2 text-white"><MessageSquare className="h-4 w-4" /></div><div><p className="text-xs font-semibold uppercase tracking-wider text-primary">Ayla</p><p className="text-sm font-medium text-secondary dark:text-white">Your challenge is a good place to start.</p></div></div></div></div></div>
+              <div className="relative" data-aos="fade-left"><div className="absolute inset-5 rounded-full bg-primary/15 blur-3xl" /><div className="relative overflow-hidden rounded-[2rem] border border-border bg-[#f7f3ff] p-5 shadow-xl dark:bg-[#151d38]"><img src={platformHeroImage} alt="Illustrative view of an AI-supported learning and engagement journey" className="w-full rounded-[1.35rem] object-cover" /><div className="absolute bottom-9 left-9 right-9 rounded-xl border border-white/70 bg-background/90 p-4 shadow-lg backdrop-blur"><div className="flex items-center gap-3"><div className="rounded-lg bg-primary p-2 text-white"><MessageSquare className="h-4 w-4" /></div><div><p className="text-xs font-semibold uppercase tracking-wider text-primary">AI-supported journey</p><p className="text-sm font-medium text-secondary dark:text-white">Support where it adds value.</p></div></div></div></div></div>
             </div>
           </div>
         </section>
@@ -721,13 +712,6 @@ const Platform = () => {
                   <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
                     <Button onClick={discussYourInitiative} size="lg" className="rounded-full px-8 py-6">
                       Discuss Your Initiative <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      onClick={() => navigateWithUTM("/ayla")}
-                      className="w-fit rounded-full px-3 text-primary hover:bg-primary/10 hover:text-primary"
-                    >
-                      Prefer to start with AI? Talk to Ayla <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </div>
                 </div>

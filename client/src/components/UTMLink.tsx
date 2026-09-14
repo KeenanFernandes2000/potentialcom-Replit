@@ -9,6 +9,7 @@ interface UTMLinkProps {
   onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
   target?: string;
   rel?: string;
+  role?: string;
   "aria-label"?: string;
 }
 
@@ -22,6 +23,7 @@ export const UTMLink: React.FC<UTMLinkProps> = ({
   onClick,
   target,
   rel,
+  role,
   "aria-label": ariaLabel,
   ...props
 }) => {
@@ -34,6 +36,7 @@ export const UTMLink: React.FC<UTMLinkProps> = ({
         onClick={onClick}
         target={target}
         rel={rel}
+        role={role}
         aria-label={ariaLabel}
         {...props}
       >
@@ -52,6 +55,7 @@ export const UTMLink: React.FC<UTMLinkProps> = ({
       onClick={onClick}
       target={target}
       rel={rel}
+      role={role}
       aria-label={ariaLabel}
       {...props}
     >

@@ -1,3 +1,4 @@
 - [Blocked dependency install](blocked-dependency-install.md) — a security-firewall-blocked dep (CVE) aborts the whole npm install, silently leaving other declared deps uninstalled and breaking builds.
 - [Protect Ayla call flow](ayla-call-flow.md) — treat the Ayla form and immediate post-submit AI voice-call startup as a protected integration.
 - [Global visual direction](global-visual-direction.md) — public-facing platform visuals should feel internationally relevant and avoid UAE-specific cultural cues.
+- [Navigation and discovery boundaries](navigation-discovery-boundaries.md) — human consultation is the commercial path; Ayla is intentionally limited to homepage/footer entry points.
