@@ -21,14 +21,6 @@ import {
   WalletCards,
 } from "lucide-react";
 
-import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
-import cartierLogo from "@assets/Customer Logos/Cartier logo.png";
-import dellLogo from "@assets/Customer Logos/Dell logo.png";
-import hsbcLogo from "@assets/Customer Logos/HSBC logo.png";
-import moeLogo from "@assets/MOE_logo_1782111063727.png";
-import vxAcademyLogo from "@assets/DCT_logo_1782108989381.png";
-import dldLogo from "@assets/Customer Logos/DLD Logo.png";
-
 export type SolutionCard = {
   title: string;
   description: string;
@@ -40,12 +32,6 @@ export type SolutionView = {
   description: string;
   icon: LucideIcon;
   stages: string[];
-};
-
-export type SolutionExperience = {
-  title: string;
-  relevance: string;
-  logo?: string;
 };
 
 export type SolutionPageConfig = {
@@ -73,8 +59,6 @@ export type SolutionPageConfig = {
   additionalTitle: string;
   additionalCards: SolutionCard[];
   views: SolutionView[];
-  experienceTitle: string;
-  experiences: SolutionExperience[];
 };
 
 export const solutionPages: Record<string, SolutionPageConfig> = {
@@ -179,29 +163,6 @@ export const solutionPages: Record<string, SolutionPageConfig> = {
           "Baseline, progress, qualification and agreed workforce capability measures.",
         icon: ChartNoAxesCombined,
         stages: ["Baseline", "Progress", "Qualification", "Capability Measures"],
-      },
-    ],
-    experienceTitle: "Experience across workforce learning and professional qualification.",
-    experiences: [
-      {
-        title: "VX Academy",
-        relevance: "Frontliner capability and visitor-experience development",
-        logo: vxAcademyLogo,
-      },
-      {
-        title: "DCT Tourist Guide Certification",
-        relevance: "Eligibility, qualification and renewal workflow",
-        logo: vxAcademyLogo,
-      },
-      {
-        title: "DCT Learn",
-        relevance: "Structured learning and mentorship journey",
-        logo: vxAcademyLogo,
-      },
-      {
-        title: "Dubai Land Department Real Estate Certification",
-        relevance: "Professional Real Estate Agent Certification",
-        logo: dldLogo,
       },
     ],
   },
@@ -315,29 +276,6 @@ export const solutionPages: Record<string, SolutionPageConfig> = {
         stages: ["Participation", "Capability", "Milestones", "Outcome Measures"],
       },
     ],
-    experienceTitle: "Experience across entrepreneurship, youth and financial capability.",
-    experiences: [
-      {
-        title: "The Entrepreneurial Nation",
-        relevance: "National entrepreneurship and SME development",
-        logo: moeLogo,
-      },
-      {
-        title: "HSBC Tatawwar",
-        relevance: "Youth learning, mentorship and innovation",
-        logo: hsbcLogo,
-      },
-      {
-        title: "Maliyat Financial Literacy Program",
-        relevance: "Financial capability across defined age groups",
-        logo: bankMuscatLogo,
-      },
-      {
-        title: "Cartier Women’s Initiative",
-        relevance: "Women entrepreneurs, growth and access to support",
-        logo: cartierLogo,
-      },
-    ],
   },
   customerPartnerEnablement: {
     slug: "/solutions/customer-partner-enablement",
@@ -440,15 +378,6 @@ export const solutionPages: Record<string, SolutionPageConfig> = {
           "Engagement, proficiency, qualification and agreed adoption measures.",
         icon: ChartNoAxesCombined,
         stages: ["Engagement", "Proficiency", "Qualification", "Adoption Measures"],
-      },
-    ],
-    experienceTitle: "Experience supporting partner learning and enablement.",
-    experiences: [
-      {
-        title: "Dell EMC VMware Partner Academy",
-        relevance:
-          "A partner learning journey supporting onboarding, product knowledge and partner capability.",
-        logo: dellLogo,
       },
     ],
   },
