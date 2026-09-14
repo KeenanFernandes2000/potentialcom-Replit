@@ -25,7 +25,7 @@ import { apiRequest } from "@/lib/queryClient";
 import { AutoSEO } from "@/components/SEO";
 import { ConsultationBookingModal } from "@/components/ConsultationBookingModal";
 import { useState } from "react";
-import { ArrowRight, MessageSquare, Users, Target } from "lucide-react";
+import { MessageSquare, Users, Target } from "lucide-react";
 
 const formSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -156,14 +156,6 @@ export default function Inquire() {
                 organisation.
               </p>
 
-              <Button
-                onClick={() => setShowBookingModal(true)}
-                size="lg"
-                className="bg-primary px-8 py-6 text-lg font-semibold text-white hover:bg-primary/90"
-              >
-                Book Your Free Consultation Session
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
             </div>
           </div>
         </section>
