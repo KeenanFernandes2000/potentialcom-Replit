@@ -166,12 +166,36 @@ const platformViews = [
 ];
 
 const ecosystemFeatures = [
-  { icon: GraduationCap, label: "Academy & Courses" },
-  { icon: CheckCircle, label: "Certification & Licensing" },
-  { icon: Trophy, label: "Competitions & Challenges" },
-  { icon: Users, label: "Mentorship & Coaching" },
-  { icon: Globe, label: "Community & Events" },
-  { icon: Lightbulb, label: "Innovation & Ideas" },
+  {
+    icon: GraduationCap,
+    label: "Academy & Courses",
+    description: "Connect courses, assessments and guided pathways to the skills your audience needs.",
+  },
+  {
+    icon: CheckCircle,
+    label: "Certification & Licensing",
+    description: "Manage eligibility, assessment, qualification and renewal in one participant journey.",
+  },
+  {
+    icon: Trophy,
+    label: "Competitions & Challenges",
+    description: "Bring applications, submissions, judging and progression into a clear workflow.",
+  },
+  {
+    icon: Users,
+    label: "Mentorship & Coaching",
+    description: "Support goals, practice and progress through human and AI guidance.",
+  },
+  {
+    icon: Globe,
+    label: "Community & Events",
+    description: "Keep people connected through resources, events, discussion and timely communication.",
+  },
+  {
+    icon: Lightbulb,
+    label: "Innovation & Ideas",
+    description: "Guide ideas through submission, evaluation and implementation, with recorded progress.",
+  },
 ];
 
 const aiCapabilities = [
@@ -367,11 +391,12 @@ const Home = () => {
                   <span className="text-primary">Prove what changed.</span>
                 </h1>
 
-                <p className="text-xl text-muted-foreground mb-8">
-                  Potential helps governments and enterprises build dedicated platforms for learning,
-                  certification, mentorship, communities, innovation and AI-enabled capability
-                  development — bringing the audience journey, engagement and evidence into one experience.
-                </p>
+                 <p className="text-xl text-muted-foreground mb-8">
+                   Potential helps governments and enterprises build dedicated platforms for workforce
+                   capability, national and community empowerment, and customer and partner enablement.
+                   Connect learning, practice, certification and engagement with the programme management
+                   and evidence your initiative needs.
+                 </p>
 
                 <div className="flex flex-wrap gap-4">
                   <Button
@@ -381,11 +406,28 @@ const Home = () => {
                   >
                     Discuss Your Initiative <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
+                   <Button
+                     size="lg"
+                     variant="outline"
+                     className="rounded-full border-border bg-background/70 px-8 py-6 text-lg"
+                     onClick={() => navigateWithUTM("/platform")}
+                   >
+                     Explore the Platform <ArrowRight className="ml-2 h-5 w-5" />
+                   </Button>
                 </div>
-                <p className="text-sm text-muted-foreground mt-4 max-w-xl">
-                  Tell Ayla what you are trying to achieve. She will help shape the right approach and,
-                  where there is a fit, connect you with our team.
-                </p>
+                 <button
+                   type="button"
+                   className="mt-5 inline-flex items-center text-sm font-semibold text-primary transition-colors hover:text-primary/80"
+                   onClick={() => {
+                     const element = document.getElementById("home-how-to-start");
+                     if (element) {
+                       const offsetTop = element.getBoundingClientRect().top + window.scrollY - 80;
+                       window.scrollTo({ top: offsetTop, behavior: "smooth" });
+                     }
+                   }}
+                 >
+                   See a proposed journey for your initiative <ArrowRight className="ml-2 h-4 w-4" />
+                 </button>
               </div>
 
               <div className="md:w-1/2 relative" data-aos="fade-up" data-aos-delay="200">
@@ -449,6 +491,178 @@ const Home = () => {
                   ))}
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* How We Help */}
+        <section id="how-we-help" className="py-24 bg-background">
+          <div className="container">
+            <div className="mx-auto max-w-3xl text-center" data-aos="fade-up">
+              <div className="inline-flex rounded-full bg-primary/10 px-4 py-1 text-sm font-medium uppercase tracking-[.12em] text-primary">
+                How We Help
+              </div>
+              <h2 className="section-title mt-5">
+                Start with the initiative you need to deliver.
+              </h2>
+              <p className="mt-6 text-lg leading-8 text-muted-foreground">
+                Potential combines learning, engagement, programme management and evidence around a
+                defined organisational mandate. Explore the three ways organisations most commonly
+                deploy the platform.
+              </p>
+            </div>
+
+            <div className="mx-auto mt-14 grid max-w-7xl gap-6 lg:grid-cols-3">
+              {helpOffers.map((offer, index) => (
+                <div
+                  key={offer.title}
+                  className="group overflow-hidden rounded-[1.75rem] border border-border bg-card shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/10 motion-reduce:transition-none"
+                  data-aos="fade-up"
+                  data-aos-delay={index * 100}
+                >
+                  <div className="relative h-52 overflow-hidden bg-secondary">
+                    <img
+                      src={offer.image}
+                      alt=""
+                      className="h-full w-full object-cover transition duration-500 group-hover:scale-105 motion-reduce:transition-none"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-secondary/90 via-secondary/15 to-transparent" />
+                    <div className="absolute bottom-5 left-5 flex h-11 w-11 items-center justify-center rounded-2xl border border-white/20 bg-white/15 text-white backdrop-blur-md">
+                      <offer.icon className="h-5 w-5" />
+                    </div>
+                  </div>
+                  <div className="flex h-[calc(100%-13rem)] flex-col p-6">
+                    <h3 className="text-2xl font-semibold text-foreground">{offer.title}</h3>
+                    <p className="mt-4 text-sm leading-6 text-muted-foreground">{offer.description}</p>
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {offer.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-full border border-primary/20 bg-primary/5 px-2.5 py-1 text-xs font-medium text-primary"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                    <Button
+                      variant="ghost"
+                      className="mt-6 w-fit px-0 text-primary hover:bg-transparent hover:text-primary/80"
+                      onClick={() => navigateWithUTM(offer.href)}
+                    >
+                      {offer.cta} <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Expansion in Practice */}
+        <section id="expansion-in-practice" className="py-24 bg-muted/50 dark:bg-secondary/10">
+          <div className="container">
+            <div className="mx-auto max-w-3xl text-center" data-aos="fade-up">
+              <div className="inline-flex rounded-full bg-primary/10 px-4 py-1 text-sm font-medium uppercase tracking-[.12em] text-primary">
+                Expansion in Practice
+              </div>
+              <h2 className="section-title mt-5">
+                One relationship. Three distinct platforms supporting different priorities.
+              </h2>
+              <p className="mt-6 text-lg leading-8 text-muted-foreground">
+                Potential’s work with the Department of Culture and Tourism Abu Dhabi demonstrates
+                how one client relationship can expand across distinct mandates, audiences and
+                operational needs.
+              </p>
+            </div>
+
+            <div className="mx-auto mt-14 grid max-w-6xl gap-4 md:grid-cols-3">
+              {dctPlatforms.map((platform, index) => (
+                <div
+                  key={platform.title}
+                  className="relative overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-sm"
+                  data-aos="fade-up"
+                  data-aos-delay={index * 100}
+                >
+                  <div className="absolute right-0 top-0 h-24 w-24 translate-x-1/3 -translate-y-1/3 rounded-full bg-primary/15 blur-2xl" />
+                  <div className="relative flex items-center justify-between gap-4">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                      <platform.icon className="h-6 w-6" />
+                    </div>
+                    {index === 0 && (
+                      <img src={dctLogo} alt="DCT logo" className="h-8 w-auto object-contain opacity-70 dark:brightness-0 dark:invert" />
+                    )}
+                  </div>
+                  <h3 className="relative mt-8 text-xl font-semibold text-foreground">{platform.title}</h3>
+                  <p className="relative mt-2 text-sm leading-6 text-muted-foreground">{platform.description}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-10 flex justify-center" data-aos="fade-up">
+              <Button
+                size="lg"
+                className="rounded-full bg-primary px-8 py-6 text-white hover:bg-primary/90"
+                onClick={() => navigateWithUTM("/inquire")}
+              >
+                Discuss an Expansion Opportunity <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* One Platform, Three Views */}
+        <section id="platform-views" className="py-24 bg-background">
+          <div className="container">
+            <div className="mx-auto max-w-3xl text-center" data-aos="fade-up">
+              <div className="inline-flex rounded-full bg-primary/10 px-4 py-1 text-sm font-medium uppercase tracking-[.12em] text-primary">
+                One Platform, Three Views
+              </div>
+              <h2 className="section-title mt-5">
+                See the complete initiative — from participant experience to leadership evidence.
+              </h2>
+              <p className="mt-6 text-lg leading-8 text-muted-foreground">
+                Use one connected platform to guide participants, keep programme owners in control,
+                and give leadership the evidence needed to make decisions.
+              </p>
+            </div>
+
+            <div className="mx-auto mt-14 grid max-w-7xl gap-6 lg:grid-cols-3">
+              {platformViews.map((view, index) => (
+                <div
+                  key={view.title}
+                  className="relative overflow-hidden rounded-[1.75rem] border border-border bg-card p-6 shadow-sm"
+                  data-aos="fade-up"
+                  data-aos-delay={index * 100}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[.18em] text-primary">
+                        Sample initiative · Demo data
+                      </p>
+                      <h3 className="mt-3 text-2xl font-semibold text-foreground">{view.title}</h3>
+                    </div>
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                      <view.icon className="h-5 w-5" />
+                    </div>
+                  </div>
+                  <p className="mt-4 text-sm leading-6 text-muted-foreground">{view.description}</p>
+                  <div className="mt-7 rounded-2xl border border-border bg-muted/50 p-4 dark:bg-secondary/20">
+                    <div className="flex flex-wrap items-center gap-2">
+                      {view.stages.map((stage, stageIndex) => (
+                        <div key={stage} className="flex items-center gap-2">
+                          <span className="rounded-full border border-primary/20 bg-background px-3 py-2 text-xs font-semibold text-foreground">
+                            {stage}
+                          </span>
+                          {stageIndex < view.stages.length - 1 && (
+                            <ArrowRight className="h-3.5 w-3.5 shrink-0 text-primary/70" aria-hidden="true" />
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -568,12 +782,12 @@ const Home = () => {
         <section id="home-how-to-start" className="py-24 bg-muted/50 dark:bg-secondary/10 md:py-32">
           <div className="container">
             <div className="mx-auto max-w-5xl text-center" data-aos="fade-up">
-              <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-                How to start
+              <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4 uppercase tracking-[.12em]">
+                How to Start
               </div>
               <h2 className="section-title mb-6 md:whitespace-nowrap">
-                Start with the need, then{" "}
-                <span className="text-primary">shape the first release.</span>
+                From defined need to{" "}
+                <span className="text-primary">measurable first phase.</span>
               </h2>
               <p className="text-lg leading-8 text-muted-foreground">
                 A strong platform journey starts with clarity. Personalised interactive previews
@@ -588,16 +802,25 @@ const Home = () => {
               <div className="absolute -right-20 -top-24 h-72 w-72 rounded-full bg-white/10 blur-3xl" aria-hidden="true" />
               <div className="absolute -bottom-32 left-1/4 h-80 w-80 rounded-full bg-primary/30 blur-3xl" aria-hidden="true" />
               <div className="relative grid gap-4 md:grid-cols-4 md:gap-5">
-                {startSteps.map(([number, title, description], index) => (
+                {startSteps.map((step, index) => (
                   <div
-                    key={number}
+                    key={step.number}
                     className="relative rounded-2xl border border-white/15 bg-white/[.08] p-5 backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-white/[.12] motion-reduce:transition-none md:p-6"
                   >
                     <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-white/20 bg-white/10 text-xl font-bold text-white shadow-lg shadow-black/20">
-                      {number}
+                      {step.number}
                     </div>
-                    <h3 className="mt-6 text-lg font-semibold text-white">{title}</h3>
-                    <p className="mt-2 text-sm leading-6 text-white/65">{description}</p>
+                    <h3 className="mt-6 text-lg font-semibold text-white">{step.title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-white/65">{step.description}</p>
+                    {step.support && (
+                      <button
+                        type="button"
+                        className="mt-4 inline-flex items-center text-left text-sm font-semibold text-[#d2b4ff] transition-colors hover:text-white"
+                        onClick={() => navigateWithUTM("/ayla")}
+                      >
+                        Ayla can support you during discovery. <ArrowRight className="ml-1.5 h-4 w-4" />
+                      </button>
+                    )}
                     {index < startSteps.length - 1 && (
                       <ArrowRight
                         className="absolute -right-4 top-12 z-10 hidden h-8 w-8 rounded-full border border-white/20 bg-[#253475] p-1.5 text-[#d2b4ff] md:block"
@@ -643,7 +866,7 @@ const Home = () => {
                   <div>
                     <p className="text-foreground font-semibold pt-1">{feature.label}</p>
                     <p className="text-sm text-muted-foreground mt-1">
-                      A purposeful layer in the journey.
+                       {feature.description}
                     </p>
                   </div>
                 </div>
@@ -688,16 +911,15 @@ const Home = () => {
               </div>
 
               <div className="order-1 lg:order-2 space-y-6" data-aos="fade-left">
-                <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium">
-                  Meet Ayla
+                 <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium uppercase tracking-[.12em]">
+                   Meet Ayla
                 </div>
                 <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
-                  Start with your challenge,{" "}
-                  <span className="text-primary">not a product demo.</span>
+                   Prefer to start with AI?
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed max-w-lg">
-                  Ayla is Potential’s AI advisor. She asks about your organisation, audience,
-                  initiative, timing and requirements to help determine the most relevant next step.
+                   Ayla can help you think through your initiative, audience and priorities during the
+                   Discover stage before you decide on the next step.
                 </p>
                 <div className="grid sm:grid-cols-2 gap-4">
                   {aylaSteps.map((step) => (
@@ -844,15 +1066,15 @@ const Home = () => {
                 aria-hidden="true"
               />
               <div className="relative max-w-3xl">
-                <p className="text-sm font-semibold uppercase tracking-[.2em] text-[#d2b4ff]">
-                  The next conversation
+                 <p className="text-sm font-semibold uppercase tracking-[.2em] text-[#d2b4ff]">
+                   Ready to discuss your initiative?
                 </p>
                 <h2 className="mt-5 text-4xl font-bold tracking-tight md:text-6xl">
-                  What does your organisation need people to do next?
+                   Turn your mandate into a platform your audience can use — and your team can measure.
                 </h2>
                 <p className="mt-6 max-w-2xl text-lg leading-8 text-white/70">
-                  Tell Ayla about your mandate, audience and challenge. She will help identify
-                  the most relevant path and connect you with our team where there is a fit.
+                   Tell us who you need to serve, what they need to achieve and what success should
+                   look like. We’ll help you shape the right first phase.
                 </p>
                 <Button
                   size="lg"
