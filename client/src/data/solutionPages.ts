@@ -87,7 +87,7 @@ export const solutionPages: Record<string, SolutionPageConfig> = {
     whyLabel: "WHY WORKFORCE CAPABILITY",
     whyTitle: "Move from training activity to role readiness.",
     whyCopy:
-      "Workforce development is most useful when it connects directly to the roles, standards and real situations people face. Potential brings learning, practice, guidance, assessment and certification into one structured journey so programme owners can see where people are ready, where support is needed and what should happen next.",
+      "Workforce development is most useful when it connects directly to the roles, standards and real situations people face. Potential.com brings learning, practice, guidance, assessment and certification into one structured journey so programme owners can see where people are ready, where support is needed and what should happen next.",
     whyCards: [
       {
         title: "Role-aligned pathways",
