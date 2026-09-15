@@ -18,337 +18,329 @@ const PrivacyPolicy = () => {
       <Header />
       <main className="pt-32 pb-20">
         <div className="container max-w-4xl">
-          <h1 className="text-4xl font-bold mb-8 text-foreground">Privacy Policy</h1>
+          <h1 className="text-4xl font-bold mb-4 text-foreground">Privacy Policy</h1>
+          <p className="mb-8 text-sm text-muted-foreground">Last updated: September 2026</p>
 
           <div className="prose prose-lg max-w-none dark:prose-invert prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-li:text-foreground">
             <p className="lead text-xl mb-8 text-foreground">
-              At Potential.com, we take the privacy, security, and data
-              protection of our users and clients seriously. This Privacy Policy
-              describes how we collect, use, store, and protect information
-              across our suite of AI Tools, including AI Chatbots and AI Voice
-              Agents (collectively referred to as "AI Tools"). By using our
-              services, you agree to the practices described in this policy.
+              Potential FZ-LLC (“Potential”, “we”, “our” or “us”) respects the privacy of the
+              organisations and individuals who use our website and technology.
             </p>
 
-            <h2 className="text-2xl font-semibold mt-10 mb-4">1. Who We Are</h2>
             <p>
-              Potential.com is a technology company that provides AI-powered
-              empowerment tools hosted on enterprise-grade infrastructure. We
-              are committed to upholding the highest standards of privacy and
-              security in compliance with international regulations, including
-              the General Data Protection Regulation (GDPR).
+              Potential provides an AI-powered Learning &amp; Engagement Platform used by
+              governments, enterprises and other organisations to deliver workforce capability,
+              national and community empowerment, customer and partner enablement, certification,
+              learning, mentoring, engagement and related programmes.
             </p>
 
-            <h2 className="text-2xl font-semibold mt-10 mb-4">
-              2. Hosting and Infrastructure
-            </h2>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>
-                All AI Tools are hosted on Amazon Web Services (AWS) servers
-                located in Europe, benefiting from AWS's robust compliance with
-                ISO 27001, SOC 1/2/3, and other industry-leading certifications.
-              </li>
-              <li>
-                Our infrastructure is designed with enterprise-grade security in
-                mind, including data encryption in transit and at rest.
-              </li>
-            </ul>
-
-            <h2 className="text-2xl font-semibold mt-10 mb-4">
-              3. Data Collection and Use
-            </h2>
-            <h3 className="text-xl font-semibold mt-6 mb-3">
-              a. Types of Data Collected
-            </h3>
             <p>
-              We do not collect or store personally identifiable information
-              (PII) by default. However, in the course of using our AI Tools,
-              users may voluntarily share:
-            </p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Names</li>
-              <li>Email addresses</li>
-              <li>Phone numbers</li>
-              <li>Business inquiries or support issues</li>
-            </ul>
-            <p className="mt-4">
-              In some cases, if our clients explicitly request to collect
-              additional personal data through the AI Tools, we may support this
-              upon mutual agreement and subject to appropriate safeguards, data
-              processing terms, and full compliance with relevant privacy
-              regulations, including GDPR.
-            </p>
-            <p className="mt-4">
-              <strong>Note:</strong> All information is anonymized where
-              possible, and only the minimum necessary non-personal data is
-              processed for each interaction.
+              This Privacy Policy explains how information is handled when you visit Potential.com,
+              contact us directly, or use a platform powered by Potential.
             </p>
 
-            <h3 className="text-xl font-semibold mt-6 mb-3">
-              b. Purpose of Data Use
-            </h3>
+            <h2>1. Our Role in Protecting Your Data</h2>
+            <p>The way Potential handles personal data depends on how you interact with us.</p>
+
+            <h3>When you interact directly with Potential</h3>
             <p>
-              Data exchanged within our AI Tools is used solely for the purpose
-              of delivering and improving the conversation flow and
-              functionality of the specific conversation session the user is
-              engaged in. It is not used across multiple conversations or
-              retained for purposes beyond the current interaction. It is not
-              used for:
-            </p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>AI model training</li>
-              <li>Marketing purposes (unless explicitly requested to)</li>
-              <li>
-                Profiling or behavioral tracking (unless explicitly requested
-                to)
-              </li>
-            </ul>
-
-            <h2 className="text-2xl font-semibold mt-10 mb-4">
-              4. Use of Third-Party Large Language Models (LLMs)
-            </h2>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>
-                All communication with LLMs is mediated through Potential.com's
-                servers, which include customizable safeguards to control what
-                data is shared.
-              </li>
-              <li>
-                By default, we do not share any personal information with
-                third-party LLM providers unless a client has explicitly
-                requested such sharing and provided informed consent.
-              </li>
-              <li>
-                Clients may configure their data-sharing preferences at the
-                enterprise level.
-              </li>
-              <li>
-                All conversations are strictly used to serve end-user
-                interactions and are not retained or used for training by
-                third-party providers.
-              </li>
-            </ul>
-
-            <h2 className="text-2xl font-semibold mt-10 mb-4">
-              5. Data Retention and Deletion
-            </h2>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>
-                Data and conversation logs are retained for a maximum of 7 days
-                on our servers, after which they are automatically deleted.
-              </li>
-              <li>
-                Clients can opt-in to longer retention periods by written
-                request and through specific data processing agreements (DPAs).
-              </li>
-              <li>
-                Upon client request, we provide data access, export, and
-                deletion in accordance with GDPR.
-              </li>
-            </ul>
-
-            <h2 className="text-2xl font-semibold mt-10 mb-4">
-              6. Legal Basis for Processing
-            </h2>
-            <p>We process personal data based on:</p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>
-                The legitimate interest of providing and maintaining the
-                service.
-              </li>
-              <li>
-                User consent, where applicable (e.g., when inputting personal
-                data).
-              </li>
-              <li>Compliance with legal obligations, if required.</li>
-              <li>
-                Performance of a contract, when data is necessary for delivering
-                our services.
-              </li>
-            </ul>
-
-            <h2 className="text-2xl font-semibold mt-10 mb-4">
-              7. Your Rights
-            </h2>
-            <p>Under GDPR and other applicable laws, you have the right to:</p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>Access the personal data we hold about you</li>
-              <li>Request rectification or deletion of your data</li>
-              <li>Object to or restrict processing</li>
-              <li>Withdraw consent at any time (where applicable)</li>
-              <li>
-                Data portability in a commonly used, machine-readable format
-              </li>
-              <li>File a complaint with a supervisory authority</li>
-            </ul>
-            <p className="mt-4">
-              To exercise any of these rights, contact us at: info@potential.com
+              When you visit Potential.com, submit an enquiry, subscribe to communications or
+              otherwise interact directly with us, Potential FZ-LLC generally acts as the Data
+              Controller for the personal information you provide.
             </p>
 
-            <h3 className="text-xl font-semibold mt-6 mb-3">
-              Single Sign-On (SSO)
-            </h3>
+            <h3>When you use a client programme powered by Potential</h3>
             <p>
-              Potential.com and its subdomains provide Single Sign-On (SSO)
-              functionality to streamline your login experience. When you use
-              SSO, you will be directed to a third-party authentication service
-              such as Google, Facebook, or another SSO provider, which will
-              authenticate your identity and provide you with access to our
-              sites. These third-party providers may collect and process your
-              personal information according to their own privacy policies.
+              Many of the platforms we provide are created for and operated on behalf of
+              government entities, enterprises and other organisations.
             </p>
-
-            <h3 className="text-xl font-semibold mt-6 mb-3">
-              Use of Google User Data
-            </h3>
             <p>
-              Our use of Google user data is limited to the practices disclosed
-              in this Privacy Policy and conforms with Google's Limited Use
-              requirements. When you use Google SSO to access our platform, we
-              collect and use Google user data such as display name, email, and
-              first name to create your user account on our platform. We only
-              use Google user data for the purposes explicitly stated in this
-              policy and do not share this data with unauthorized third parties.
+              In these cases, the client organisation is generally the Data Controller and owns
+              and controls the programme data, while Potential acts as a Data Processor, providing
+              the technology and associated services required to securely host and operate the
+              platform.
             </p>
-
-            <h3 className="text-xl font-semibold mt-6 mb-3">
-              Google Gmail and Calendar (Read-Only) Access
-            </h3>
             <p>
-              Separately from Google SSO, you may choose to connect your own Google
-              account so your Potential.com AI assistant can use your information to
-              help you. We request only the minimum read-only scopes you explicitly
-              grant on Google&apos;s consent screen:
+              Potential does not claim ownership of participant data collected through client
+              programmes. We store and process this information confidentially on behalf of the
+              relevant client and in accordance with our contractual obligations, applicable data
+              protection requirements and the client&apos;s instructions.
             </p>
-            <ul className="list-disc pl-6 my-3 space-y-1">
-              <li>
-                <strong>Gmail (read-only)</strong> &mdash;{" "}
-                <code>gmail.readonly</code>: to read your email so your assistant can
-                answer your questions and surface relevant context. We never send,
-                compose, modify, label, or delete any email.
-              </li>
-              <li>
-                <strong>Google Calendar (read-only)</strong> &mdash;{" "}
-                <code>calendar.readonly</code>: to read your schedule so your assistant
-                can help you plan and answer scheduling questions. We never create,
-                modify, or delete calendar events.
-              </li>
+            <p>Client-specific privacy notices, consent requirements or programme terms may also apply.</p>
+
+            <h2>2. Information Collected Through Potential.com</h2>
+            <p>When you interact directly with Potential, we may collect information that you voluntarily provide, such as:</p>
+            <ul>
+              <li>Name and contact information</li>
+              <li>Organisation and job title</li>
+              <li>Information submitted through enquiry or consultation forms</li>
+              <li>Newsletter and communication preferences</li>
+              <li>Correspondence with our team</li>
+              <li>Information you provide when requesting information about our platform or services</li>
             </ul>
             <p>
-              This data is used <strong>only</strong> to provide the user-facing
-              features you requested inside your own assistant, and is processed
-              per-user. Your Google access and refresh tokens are{" "}
-              <strong>encrypted at rest</strong> and transmitted over TLS. We do not
-              sell your Google user data, and we do not use it for advertising. We do
-              not use your Google user data — including Gmail or Google Calendar
-              content — to develop, improve, or train generalized or non-personalized
-              AI or machine-learning models. We share your Google user data only with
-              the service providers necessary to operate this feature (for example, our
-              AI processing provider, which processes your message and calendar content
-              to generate the assistant's replies); they act on our behalf under
-              confidentiality obligations and may not use it for any other purpose. You
-              can disconnect Google at any time from your
-              Connections page, which immediately revokes our access and deletes the
-              stored tokens; you may also revoke access at{" "}
-              <a
-                href="https://myaccount.google.com/connections"
-                className="underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                myaccount.google.com/connections
-              </a>
-              .
+              We may also automatically collect limited technical information through cookies and
+              similar technologies, such as browser type, device information, IP address, pages
+              visited and general website usage information.
             </p>
             <p>
-              Potential.com&apos;s use and transfer to any other app of information
-              received from Google APIs will adhere to the{" "}
-              <a
-                href="https://developers.google.com/terms/api-services-user-data-policy"
-                className="underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Google API Services User Data Policy
-              </a>
-              , including the <strong>Limited Use</strong> requirements. Specifically,
-              data obtained via Google APIs is used solely to provide and improve the
-              user-facing features the user requested; is not sold or transferred to
-              third parties; is not used for advertising; and is not read by humans
-              except (a) with the user&apos;s explicit consent, (b) for security
-              purposes, (c) to comply with applicable law, or (d) as part of internal
-              operations on aggregated, de-identified data.
+              We use this information to respond to enquiries, operate and improve our website,
+              understand interest in our services and, where you have opted in, send relevant
+              communications.
             </p>
 
-            <h2 className="text-2xl font-semibold mt-10 mb-4">
-              8. Data Security Measures
-            </h2>
-            <p>We apply a layered approach to securing client data:</p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>End-to-end encryption (TLS 1.2+)</li>
-              <li>Strict access controls and role-based permissions</li>
-              <li>Real-time monitoring and automated incident detection</li>
-              <li>Secure APIs with audit logs and rate limiting</li>
-              <li>Frequent vulnerability assessments and security audits</li>
-              <li>Security training and awareness programs for staff</li>
+            <h2>3. Information Within Client Platforms</h2>
+            <p>
+              The information collected within a client platform depends on the programme, its
+              audience and the requirements defined by the client.
+            </p>
+            <p>
+              A programme may require information relating to registration, eligibility,
+              participant profiles, learning activities, assessments, submissions, certifications,
+              events, mentoring, coaching, programme participation, progress or outcomes.
+            </p>
+            <p>This programme information is controlled and owned by the relevant client organisation.</p>
+            <p>
+              Potential provides the technology through which this information may be securely
+              collected, stored and processed. We access or process such information only where
+              required to operate, support, secure or improve the relevant client platform, or
+              where otherwise instructed or authorised by the client.
+            </p>
+            <p>The exact information collected and its purpose may therefore differ from one programme to another.</p>
+
+            <h2>4. AI-Powered Features</h2>
+            <p>
+              Potential platforms may include AI-powered functionality such as AI Coaches, AI
+              Mentors, AI Examiners, simulations, role-play experiences, personalised learning
+              pathways, AI assistants, analytics and other intelligent features.
+            </p>
+            <p>
+              Information submitted during interactions with these features may be processed and
+              stored as part of the programme experience and, depending on the programme
+              configuration, may be made available to authorised programme administrators.
+            </p>
+            <p>
+              Potential applies appropriate safeguards based on the nature and purpose of each AI
+              use case. These may include access controls, data minimisation, confidentiality
+              measures, security controls, human oversight and restrictions on how information may
+              be used.
+            </p>
+            <p>
+              We may use approved third-party AI and technology service providers to enable
+              particular functionality. We select technologies according to the requirements of
+              each use case and apply appropriate contractual, privacy and security safeguards
+              when doing so.
+            </p>
+            <p>
+              AI-generated information may contain errors and should not automatically be treated
+              as professional advice or as the sole basis for significant decisions.
+            </p>
+
+            <h2>5. Children and Young People</h2>
+            <p>
+              Some client programmes delivered through Potential may be designed for children or
+              young people.
+            </p>
+            <p>
+              Where a programme&apos;s intended audience includes minors and parental or guardian
+              consent is required, the platform can enforce parental or guardian consent before
+              the minor is authorised to use the programme.
+            </p>
+            <p>
+              This consent process is facilitated automatically through the platform according to
+              the programme configuration and requirements established with the client.
+            </p>
+            <p>
+              Additional programme-specific privacy notices, consent wording and safeguards may
+              apply depending on the age of participants, programme requirements and applicable
+              laws.
+            </p>
+
+            <h2>6. How We Use Information</h2>
+            <p>Where Potential acts as the Data Controller, we may use information to:</p>
+            <ul>
+              <li>Respond to enquiries and requests</li>
+              <li>Arrange consultations or demonstrations</li>
+              <li>Provide information about our platform and services</li>
+              <li>Operate, maintain and improve Potential.com</li>
+              <li>Understand website usage and improve the user experience</li>
+              <li>Maintain security and prevent misuse</li>
+              <li>Meet legal and regulatory requirements</li>
+              <li>Send relevant marketing communications where you have provided consent or where otherwise permitted by applicable law</li>
             </ul>
+            <p>
+              Where Potential acts as a Data Processor for a client platform, information is
+              processed primarily to provide and support the services requested by that client and
+              in accordance with the client&apos;s instructions.
+            </p>
 
-            <h2 className="text-2xl font-semibold mt-10 mb-4">
-              9. Third-Party Sharing and Cookies
-            </h2>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>
-                We do not sell or rent your personal data to third parties.
-              </li>
-              <li>
-                We only share data with trusted subprocessors as necessary to
-                provide our services, governed by data processing agreements
-                that ensure GDPR compliance.
-              </li>
-              <li>
-                We may use cookies and similar tracking technologies on our web
-                interfaces, including our domains and subdomains, but NOT when
-                our AI tools are added to clients' websites and applications to
-                improve user experience. Users are prompted to consent to cookie
-                usage, and cookie preferences can be managed anytime.
-              </li>
+            <h2>7. Marketing and Programme Data</h2>
+            <p>
+              Information provided directly to Potential through Potential.com may be used for
+              relevant business communications and marketing where you have opted in or where such
+              communication is otherwise permitted.
+            </p>
+            <p>
+              Participant information from client programmes is not used by Potential for our own
+              marketing purposes unless the individual has separately and appropriately consented
+              to such use.
+            </p>
+            <p>This distinction is important to how we operate our client platforms.</p>
+
+            <h2>8. Data Hosting and International Transfers</h2>
+            <p>Potential uses established cloud infrastructure and technology providers to deliver its services.</p>
+            <p>
+              Our standard platform infrastructure may use AWS hosting within the European Union,
+              while other hosting arrangements, including Microsoft Azure infrastructure within
+              the UAE, may be used where appropriate to meet specific client, regulatory, security
+              or data-residency requirements.
+            </p>
+            <p>The exact infrastructure may therefore differ between client deployments.</p>
+            <p>
+              Where information is transferred or processed across jurisdictions, we apply
+              appropriate contractual, organisational and technical safeguards in accordance with
+              applicable data protection requirements.
+            </p>
+
+            <h2>9. Data Security and Confidentiality</h2>
+            <p>
+              We take reasonable technical and organisational measures to protect information
+              against unauthorised access, disclosure, alteration, loss or misuse.
+            </p>
+            <p>
+              Depending on the platform and client requirements, safeguards may include access
+              controls, authentication, encryption, secure cloud infrastructure, monitoring,
+              role-based permissions and other appropriate security measures.
+            </p>
+            <p>
+              Access to client programme information is limited to authorised personnel and
+              service providers who require such access for legitimate operational purposes and
+              who are subject to appropriate confidentiality and data-protection obligations.
+            </p>
+            <p>
+              No online system can guarantee absolute security, but we continually seek to apply
+              safeguards appropriate to the nature of the information and services being provided.
+            </p>
+
+            <h2>10. Data Retention</h2>
+            <p>There is no single retention period applicable to all Potential-powered programmes.</p>
+            <p>
+              For client platforms, retention periods depend on the relevant programme, client
+              requirements, contractual obligations and applicable legal or regulatory
+              requirements.
+            </p>
+            <p>
+              Where Potential acts as the Data Controller, we retain personal information only for
+              as long as reasonably necessary for the purpose for which it was collected, our
+              legitimate business requirements and applicable legal obligations.
+            </p>
+            <p>
+              When information is no longer required, it may be securely deleted or anonymised in
+              accordance with the applicable requirements.
+            </p>
+
+            <h2>11. Cookies</h2>
+            <p>
+              Potential.com uses cookies and similar technologies to operate the website, remember
+              preferences, understand how visitors use the site and improve the overall experience.
+            </p>
+            <p>
+              Some cookies may be necessary for the website to function, while others may support
+              analytics and performance measurement.
+            </p>
+            <p>
+              Where required by applicable law, non-essential cookies will be used in accordance
+              with the choices and consent provided through our website.
+            </p>
+            <p>
+              You can also control cookies through your browser settings, although disabling
+              certain cookies may affect parts of the website experience.
+            </p>
+
+            <h2>12. Service Providers</h2>
+            <p>
+              We may work with trusted technology, cloud infrastructure, communications, analytics,
+              AI and other service providers where necessary to operate Potential.com and deliver
+              our platform.
+            </p>
+            <p>
+              These providers may process information only to the extent required to provide their
+              services and are subject to appropriate contractual, confidentiality, security and
+              data-protection requirements.
+            </p>
+            <p>We do not sell participant personal data.</p>
+
+            <h2>13. Your Privacy Rights</h2>
+            <p>
+              Depending on where you are located and the applicable data protection law, you may
+              have rights relating to your personal information, including the right to:
+            </p>
+            <ul>
+              <li>Request access to your personal information</li>
+              <li>Request correction of inaccurate information</li>
+              <li>Request deletion where applicable</li>
+              <li>Object to or restrict certain processing</li>
+              <li>Withdraw consent where processing is based on consent</li>
+              <li>Request portability of your information where applicable</li>
+              <li>Raise a concern regarding how your information is handled</li>
             </ul>
-
-            <h3 className="text-xl font-semibold mt-6 mb-3">
-              Cookies and Web Beacons
-            </h3>
             <p>
-              We do use cookies to store information, such as your personal
-              preferences when you visit our sites. This could include only
-              showing you a popup once in your visit or the ability to log in to
-              some of our features, such as forums. We also use third-party
-              advertisements on Potential.com and its subdomains to support our
-              sites.
+              If your request relates to a client programme powered by Potential, the relevant
+              client organisation may be the Data Controller responsible for responding to your
+              request. Where appropriate, Potential will support the client in fulfilling its data
+              protection obligations.
+            </p>
+            <p>For information provided directly to Potential, you may contact us using the details below.</p>
+
+            <h2>14. Applicable Data Protection Requirements</h2>
+            <p>
+              Potential operates internationally and supports clients and participants across
+              different jurisdictions.
+            </p>
+            <p>
+              We seek to handle personal information in accordance with applicable data protection
+              and privacy requirements, including relevant UAE data protection requirements and
+              the General Data Protection Regulation (GDPR) where applicable.
+            </p>
+            <p>
+              Specific client programmes may be subject to additional national, sector-specific or
+              organisational requirements, which can be addressed through the relevant programme
+              configuration, contractual arrangements and privacy documentation.
             </p>
 
-            <h2 className="text-2xl font-semibold mt-10 mb-4">
-              10. Changes to This Policy
-            </h2>
+            <h2>15. Third-Party Links and Services</h2>
             <p>
-              We may update this Privacy Policy from time to time. Any changes
-              will be posted on this page with an updated revision date. In case
-              of significant changes, we will notify users via email or a notice
-              on our website.
+              Potential.com and client platforms may contain links to external websites, services
+              or resources operated by third parties.
+            </p>
+            <p>
+              Their privacy practices are governed by their own policies, and Potential is not
+              responsible for how independent third-party websites handle personal information.
             </p>
 
-            <h2 className="text-2xl font-semibold mt-10 mb-4">
-              11. Contact Us
-            </h2>
+            <h2>16. Changes to This Privacy Policy</h2>
             <p>
-              For any questions or concerns related to this Privacy Policy or
-              data protection practices, please contact:
+              We may update this Privacy Policy from time to time to reflect changes to our
+              platform, technology, services, legal requirements or privacy practices.
             </p>
-            <p className="mt-4">
-              Potential.com
+            <p>
+              The latest version will be published on this page together with the date of the most
+              recent update.
+            </p>
+
+            <h2>17. Contact Us</h2>
+            <p>
+              For questions about this Privacy Policy or how Potential handles personal
+              information, please contact:
+            </p>
+            <p>
+              Potential FZ-LLC
               <br />
               Email: info@potential.com
-              <br />
-              Website: https://www.potential.com
+            </p>
+            <p>
+              For privacy matters relating to a specific programme powered by Potential, you may
+              also contact the organisation responsible for that programme.
             </p>
           </div>
         </div>

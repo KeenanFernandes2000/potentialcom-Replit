@@ -1,0 +1,192 @@
+Privacy Policy
+
+Last updated: September 2026
+
+Potential FZ-LLC (“Potential”, “we”, “our” or “us”) respects the privacy of the organisations and individuals who use our website and technology.
+
+Potential provides an AI-powered Learning & Engagement Platform used by governments, enterprises and other organisations to deliver workforce capability, national and community empowerment, customer and partner enablement, certification, learning, mentoring, engagement and related programmes.
+
+This Privacy Policy explains how information is handled when you visit Potential.com, contact us directly, or use a platform powered by Potential.
+
+1. Our Role in Protecting Your Data
+
+The way Potential handles personal data depends on how you interact with us.
+
+When you interact directly with Potential
+
+When you visit Potential.com, submit an enquiry, subscribe to communications or otherwise interact directly with us, Potential FZ-LLC generally acts as the Data Controller for the personal information you provide.
+
+When you use a client programme powered by Potential
+
+Many of the platforms we provide are created for and operated on behalf of government entities, enterprises and other organisations.
+
+In these cases, the client organisation is generally the Data Controller and owns and controls the programme data, while Potential acts as a Data Processor, providing the technology and associated services required to securely host and operate the platform.
+
+Potential does not claim ownership of participant data collected through client programmes. We store and process this information confidentially on behalf of the relevant client and in accordance with our contractual obligations, applicable data protection requirements and the client's instructions.
+
+Client-specific privacy notices, consent requirements or programme terms may also apply.
+
+2. Information Collected Through Potential.com
+
+When you interact directly with Potential, we may collect information that you voluntarily provide, such as:
+
+Name and contact information
+Organisation and job title
+Information submitted through enquiry or consultation forms
+Newsletter and communication preferences
+Correspondence with our team
+Information you provide when requesting information about our platform or services
+
+We may also automatically collect limited technical information through cookies and similar technologies, such as browser type, device information, IP address, pages visited and general website usage information.
+
+We use this information to respond to enquiries, operate and improve our website, understand interest in our services and, where you have opted in, send relevant communications.
+
+3. Information Within Client Platforms
+
+The information collected within a client platform depends on the programme, its audience and the requirements defined by the client.
+
+A programme may require information relating to registration, eligibility, participant profiles, learning activities, assessments, submissions, certifications, events, mentoring, coaching, programme participation, progress or outcomes.
+
+This programme information is controlled and owned by the relevant client organisation.
+
+Potential provides the technology through which this information may be securely collected, stored and processed. We access or process such information only where required to operate, support, secure or improve the relevant client platform, or where otherwise instructed or authorised by the client.
+
+The exact information collected and its purpose may therefore differ from one programme to another.
+
+4. AI-Powered Features
+
+Potential platforms may include AI-powered functionality such as AI Coaches, AI Mentors, AI Examiners, simulations, role-play experiences, personalised learning pathways, AI assistants, analytics and other intelligent features.
+
+Information submitted during interactions with these features may be processed and stored as part of the programme experience and, depending on the programme configuration, may be made available to authorised programme administrators.
+
+Potential applies appropriate safeguards based on the nature and purpose of each AI use case. These may include access controls, data minimisation, confidentiality measures, security controls, human oversight and restrictions on how information may be used.
+
+We may use approved third-party AI and technology service providers to enable particular functionality. We select technologies according to the requirements of each use case and apply appropriate contractual, privacy and security safeguards when doing so.
+
+AI-generated information may contain errors and should not automatically be treated as professional advice or as the sole basis for significant decisions.
+
+5. Children and Young People
+
+Some client programmes delivered through Potential may be designed for children or young people.
+
+Where a programme's intended audience includes minors and parental or guardian consent is required, the platform can enforce parental or guardian consent before the minor is authorised to use the programme.
+
+This consent process is facilitated automatically through the platform according to the programme configuration and requirements established with the client.
+
+Additional programme-specific privacy notices, consent wording and safeguards may apply depending on the age of participants, programme requirements and applicable laws.
+
+6. How We Use Information
+
+Where Potential acts as the Data Controller, we may use information to:
+
+Respond to enquiries and requests
+Arrange consultations or demonstrations
+Provide information about our platform and services
+Operate, maintain and improve Potential.com
+Understand website usage and improve the user experience
+Maintain security and prevent misuse
+Meet legal and regulatory requirements
+Send relevant marketing communications where you have provided consent or where otherwise permitted by applicable law
+
+Where Potential acts as a Data Processor for a client platform, information is processed primarily to provide and support the services requested by that client and in accordance with the client's instructions.
+
+7. Marketing and Programme Data
+
+Information provided directly to Potential through Potential.com may be used for relevant business communications and marketing where you have opted in or where such communication is otherwise permitted.
+
+Participant information from client programmes is not used by Potential for our own marketing purposes unless the individual has separately and appropriately consented to such use.
+
+This distinction is important to how we operate our client platforms.
+
+8. Data Hosting and International Transfers
+
+Potential uses established cloud infrastructure and technology providers to deliver its services.
+
+Our standard platform infrastructure may use AWS hosting within the European Union, while other hosting arrangements, including Microsoft Azure infrastructure within the UAE, may be used where appropriate to meet specific client, regulatory, security or data-residency requirements.
+
+The exact infrastructure may therefore differ between client deployments.
+
+Where information is transferred or processed across jurisdictions, we apply appropriate contractual, organisational and technical safeguards in accordance with applicable data protection requirements.
+
+9. Data Security and Confidentiality
+
+We take reasonable technical and organisational measures to protect information against unauthorised access, disclosure, alteration, loss or misuse.
+
+Depending on the platform and client requirements, safeguards may include access controls, authentication, encryption, secure cloud infrastructure, monitoring, role-based permissions and other appropriate security measures.
+
+Access to client programme information is limited to authorised personnel and service providers who require such access for legitimate operational purposes and who are subject to appropriate confidentiality and data-protection obligations.
+
+No online system can guarantee absolute security, but we continually seek to apply safeguards appropriate to the nature of the information and services being provided.
+
+10. Data Retention
+
+There is no single retention period applicable to all Potential-powered programmes.
+
+For client platforms, retention periods depend on the relevant programme, client requirements, contractual obligations and applicable legal or regulatory requirements.
+
+Where Potential acts as the Data Controller, we retain personal information only for as long as reasonably necessary for the purpose for which it was collected, our legitimate business requirements and applicable legal obligations.
+
+When information is no longer required, it may be securely deleted or anonymised in accordance with the applicable requirements.
+
+11. Cookies
+
+Potential.com uses cookies and similar technologies to operate the website, remember preferences, understand how visitors use the site and improve the overall experience.
+
+Some cookies may be necessary for the website to function, while others may support analytics and performance measurement.
+
+Where required by applicable law, non-essential cookies will be used in accordance with the choices and consent provided through our website.
+
+You can also control cookies through your browser settings, although disabling certain cookies may affect parts of the website experience.
+
+12. Service Providers
+
+We may work with trusted technology, cloud infrastructure, communications, analytics, AI and other service providers where necessary to operate Potential.com and deliver our platform.
+
+These providers may process information only to the extent required to provide their services and are subject to appropriate contractual, confidentiality, security and data-protection requirements.
+
+We do not sell participant personal data.
+
+13. Your Privacy Rights
+
+Depending on where you are located and the applicable data protection law, you may have rights relating to your personal information, including the right to:
+
+Request access to your personal information
+Request correction of inaccurate information
+Request deletion where applicable
+Object to or restrict certain processing
+Withdraw consent where processing is based on consent
+Request portability of your information where applicable
+Raise a concern regarding how your information is handled
+
+If your request relates to a client programme powered by Potential, the relevant client organisation may be the Data Controller responsible for responding to your request. Where appropriate, Potential will support the client in fulfilling its data protection obligations.
+
+For information provided directly to Potential, you may contact us using the details below.
+
+14. Applicable Data Protection Requirements
+
+Potential operates internationally and supports clients and participants across different jurisdictions.
+
+We seek to handle personal information in accordance with applicable data protection and privacy requirements, including relevant UAE data protection requirements and the General Data Protection Regulation (GDPR) where applicable.
+
+Specific client programmes may be subject to additional national, sector-specific or organisational requirements, which can be addressed through the relevant programme configuration, contractual arrangements and privacy documentation.
+
+15. Third-Party Links and Services
+
+Potential.com and client platforms may contain links to external websites, services or resources operated by third parties.
+
+Their privacy practices are governed by their own policies, and Potential is not responsible for how independent third-party websites handle personal information.
+
+16. Changes to This Privacy Policy
+
+We may update this Privacy Policy from time to time to reflect changes to our platform, technology, services, legal requirements or privacy practices.
+
+The latest version will be published on this page together with the date of the most recent update.
+
+17. Contact Us
+
+For questions about this Privacy Policy or how Potential handles personal information, please contact:
+
+Potential FZ-LLC
+Email: info@potential.com
+
+For privacy matters relating to a specific programme powered by Potential, you may also contact the organisation responsible for that programme.
