@@ -169,7 +169,7 @@ export default function Inquire() {
                 </h2>
                 <p className="text-lg text-muted-foreground">
                   Fill out the form and choose a time to speak with the
-                  Potential team.
+                  Potential.com team.
                 </p>
               </div>
 
@@ -364,7 +364,7 @@ export default function Inquire() {
                 {
                   icon: MessageSquare,
                   title: "Leave with next steps",
-                  text: "Get a practical view of what to do next and where Potential can help.",
+                  text: "Get a practical view of what to do next and where Potential.com can help.",
                 },
               ].map(({ icon: Icon, title, text }) => (
                 <div
