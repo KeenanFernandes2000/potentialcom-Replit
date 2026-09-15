@@ -296,7 +296,7 @@ export const solutionPages: Record<string, SolutionPageConfig> = {
     whyLabel: "FROM ONBOARDING TO ADOPTION",
     whyTitle: "Give every customer or partner a clear path to proficiency.",
     whyCopy:
-      "Enablement is more effective when people can move from onboarding and product knowledge into practice, qualification and ongoing support. Potential connects these steps in one branded experience while programme owners see engagement, progression and adoption evidence.",
+      "Enablement is more effective when people can move from onboarding and product knowledge into practice, qualification and ongoing support. Potential.com connects these steps in one branded experience while programme owners see engagement, progression and adoption evidence.",
     whyCards: [
       {
         title: "Faster understanding",
