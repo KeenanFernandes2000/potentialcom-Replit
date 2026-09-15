@@ -312,7 +312,7 @@ function SolutionPage({ config }: { config: SolutionPageConfig }) {
                 <a
                   href={vxAcademyPdf}
                   download
-                  className="mt-6 inline-flex w-fit items-center justify-center gap-2 rounded-full bg-primary px-6 py-4 text-base font-semibold text-white shadow-lg shadow-primary/20 transition-colors hover:bg-primary/90"
+                  className="mx-auto mt-6 inline-flex w-fit items-center justify-center gap-2 rounded-full bg-primary px-6 py-4 text-base font-semibold text-white shadow-lg shadow-primary/20 transition-colors hover:bg-primary/90"
                 >
                   <Download className="h-5 w-5" />
                   Download Case Study
