@@ -305,11 +305,7 @@ const Platform = () => {
                    One platform around the{" "}
                    <span className="text-primary">journey you need to deliver.</span>
                 </h1>
-                <p className="mt-7 max-w-2xl text-lg leading-8 text-muted-foreground md:text-xl">
-                   Potential brings learning, practice, certification, coaching, communities,
-                   innovation and programme management into one dedicated experience — shaped around
-                   your audience, roles and the evidence your initiative needs.
-                </p>
+                <p className="mt-7 max-w-2xl text-lg leading-8 text-muted-foreground md:text-xl">Potential.com brings learning, practice, certification, coaching, communities, innovation and programme management into one dedicated experience — shaped around your audience, roles and the evidence your initiative needs.</p>
                 <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
                   <Button onClick={discussYourInitiative} size="lg" className="rounded-full px-8 py-6 text-base shadow-lg shadow-primary/20">
                     Discuss Your Initiative <ArrowRight className="h-5 w-5" />

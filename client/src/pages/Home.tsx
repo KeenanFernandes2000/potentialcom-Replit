@@ -275,7 +275,7 @@ const aylaSteps = [
   {
     number: "4",
     title: "Meet our team",
-    description: "Where there is a strong fit, book a conversation directly with Potential.",
+    description: "Where there is a strong fit, book a conversation directly with Potential.com",
   },
 ];
 
