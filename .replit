@@ -51,3 +51,8 @@ author = 42954801
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "npm list"
+
+[userenv]
+
+[userenv.shared]
+AWS_REGION = "eu-west-1"
