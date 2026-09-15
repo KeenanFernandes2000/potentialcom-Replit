@@ -279,7 +279,7 @@ const UseCases = () => {
           <div className="container">
             <div className="max-w-3xl" data-aos="fade-up">
               <p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">Use-case library</p>
-              <h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary dark:text-white md:text-5xl">What organisations use Potential for</h2>
+              <h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary dark:text-white md:text-5xl">What organisations use Potential.com for</h2>
               <p className="mt-5 text-lg leading-8 text-muted-foreground">
                 Start with the mandate, audience and outcome. Configure the platform around the journey required to deliver it.
               </p>
