@@ -4,6 +4,7 @@ import path from "path";
 import { Readable } from "node:stream";
 import { getAgent, POTENTIAL_API_BASE } from "./agents";
 import sgMail from "@sendgrid/mail";
+import { SendEmailCommand, SESClient } from "@aws-sdk/client-ses";
 import { storage } from "./storage";
 import {
   registerUserSchema,
@@ -26,6 +27,18 @@ const FORM_NOTIFICATION_FROM =
   process.env.FORM_NOTIFICATION_FROM ||
   process.env.SENDGRID_FROM_EMAIL ||
   "no-reply@ai.potential.com";
+const AWS_REGION =
+  process.env.AWS_REGION || process.env.AWS_DEFAULT_REGION || "us-east-1";
+const AWS_SES_CLIENT =
+  process.env.AWS_ACCESS_KEY_ID && process.env.AWS_SECRET_ACCESS_KEY
+    ? new SESClient({
+        region: AWS_REGION,
+        credentials: {
+          accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+          secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        },
+      })
+    : null;
 
 if (SENDGRID_API_KEY) {
   sgMail.setApiKey(SENDGRID_API_KEY);
@@ -35,9 +48,9 @@ async function sendFormNotificationEmail(
   subject: string,
   lines: string[],
 ): Promise<void> {
-  if (!SENDGRID_API_KEY) {
+  if (!AWS_SES_CLIENT && !SENDGRID_API_KEY) {
     console.warn(
-      "SENDGRID_API_KEY is not set; skipping form notification email.",
+      "No email provider is configured; skipping form notification email.",
     );
     return;
   }
@@ -96,6 +109,37 @@ async function sendFormNotificationEmail(
       </div>
     `;
 
+    if (AWS_SES_CLIENT) {
+      const response = await AWS_SES_CLIENT.send(
+        new SendEmailCommand({
+          Source: FORM_NOTIFICATION_FROM,
+          Destination: {
+            ToAddresses: [FORM_NOTIFICATION_TO],
+          },
+          Message: {
+            Subject: {
+              Data: subject,
+              Charset: "UTF-8",
+            },
+            Body: {
+              Text: {
+                Data: text,
+                Charset: "UTF-8",
+              },
+              Html: {
+                Data: html,
+                Charset: "UTF-8",
+              },
+            },
+          },
+        }),
+      );
+      console.log(
+        `[email] sent provider="AWS SES" subject="${subject}" to="${FORM_NOTIFICATION_TO}" from="${FORM_NOTIFICATION_FROM}" messageId="${response.MessageId || "unknown"}"`,
+      );
+      return;
+    }
+
     const [response] = await sgMail.send({
       to: FORM_NOTIFICATION_TO,
       from: FORM_NOTIFICATION_FROM,
@@ -104,7 +148,7 @@ async function sendFormNotificationEmail(
       html,
     });
     console.log(
-      `[email] sent subject="${subject}" to="${FORM_NOTIFICATION_TO}" from="${FORM_NOTIFICATION_FROM}" status=${response.statusCode}`,
+      `[email] sent provider="SendGrid" subject="${subject}" to="${FORM_NOTIFICATION_TO}" from="${FORM_NOTIFICATION_FROM}" status=${response.statusCode}`,
     );
   } catch (error) {
     console.error("Failed to send form notification email:", error);
