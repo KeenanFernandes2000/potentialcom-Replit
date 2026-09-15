@@ -25,6 +25,8 @@ import programmeOwnerVisualImg from "@assets/ChatGPT_Image_Sep_14,_2026,_02_00_4
 import leadershipViewVisualImg from "@assets/ChatGPT_Image_Sep_14,_2026,_02_05_14_PM_1789380407708.png";
 import vxAcademyLogo from "@assets/DCT_logo_1782108989381.png";
 import vxAcademyPdf from "@assets/DCT_VX_Academy_Case_Study_1782113750466.pdf";
+import hsbcLogo from "@assets/Customer Logos/HSBC logo.png";
+import tatawwarPdf from "@assets/Tatawwar_Case_Study_1782114335023.pdf";
 
 const platformViewImages = [
   participantJourneyVisualImg,
@@ -149,6 +151,42 @@ function SolutionPage({ config }: { config: SolutionPageConfig }) {
     title: string;
     image: string;
   } | null>(null);
+  const relevantExperience =
+    config.slug === "/solutions/workforce-capability"
+      ? {
+          heading: "Workforce Capability in Practice",
+          logo: vxAcademyLogo,
+          logoAlt: "Department of Culture and Tourism Abu Dhabi",
+          programmeName: "Visitor Experience (VX) Academy",
+          programmeSummary:
+            "AI-powered frontliner empowerment and certification academy to elevate visitor experience standards in the Emirate.",
+          about:
+            "The Visitor Experience (VX) Academy is Abu Dhabi’s dedicated AI-powered hub for service excellence training, designed to empower the emirate’s workforce. Established by the Department of Culture and Tourism (DCT Abu Dhabi), the Academy equips frontline staff across every touchpoint with the skills, knowledge, and confidence to consistently deliver world-class visitor experiences.",
+          stats: [
+            { value: "100,000", label: "Target Frontliners" },
+            { value: "88.1%", label: "Completion Rate" },
+            { value: "135,205", label: "Hours Delivered So Far" },
+          ],
+          pdf: vxAcademyPdf,
+        }
+      : config.slug === "/solutions/national-community-empowerment"
+        ? {
+            heading: "Youth & Community Empowerment in Practice",
+            logo: hsbcLogo,
+            logoAlt: "HSBC",
+            programmeName: "HSBC Tatawwar Youth Program",
+            programmeSummary:
+              "Empowering youth to innovate on UN SDGs through learning, mentorship and incubation.",
+            about:
+              "Tatawwar, meaning “To Develop” in Arabic, is an exciting, interactive programme that brings together a global community of youth, schools, parents and the business community to help innovate for a shared future. It gives the youth the chance to practice important business skills, understand sustainable commitments, connect with the corporate world, and hear from some extraordinary professionals along the way.",
+            stats: [
+              { value: "25,000+", label: "Youth Empowered" },
+              { value: "3,000+", label: "Innovations Developed" },
+              { value: "8", label: "International Awards" },
+            ],
+            pdf: tatawwarPdf,
+          }
+        : null;
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-background">
@@ -254,7 +292,7 @@ function SolutionPage({ config }: { config: SolutionPageConfig }) {
           </div>
         </section>
 
-        {config.slug === "/solutions/workforce-capability" && (
+        {relevantExperience && (
           <section id="relevant-experience" className="scroll-mt-24 bg-white py-20 text-secondary md:py-28">
             <div className="container">
               <div className="mx-auto mb-12 max-w-4xl text-center" data-aos="fade-up">
@@ -262,7 +300,7 @@ function SolutionPage({ config }: { config: SolutionPageConfig }) {
                   RELEVANT EXPERIENCE
                 </p>
                 <h2 className="mt-4 text-4xl font-bold tracking-tight md:text-5xl">
-                  Workforce Capability in Practice{" "}
+                  {relevantExperience.heading}{" "}
                   <span className="text-primary">— Case Study</span>
                 </h2>
               </div>
@@ -275,41 +313,27 @@ function SolutionPage({ config }: { config: SolutionPageConfig }) {
                   <div>
                     <div className="flex h-32 items-center justify-center rounded-2xl border border-border bg-white px-6">
                       <img
-                        src={vxAcademyLogo}
-                        alt="Department of Culture and Tourism Abu Dhabi"
+                        src={relevantExperience.logo}
+                        alt={relevantExperience.logoAlt}
                         className="max-h-24 max-w-[210px] object-contain"
                       />
                     </div>
                     <h3 className="mt-7 text-3xl font-bold leading-tight tracking-tight md:text-4xl">
-                      Visitor Experience (VX) Academy
+                      {relevantExperience.programmeName}
                     </h3>
-                    <p className="mt-4 text-base leading-7 text-muted-foreground">
-                      AI-powered frontliner empowerment and certification academy to elevate visitor
-                      experience standards in the Emirate.
-                    </p>
+                    <p className="mt-4 text-base leading-7 text-muted-foreground">{relevantExperience.programmeSummary}</p>
                   </div>
 
                   <div>
                     <p className="text-sm font-semibold uppercase tracking-[.18em] text-primary">
                       About the programme
                     </p>
-                    <p className="mt-4 text-lg leading-8 text-muted-foreground">
-                      The Visitor Experience (VX) Academy is Abu Dhabi’s dedicated AI-powered hub
-                      for service excellence training, designed to empower the emirate’s workforce.
-                      Established by the Department of Culture and Tourism (DCT Abu Dhabi), the
-                      Academy equips frontline staff across every touchpoint with the skills,
-                      knowledge, and confidence to consistently deliver world-class visitor
-                      experiences.
-                    </p>
+                    <p className="mt-4 text-lg leading-8 text-muted-foreground">{relevantExperience.about}</p>
                   </div>
                 </div>
 
                 <div className="mt-10 grid gap-3 border-t border-border pt-8 sm:grid-cols-3">
-                  {[
-                    { value: "100,000", label: "Target Frontliners" },
-                    { value: "88.1%", label: "Completion Rate" },
-                    { value: "135,205", label: "Hours Delivered So Far" },
-                  ].map((stat) => (
+                  {relevantExperience.stats.map((stat) => (
                     <div key={stat.label} className="rounded-2xl bg-[#f8f5fc] p-5">
                       <p className="text-2xl font-bold tracking-tight text-primary md:text-3xl">{stat.value}</p>
                       <p className="mt-2 text-sm leading-5 text-muted-foreground">{stat.label}</p>
@@ -318,7 +342,7 @@ function SolutionPage({ config }: { config: SolutionPageConfig }) {
                 </div>
 
                 <a
-                  href={vxAcademyPdf}
+                  href={relevantExperience.pdf}
                   download
                   className="mx-auto mt-6 flex w-fit items-center justify-center gap-2 rounded-full bg-primary px-6 py-4 text-base font-semibold text-white shadow-lg shadow-primary/20 transition-colors hover:bg-primary/90"
                 >
