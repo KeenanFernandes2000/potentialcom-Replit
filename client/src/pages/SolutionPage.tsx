@@ -2,7 +2,6 @@ import type { CSSProperties } from "react";
 import { useState } from "react";
 import {
   ArrowRight,
-  ChevronRight,
   CircleDot,
   Download,
   Maximize2,
@@ -136,7 +135,16 @@ function SectionIntro({
 
 function SolutionPage({ config }: { config: SolutionPageConfig }) {
   const discuss = () => navigateWithUTM("/inquire");
-  const explorePlatform = () => navigateWithUTM("/platform");
+  const exploreRelevantCaseStudy = () => {
+    const section = document.getElementById("relevant-experience");
+
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+
+    navigateWithUTM("/solutions/workforce-capability#relevant-experience");
+  };
   const [expandedView, setExpandedView] = useState<{
     title: string;
     image: string;
@@ -175,10 +183,10 @@ function SolutionPage({ config }: { config: SolutionPageConfig }) {
                   <Button
                     variant="outline"
                     size="lg"
-                    onClick={explorePlatform}
+                    onClick={exploreRelevantCaseStudy}
                     className="group rounded-full border-border bg-background/70 px-8 py-6 text-base text-secondary dark:text-white"
                   >
-                    Explore the Platform <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    Explore a Relevant Case Study →
                   </Button>
                 </div>
               </div>
@@ -247,7 +255,7 @@ function SolutionPage({ config }: { config: SolutionPageConfig }) {
         </section>
 
         {config.slug === "/solutions/workforce-capability" && (
-          <section id="relevant-experience" className="bg-white py-20 text-secondary md:py-28">
+          <section id="relevant-experience" className="scroll-mt-24 bg-white py-20 text-secondary md:py-28">
             <div className="container">
               <div className="mx-auto mb-12 max-w-4xl text-center" data-aos="fade-up">
                 <p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">
