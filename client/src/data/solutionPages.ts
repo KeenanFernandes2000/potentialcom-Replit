@@ -188,7 +188,7 @@ export const solutionPages: Record<string, SolutionPageConfig> = {
     whyLabel: "FROM MANDATE TO JOURNEY",
     whyTitle: "Give participants a clear path — and programme owners a clear view.",
     whyCopy:
-      "Empowerment programmes work best when participants know what to do next and programme teams can see how people are progressing. Potential connects learning, mentoring, challenges, practical milestones and follow-up in one dedicated experience.",
+      "Empowerment programmes work best when participants know what to do next and programme teams can see how people are progressing. Potential.com connects learning, mentoring, challenges, practical milestones and follow-up in one dedicated experience.",
     whyCards: [
       {
         title: "Structured participation",
