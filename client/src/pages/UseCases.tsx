@@ -345,7 +345,7 @@ const UseCases = () => {
               <div className="relative max-w-3xl">
                 <p className="text-sm font-semibold uppercase tracking-[.2em] text-[#d2b4ff]">The next conversation</p>
                 <h2 className="mt-5 text-4xl font-bold tracking-tight md:text-6xl">What are you trying to achieve?</h2>
-                <p className="mt-6 max-w-2xl text-lg leading-8 text-white/70">Tell us about your audience, mandate and timing. We’ll help identify the most relevant Potential journey and the right next step.</p>
+                <p className="mt-6 max-w-2xl text-lg leading-8 text-white/70">Tell us about your audience, mandate and timing. We’ll help identify the most relevant Potential.com journey and the right next step.</p>
                 <Button onClick={discussYourInitiative} size="lg" className="mt-9 rounded-full bg-white px-8 py-6 text-secondary hover:bg-white/90">Discuss Your Initiative <ArrowRight className="h-5 w-5" aria-hidden="true" /></Button>
               </div>
             </div>
