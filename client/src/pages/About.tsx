@@ -38,7 +38,7 @@ export default function About() {
             <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_.95fr] lg:gap-20">
               <div data-aos="fade-right">
                 <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background/75 px-4 py-2 text-sm font-semibold text-primary">
-                  <Globe className="h-4 w-4" /> ABOUT POTENTIAL
+                  <Globe className="h-4 w-4" /> ABOUT POTENTIAL.COM
                 </div>
                 <h1 className="max-w-3xl text-4xl font-bold leading-[1.05] tracking-[-0.04em] text-secondary dark:text-white md:text-6xl lg:text-7xl">
                   Experience that shapes the platform we deliver today.
@@ -184,9 +184,7 @@ export default function About() {
               <h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary dark:text-white md:text-5xl">
                 Built from real programme delivery, not from a blank page.
               </h2>
-              <p className="mt-5 text-lg leading-8 text-muted-foreground">
-                Potential has supported learning, empowerment, certification, mentorship, innovation and engagement initiatives across governments, enterprises and large-scale programmes. That experience shapes how we design participant journeys, administration workflows and evidence for decision-makers.
-              </p>
+              <p className="mt-5 text-lg leading-8 text-muted-foreground">Potential.com has supported learning, empowerment, certification, mentorship, innovation and engagement initiatives across governments, enterprises and large-scale programmes. That experience shapes how we design participant journeys, administration workflows and evidence for decision-makers.</p>
             </div>
             <div className="relative mx-auto mt-14 max-w-6xl">
               <div className="absolute left-[16%] right-[16%] top-16 hidden border-t border-dashed border-primary/30 md:block" aria-hidden="true" />
