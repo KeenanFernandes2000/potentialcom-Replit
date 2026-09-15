@@ -4,6 +4,7 @@ import {
   ArrowRight,
   ChevronRight,
   CircleDot,
+  Download,
   Maximize2,
   Orbit,
   Sparkles,
@@ -23,6 +24,8 @@ import type { SolutionPageConfig } from "@/data/solutionPages";
 import participantJourneyVisualImg from "@assets/ChatGPT_Image_Sep_14,_2026,_01_57_54_PM_1789380291902.png";
 import programmeOwnerVisualImg from "@assets/ChatGPT_Image_Sep_14,_2026,_02_00_44_PM_1789380387671.png";
 import leadershipViewVisualImg from "@assets/ChatGPT_Image_Sep_14,_2026,_02_05_14_PM_1789380407708.png";
+import vxAcademyLogo from "@assets/DCT_logo_1782108989381.png";
+import vxAcademyPdf from "@assets/DCT_VX_Academy_Case_Study_1782113750466.pdf";
 
 const platformViewImages = [
   participantJourneyVisualImg,
@@ -242,6 +245,90 @@ function SolutionPage({ config }: { config: SolutionPageConfig }) {
             </div>
           </div>
         </section>
+
+        {config.slug === "/solutions/workforce-capability" && (
+          <section id="relevant-experience" className="bg-white py-20 text-secondary md:py-28">
+            <div className="container">
+              <div className="mx-auto mb-12 max-w-4xl text-center" data-aos="fade-up">
+                <p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">
+                  RELEVANT EXPERIENCE
+                </p>
+                <h2 className="mt-4 text-4xl font-bold tracking-tight md:text-5xl">
+                  Workforce Capability in Practice{" "}
+                  <span className="text-primary">— Case Study</span>
+                </h2>
+              </div>
+
+              <div
+                className="mx-auto max-w-6xl rounded-[2rem] border border-[#e7e2f0] bg-white p-6 shadow-[0_18px_60px_rgba(41,28,78,0.08)] md:p-10"
+                data-aos="fade-up"
+              >
+                <div className="grid gap-10 lg:grid-cols-[.85fr_1.15fr] lg:items-center">
+                  <div>
+                    <div className="mb-6 flex flex-wrap gap-2">
+                      <span className="rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-primary">
+                        Government
+                      </span>
+                      <span className="rounded-full border border-border px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                        Certification
+                      </span>
+                    </div>
+                    <div className="flex h-32 items-center justify-center rounded-2xl border border-border bg-white px-6">
+                      <img
+                        src={vxAcademyLogo}
+                        alt="Department of Culture and Tourism Abu Dhabi"
+                        className="max-h-24 max-w-[210px] object-contain"
+                      />
+                    </div>
+                    <h3 className="mt-7 text-3xl font-bold leading-tight tracking-tight md:text-4xl">
+                      Visitor Experience (VX) Academy
+                    </h3>
+                    <p className="mt-4 text-base leading-7 text-muted-foreground">
+                      AI-powered frontliner empowerment and certification academy to elevate visitor
+                      experience standards in the Emirate.
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="text-sm font-semibold uppercase tracking-[.18em] text-primary">
+                      About the programme
+                    </p>
+                    <p className="mt-4 text-lg leading-8 text-muted-foreground">
+                      The Visitor Experience (VX) Academy is Abu Dhabi’s dedicated AI-powered hub
+                      for service excellence training, designed to empower the emirate’s workforce.
+                      Established by the Department of Culture and Tourism (DCT Abu Dhabi), the
+                      Academy equips frontline staff across every touchpoint with the skills,
+                      knowledge, and confidence to consistently deliver world-class visitor
+                      experiences.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-10 grid gap-3 border-t border-border pt-8 sm:grid-cols-3">
+                  {[
+                    { value: "100,000", label: "Target Frontliners" },
+                    { value: "88.1%", label: "Completion Rate" },
+                    { value: "135,205", label: "Hours Delivered So Far" },
+                  ].map((stat) => (
+                    <div key={stat.label} className="rounded-2xl bg-[#f8f5fc] p-5">
+                      <p className="text-2xl font-bold tracking-tight text-primary md:text-3xl">{stat.value}</p>
+                      <p className="mt-2 text-sm leading-5 text-muted-foreground">{stat.label}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <a
+                  href={vxAcademyPdf}
+                  download
+                  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-4 text-base font-semibold text-white shadow-lg shadow-primary/20 transition-colors hover:bg-primary/90"
+                >
+                  <Download className="h-5 w-5" />
+                  Download Case Study
+                </a>
+              </div>
+            </div>
+          </section>
+        )}
 
         <section className="bg-[#f6f4fb] py-24 dark:bg-[#10172c] md:py-32">
           <div className="container">
