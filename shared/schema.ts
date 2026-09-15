@@ -73,6 +73,7 @@ export const aylaConsultations = pgTable("ayla_consultations", {
   companyName: varchar("company_name", { length: 255 }).notNull(),
   companyWebsite: varchar("company_website", { length: 255 }),
   role: varchar("role", { length: 100 }).notNull(),
+  describeInitiative: text("describe_initiative"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -142,6 +143,18 @@ export const aylaConsultationSchema = createInsertSchema(aylaConsultations).pick
   role: true,
 });
 
+export const inquireConsultationSchema = z.object({
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  email: z.string().email("Please enter a valid email address"),
+  phoneNumber: z.string().default(""),
+  countryCode: z.string().default(""),
+  companyName: z.string().min(1, "Company name is required"),
+  companyWebsite: z.string().default(""),
+  role: z.string().default(""),
+  describeInitiative: z.string().optional(),
+});
+
 export const csrInfographicLeadSchema = createInsertSchema(csrInfographicLeads).pick({
   fullName: true,
   email: true,
@@ -157,6 +170,7 @@ export type NewsletterSubscriberInput = z.infer<typeof newsletterSubscriberSchem
 export type ResourceDownloadInput = z.infer<typeof resourceDownloadSchema>;
 export type VeraConsultationInput = z.infer<typeof veraConsultationSchema>;
 export type AylaConsultationInput = z.infer<typeof aylaConsultationSchema>;
+export type InquireConsultationInput = z.infer<typeof inquireConsultationSchema>;
 
 export type User = typeof users.$inferSelect;
 export type NewsletterSubscriber = typeof newsletterSubscribers.$inferSelect;

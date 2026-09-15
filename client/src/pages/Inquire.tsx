@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Form,
   FormControl,
@@ -31,14 +32,14 @@ const formSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
   email: z.string().email("Please enter a valid email address"),
-  phoneNumber: z.string().min(1, "Phone number is required"),
-  countryCode: z.string().min(1, "Please select a country code"),
+  phoneNumber: z.string().default(""),
+  countryCode: z.string().default(""),
   companyName: z.string().min(1, "Company name is required"),
   companyWebsite: z
     .string()
     .refine((value) => {
       if (!value || value.trim() === "" || value.trim() === "https://") {
-        return false;
+        return true;
       }
       try {
         new URL(value);
@@ -46,10 +47,9 @@ const formSchema = z.object({
       } catch {
         return false;
       }
-    }, "Please enter a valid website URL")
-    .optional()
-    .or(z.literal("")),
-  role: z.string().min(1, "Role is required"),
+    }, "Please enter a valid website URL"),
+  role: z.string().default(""),
+  describeInitiative: z.string().optional(),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -83,6 +83,7 @@ export default function Inquire() {
       companyName: "",
       companyWebsite: "https://",
       role: "",
+      describeInitiative: "",
     },
   });
 
@@ -185,7 +186,9 @@ export default function Inquire() {
                         name="firstName"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>First Name</FormLabel>
+                            <FormLabel>
+                              First Name <span className="text-destructive">*</span>
+                            </FormLabel>
                             <FormControl>
                               <Input placeholder="Enter your first name" {...field} />
                             </FormControl>
@@ -198,7 +201,9 @@ export default function Inquire() {
                         name="lastName"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Last Name</FormLabel>
+                            <FormLabel>
+                              Last Name <span className="text-destructive">*</span>
+                            </FormLabel>
                             <FormControl>
                               <Input placeholder="Enter your last name" {...field} />
                             </FormControl>
@@ -213,7 +218,9 @@ export default function Inquire() {
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Email Address</FormLabel>
+                          <FormLabel>
+                            Email Address <span className="text-destructive">*</span>
+                          </FormLabel>
                           <FormControl>
                             <Input
                               type="email"
@@ -232,7 +239,9 @@ export default function Inquire() {
                         name="countryCode"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Country Code</FormLabel>
+                            <FormLabel>
+                              Country Code <span className="text-muted-foreground">(optional)</span>
+                            </FormLabel>
                             <Select
                               onValueChange={field.onChange}
                               defaultValue={field.value}
@@ -263,7 +272,9 @@ export default function Inquire() {
                           name="phoneNumber"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Phone Number</FormLabel>
+                              <FormLabel>
+                                Phone Number <span className="text-muted-foreground">(optional)</span>
+                              </FormLabel>
                               <FormControl>
                                 <Input
                                   placeholder="Enter your phone number"
@@ -277,52 +288,81 @@ export default function Inquire() {
                       </div>
                     </div>
 
-                    <FormField
-                      control={form.control}
-                      name="companyName"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Company Name</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Enter your company name"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                      <FormField
+                        control={form.control}
+                        name="companyName"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>
+                              Company Name <span className="text-destructive">*</span>
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="Enter your company name"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
 
-                    <FormField
-                      control={form.control}
-                      name="companyWebsite"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Company Website</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="https://yourcompany.com"
-                              {...field}
-                              onChange={(event) =>
-                                handleWebsiteChange(event.target.value)
-                              }
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                      <FormField
+                        control={form.control}
+                        name="companyWebsite"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>
+                              Company Website <span className="text-muted-foreground">(optional)</span>
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="https://yourcompany.com"
+                                {...field}
+                                onChange={(event) =>
+                                  handleWebsiteChange(event.target.value)
+                                }
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
 
                     <FormField
                       control={form.control}
                       name="role"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Role</FormLabel>
+                          <FormLabel>
+                            Role <span className="text-muted-foreground">(optional)</span>
+                          </FormLabel>
                           <FormControl>
                             <Input
                               placeholder="Enter your role (e.g., Manager, Director, Executive)"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="describeInitiative"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>
+                            Describe your Initiative/Program{" "}
+                            <span className="text-muted-foreground">(optional)</span>
+                          </FormLabel>
+                          <FormControl>
+                            <Textarea
+                              placeholder="Tell us about your initiative or program"
+                              rows={5}
                               {...field}
                             />
                           </FormControl>
