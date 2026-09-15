@@ -389,12 +389,7 @@ const Home = () => {
                   <span className="text-primary">Prove what changed.</span>
                 </h1>
 
-                 <p className="text-xl text-muted-foreground mb-8">
-                   Potential helps governments and enterprises build dedicated platforms for workforce
-                   capability, national and community empowerment, and customer and partner enablement.
-                   Connect learning, practice, certification and engagement with the programme management
-                   and evidence your initiative needs.
-                 </p>
+                 <p className="text-xl text-muted-foreground mb-8">Potential.com helps governments and enterprises build dedicated platforms for workforce capability, national and community empowerment, and customer and partner enablement. Connect learning, practice, certification and engagement with the programme management and evidence your initiative needs.</p>
 
                 <div className="flex flex-wrap gap-4">
                   <Button
