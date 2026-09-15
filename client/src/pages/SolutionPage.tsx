@@ -265,14 +265,6 @@ function SolutionPage({ config }: { config: SolutionPageConfig }) {
               >
                 <div className="grid gap-10 lg:grid-cols-[.85fr_1.15fr] lg:items-center">
                   <div>
-                    <div className="mb-6 flex flex-wrap gap-2">
-                      <span className="rounded-full bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-primary">
-                        Government
-                      </span>
-                      <span className="rounded-full border border-border px-4 py-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                        Certification
-                      </span>
-                    </div>
                     <div className="flex h-32 items-center justify-center rounded-2xl border border-border bg-white px-6">
                       <img
                         src={vxAcademyLogo}
@@ -320,7 +312,7 @@ function SolutionPage({ config }: { config: SolutionPageConfig }) {
                 <a
                   href={vxAcademyPdf}
                   download
-                  className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-4 text-base font-semibold text-white shadow-lg shadow-primary/20 transition-colors hover:bg-primary/90"
+                  className="mt-6 inline-flex w-fit items-center justify-center gap-2 rounded-full bg-primary px-6 py-4 text-base font-semibold text-white shadow-lg shadow-primary/20 transition-colors hover:bg-primary/90"
                 >
                   <Download className="h-5 w-5" />
                   Download Case Study
