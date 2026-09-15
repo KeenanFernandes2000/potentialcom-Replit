@@ -137,6 +137,7 @@ function SectionIntro({
 
 function SolutionPage({ config }: { config: SolutionPageConfig }) {
   const discuss = () => navigateWithUTM("/inquire");
+  const explorePlatform = () => navigateWithUTM("/platform");
   const exploreRelevantCaseStudy = () => {
     const section = document.getElementById("relevant-experience");
 
@@ -221,10 +222,16 @@ function SolutionPage({ config }: { config: SolutionPageConfig }) {
                   <Button
                     variant="outline"
                     size="lg"
-                    onClick={exploreRelevantCaseStudy}
+                    onClick={
+                      config.slug === "/solutions/customer-partner-enablement"
+                        ? explorePlatform
+                        : exploreRelevantCaseStudy
+                    }
                     className="group rounded-full border-border bg-background/70 px-8 py-6 text-base text-secondary dark:text-white"
                   >
-                    Explore a Relevant Case Study →
+                    {config.slug === "/solutions/customer-partner-enablement"
+                      ? "View Platform Capabilities"
+                      : "Explore a Relevant Case Study →"}
                   </Button>
                 </div>
               </div>
