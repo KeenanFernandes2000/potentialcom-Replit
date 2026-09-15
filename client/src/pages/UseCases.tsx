@@ -244,11 +244,7 @@ const UseCases = () => {
                     needs to deliver.
                   </span>
                 </h1>
-                <p className="mt-7 max-w-2xl text-lg leading-8 text-white/85 md:text-xl">
-                  Potential helps governments and enterprises create dedicated learning and
-                  engagement platforms around specific mandates — from AI capability and
-                  certification to innovation, mentorship, workforce development and community programmes.
-                </p>
+                <p className="mt-7 max-w-2xl text-lg leading-8 text-white/85 md:text-xl">Potential.com helps governments and enterprises create dedicated learning and engagement platforms around specific mandates — from AI capability and certification to innovation, mentorship, workforce development and community programmes.</p>
                 <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
                   <Button onClick={discussYourInitiative} size="lg" className="rounded-full bg-white px-8 py-6 text-base font-semibold text-secondary shadow-lg shadow-black/10 hover:bg-white/90">
                     Discuss Your Initiative <ArrowRight className="h-5 w-5" aria-hidden="true" />
