@@ -322,7 +322,8 @@ async function extractStaticRoutes(): Promise<StaticRoute[]> {
           routePath.includes(":") ||
           routePath.includes("*") ||
           routePath === "" ||
-          routePath === "/pricing"
+          routePath === "/pricing" ||
+          routePath === "/ai-agents"
         ) {
           continue;
         }

@@ -113,6 +113,10 @@ const helpOffers = [
     icon: GraduationCap,
     href: "/solutions/workforce-capability",
     cta: "Explore Workforce Capability",
+    programmes: [
+      { label: "Performance & certification", href: "/solutions/workforce-capability" },
+      { label: "Applied AI skills", href: "/solutions/workforce-capability" },
+    ],
   },
   {
     title: "National & Community Empowerment",
@@ -123,6 +127,10 @@ const helpOffers = [
     icon: Globe,
     href: "/solutions/national-community-empowerment",
     cta: "Explore National & Community",
+    programmes: [
+      { label: "CSR & community impact", href: "/solutions/csr-community-impact" },
+      { label: "Entrepreneurship & SME development", href: "/solutions/entrepreneurship-sme-development" },
+    ],
   },
   {
     title: "Customer & Partner Enablement",
@@ -133,6 +141,10 @@ const helpOffers = [
     icon: Briefcase,
     href: "/solutions/customer-partner-enablement",
     cta: "Explore Customer & Partner",
+    programmes: [
+      { label: "Partner & channel academy", href: "/solutions/customer-partner-enablement" },
+      { label: "Customer education", href: "/solutions/customer-partner-enablement" },
+    ],
   },
 ];
 
@@ -206,18 +218,18 @@ const startSteps = [
   {
     number: "01",
     title: "Discover",
-    description: "Define the need, audience and path.",
+    description: "Define the need, audience and programme path.",
     support: true,
   },
   {
     number: "02",
-    title: "Blueprint",
+    title: "Programme Blueprint",
     description: "Agree the first journey, roles and success measures.",
   },
   {
     number: "03",
-    title: "Mockup",
-    description: "Preview a personalised interactive mockup platform.",
+    title: "Platform Preview",
+    description: "Preview a personalised interactive platform journey.",
   },
   {
     number: "04",
@@ -534,6 +546,23 @@ const Home = () => {
                         </span>
                       ))}
                     </div>
+                    <div className="mt-5 border-t border-border pt-4">
+                      <p className="text-[10px] font-semibold uppercase tracking-[.16em] text-primary">
+                        Programme paths
+                      </p>
+                      <div className="mt-2 space-y-1.5">
+                        {offer.programmes.map((programme) => (
+                          <button
+                            key={programme.label}
+                            type="button"
+                            onClick={() => navigateWithUTM(programme.href)}
+                            className="block text-left text-sm font-medium text-secondary transition-colors hover:text-primary dark:text-white"
+                          >
+                            {programme.label} <ArrowRight className="ml-1 inline h-3.5 w-3.5" />
+                          </button>
+                        ))}
+                      </div>
+                    </div>
                     <Button
                       variant="ghost"
                       className="mt-6 w-fit px-0 text-primary hover:bg-transparent hover:text-primary/80"
@@ -749,11 +778,11 @@ const Home = () => {
           <div className="container">
             <div className="mx-auto max-w-5xl text-center" data-aos="fade-up">
               <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4 uppercase tracking-[.12em]">
-                How to Start
+                 Programme to Platform
               </div>
               <h2 className="section-title mb-6 md:whitespace-nowrap">
-                From defined need to{" "}
-                <span className="text-primary">measurable first phase.</span>
+                 From programme need to{" "}
+                 <span className="text-primary">measurable first phase.</span>
               </h2>
               <p className="text-lg leading-8 text-muted-foreground">
                 A strong platform journey starts with clarity. Personalised interactive previews

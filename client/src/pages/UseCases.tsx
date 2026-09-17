@@ -78,123 +78,120 @@ const clientLogos = [
   { name: "WFZO", logo: wfzoLogo },
 ];
 
-const useCases = [
+const programmePaths = [
   {
     number: "01",
-    title: "AI Skills & Enablement",
+    title: "Workforce Performance & Certification",
     description:
-      "Assess readiness, build role-relevant capability, practise on real tasks and support workplace application, with evidence of adoption and outcomes for leadership.",
-    icon: Sparkles,
+      "Connect role standards, assessment, learning, practice, qualification and workplace application.",
+    icon: UsersRound,
     tint: "bg-[#e9e2ff] text-[#6941b5]",
-    signal: "AI capability",
+    signal: "Workforce capability",
   },
   {
     number: "02",
-    title: "Certification & Licensing",
+    title: "Entrepreneurship & SME Development",
     description:
-      "Manage learning, eligibility, assessment, certification and renewal journeys in one dedicated experience.",
-    icon: Award,
+      "Support entrepreneurs and SMEs through assessment, learning, mentoring, challenges, milestones and follow-up.",
+    icon: Rocket,
     tint: "bg-[#dff4ef] text-[#087b70]",
-    signal: "Credentials",
+    signal: "Enterprise progress",
   },
   {
     number: "03",
-    title: "Innovation Management",
+    title: "CSR & Community Impact",
     description:
-      "Capture ideas, guide evaluation, support progression and provide visibility from submission through implementation and validated benefit.",
-    icon: Lightbulb,
+      "Turn community, stakeholder and CSR priorities into structured participation, learning, action and evidence.",
+    icon: HeartPulse,
     tint: "bg-[#fff0d8] text-[#a36018]",
-    signal: "Innovation",
+    signal: "Community impact",
   },
   {
     number: "04",
-    title: "Workforce Capability",
-    description:
-      "Build role-based learning and development journeys with assessment, practice, coaching and evidence of readiness.",
-    icon: UsersRound,
-    tint: "bg-[#e5edff] text-[#315aa8]",
-    signal: "Workforce",
-  },
-  {
-    number: "05",
     title: "Partner & Channel Academy",
     description:
       "Onboard, train, certify and continuously engage partners, distributors or external networks.",
     icon: Building2,
-    tint: "bg-[#fce4ed] text-[#a13b68]",
+    tint: "bg-[#e5edff] text-[#315aa8]",
     signal: "Partner enablement",
   },
   {
-    number: "06",
-    title: "Financial Wellbeing",
+    number: "05",
+    title: "Financial Capability",
     description:
       "Deliver structured financial education programmes with learning, engagement, applied activities and reporting.",
     icon: Banknote,
-    tint: "bg-[#e9f2df] text-[#4f7a2c]",
+    tint: "bg-[#fce4ed] text-[#a13b68]",
     signal: "Financial capability",
   },
   {
-    number: "07",
-    title: "Women Empowerment",
+    number: "06",
+    title: "Innovation & Challenges",
     description:
-      "Combine learning, mentorship, coaching, events and milestone tracking around women-focused development programmes.",
+      "Manage applications, submissions, judging, progression, recognition and participant communications.",
+    icon: Lightbulb,
+    tint: "bg-[#e9f2df] text-[#4f7a2c]",
+    signal: "Innovation",
+  },
+  {
+    number: "07",
+    title: "Youth & Employability",
+    description:
+      "Deliver learning, challenges, assessments, mentoring and progression for youth or national talent programmes.",
+    icon: GraduationCap,
+    tint: "bg-[#f8e3de] text-[#a44f3d]",
+    signal: "Talent and progression",
+  },
+];
+
+const audienceLenses = [
+  {
+    number: "A1",
+    title: "Women’s Enterprise",
+    description:
+      "Support women entrepreneurs through learning, mentoring, peer engagement and practical business milestones.",
     icon: HeartPulse,
     tint: "bg-[#f8e3de] text-[#a44f3d]",
-    signal: "Development",
   },
   {
-    number: "08",
+    number: "A2",
     title: "Youth & National Talent",
     description:
-      "Deliver learning, challenges, assessments, selection journeys, recognition and progression for youth or national talent programmes.",
+      "Shape learning, challenges, selection, recognition and progression around a defined youth or talent mandate.",
     icon: GraduationCap,
     tint: "bg-[#fff3c9] text-[#8a6a00]",
-    signal: "Talent",
   },
   {
-    number: "09",
+    number: "A3",
+    title: "Employability",
+    description:
+      "Combine learning, coaching, mentorship, events, applications and employability milestones in one participant journey.",
+    icon: Rocket,
+    tint: "bg-[#dff2e8] text-[#26734f]",
+  },
+  {
+    number: "A4",
     title: "Mentorship & Coaching",
     description:
-      "Manage mentor and mentee journeys, onboarding, matching, goals, sessions, progress and feedback, with AI coaching where relevant.",
+      "Manage mentor and mentee journeys, onboarding, matching, goals, sessions, progress and feedback.",
     icon: Handshake,
     tint: "bg-[#dff2e8] text-[#26734f]",
-    signal: "Guidance",
   },
   {
-    number: "10",
+    number: "A5",
     title: "Awards & Challenges",
     description:
-      "Manage applications, submissions, judging, evaluation, progression, recognition and participant communications.",
+      "Add applications, submissions, judging, evaluation, progression, recognition and participant communications to a programme.",
     icon: Target,
     tint: "bg-[#e8e9fb] text-[#4e55a0]",
-    signal: "Recognition",
   },
   {
-    number: "11",
-    title: "Stakeholder & Community Engagement",
-    description:
-      "Create dedicated engagement hubs for communities, stakeholders or programme audiences with content, events, discussion and participation tracking.",
-    icon: Network,
-    tint: "bg-[#f7e7d7] text-[#9a5a2a]",
-    signal: "Community",
-  },
-  {
-    number: "12",
+    number: "A6",
     title: "Customer Education",
     description:
       "Help customers use products and services effectively through structured learning, guidance, certification and engagement.",
     icon: BookOpen,
     tint: "bg-[#e0eef5] text-[#2d6d88]",
-    signal: "Customer success",
-  },
-  {
-    number: "13",
-    title: "Employability",
-    description:
-      "Combine learning, coaching, mentorship, events, applications and employability milestones in one participant journey.",
-    icon: Rocket,
-    tint: "bg-[#f1e4f9] text-[#82469a]",
-    signal: "Employability",
   },
 ];
 
@@ -271,17 +268,17 @@ const UseCases = () => {
           </div>
         </section>
 
-        <section id="library" className="bg-background py-24 md:py-32">
+         <section id="library" className="bg-background py-24 md:py-32">
           <div className="container">
             <div className="max-w-3xl" data-aos="fade-up">
-              <p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">Use-case library</p>
-              <h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary dark:text-white md:text-5xl">What organisations use Potential.com for</h2>
+               <p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">Programme paths</p>
+               <h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary dark:text-white md:text-5xl">Start with the programme you need to deliver</h2>
               <p className="mt-5 text-lg leading-8 text-muted-foreground">
-                Start with the mandate, audience and outcome. Configure the platform around the journey required to deliver it.
+                 Start with the mandate, audience and outcome. Then configure the platform around the journey required to deliver it.
               </p>
             </div>
             <div className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {useCases.map((item, index) => {
+               {programmePaths.map((item, index) => {
                 const Icon = item.icon;
                 return (
                   <article key={item.number} className="group flex min-h-[250px] flex-col rounded-2xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10" data-aos="fade-up" data-aos-delay={Math.min(index * 35, 240)}>
@@ -298,6 +295,74 @@ const UseCases = () => {
             </div>
           </div>
         </section>
+
+         <section id="capabilities" className="bg-[#f6f4fb] py-24 dark:bg-[#10172c] md:py-32">
+           <div className="container">
+             <div className="max-w-3xl" data-aos="fade-up">
+               <p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">Capabilities second</p>
+               <h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary dark:text-white md:text-5xl">
+                 Combine the capabilities each programme needs
+               </h2>
+               <p className="mt-5 text-lg leading-8 text-muted-foreground">
+                 These are the building blocks behind the programme journey — selected and configured
+                 around the initiative, rather than sold as disconnected features.
+               </p>
+             </div>
+             <div className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+               {capabilities.map(([title, description, Icon], index) => (
+                 <article
+                   key={title}
+                   className="group rounded-2xl border border-border bg-background p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10"
+                   data-aos="fade-up"
+                   data-aos-delay={Math.min(index * 60, 240)}
+                 >
+                   <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+                     <Icon className="h-6 w-6" />
+                   </div>
+                   <h3 className="mt-6 text-lg font-semibold text-secondary dark:text-white">{title}</h3>
+                   <p className="mt-3 text-sm leading-6 text-muted-foreground">{description}</p>
+                 </article>
+               ))}
+             </div>
+           </div>
+         </section>
+
+         <section className="bg-background py-24 md:py-32">
+           <div className="container">
+             <div className="mx-auto max-w-3xl text-center" data-aos="fade-up">
+               <p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">Audience lenses</p>
+               <h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary dark:text-white md:text-5xl">
+                 Shape the journey around the people it serves
+               </h2>
+               <p className="mt-5 text-lg leading-8 text-muted-foreground">
+                 Women, youth, entrepreneurs, employees, customers and communities are audience
+                 contexts within a programme — not separate products.
+               </p>
+             </div>
+             <div className="mx-auto mt-14 grid max-w-6xl gap-4 md:grid-cols-2 lg:grid-cols-3">
+               {audienceLenses.map((item, index) => {
+                 const Icon = item.icon;
+                 return (
+                   <article
+                     key={item.number}
+                     className="rounded-2xl border border-border bg-card p-6 shadow-sm"
+                     data-aos="fade-up"
+                     data-aos-delay={Math.min(index * 60, 240)}
+                   >
+                     <div className="flex items-start justify-between gap-4">
+                       <div className={`rounded-xl p-3 ${item.tint} dark:bg-primary/20 dark:text-[#eadfff]`}>
+                         <Icon className="h-6 w-6" aria-hidden="true" />
+                       </div>
+                       <span className="font-mono text-sm text-muted-foreground">{item.number}</span>
+                     </div>
+                     <h3 className="mt-6 text-xl font-semibold leading-snug text-secondary dark:text-white">{item.title}</h3>
+                     <p className="mt-3 text-sm leading-6 text-muted-foreground">{item.description}</p>
+                   </article>
+                 );
+               })}
+             </div>
+           </div>
+         </section>
 
         <div className="relative z-10 w-full">
           <div className="client-logos py-8" data-aos="fade-up" data-aos-delay="100">

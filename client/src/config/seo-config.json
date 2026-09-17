@@ -20,8 +20,8 @@
     },
     "/usecases": {
       "title": "Learning & Engagement Use Cases | Potential",
-      "description": "Explore workforce, national empowerment, customer education and partner enablement use cases built on Potential’s learning and engagement platform.",
-      "keywords": "workforce capability, national empowerment, customer education, partner enablement, learning platform"
+      "description": "Explore programme paths, platform capabilities and audience lenses built on Potential’s learning and engagement platform.",
+      "keywords": "programme paths, workforce capability, national empowerment, customer education, partner enablement, learning platform"
     },
     "/case-studies": {
       "title": "Case Studies | Potential",
@@ -60,6 +60,16 @@
       "title": "Customer & Partner Enablement | Potential",
       "description": "Help customers and partners adopt products and build proficiency through dedicated learning, onboarding and certification journeys.",
       "keywords": "customer enablement, partner enablement, onboarding, product learning, certification, Potential"
+    },
+    "/solutions/csr-community-impact": {
+      "title": "CSR & Community Impact | Potential",
+      "description": "Turn CSR and community priorities into structured participation, learning, action and evidence with Potential.com.",
+      "keywords": "CSR programmes, community impact, stakeholder engagement, sustainability, learning platform, Potential"
+    },
+    "/solutions/entrepreneurship-sme-development": {
+      "title": "Entrepreneurship & SME Development | Potential",
+      "description": "Support entrepreneurs and SMEs through structured assessment, learning, mentoring, challenges and practical milestones.",
+      "keywords": "entrepreneurship development, SME development, mentoring, innovation challenges, learning platform, Potential"
     },
     "/resources": {
       "title": "Resources | Potential",

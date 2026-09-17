@@ -44,7 +44,7 @@ export default function About() {
                   Experience that shapes the platform we deliver today.
                 </h1>
                 <p className="mt-7 max-w-2xl text-lg leading-8 text-muted-foreground md:text-xl">
-                  Our experience in empowerment programmes informs the learning and engagement platform we deliver today. Each initiative combines a proven foundation with the audience journey, roles and measures its owner needs.
+                   Our experience in empowerment programmes informs the learning and engagement platform we deliver today. Each initiative combines a proven foundation with the programme path, audience journey, roles and measures its owner needs.
                 </p>
                 <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
                   <Button onClick={() => navigateWithUTM("/inquire")} size="lg" className="rounded-full px-8 py-6 text-base shadow-lg shadow-primary/20">

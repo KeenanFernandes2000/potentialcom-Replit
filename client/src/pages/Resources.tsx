@@ -11,6 +11,7 @@ import {
   ArrowRight,
   Award,
   BookOpen,
+  BriefcaseBusiness,
   ChartNoAxesCombined,
   CircleUserRound,
   Network,
@@ -221,12 +222,12 @@ const Resources = () => {
             </div>
             <div className="mx-auto mt-12 grid max-w-6xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {[
-                { title: "Workforce capability", icon: Route },
-                { title: "Certification & licensing", icon: ShieldCheck },
-                { title: "National & community empowerment", icon: Users },
-                { title: "Participant journeys", icon: CircleUserRound },
-                { title: "Programme operations", icon: Network },
-                { title: "Outcome evidence", icon: ChartNoAxesCombined },
+                 { title: "Workforce capability", icon: Route },
+                 { title: "CSR & community impact", icon: Users },
+                 { title: "Entrepreneurship & SME development", icon: BriefcaseBusiness },
+                 { title: "Certification & licensing", icon: ShieldCheck },
+                 { title: "Participant journeys", icon: CircleUserRound },
+                 { title: "Outcome evidence", icon: ChartNoAxesCombined },
               ].map((theme, index) => {
                 const Icon = theme.icon;
                 return (

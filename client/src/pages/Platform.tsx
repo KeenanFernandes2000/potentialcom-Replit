@@ -305,7 +305,7 @@ const Platform = () => {
                    One platform around the{" "}
                    <span className="text-primary">journey you need to deliver.</span>
                 </h1>
-                <p className="mt-7 max-w-2xl text-lg leading-8 text-muted-foreground md:text-xl">Potential.com brings learning, practice, certification, coaching, communities, innovation and programme management into one dedicated experience — shaped around your audience, roles and the evidence your initiative needs.</p>
+                 <p className="mt-7 max-w-2xl text-lg leading-8 text-muted-foreground md:text-xl">Start with the programme you need to deliver, then configure learning, practice, certification, coaching, communities, innovation and programme management around your audience, roles and evidence.</p>
                 <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
                   <Button onClick={discussYourInitiative} size="lg" className="rounded-full px-8 py-6 text-base shadow-lg shadow-primary/20">
                     Discuss Your Initiative <ArrowRight className="h-5 w-5" />
@@ -316,7 +316,7 @@ const Platform = () => {
                      onClick={() => navigateWithUTM("/usecases")}
                      className="group rounded-full border-border bg-background/70 px-8 py-6 text-base text-secondary dark:text-white"
                    >
-                     Explore Use Cases <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      Explore Programme Paths <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                    </Button>
                 </div>
                 <div className="mt-12 flex flex-wrap gap-x-8 gap-y-3 border-t border-secondary/10 pt-5 text-sm font-medium text-secondary/70 dark:border-white/15 dark:text-white/80">

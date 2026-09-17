@@ -573,8 +573,8 @@ const CaseStudies = () => {
               </span>
             </h1>
             <p className="max-w-2xl mx-auto text-base md:text-lg text-white/85 mb-8">
-              Evidence from learning, certification, engagement, innovation,
-              mentorship and capability initiatives delivered for governments and enterprises.
+               Explore programme evidence from learning, certification, engagement, innovation,
+               mentorship and capability initiatives delivered for governments and enterprises.
             </p>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-3xl mx-auto">
@@ -642,11 +642,11 @@ const CaseStudies = () => {
           <div className="container">
             <FadeIn className="text-center mb-10">
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Evidence from Delivered Initiatives
+                 Programme Evidence from Delivered Initiatives
               </h2>
               <p className="max-w-2xl mx-auto text-muted-foreground">
-                Explore platforms, programmes and campaigns delivered for leading
-                governments and enterprises. Filter by industry and use case.
+                 Explore platforms, programmes and campaigns delivered for leading
+                 governments and enterprises. Filter by industry and programme need.
               </p>
             </FadeIn>
 

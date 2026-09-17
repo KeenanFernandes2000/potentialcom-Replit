@@ -138,6 +138,7 @@ function SectionIntro({
 function SolutionPage({ config }: { config: SolutionPageConfig }) {
   const discuss = () => navigateWithUTM("/inquire");
   const explorePlatform = () => navigateWithUTM("/platform");
+  const isParentCategory = Boolean(config.isParentCategory);
   const exploreRelevantCaseStudy = () => {
     const section = document.getElementById("relevant-experience");
 
@@ -146,7 +147,11 @@ function SolutionPage({ config }: { config: SolutionPageConfig }) {
       return;
     }
 
-    navigateWithUTM("/solutions/workforce-capability#relevant-experience");
+    navigateWithUTM(
+      config.slug === "/solutions/workforce-capability"
+        ? "/solutions/workforce-capability#relevant-experience"
+        : "/case-studies",
+    );
   };
   const [expandedView, setExpandedView] = useState<{
     title: string;
@@ -219,7 +224,7 @@ function SolutionPage({ config }: { config: SolutionPageConfig }) {
                   <Button onClick={discuss} size="lg" className="rounded-full px-8 py-6 text-base shadow-lg shadow-primary/20">
                     {config.primaryCta} <ArrowRight className="h-5 w-5" />
                   </Button>
-                  <Button
+                   <Button
                     variant="outline"
                     size="lg"
                     onClick={
@@ -229,9 +234,11 @@ function SolutionPage({ config }: { config: SolutionPageConfig }) {
                     }
                     className="group rounded-full border-border bg-background/70 px-8 py-6 text-base text-secondary dark:text-white"
                   >
-                    {config.slug === "/solutions/customer-partner-enablement"
-                      ? "View Platform Capabilities"
-                      : "Explore a Relevant Case Study →"}
+                     {config.slug === "/solutions/customer-partner-enablement"
+                       ? "View Platform Capabilities"
+                       : config.slug === "/solutions/workforce-capability"
+                         ? "Explore Relevant Experience"
+                         : "Explore Case Studies"}
                   </Button>
                 </div>
               </div>
@@ -270,6 +277,126 @@ function SolutionPage({ config }: { config: SolutionPageConfig }) {
             </div>
           </div>
         </section>
+
+         {config.programmeCards && (
+           <section className="bg-[#f6f4fb] py-24 dark:bg-[#10172c] md:py-32">
+             <div className="container">
+               <SectionIntro
+                 label={isParentCategory ? "PROGRAMME PATHS" : "PROGRAMMES"}
+                 title={config.programmeTitle ?? "Programme paths for your initiative"}
+                 copy={
+                   isParentCategory
+                     ? "Start with the programme category that best matches the mandate, audience and progress you need to enable."
+                     : "Configure the platform around the programme, audience and practical progress you need to deliver."
+                 }
+               />
+               <div
+                 className={`mx-auto mt-14 grid max-w-7xl gap-5 ${
+                   config.programmeCards.length >= 5
+                     ? "md:grid-cols-2 lg:grid-cols-3"
+                     : "md:grid-cols-2 lg:grid-cols-4"
+                 }`}
+               >
+                 {config.programmeCards.map((card, index) => {
+                   const Icon = card.icon;
+                   return (
+                     <div
+                       key={card.title}
+                       className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-background p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/10 motion-reduce:transition-none"
+                       data-aos="fade-up"
+                       data-aos-delay={Math.min(index * 70, 280)}
+                     >
+                       <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary via-primary/40 to-transparent" />
+                       <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+                         <Icon className="h-6 w-6" />
+                       </div>
+                       <h3 className="mt-6 text-lg font-semibold text-secondary dark:text-white">
+                         {card.title}
+                       </h3>
+                       <p className="mt-3 flex-1 text-sm leading-6 text-muted-foreground">
+                         {card.description}
+                       </p>
+                       {card.href && (
+                         <button
+                           type="button"
+                           onClick={() => navigateWithUTM(card.href!)}
+                           className="mt-5 inline-flex w-fit items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-primary/75"
+                         >
+                           Explore programme <ArrowRight className="h-4 w-4" />
+                         </button>
+                       )}
+                     </div>
+                   );
+                 })}
+               </div>
+             </div>
+           </section>
+         )}
+
+         {(config.audiences || config.measurementPoints) && (
+           <section className="bg-background py-24 md:py-32">
+             <div className="container">
+               <div className="grid gap-12 lg:grid-cols-[.9fr_1.1fr] lg:items-start">
+                 {config.audiences && (
+                   <div data-aos="fade-right">
+                     <p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">
+                       AUDIENCE LENSES
+                     </p>
+                     <h2 className="mt-4 text-4xl font-bold tracking-tight text-secondary dark:text-white md:text-5xl">
+                       Design around the people the programme needs to serve.
+                     </h2>
+                     <p className="mt-5 text-lg leading-8 text-muted-foreground">
+                       Audiences shape the journey, roles and support model. They are not separate
+                       products; they are the context the programme is configured around.
+                     </p>
+                     <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                       {config.audiences.map((audience) => (
+                         <div
+                           key={audience}
+                           className="rounded-2xl border border-border bg-card p-4 text-sm font-semibold leading-6 text-secondary shadow-sm dark:text-white"
+                         >
+                           {audience}
+                         </div>
+                       ))}
+                     </div>
+                   </div>
+                 )}
+                 {config.measurementPoints && (
+                   <div
+                     className="rounded-[2rem] border border-border bg-[#fcfaf5] p-7 dark:bg-[#10172c] md:p-9"
+                     data-aos="fade-left"
+                   >
+                     <p className="text-sm font-semibold uppercase tracking-[.2em] text-primary">
+                       MEASUREMENT & EVIDENCE
+                     </p>
+                     <h2 className="mt-4 text-3xl font-bold tracking-tight text-secondary dark:text-white md:text-4xl">
+                       Define what progress should look like before launch.
+                     </h2>
+                     <p className="mt-5 text-lg leading-8 text-muted-foreground">
+                       Connect participation, learning, practice and application with the agreed
+                       evidence your programme owners and leadership need.
+                     </p>
+                     <div className="mt-7 space-y-3">
+                       {config.measurementPoints.map((point, index) => (
+                         <div
+                           key={point}
+                           className="flex items-start gap-3 rounded-2xl border border-primary/15 bg-background p-4"
+                         >
+                           <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-xs font-bold text-primary">
+                             0{index + 1}
+                           </span>
+                           <span className="pt-1 text-sm font-semibold leading-6 text-secondary dark:text-white">
+                             {point}
+                           </span>
+                         </div>
+                       ))}
+                     </div>
+                   </div>
+                 )}
+               </div>
+             </div>
+           </section>
+         )}
 
         <section className="bg-secondary py-24 text-white md:py-28">
           <div className="container">

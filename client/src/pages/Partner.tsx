@@ -62,7 +62,7 @@ export default function Partner() {
                   Deliver learning and engagement programmes with Potential.
                 </h1>
                 <p className="mt-7 max-w-2xl text-lg leading-8 text-muted-foreground md:text-xl">
-                  We work with organisations that bring access to a defined government or enterprise mandate, specialist programme expertise or implementation capability. Together, we shape the participant journey, agree responsibilities and help the client measure progress.
+                   We work with organisations that bring access to a defined government or enterprise programme, specialist expertise or implementation capability. Together, we shape the participant journey, agree responsibilities and help the client measure progress.
                 </p>
                 <div className="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
                   <Button onClick={() => navigateWithUTM("/inquire")} size="lg" className="rounded-full px-8 py-6 text-base shadow-lg shadow-primary/20 gtm-partner-become-partner">

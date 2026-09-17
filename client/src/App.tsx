@@ -40,6 +40,8 @@ import Platform from "@/pages/Platform";
 import WorkforceCapability from "@/pages/WorkforceCapability";
 import NationalCommunityEmpowerment from "@/pages/NationalCommunityEmpowerment";
 import CustomerPartnerEnablement from "@/pages/CustomerPartnerEnablement";
+import CSRCommunityImpact from "@/pages/CSRCommunityImpact";
+import EntrepreneurshipSMEDevelopment from "@/pages/EntrepreneurshipSMEDevelopment";
 
 function LegacyPricingRedirect() {
   const [, navigate] = useLocation();
@@ -60,6 +62,8 @@ function Router() {
       <Route path="/solutions/workforce-capability" component={WorkforceCapability} />
       <Route path="/solutions/national-community-empowerment" component={NationalCommunityEmpowerment} />
       <Route path="/solutions/customer-partner-enablement" component={CustomerPartnerEnablement} />
+      <Route path="/solutions/csr-community-impact" component={CSRCommunityImpact} />
+      <Route path="/solutions/entrepreneurship-sme-development" component={EntrepreneurshipSMEDevelopment} />
       <Route path="/solutions" component={Offerings} />
       <Route path="/resources" component={Resources} />
       <Route path="/partner" component={Partner} />
