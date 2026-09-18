@@ -658,10 +658,10 @@ const Demo = () => {
                 size="lg"
                 variant="outline"
                 className="rounded-full border-white/40 bg-white/10 text-white hover:bg-white/20 font-semibold px-8 py-6 text-lg"
-                onClick={() => (window.location.href = "/ai-agents")}
+                onClick={() => navigateWithUTM("/inquire")}
                 data-testid="cta-build-agent"
               >
-                Build Your AI Agent
+                Discuss Your Initiative
               </Button>
             </div>
           </div>

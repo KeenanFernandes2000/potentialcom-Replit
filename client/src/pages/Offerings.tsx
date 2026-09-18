@@ -1,221 +1,289 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Agents from "@/components/sections/Agents";
-import Platforms from "@/components/sections/Platforms";
-import Solutions from "@/components/sections/Solutions";
+import { SEO } from "@/components/SEO";
+import UTMLink from "@/components/UTMLink";
 import { Button } from "@/components/ui/button";
-import { useEffect } from "react";
-import { AutoSEO } from "@/components/SEO";
-import { navigateWithUTM } from "@/lib/utm-utils";
-import zeinAubImage from "@assets/ZEIN AUB.png";
-import wfzoImage from "@assets/WFZO.png";
-import arliHomesImage from "@assets/arliHomes.png";
+import {
+  ArrowRight,
+  BookOpen,
+  BriefcaseBusiness,
+  CheckCircle2,
+  ChevronRight,
+  GraduationCap,
+  Handshake,
+  Lightbulb,
+  MessageCircle,
+  Users,
+} from "lucide-react";
 
-const Offerings = () => {
-  // Case Studies section
-  const CaseStudies = () => {
-    const caseStudies = [
+const solutionGroups = [
+  {
+    title: "Workforce Capability",
+    intro:
+      "Build workforce capability around the roles, standards and operational outcomes that matter to your organisation.",
+    programs: [
+      "Frontline Readiness",
+      "Certification & Licensing",
+      "AI & Digital Adoption",
+      "Sales & Service Enablement",
+      "Leadership & Talent Development",
+      "Compliance & Safety Readiness",
+    ],
+    href: "/solutions/workforce-capability",
+    cta: "Explore Workforce Capability",
+    icon: BriefcaseBusiness,
+  },
+  {
+    title: "National & Community Empowerment",
+    intro:
+      "Turn public, social and economic-development mandates into managed programmes with clear participant progress and evidence.",
+    programs: [
+      "CSR & Community Impact",
+      "Entrepreneurship & SME Development",
+      "National Talent & Employability",
+      "Financial Capability",
+    ],
+    href: "/solutions/national-community-empowerment",
+    cta: "Explore National & Community Empowerment",
+    icon: Users,
+    priorityLinks: [
       {
-        title: "Tatawwar: Building Tomorrow's Minds",
-        description:
-          "Transformative educational initiative with HSBC that connected students, teachers, and businesses to address UN Sustainable Development Goals.",
-        imageSrc:
-          "https://placehold.co/800x400/e6f7ff/0066cc?text=HSBC+Partnership",
-        category: "Education",
-        partner: "HSBC",
+        label: "CSR & Community Impact",
+        href: "/solutions/csr-community-impact",
       },
       {
-        title: "The Entrepreneurial Nation",
-        description:
-          "Revolutionary program that equipped SMEs and startups with AI-powered tools to rapidly scale operations and accelerate business growth.",
-        imageSrc:
-          "https://placehold.co/800x400/f5f5f5/333333?text=Ministry+of+Economy",
-        category: "SME Development",
-        partner: "Ministry of Economy",
+        label: "Entrepreneurship & SME Development",
+        href: "/solutions/entrepreneurship-sme-development",
       },
-      {
-        title: "Maliyat Financial Literacy",
-        description:
-          "Groundbreaking CSR initiative with Bank Muscat that empowered youth with essential financial skills for economic independence.",
-        imageSrc:
-          "https://placehold.co/800x400/f9f9f9/c41230?text=Bank+Muscat+Initiative",
-        category: "Financial Education",
-        partner: "Bank Muscat",
-      },
-      {
-        title: "Cartier Women's Initiative",
-        description:
-          "Global entrepreneurship competition that identified and accelerated women-led ventures addressing critical global challenges.",
-        imageSrc:
-          "https://placehold.co/800x400/000000/ffffff?text=Cartier+Women's+Initiative",
-        category: "Women Empowerment",
-        partner: "Cartier",
-      },
-    ];
+    ],
+  },
+  {
+    title: "Customer & Partner Enablement",
+    intro:
+      "Help customers, partners and suppliers build knowledge, capability and confidence through structured learning and engagement journeys.",
+    programs: [
+      "Customer Education & Adoption",
+      "Partner & Channel Enablement",
+      "Supplier Development & Local Content",
+    ],
+    href: "/solutions/customer-partner-enablement",
+    cta: "Explore Customer & Partner Enablement",
+    icon: Handshake,
+  },
+];
 
-    return (
-      <section id="case-studies" className="py-24 relative">
-        <div className="container">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex px-4 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-              Success Stories
+const platformCapabilities = [
+  { label: "Academy & Courses", icon: BookOpen },
+  { label: "Certification & Licensing", icon: GraduationCap },
+  { label: "Mentorship & Coaching", icon: Users },
+  { label: "Community & Events", icon: MessageCircle },
+  { label: "Competitions & Challenges", icon: CheckCircle2 },
+  { label: "Innovation & Ideas", icon: Lightbulb },
+  { label: "AI", icon: ArrowRight },
+];
+
+export default function Offerings() {
+  return (
+    <div className="min-h-screen bg-background">
+      <SEO
+        title="Solutions | AI-powered Learning & Engagement Platform | Potential"
+        description="Design and deliver workforce capability, national and community empowerment, and customer and partner enablement programmes with Potential."
+        keywords="workforce capability, community empowerment, customer enablement, partner enablement, learning platform"
+      />
+      <Header />
+
+      <main className="pt-24">
+        <section className="relative overflow-hidden py-20 md:py-28">
+          <div className="absolute inset-0 bg-grid-pattern opacity-5" />
+          <div className="absolute -right-24 top-8 h-72 w-72 rounded-full bg-primary/15 blur-3xl" />
+          <div className="container relative z-10">
+            <div className="mx-auto max-w-4xl text-center">
+              <div className="mb-5 inline-flex rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+                Solutions
+              </div>
+              <h1 className="text-4xl font-bold leading-tight md:text-6xl">
+                Programmes built around the outcomes your organisation needs to
+                deliver.
+              </h1>
+              <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-muted-foreground md:text-xl">
+                Potential helps governments and enterprises launch dedicated
+                learning and engagement programmes around workforce capability,
+                national and community empowerment, and customer and partner
+                enablement. Start with the initiative, then bring the
+                participant journey, programme management and evidence together
+                in one platform.
+              </p>
+              <div className="mt-9 flex flex-wrap justify-center gap-4">
+                <Button asChild size="lg" className="rounded-full px-7">
+                  <UTMLink href="/inquire">
+                    Discuss Your Initiative
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </UTMLink>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="rounded-full px-7"
+                >
+                  <UTMLink href="/platform">Explore the Platform</UTMLink>
+                </Button>
+              </div>
             </div>
-            <h2 className="text-3xl font-bold mb-6">Real-World Case Studies</h2>
-            <p className="text-xl text-muted-foreground">
-              See how organizations are transforming with our AI solutions
-            </p>
           </div>
+        </section>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {caseStudies.map((study, idx) => (
-              <div
-                key={idx}
-                className="glass-effect rounded-xl overflow-hidden border border-border shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-                data-aos="fade-up"
-                data-aos-delay={idx * 100}
-              >
-                <div className="h-48 relative">
-                  <img
-                    src={study.imageSrc}
-                    alt={study.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute top-4 right-4 rounded-full bg-primary/80 text-white px-3 py-1 text-xs font-medium">
-                    {study.category}
-                  </div>
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-xl font-bold">{study.title}</h3>
-                    <div className="text-xs text-muted-foreground bg-background/50 px-2 py-1 rounded-full">
-                      with {study.partner}
-                    </div>
-                  </div>
-                  <p className="text-muted-foreground mb-4">
-                    {study.description}
-                  </p>
-                  <Button
-                    variant="link"
-                    className="px-0 text-primary gtm-offerings-case-study"
-                    onClick={() => navigateWithUTM("/vera")}
+        <section className="border-y border-border bg-muted/30 py-20 md:py-24">
+          <div className="container">
+            <div className="mx-auto mb-12 max-w-3xl text-center">
+              <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+                Three ways organisations use Potential
+              </p>
+              <h2 className="text-3xl font-bold md:text-5xl">
+                Start with the programme you need to deliver.
+              </h2>
+            </div>
+
+            <div className="grid gap-6 lg:grid-cols-3">
+              {solutionGroups.map((group) => {
+                const Icon = group.icon;
+                return (
+                  <article
+                    key={group.title}
+                    className="flex h-full flex-col rounded-3xl border border-border bg-background p-7 shadow-sm transition-shadow hover:shadow-xl"
                   >
-                    Read full case study
-                  </Button>
+                    <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                      <Icon className="h-7 w-7" />
+                    </div>
+                    <h3 className="text-2xl font-bold">{group.title}</h3>
+                    <p className="mt-4 leading-7 text-muted-foreground">
+                      {group.intro}
+                    </p>
+                    <ul className="mt-6 space-y-3">
+                      {group.programs.map((program) => (
+                        <li
+                          key={program}
+                          className="flex items-start gap-3 text-sm"
+                        >
+                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                          <span>{program}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-auto pt-8">
+                      <Button asChild variant="outline" className="w-full rounded-full">
+                        <UTMLink href={group.href}>
+                          {group.cta}
+                          <ChevronRight className="ml-2 h-4 w-4" />
+                        </UTMLink>
+                      </Button>
+                      {group.priorityLinks && (
+                        <div className="mt-5 space-y-2 border-t border-border pt-5">
+                          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                            Priority offers
+                          </p>
+                          {group.priorityLinks.map((link) => (
+                            <UTMLink
+                              key={link.href}
+                              href={link.href}
+                              className="flex items-center justify-between rounded-lg px-2 py-1.5 text-sm font-medium text-primary hover:bg-primary/5"
+                            >
+                              {link.label}
+                              <ArrowRight className="h-4 w-4" />
+                            </UTMLink>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        <section className="py-20 md:py-24">
+          <div className="container">
+            <div className="mx-auto max-w-3xl text-center">
+              <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+                From programme to platform
+              </p>
+              <h2 className="text-3xl font-bold md:text-5xl">
+                The programme defines the journey. The platform brings it
+                together.
+              </h2>
+              <p className="mt-5 text-lg leading-8 text-muted-foreground">
+                Potential combines the capabilities each initiative needs into
+                one dedicated participant and programme-management experience.
+              </p>
+            </div>
+
+            <div className="mx-auto mt-12 max-w-5xl">
+              <div className="grid gap-4 md:grid-cols-[1fr_auto_2fr] md:items-center">
+                <div className="rounded-2xl border border-primary/20 bg-primary/5 p-6 text-center">
+                  <p className="font-semibold">Programme</p>
+                </div>
+                <ArrowRight className="mx-auto hidden h-6 w-6 rotate-90 text-primary md:block md:rotate-0" />
+                <div className="rounded-2xl border border-border bg-card p-6 text-center shadow-sm">
+                  <p className="font-semibold">
+                    Participant Journey + Programme Management + Leadership
+                    Evidence
+                  </p>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  };
-
-  // Testimonials section
-  const Testimonials = () => {
-    const testimonials = [
-      {
-        quote:
-          "The Potential platform was instrumental in our type of work, a timesaving enabler! Their great customer support and open mentality for user experience enhancement is the key success factor",
-        name: "MAHA ZOUWAYHED",
-        title: "ASSOCIATE DIRECTOR, TALAL AND MADIHA ZEIN AUB INNOVATION PARK",
-        avatar: zeinAubImage,
-      },
-      {
-        quote:
-          "We made use of Potential.com's platform to empower Free Zones around the world by giving them access to our learning resources and helping them take action and innovate with their stakeholders.",
-        name: "DR. SAMIR HAMROUNI",
-        title: "CEO, WORLD FREE ZONE ORGANIZATIONS",
-        avatar: wfzoImage,
-      },
-      {
-        quote:
-          "The AI Voice Agent setup was easy, and the team were very helpful in trying to get all our information into the system before we launched. Overall, it has been a positive experience, and I look forward to seeing Grace grow into a more mature AI receptionist for our business.",
-        name: "SAMANTHA CALLEJA",
-        title: "ARLI HOMES, MELBOURNE, AUSTRALIA",
-        avatar: arliHomesImage,
-      },
-    ];
-
-    return (
-      <section id="testimonials" className="py-24 bg-muted/30">
-        <div className="container">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-3xl font-bold mb-6">Testimonials</h2>
-          </div>
-
-          <div className="overflow-x-auto pb-4">
-            <div className="flex gap-8 w-max">
-              {testimonials.map((testimonial, idx) => (
-                <div
-                  key={idx}
-                  className="glass-effect rounded-xl p-8 border border-border shadow-md w-80 md:w-96 flex-shrink-0"
-                  data-aos="fade-up"
-                  data-aos-delay={idx * 100}
-                >
-                  <div className="flex flex-col h-full">
-                    <p className="text-lg font-medium mb-6 italic">
-                      "{testimonial.quote}"
-                    </p>
-                    <div className="mt-auto flex items-center">
-                      <div className="w-16 h-16 rounded-full overflow-hidden mr-4">
-                        <img
-                          src={testimonial.avatar}
-                          alt={testimonial.name}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      <div>
-                        <p className="font-bold text-primary">
-                          {testimonial.name}
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          {testimonial.title}
-                        </p>
-                      </div>
+              <div className="mt-5 flex flex-wrap justify-center gap-3">
+                {platformCapabilities.map((capability) => {
+                  const Icon = capability.icon;
+                  return (
+                    <div
+                      key={capability.label}
+                      className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/30 px-4 py-2 text-sm"
+                    >
+                      <Icon className="h-4 w-4 text-primary" />
+                      {capability.label}
                     </div>
-                  </div>
-                </div>
-              ))}
+                  );
+                })}
+              </div>
+              <div className="mt-9 text-center">
+                <Button asChild size="lg" className="rounded-full px-7">
+                  <UTMLink href="/platform">
+                    Explore the Platform
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </UTMLink>
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    );
-  };
+        </section>
 
-  // Refresh AOS animations on route change
-  useEffect(() => {
-    if (typeof window !== "undefined" && (window as any).AOS) {
-      (window as any).AOS.refresh();
-    }
-  }, []);
-
-  return (
-    <div className="font-inter min-h-screen">
-      <AutoSEO />
-      <Header />
-      <main className="pt-32">
-        <div className="container mb-12">
-          <div className="max-w-6xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Our AI Products
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl">
-              Explore our comprehensive range of AI solutions designed to
-              empower your organization.
-            </p>
+        <section className="relative overflow-hidden bg-secondary py-20 text-secondary-foreground md:py-24">
+          <div className="absolute inset-0 bg-grid-pattern opacity-10" />
+          <div className="container relative z-10 text-center">
+            <div className="mx-auto max-w-3xl rounded-3xl border border-primary/20 bg-background/10 p-8 shadow-lg backdrop-blur-sm md:p-12">
+              <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+                Start with the right first phase
+              </p>
+              <h2 className="text-3xl font-bold md:text-5xl">
+                What programme does your organisation need to deliver?
+              </h2>
+              <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-secondary-foreground/80">
+                Tell us about the audience, mandate and outcomes you are
+                working toward. We&apos;ll help you shape the right first
+                phase.
+              </p>
+              <Button asChild size="lg" className="mt-8 rounded-full px-8">
+                <UTMLink href="/inquire">
+                  Discuss Your Initiative
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </UTMLink>
+              </Button>
+            </div>
           </div>
-        </div>
-
-        <Agents />
-        <Platforms />
-        <Solutions />
-        <CaseStudies />
-        <Testimonials />
+        </section>
       </main>
+
       <Footer />
     </div>
   );
-};
-
-export default Offerings;
+}

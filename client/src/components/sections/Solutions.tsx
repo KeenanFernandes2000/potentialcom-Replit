@@ -71,9 +71,9 @@ const Solutions = () => {
                 <Button
                   variant="ghost"
                   className="text-primary font-medium p-0 hover:bg-transparent flex items-center group gtm-solutions-learn-more"
-                  onClick={() => navigateWithUTM("/vera")}
+                  onClick={() => navigateWithUTM("/solutions")}
                 >
-                  Learn More{" "}
+                  Explore Solutions{" "}
                   <ArrowRight className="ml-1 w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Button>
               </CardFooter>
@@ -84,7 +84,7 @@ const Solutions = () => {
         {/* Call to action */}
         <div className="mt-16 text-center">
           <p className="text-muted-foreground mb-6">
-            Need a customized solution for your specific business requirements?
+            Need help shaping the right programme for your organisation?
           </p>
           <Button
             className="rounded-full bg-primary hover:bg-primary/90 text-white font-medium px-6 py-6 gtm-solutions-schedule-consultation"

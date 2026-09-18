@@ -15,11 +15,25 @@ app.get("/health", (_req, res) => {
   res.status(200).send("ok");
 });
 
-// Keep obsolete commercial URLs out of the public site while preserving a
-// relevant destination for existing bookmarks and campaign links.
+// Keep obsolete commercial pricing URLs on the relevant current consultation
+// destination. This must run before the SPA fallback so it is a real 301.
 app.get("/pricing", (_req, res) => {
   res.redirect(301, "/inquire");
 });
+
+// Retired Potential.com product pages should not be confused with the
+// separately managed ai.potential.com application.
+app.get(["/ai-agents", "/voice", "/chatbot"], (_req, res) => {
+  res.status(410).type("text/plain").send("Gone");
+});
+
+app.get("/vera", (_req, res) => res.redirect(301, "/inquire"));
+app.get("/demo", (_req, res) => res.redirect(301, "/inquire"));
+app.get("/lumi", (_req, res) => res.redirect(301, "/inquire"));
+app.get("/promptingguide", (_req, res) => res.redirect(301, "/resources"));
+app.get("/ai-for-csr", (_req, res) =>
+  res.redirect(301, "/solutions/csr-community-impact"),
+);
 
 // Force HTTPS in production
 if (process.env.NODE_ENV === "production") {

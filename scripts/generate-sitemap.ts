@@ -26,6 +26,22 @@ interface StaticRoute {
   changefreq: string;
 }
 
+const EXCLUDED_SITEMAP_ROUTES = new Set([
+  "/login",
+  "/register",
+  "/profile",
+  "/forgot-password",
+  "/ai-agents",
+  "/voice",
+  "/chatbot",
+  "/vera",
+  "/demo",
+  "/lumi",
+  "/ai-for-csr",
+  "/pricing",
+  "/promptingguide",
+]);
+
 /**
  * Determine route priority and change frequency based on route path
  */
@@ -154,18 +170,8 @@ async function extractHomepageSections(): Promise<StaticRoute[]> {
     }
   }
 
-  // Convert IDs to anchor routes
-  foundIds.forEach((id) => {
-    sections.push({
-      url: `/#${id}`,
-      priority: "0.7",
-      changefreq: "monthly",
-    });
-  });
-
   console.log(
-    `🏠 Found ${sections.length} homepage sections:`,
-    sections.map((s) => s.url).join(", ")
+    `🏠 Found ${foundIds.size} homepage sections; fragment URLs are intentionally excluded from the sitemap`
   );
 
   return sections;
@@ -322,8 +328,7 @@ async function extractStaticRoutes(): Promise<StaticRoute[]> {
           routePath.includes(":") ||
           routePath.includes("*") ||
           routePath === "" ||
-          routePath === "/pricing" ||
-          routePath === "/ai-agents"
+          EXCLUDED_SITEMAP_ROUTES.has(routePath)
         ) {
           continue;
         }
@@ -587,10 +592,10 @@ async function generateSitemap(): Promise<void> {
     const staticRoutes = await extractStaticRoutes();
     allPages.push(...staticRoutes);
 
-    // Add homepage sections
-    console.log("🏠 Adding homepage sections...");
-    const homepageSections = await extractHomepageSections();
-    allPages.push(...homepageSections);
+    // Homepage fragments are useful for on-page navigation but are not
+    // independent crawlable URLs, so they are intentionally excluded.
+    const homepageSections: StaticRoute[] = [];
+    console.log("🏠 Excluding homepage fragment URLs from sitemap...");
 
     // Fetch and add blog posts
     console.log("📝 Fetching blog posts...");

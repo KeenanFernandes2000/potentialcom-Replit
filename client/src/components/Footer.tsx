@@ -21,7 +21,7 @@ interface FooterProps {
 
 const Footer = ({
   newsletterTitle = "Stay Updated",
-  newsletterDescription = "Subscribe to our newsletter for the latest AI innovations.",
+  newsletterDescription = "Subscribe to our newsletter for practical insights on capability, engagement and programme outcomes.",
 }: FooterProps) => {
   const { toast } = useToast();
 
@@ -47,6 +47,11 @@ const Footer = ({
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
+              <li>
+                <UTMLink href="/solutions" className="opacity-80 hover:opacity-100 hover:text-primary transition-colors">
+                  Solutions
+                </UTMLink>
+              </li>
               <li>
                 <UTMLink href="/platform" className="opacity-80 hover:opacity-100 hover:text-primary transition-colors">
                   Platform

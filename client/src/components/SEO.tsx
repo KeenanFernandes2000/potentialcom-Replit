@@ -10,6 +10,7 @@ interface SEOProps {
   author?: string;
   type?: string;
   noIndex?: boolean;
+  robots?: string;
 }
 
 export const SEO: React.FC<SEOProps> = ({
@@ -21,6 +22,7 @@ export const SEO: React.FC<SEOProps> = ({
   author,
   type = "website",
   noIndex = false,
+  robots,
 }) => {
   const seoData = useSEO({
     title,
@@ -40,7 +42,12 @@ export const SEO: React.FC<SEOProps> = ({
       {seoData.author && <meta name="author" content={seoData.author} />}
 
       {/* Robots */}
-      {noIndex && <meta name="robots" content="noindex,nofollow" />}
+      {(robots || (noIndex ? "noindex,nofollow" : seoData.robots)) && (
+        <meta
+          name="robots"
+          content={robots || (noIndex ? "noindex,nofollow" : seoData.robots)}
+        />
+      )}
 
       {/* Open Graph Tags */}
       <meta property="og:title" content={seoData.title} />

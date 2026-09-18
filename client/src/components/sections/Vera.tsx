@@ -115,9 +115,9 @@ const Vera = () => {
             <Button
               className="rounded-full bg-primary hover:bg-primary/90 text-white font-semibold px-8 py-6 gtm-vera-talk-to-vera"
               size="lg"
-              onClick={() => navigateWithUTM("/vera")}
+              onClick={() => navigateWithUTM("/inquire")}
             >
-              Talk to Vera
+              Discuss Your Initiative
             </Button>
 
             {/* Chat Preview */}

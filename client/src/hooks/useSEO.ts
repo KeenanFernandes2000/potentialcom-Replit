@@ -9,6 +9,7 @@ export interface SEOData {
   author?: string;
   image?: string;
   url?: string;
+  robots?: string;
 }
 
 export const useSEO = (customSEO?: Partial<SEOData>): SEOData => {
@@ -44,6 +45,7 @@ export const useSEO = (customSEO?: Partial<SEOData>): SEOData => {
       keywords: customSEO?.keywords || pageSEO.keywords || defaultSEO.keywords,
       author: customSEO?.author || defaultSEO.author,
       image: customSEO?.image || defaultSEO.image,
+      robots: customSEO?.robots || pageSEO.robots || defaultSEO.robots,
       url: fullUrl,
     };
 

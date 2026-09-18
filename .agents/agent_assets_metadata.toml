@@ -1,0 +1,16 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "mDlQ-TqnKGv5KrLNpPrCC"
+uri = "file://Potential_Legacy_Pages_HTML_Archive.zip"
+type = "unspecified"
+title = "Potential legacy pages HTML archive"
+description = "Reference HTML exports of the nine legacy Potential.com pages captured before the SEO/indexation cleanup."
+logical_id = "d721df48-9cd1-418a-a0da-d4f3d5cb0fc0"
+content_hash = "sha256:0f4129ff03ab85a4a8c6febd3257aa5fbd759f3e72c407095b62cfe724341d60"
+size = 62854
+mtime_ms = 1789713160117
+storage_uri = "gcs://replit-rams-assets-sisko/rams/assets/repl:e52685cd-62de-434f-b4ef-21cc1fcab29f/d721df48-9cd1-418a-a0da-d4f3d5cb0fc0/2271d884-fe79-4fd0-ae7d-23c9ba5337ff"
+storage_version_token = "1789713555483716"
+content_type = "application/octet-stream"

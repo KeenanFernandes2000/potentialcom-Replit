@@ -1,0 +1,7 @@
+# Public Potential.com content is crawlable.
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+
+Sitemap: https://potential.com/sitemap.xml

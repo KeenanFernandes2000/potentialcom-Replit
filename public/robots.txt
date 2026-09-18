@@ -37,3 +37,5 @@ Allow: /
 User-agent: *
 Disallow: /admin/
 Disallow: /private/
+
+Sitemap: https://potential.com/sitemap.xml

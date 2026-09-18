@@ -158,9 +158,9 @@ const Platforms = () => {
               <Button
                 variant="outline"
                 className="w-full rounded-full hover:bg-primary hover:text-white gtm-platforms-learn-more"
-                onClick={() => navigateWithUTM("/vera")}
+                onClick={() => navigateWithUTM("/platform")}
               >
-                Learn More
+                Explore the Platform
               </Button>
             </div>
           ))}
