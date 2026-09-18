@@ -1,0 +1,630 @@
+Please implement the following SEO/indexation cleanup for the Potential.com website.
+
+IMPORTANT:
+- This task applies ONLY to Potential.com and this Replit project.
+- ai.potential.com is a completely separate application and is NOT managed through this Replit project.
+- Do not make or attempt any changes to ai.potential.com.
+- Do not redesign unrelated pages or alter the current Potential.com positioning except where specifically requested below.
+- Do NOT publish automatically. Complete the work and report back for review first.
+
+==================================================
+1. ARCHIVE LEGACY PAGES BEFORE RETIRING THEM
+==================================================
+
+Before deleting, retiring, redirecting, or otherwise modifying any of the legacy pages listed below, create a backup archive named:
+
+Potential_Legacy_Pages_HTML_Archive.zip
+
+Save it in the Replit workspace so I can download it manually.
+
+The archive should contain a clearly named HTML reference/export of the CURRENT version of each of these pages:
+
+- /ai-agents
+- /voice
+- /chatbot
+- /vera
+- /demo
+- /lumi
+- /ai-for-csr
+- /pricing
+- /promptingguide
+
+Preserve each page as its own clearly named .html file.
+
+The purpose is to retain a reference copy of the old pages before they are retired.
+
+Do NOT delete this ZIP after the cleanup.
+
+Do not retire the legacy pages until the archive has been successfully created.
+
+==================================================
+2. KEEP THESE CAMPAIGN/CONVERSION PAGES
+==================================================
+
+The following pages must remain LIVE, INDEXABLE and INCLUDED in the Potential.com sitemap:
+
+- /year-of-family
+- /launch-programs
+- /book
+
+Do NOT redirect, delete or noindex these pages.
+
+==================================================
+3. KEEP AUTHENTICATION PAGES BUT NOINDEX THEM
+==================================================
+
+These pages may be operationally required and must NOT be deleted.
+
+Keep them functional but remove them from the sitemap and prevent search indexing.
+
+Apply:
+
+/login
+- noindex,follow
+- remove from sitemap
+
+/register
+- noindex,follow
+- remove from sitemap
+
+/profile
+- noindex,nofollow
+- remove from sitemap
+
+/forgot-password
+- noindex,nofollow
+- remove from sitemap
+
+Make sure the robots directives can be reliably detected by search engines.
+
+==================================================
+4. RETIRE LEGACY AI/MARKETING ROUTES
+==================================================
+
+Only do this AFTER the archive in Section 1 has been successfully created.
+
+These pages are no longer part of the current Potential.com proposition:
+
+- /ai-agents
+- /voice
+- /chatbot
+
+For these three routes:
+
+- remove from sitemap
+- remove obsolete SEO metadata
+- remove internal commercial links pointing to them
+- retire them as public pages
+- return HTTP 410 Gone unless there is a clearly relevant CURRENT Potential.com replacement
+- do NOT redirect them to ai.potential.com
+- do NOT redirect them to another external domain
+- do NOT redirect them generically to the homepage
+
+For the following legacy routes, archive first and then use these replacements:
+
+/vera
+301 → /inquire
+
+/demo
+301 → /inquire
+
+/lumi
+301 → /inquire
+
+/promptingguide
+301 → /resources
+
+/ai-for-csr
+301 → /solutions/csr-community-impact
+
+/pricing
+Keep the existing:
+301 → /inquire
+
+Remove all of these legacy URLs from the sitemap.
+
+Make sure all redirects are real HTTP 301 server-side redirects rather than JavaScript/window redirects.
+
+==================================================
+5. COMPLETELY REPOSITION /solutions
+==================================================
+
+The current /solutions page represents the OLD AI-product catalogue.
+
+Keep the URL:
+
+/solutions
+
+Do NOT delete or redirect it.
+
+Completely replace its old AI-agent/product proposition with the current Potential.com commercial solutions architecture.
+
+Use the following exact structure and copy.
+
+------------------------------
+HERO
+------------------------------
+
+Eyebrow:
+
+SOLUTIONS
+
+Headline:
+
+Programmes built around the outcomes your organisation needs to deliver.
+
+Supporting copy:
+
+Potential helps governments and enterprises launch dedicated learning and engagement programmes around workforce capability, national and community empowerment, and customer and partner enablement. Start with the initiative, then bring the participant journey, programme management and evidence together in one platform.
+
+Primary CTA:
+
+Discuss Your Initiative
+
+Link:
+/inquire
+
+Secondary CTA:
+
+Explore the Platform
+
+Link:
+/platform
+
+Use the current Potential.com visual design language and shared CTA/button styles.
+
+------------------------------
+THREE SOLUTION CATEGORIES
+------------------------------
+
+Eyebrow:
+
+THREE WAYS ORGANISATIONS USE POTENTIAL
+
+Heading:
+
+Start with the programme you need to deliver.
+
+Create three strong visual solution groups/cards.
+
+1. WORKFORCE CAPABILITY
+
+Intro:
+
+Build workforce capability around the roles, standards and operational outcomes that matter to your organisation.
+
+Show these programmes:
+
+- Frontline Readiness
+- Certification & Licensing
+- AI & Digital Adoption
+- Sales & Service Enablement
+- Leadership & Talent Development
+- Compliance & Safety Readiness
+
+CTA:
+
+Explore Workforce Capability
+
+Link:
+/solutions/workforce-capability
+
+
+2. NATIONAL & COMMUNITY EMPOWERMENT
+
+Intro:
+
+Turn public, social and economic-development mandates into managed programmes with clear participant progress and evidence.
+
+Show these programmes:
+
+- CSR & Community Impact
+- Entrepreneurship & SME Development
+- National Talent & Employability
+- Financial Capability
+
+Main CTA:
+
+Explore National & Community Empowerment
+
+Link:
+/solutions/national-community-empowerment
+
+Also prominently link these two priority offers:
+
+CSR & Community Impact
+→ /solutions/csr-community-impact
+
+Entrepreneurship & SME Development
+→ /solutions/entrepreneurship-sme-development
+
+
+3. CUSTOMER & PARTNER ENABLEMENT
+
+Intro:
+
+Help customers, partners and suppliers build knowledge, capability and confidence through structured learning and engagement journeys.
+
+Show these programmes:
+
+- Customer Education & Adoption
+- Partner & Channel Enablement
+- Supplier Development & Local Content
+
+CTA:
+
+Explore Customer & Partner Enablement
+
+Link:
+/solutions/customer-partner-enablement
+
+------------------------------
+FROM PROGRAMME TO PLATFORM
+------------------------------
+
+Eyebrow:
+
+FROM PROGRAMME TO PLATFORM
+
+Heading:
+
+The programme defines the journey. The platform brings it together.
+
+Copy:
+
+Potential combines the capabilities each initiative needs into one dedicated participant and programme-management experience.
+
+Create a clean visual representation of:
+
+Programme
+
+↓
+
+Participant Journey + Programme Management + Leadership Evidence
+
+↓
+
+Academy & Courses · Certification & Licensing · Mentorship & Coaching · Community & Events · Competitions & Challenges · Innovation & Ideas · AI
+
+CTA:
+
+Explore the Platform
+
+Link:
+/platform
+
+------------------------------
+CLOSING CTA
+------------------------------
+
+Use the standard Potential.com final CTA component/design.
+
+Heading:
+
+What programme does your organisation need to deliver?
+
+Copy:
+
+Tell us about the audience, mandate and outcomes you are working toward. We'll help you shape the right first phase.
+
+Button:
+
+Discuss Your Initiative
+
+Link:
+/inquire
+
+IMPORTANT FOR /solutions:
+
+Remove all legacy content related to:
+
+- AI product catalogue
+- AI agents as standalone products
+- chatbots as standalone products
+- voice agents as standalone products
+- Vera as a standalone product
+- old AI-product pricing
+- old AI-product CTAs
+
+The page should clearly represent Potential as an:
+
+AI-powered Learning & Engagement Platform
+
+with the three current commercial categories.
+
+==================================================
+6. CLEAN THE POTENTIAL.COM SITEMAP
+==================================================
+
+Keep the existing sitemap-generation process, but clean the rules determining which URLs are included.
+
+Explicitly KEEP these pages in the sitemap:
+
+- /
+- /platform
+- /solutions
+- /solutions/workforce-capability
+- /solutions/national-community-empowerment
+- /solutions/customer-partner-enablement
+- /solutions/csr-community-impact
+- /solutions/entrepreneurship-sme-development
+- /usecases
+- /case-studies
+- /resources
+- /partner
+- /about
+- /inquire
+- /ayla
+- /blog
+- /privacy
+- /terms
+- /year-of-family
+- /launch-programs
+- /book
+- appropriate index-worthy blog/article pages
+
+REMOVE from the sitemap:
+
+- /login
+- /register
+- /profile
+- /forgot-password
+- /ai-agents
+- /voice
+- /chatbot
+- /vera
+- /demo
+- /lumi
+- /ai-for-csr
+- /pricing
+- /promptingguide
+
+Also remove ALL homepage fragment URLs such as:
+
+/#agents
+/#benefits
+/#solutions
+/#vera
+
+and any other URL containing a # fragment.
+
+Do NOT mass-remove old blog articles at this stage.
+
+We will audit the historic article library separately using Search Console performance data.
+
+==================================================
+7. FIX /robots.txt
+==================================================
+
+The audit found that:
+
+https://potential.com/robots.txt
+
+currently returns the React application HTML instead of a real robots.txt file.
+
+Fix this.
+
+It must:
+
+- return HTTP 200
+- return Content-Type: text/plain
+- contain valid robots directives
+- allow search engines to crawl public/indexable Potential.com content
+
+Include:
+
+Sitemap: https://potential.com/sitemap.xml
+
+Do not use robots.txt to block pages that search engines need to crawl in order to see a noindex directive.
+
+==================================================
+8. FIX UNKNOWN URL / SOFT-404 BEHAVIOUR
+==================================================
+
+The audit found that non-existent URLs currently return HTTP 200 and then display the client-side Not Found screen.
+
+Fix this.
+
+Genuinely unknown/non-existent URLs must return:
+
+HTTP 404
+
+Valid React routes must continue working normally.
+
+The client-side Not Found component alone is not sufficient if the server response remains HTTP 200.
+
+==================================================
+9. FIX DEFAULT OPEN GRAPH IMAGE
+==================================================
+
+The audit found that the configured:
+
+/og-image.jpg
+
+currently returns SPA HTML rather than an image.
+
+Fix this by either:
+
+- providing a real default Open Graph image at that URL, or
+- updating the default metadata to point to an existing appropriate image.
+
+Verify that the final OG image:
+
+- returns HTTP 200
+- returns an appropriate image Content-Type
+- is publicly accessible
+- works for social crawlers
+
+==================================================
+10. CLEAN SEO METADATA
+==================================================
+
+The primary SEO identity of Potential.com should now be:
+
+AI-powered Learning & Engagement Platform
+
+Review the main site's SEO configuration and remove obsolete metadata related to retired routes and the old commercial positioning, including references to:
+
+- AI agents as the primary Potential.com offer
+- chatbots as standalone Potential.com products
+- voice agents as standalone Potential.com products
+- AI team members
+- old AI-product pricing
+- old AI-product catalogue messaging
+
+Do NOT mass-edit historic blog/article titles simply because they mention AI, chatbots or agents.
+
+Those articles will be audited separately.
+
+Remove duplicate SEO configuration keys, including the duplicate /voice and /chatbot entries identified in the audit.
+
+Each important strategic page should have:
+
+- unique page title
+- unique meta description
+- self-referencing canonical URL
+- appropriate Open Graph metadata
+- appropriate Twitter/social metadata
+- correct robots directive
+
+Review at minimum:
+
+- /
+- /platform
+- /solutions
+- /solutions/workforce-capability
+- /solutions/national-community-empowerment
+- /solutions/customer-partner-enablement
+- /solutions/csr-community-impact
+- /solutions/entrepreneurship-sme-development
+- /usecases
+- /case-studies
+- /resources
+- /partner
+- /about
+- /inquire
+- /ayla
+- /blog
+- /year-of-family
+- /launch-programs
+- /book
+
+==================================================
+11. CANONICAL URL CLEANUP
+==================================================
+
+Ensure every important indexable Potential.com page has a self-referencing canonical using its final HTTPS URL.
+
+For example:
+
+https://potential.com/solutions/workforce-capability
+
+should canonical to itself.
+
+Do the same for all other strategic/indexable pages.
+
+Redirecting, retired, private and noindex pages should not compete as independent canonical/indexable destinations.
+
+==================================================
+12. IMPROVE INITIAL HTML SEO
+==================================================
+
+The audit found that route-specific metadata currently depends heavily on client-side React rendering.
+
+Improve the delivery of route-specific:
+
+- title
+- meta description
+- canonical
+- robots directive
+- Open Graph metadata
+
+in the initial HTML response for important strategic pages using the safest practical approach available in this application.
+
+IMPORTANT:
+
+Do NOT undertake a major or risky application architecture rewrite solely for this.
+
+If full SSR, static generation or prerendering would require substantial redevelopment, do not implement it as part of this task.
+
+Instead:
+
+1. implement any safe improvements that can be made now
+2. clearly report what remains dependent on React hydration
+3. explain what larger architectural change would be required later
+
+==================================================
+13. INTERNAL LINK CLEANUP
+==================================================
+
+Review Potential.com's internal commercial links.
+
+Remove links pointing users toward retired:
+
+- /ai-agents
+- /voice
+- /chatbot
+- /vera
+- /demo
+- /lumi
+
+Do not replace these with links to ai.potential.com.
+
+Where appropriate:
+
+- consultation/demo CTAs → /inquire
+- CSR-related links → /solutions/csr-community-impact
+- programme discovery → /solutions or /usecases
+- platform capability links → /platform
+
+Do not modify historic blog article content in bulk yet.
+
+==================================================
+14. DO NOT CHANGE THESE AREAS
+==================================================
+
+Do NOT:
+
+- modify ai.potential.com
+- attempt to configure ai.potential.com
+- redirect retired Potential.com pages to ai.potential.com
+- delete historic blog articles yet
+- mass-redirect old articles
+- redesign unrelated website sections
+- change the approved homepage hero
+- change the three main commercial categories
+- remove /year-of-family
+- remove /launch-programs
+- remove /book
+- delete operational authentication functionality
+- publish automatically
+
+==================================================
+15. FINAL VERIFICATION REPORT
+==================================================
+
+After completing the work, but BEFORE publishing, give me a clear verification report covering:
+
+1. Confirmation that Potential_Legacy_Pages_HTML_Archive.zip was created
+2. Exact location/name of the ZIP so I can download it
+3. Confirmation of which legacy HTML pages are included
+4. New sitemap URL count
+5. Confirmation that /year-of-family, /launch-programs and /book remain in the sitemap
+6. Confirmation that auth pages are removed from the sitemap and noindexed
+7. Confirmation that retired legacy routes are removed from the sitemap
+8. HTTP status and final target for every redirect
+9. HTTP 410 results for retired routes where applicable
+10. /robots.txt HTTP status and Content-Type
+11. Confirmation that /robots.txt references https://potential.com/sitemap.xml
+12. Test of a fake/non-existent URL confirming HTTP 404
+13. Open Graph image URL, HTTP status and Content-Type
+14. Confirmation that /solutions has been completely repositioned
+15. /solutions page title, description and canonical
+16. Metadata/canonical/robots status of each strategic page
+17. Any remaining client-side-only SEO metadata limitations
+18. Confirmation that no changes were made or attempted on ai.potential.com
+19. Confirmation that nothing was published
+
+DO NOT PUBLISH.
+
+I want to review the archive and verification report before approving publication.
