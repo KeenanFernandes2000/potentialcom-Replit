@@ -12,6 +12,12 @@ const ASSISTANT_ID =
 const CONNECT_TIMEOUT_MS = 20000;
 /** Silence from the local microphone for this long means the device, not the visitor. */
 const NO_USER_AUDIO_MS = 10000;
+/**
+ * Fallback fuse for SDK versions with no local audio-level observer: the only
+ * evidence the microphone works is then a user transcript, which is slower to
+ * arrive and needs a longer fuse to avoid crying wolf at someone who is thinking.
+ */
+const NO_USER_TRANSCRIPT_MS = 25000;
 
 /**
  * Prefer a server-signed, origin- and assistant-scoped JWT over the public key.
@@ -156,8 +162,12 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
   };
 
   const switchMicrophone = async (deviceId: string) => {
+    if (typeof vapiRef.current?.setInputDevicesAsync !== "function") {
+      setAudioWarning("Switching device isn't available here — choose your microphone in the browser's site settings, then start the call again.");
+      return;
+    }
     try {
-      await vapiRef.current?.setInputDevicesAsync({ audioDeviceId: deviceId });
+      await vapiRef.current.setInputDevicesAsync({ audioDeviceId: deviceId });
       lastLoudAtRef.current = Date.now();
       setAudioWarning(null);
     } catch (err) {
@@ -250,10 +260,15 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
       return;
     }
 
+    // HubSpot's iframe also posts plain strings across this channel, so parse
+    // only what can be JSON instead of logging an exception for every one.
+    if (typeof event.data === 'string' && !event.data.trimStart().startsWith('{')) {
+      return;
+    }
+
     try {
       const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
-      console.log(data);
-      
+
       // Check for meeting booking events
       if (data.meetingBookSucceeded && data.meetingsPayload) {
         const eventData = data.meetingsPayload.bookingResponse?.event;
@@ -422,18 +437,30 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
             heardUserRef.current = false;
             lastLoudAtRef.current = Date.now();
 
-            // 40% of her recent calls died with
-            // "assistant-did-not-receive-customer-audio". The SDK exposes the
-            // local mic level precisely so that case can be caught and named
-            // instead of leaving both sides waiting in silence.
-            void vapiInstance.startLocalAudioLevelObserver(200);
+            // The local mic level is the direct way to catch a dead input
+            // device, but it only exists from @vapi-ai/web 2.7. Older versions
+            // throw on the call, which would take the rest of this handler with
+            // it, so feature-detect rather than assume the installed version.
+            const client = vapiInstance as unknown as {
+              startLocalAudioLevelObserver?: (interval?: number) => Promise<void>;
+            };
+            const hasLevelObserver = typeof client.startLocalAudioLevelObserver === "function";
+            if (hasLevelObserver) {
+              void client.startLocalAudioLevelObserver!(200);
+            }
+
             silenceWatchRef.current = window.setInterval(() => {
               if (vapiRef.current !== vapiInstance) return;
               if (vapiInstance.isMuted()) {
                 lastLoudAtRef.current = Date.now();
                 return;
               }
-              if (Date.now() - lastLoudAtRef.current > NO_USER_AUDIO_MS) {
+              // Without the observer, lastLoudAt only moves on a user
+              // transcript — so once we have heard them, stop watching rather
+              // than warning every visitor who pauses to think.
+              if (!hasLevelObserver && heardUserRef.current) return;
+              const limit = hasLevelObserver ? NO_USER_AUDIO_MS : NO_USER_TRANSCRIPT_MS;
+              if (Date.now() - lastLoudAtRef.current > limit) {
                 setAudioWarning(
                   "We can't hear anything from your microphone. It may be muted, turned down, or the wrong input device.",
                 );
