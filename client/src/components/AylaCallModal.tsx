@@ -57,6 +57,15 @@ function describeEndedReason(reason?: string): { title: string; detail: string }
       detail: "Check that the right input device is selected, then start the call again.",
     };
   }
+  // The dominant failure: 18 of her last 43 calls, every one of them 0.000s
+  // long, going back to March. The audio track never reached Vapi at all, so
+  // this is not a visitor who went quiet — it is a capture that never started.
+  if (reason.includes("did-not-receive-customer-audio")) {
+    return {
+      title: "Your microphone never came through.",
+      detail: "The call connected but no audio reached us. Starting again usually fixes it — if it doesn't, book a session with a consultant.",
+    };
+  }
   if (reason.includes("ejected") || reason.includes("meeting-ended") || reason.includes("transport")) {
     return {
       title: "The connection dropped.",
@@ -126,6 +135,15 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
   const lastLoudAtRef = useRef(0);
   const heardUserRef = useRef(false);
   const endedReasonRef = useRef<string | null>(null);
+
+  // The parent passes onClose as an inline arrow, so it is a different function
+  // on every render. Reading it — and user — through refs keeps the call effect
+  // keyed on isOpen alone. Otherwise any re-render re-runs that effect, and its
+  // cleanup stops a call that has only just connected.
+  const onCloseRef = useRef(onClose);
+  const userRef = useRef(user);
+  onCloseRef.current = onClose;
+  userRef.current = user;
 
   /** Offer a way out of a dead input device: list the other microphones. */
   const loadMicDevices = async () => {
@@ -382,14 +400,14 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
 
           const assistantOverrides = {
             variableValues: {
-              firstName: user.firstName,
-              lastName: user.lastName,
-              email: user.email,
-              phoneNumber: user.phoneNumber,
-              companyName: user.companyName,
-              website: user.website,
-              companyWebsite: user.companyWebsite,
-              role: user.role,
+              firstName: userRef.current.firstName,
+              lastName: userRef.current.lastName,
+              email: userRef.current.email,
+              phoneNumber: userRef.current.phoneNumber,
+              companyName: userRef.current.companyName,
+              website: userRef.current.website,
+              companyWebsite: userRef.current.companyWebsite,
+              role: userRef.current.role,
             }
           };
           
@@ -464,7 +482,7 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
               if (failure) {
                 setCallError(failure);
               } else {
-                onClose();
+                onCloseRef.current();
               }
             }
           });
@@ -583,7 +601,7 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
         }
       };
     }
-  }, [isOpen, onClose, user]);
+  }, [isOpen]);
 
   const handleMuteToggle = () => {
     if (vapiRef.current) {
