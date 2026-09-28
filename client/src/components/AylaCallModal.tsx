@@ -1,9 +1,73 @@
 import { useEffect, useState, useRef } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Mic, MicOff, PhoneOff, ChevronDown, ChevronUp, Check, Copy } from "lucide-react";
+import { Mic, MicOff, PhoneOff, ChevronDown, ChevronUp, Check, Copy, AlertTriangle, RefreshCw, CalendarClock } from "lucide-react";
 import AylaAvatarCentered from "@assets/Ayla Avatar Centered.png";
 import Vapi from '@vapi-ai/web';
+
+const ASSISTANT_ID =
+  import.meta.env.VITE_AYLA_BOT_ID || "32d7022b-8c96-4498-bd94-60dfd4171e4f";
+
+/** If Vapi has not reported call-start by now, the connection is not coming. */
+const CONNECT_TIMEOUT_MS = 20000;
+/** Silence from the local microphone for this long means the device, not the visitor. */
+const NO_USER_AUDIO_MS = 10000;
+
+/**
+ * Prefer a server-signed, origin- and assistant-scoped JWT over the public key.
+ * The public key is a fallback only: without it a token outage would take the
+ * whole call flow down, and the key is no more exposed than it already was.
+ */
+async function resolveVapiCredential(): Promise<{ credential: string; scoped: boolean }> {
+  const publicKey = import.meta.env.VITE_VAPI_KEY;
+  try {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/vapi/token`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ assistantId: ASSISTANT_ID }),
+    });
+    if (res.ok) {
+      const { token } = await res.json();
+      if (token) return { credential: token, scoped: true };
+    }
+    console.warn(`Vapi token endpoint returned ${res.status}; falling back to the public key.`);
+  } catch (err) {
+    console.warn("Vapi token endpoint unreachable; falling back to the public key.", err);
+  }
+  return { credential: publicKey, scoped: false };
+}
+
+/**
+ * Vapi reports why a call stopped in `status-update`. Only some reasons are the
+ * visitor's problem; the rest need to read as "our fault, here is the way out"
+ * rather than the modal simply vanishing.
+ */
+function describeEndedReason(reason?: string): { title: string; detail: string } | null {
+  if (!reason) return null;
+  if (reason === "customer-ended-call" || reason.startsWith("assistant-ended-call")) return null;
+  if (reason.includes("max-duration")) {
+    return {
+      title: "We ran out of time on this call.",
+      detail: "Ayla's calls are time-limited. Start again to carry on, or book a session with a consultant.",
+    };
+  }
+  if (reason.includes("microphone") || reason.includes("no-microphone")) {
+    return {
+      title: "We lost your microphone.",
+      detail: "Check that the right input device is selected, then start the call again.",
+    };
+  }
+  if (reason.includes("ejected") || reason.includes("meeting-ended") || reason.includes("transport")) {
+    return {
+      title: "The connection dropped.",
+      detail: "This is usually the network. Start the call again, or book a session instead.",
+    };
+  }
+  return {
+    title: "The call ended unexpectedly.",
+    detail: "Sorry — that one is on us. Try again, or book a session with a consultant.",
+  };
+}
 
 interface AylaCallModalProps {
   isOpen: boolean;
@@ -48,10 +112,41 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
   const [voiceAgentId, setVoiceAgentId] = useState<string | null>(null);
   const [voiceAgentLoading, setVoiceAgentLoading] = useState(false);
   const [voiceAgentCopied, setVoiceAgentCopied] = useState(false);
-  const voiceAgentUrl = voiceAgentId ? `https://ai.potential.com/voice/${voiceAgentId}` : "";
+  const voiceAgentUrl = voiceAgentId && voiceAgentId !== "Error" ? `https://ai.potential.com/voice/${voiceAgentId}` : "";
   const [waitingMessageIndex, setWaitingMessageIndex] = useState(0);
   const [isWaiting, setIsWaiting] = useState(false);
   const [micPermissionError, setMicPermissionError] = useState<string | null>(null);
+  const [callError, setCallError] = useState<{ title: string; detail: string } | null>(null);
+  const [audioWarning, setAudioWarning] = useState<string | null>(null);
+  const [isStalled, setIsStalled] = useState(false);
+  const [micDevices, setMicDevices] = useState<MediaDeviceInfo[]>([]);
+  const [networkWarning, setNetworkWarning] = useState(false);
+  const connectTimerRef = useRef<number | undefined>(undefined);
+  const silenceWatchRef = useRef<number | undefined>(undefined);
+  const lastLoudAtRef = useRef(0);
+  const heardUserRef = useRef(false);
+  const endedReasonRef = useRef<string | null>(null);
+
+  /** Offer a way out of a dead input device: list the other microphones. */
+  const loadMicDevices = async () => {
+    try {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      setMicDevices(devices.filter(d => d.kind === "audioinput"));
+    } catch (err) {
+      console.warn("Could not enumerate microphones", err);
+    }
+  };
+
+  const switchMicrophone = async (deviceId: string) => {
+    try {
+      await vapiRef.current?.setInputDevicesAsync({ audioDeviceId: deviceId });
+      lastLoudAtRef.current = Date.now();
+      setAudioWarning(null);
+    } catch (err) {
+      console.error("Could not switch microphone", err);
+      setAudioWarning("We couldn't switch to that microphone. Try another one, or book a session instead.");
+    }
+  };
   const [showBookingForm, setShowBookingForm] = useState(false);
   const [bookingInfo, setBookingInfo] = useState<{
     meetingTime?: string;
@@ -208,6 +303,10 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
 
   // Add microphone permission check
   const checkMicrophonePermission = async () => {
+    if (!navigator.mediaDevices?.getUserMedia) {
+      setMicPermissionError('This browser cannot open a microphone. Try Chrome, Edge or Safari — or book a session with a consultant instead.');
+      return false;
+    }
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       // Stop the stream immediately after getting permission
@@ -216,7 +315,16 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
       return true;
     } catch (error) {
       console.error('Microphone permission error:', error);
-      setMicPermissionError('Microphone access is required for this call. Please enable microphone access in your browser settings and <b>reload the page</b>.');
+      // "Denied" and "there is no microphone" need different instructions, and
+      // the name is the only thing that separates them.
+      const name = (error as DOMException)?.name;
+      if (name === 'NotFoundError' || name === 'OverconstrainedError') {
+        setMicPermissionError('We could not find a microphone on this device. Plug one in and try again, or book a session with a consultant instead.');
+      } else if (name === 'NotReadableError') {
+        setMicPermissionError('Your microphone is in use by another app. Close the other call or recording, then try again.');
+      } else {
+        setMicPermissionError('Microphone access is required for this call. Allow it in your browser settings, then try again.');
+      }
       return false;
     }
   };
@@ -224,22 +332,53 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
   useEffect(() => {
     if (isOpen && !vapiRef.current) {
       setCallStatus('connecting');
-      const apiKey = import.meta.env.VITE_VAPI_KEY;
-      if (!apiKey) {
-        console.error('Voice API key is not set. Please check your .env file.');
-        return;
-      }
+      setCallError(null);
+      setAudioWarning(null);
+      endedReasonRef.current = null;
+      // The modal can be dismissed while we are still awaiting permission or a
+      // token; without this flag the call would connect to a closed modal and
+      // keep the microphone open.
+      let cancelled = false;
 
-      // Check microphone permission before initializing the call
-      checkMicrophonePermission().then(hasPermission => {
+      const startCall = async () => {
+        const hasPermission = await checkMicrophonePermission();
+        if (cancelled) return;
         if (!hasPermission) {
           setCallStatus('idle');
           return;
         }
 
+        const { credential, scoped } = await resolveVapiCredential();
+        if (cancelled) return;
+        if (!credential) {
+          console.error('No Vapi credential available: the token endpoint failed and VITE_VAPI_KEY is not set.');
+          setCallStatus('idle');
+          setCallError({
+            title: "We couldn't start the call.",
+            detail: "Ayla is briefly unavailable. Book a session with a consultant and we'll pick it up from there.",
+          });
+          return;
+        }
+        if (!scoped) {
+          console.warn('Ayla is running on the unscoped public key for this call.');
+        }
+
         try {
-          const vapiInstance = new Vapi(apiKey);
+          const vapiInstance = new Vapi(credential);
           vapiRef.current = vapiInstance;
+
+          // Nothing else tells us a connection silently never arrived.
+          connectTimerRef.current = window.setTimeout(() => {
+            if (vapiRef.current !== vapiInstance) return;
+            try { vapiInstance.stop(); } catch { /* already gone */ }
+            vapiRef.current = null;
+            setCallStatus('idle');
+            setIsCallActive(false);
+            setCallError({
+              title: "Ayla couldn't connect.",
+              detail: "That is usually a firewall or a flaky network. Try again, or book a session with a consultant.",
+            });
+          }, CONNECT_TIMEOUT_MS);
 
           const assistantOverrides = {
             variableValues: {
@@ -254,21 +393,79 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
             }
           };
           
-          vapiInstance.start('32d7022b-8c96-4498-bd94-60dfd4171e4f', assistantOverrides);
+          vapiInstance.start(ASSISTANT_ID, assistantOverrides);
 
           vapiInstance.on('call-start', () => {
+            window.clearTimeout(connectTimerRef.current);
             setIsCallActive(true);
             setTranscripts([]);
             setCurrentPartial(null);
             setCallStatus('connected');
+            heardUserRef.current = false;
+            lastLoudAtRef.current = Date.now();
+
+            // 40% of her recent calls died with
+            // "assistant-did-not-receive-customer-audio". The SDK exposes the
+            // local mic level precisely so that case can be caught and named
+            // instead of leaving both sides waiting in silence.
+            void vapiInstance.startLocalAudioLevelObserver(200);
+            silenceWatchRef.current = window.setInterval(() => {
+              if (vapiRef.current !== vapiInstance) return;
+              if (vapiInstance.isMuted()) {
+                lastLoudAtRef.current = Date.now();
+                return;
+              }
+              if (Date.now() - lastLoudAtRef.current > NO_USER_AUDIO_MS) {
+                setAudioWarning(
+                  "We can't hear anything from your microphone. It may be muted, turned down, or the wrong input device.",
+                );
+                void loadMicDevices();
+              }
+            }, 2000);
+          });
+
+          vapiInstance.on('local-volume-level', (level: number) => {
+            // Anything above the noise floor proves the microphone is live.
+            if (level > 0.02) {
+              lastLoudAtRef.current = Date.now();
+              setAudioWarning(null);
+            }
+          });
+
+          vapiInstance.on('call-start-failed', (event: any) => {
+            console.error('Vapi call-start-failed:', event);
+            window.clearTimeout(connectTimerRef.current);
+            if (vapiRef.current !== vapiInstance) return;
+            vapiRef.current = null;
+            setCallStatus('idle');
+            setIsCallActive(false);
+            setCallError({
+              title: "Ayla couldn't connect.",
+              detail: `The call failed while ${event?.stage || 'connecting'}. Try again, or book a session with a consultant.`,
+            });
+          });
+
+          vapiInstance.on('network-quality-change', (event: any) => {
+            // 'bad' and 'low' are Daily's degraded thresholds.
+            const quality = event?.threshold || event?.quality;
+            setNetworkWarning(quality === 'bad' || quality === 'low' || quality === 'very-low');
           });
 
           vapiInstance.on('call-end', () => {
+            window.clearTimeout(connectTimerRef.current);
+            window.clearInterval(silenceWatchRef.current);
             setIsCallActive(false);
             setCallStatus('idle');
             if (vapiRef.current === vapiInstance) {
               vapiRef.current = null;
-              onClose();
+              const failure = describeEndedReason(endedReasonRef.current || undefined);
+              // A clean hang-up closes the modal; anything else keeps it open so
+              // the visitor gets an explanation and a way forward.
+              if (failure) {
+                setCallError(failure);
+              } else {
+                onClose();
+              }
             }
           });
 
@@ -283,6 +480,12 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
 
           vapiInstance.on('message', (message) => {
             if (message.type === 'transcript') {
+              if (message.role === 'user') {
+                // Proof the microphone is live: clear any "we can't hear you" hint.
+                heardUserRef.current = true;
+                lastLoudAtRef.current = Date.now();
+                setAudioWarning(null);
+              }
               if (message.transcriptType === 'partial') {
                 setCurrentPartial({
                   role: message.role,
@@ -293,6 +496,19 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
                 setTranscripts(prev => [...prev, { role: message.role, text: message.transcript }]);
                 setCurrentPartial(null);
               }
+            }
+
+            // Vapi reports the reason a call stopped here, not on 'call-end'.
+            if (message.type === 'status-update') {
+              if (message.endedReason) endedReasonRef.current = message.endedReason;
+              if (message.status === 'ended') setIsSpeaking(false);
+            }
+
+            // The pipeline stalled (model, voice or tool latency). Say so rather
+            // than leaving the visitor talking into silence.
+            if (message.type === 'hang') {
+              setIsStalled(true);
+              window.setTimeout(() => setIsStalled(false), 6000);
             }
             // Handle tool-calls for agent creation
             if (
@@ -329,25 +545,43 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
           });
 
           vapiInstance.on('error', (error) => {
+            console.error('Vapi call error:', error);
+            window.clearTimeout(connectTimerRef.current);
+            window.clearInterval(silenceWatchRef.current);
             setIsCallActive(false);
             setCallStatus('idle');
             if (vapiRef.current === vapiInstance) {
               vapiRef.current = null;
-              onClose();
+              setCallError(
+                describeEndedReason(endedReasonRef.current || undefined) || {
+                  title: "The call dropped.",
+                  detail: "Sorry — that one is on us. Try again, or book a session with a consultant.",
+                },
+              );
             }
           });
-
-          return () => {
-            if (vapiRef.current === vapiInstance) {
-              vapiInstance.stop();
-              vapiRef.current = null;
-            }
-          };
         } catch (error) {
+          console.error('Could not initialise the Vapi client:', error);
+          window.clearTimeout(connectTimerRef.current);
           setCallStatus('idle');
-          onClose();
+          setCallError({
+            title: "We couldn't start the call.",
+            detail: "Your browser may be blocking it. Try again, or book a session with a consultant.",
+          });
         }
-      });
+      };
+
+      void startCall();
+
+      return () => {
+        cancelled = true;
+        window.clearTimeout(connectTimerRef.current);
+        window.clearInterval(silenceWatchRef.current);
+        if (vapiRef.current) {
+          try { vapiRef.current.stop(); } catch { /* already stopped */ }
+          vapiRef.current = null;
+        }
+      };
     }
   }, [isOpen, onClose, user]);
 
@@ -386,6 +620,14 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
       setAgentName("");
       setVoiceAgentName("");
       setBookingInfo(null);
+      setCallError(null);
+      setAudioWarning(null);
+      setIsStalled(false);
+      setNetworkWarning(false);
+      setMicDevices([]);
+      window.clearTimeout(connectTimerRef.current);
+      window.clearInterval(silenceWatchRef.current);
+      endedReasonRef.current = null;
       if (transcriptContainerRef.current) {
         transcriptContainerRef.current.scrollTop = 0;
       }
@@ -415,10 +657,21 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
     formData.append("source", window.location.href);
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/bot/createsimplechatbot`, { method: "POST", body: formData });
-      const data = await response.json();
+      const data = await response.json().catch(() => ({}));
       stopWaitingMessages();
       await new Promise(resolve => setTimeout(resolve, 1000));
-      setBotId(data?.assistantData?._id || "Unknown");
+      // A 429 or a 500 still parses as JSON. Announcing "your chatbot is ready"
+      // and showing a link to an id that does not exist is worse than failing.
+      if (!response.ok || !data?.assistantData?._id) {
+        if (response.status === 429) {
+          vapiRef.current?.say("We've hit our limit for new agents from your network for now. I can book you a session with a consultant instead.", false);
+        } else {
+          vapiRef.current?.say("I'm sorry, I couldn't create your chatbot just now. Shall I book you a session with a consultant instead?", false);
+        }
+        setBotId("Error");
+        return;
+      }
+      setBotId(data.assistantData._id);
       if(data.failedToScrape){
         vapiRef.current?.say("Great news! Your chatbot is now ready. You can click on the provided link to test it. I've also sent you an email with a link to your personal dashboard where you can customize and enhance your agent. However, I was unable to scrape your website. You can login to your dashboard and add your website manually.", false);
       }
@@ -435,7 +688,7 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
     }
   };
 
-  const chatbotUrl = botId ? `https://ai.potential.com/chat/${botId}` : "";
+  const chatbotUrl = botId && botId !== "Error" ? `https://ai.potential.com/chat/${botId}` : "";
 
   const handleCopy = () => {
     if (!chatbotUrl) return;
@@ -471,10 +724,20 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
     formData.append("source", window.location.href);
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/vapi/simpleassistant`, { method: "POST", body: formData });
-      const data = await response.json();
+      const data = await response.json().catch(() => ({}));
       stopWaitingMessages();
       await new Promise(resolve => setTimeout(resolve, 1000));
-      setVoiceAgentId(data?.assistant?.id || "Unknown");
+      // Same as the chatbot path: only claim success when there is a real id.
+      if (!response.ok || !data?.assistant?.id) {
+        if (response.status === 429) {
+          vapiRef.current?.say("We've hit our limit for new agents from your network for now. I can book you a session with a consultant instead.", false);
+        } else {
+          vapiRef.current?.say("I'm sorry, I couldn't create your voice agent just now. Shall I book you a session with a consultant instead?", false);
+        }
+        setVoiceAgentId("Error");
+        return;
+      }
+      setVoiceAgentId(data.assistant.id);
       if(data.failedToScrape){
         vapiRef.current?.say("Great news! Your voice agent is now ready. You can click on the provided link to test it. I've also sent you an email with a link to your personal dashboard where you can customize and enhance your agent. However, I was unable to scrape your website. You can login to your dashboard and add your website manually.", false);
       }
@@ -507,30 +770,133 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
       >
         {micPermissionError && (
           <div className="mb-6 w-full flex flex-col items-center">
-            <div className="flex items-center gap-3 bg-red-50 dark:bg-red-900/20 border border-red-300 dark:border-red-800 rounded-xl px-6 py-4 shadow-md w-full max-w-md">
-              <span className="flex-shrink-0">
+            <div className="flex items-start gap-3 bg-red-50 dark:bg-red-900/20 border border-red-300 dark:border-red-800 rounded-xl px-6 py-4 shadow-md w-full max-w-md">
+              <span className="flex-shrink-0 mt-0.5">
                 <MicOff className="h-6 w-6 text-red-600" />
               </span>
               <div className="flex-1">
                 <p className="text-red-700 dark:text-red-300 font-semibold text-base mb-1">
-                  Microphone access is required for this call.
+                  We can't reach your microphone.
                 </p>
-                <p className="text-xs text-red-600 dark:text-red-200">
-                  Please enable microphone access in your browser settings and <b>reload the page</b>.
-                </p>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="mt-3 border-red-300 dark:border-red-700 text-red-700 dark:text-red-200 hover:bg-red-100 dark:hover:bg-red-900/30"
-                  onClick={() => {
-                    setMicPermissionError(null);
-                    if (typeof onRemount === 'function') onRemount();
-                  }}
-                >
-                  Try Again
-                </Button>
+                <p className="text-xs text-red-600 dark:text-red-200">{micPermissionError}</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-red-300 dark:border-red-700 text-red-700 dark:text-red-200 hover:bg-red-100 dark:hover:bg-red-900/30"
+                    onClick={() => {
+                      setMicPermissionError(null);
+                      if (typeof onRemount === 'function') onRemount();
+                    }}
+                  >
+                    <RefreshCw className="h-4 w-4 mr-1.5" /> Try again
+                  </Button>
+                  {/* Never a dead end: the booking path does not need a microphone. */}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-red-700 dark:text-red-200 hover:bg-red-100 dark:hover:bg-red-900/30"
+                    onClick={() => {
+                      setMicPermissionError(null);
+                      setShowAgentCreation(false);
+                      setShowVoiceAgentCreation(false);
+                      setShowBookingForm(true);
+                    }}
+                  >
+                    <CalendarClock className="h-4 w-4 mr-1.5" /> Book a session instead
+                  </Button>
+                </div>
               </div>
             </div>
+          </div>
+        )}
+
+        {callError && (
+          <div className="mb-6 w-full flex flex-col items-center">
+            <div className="flex items-start gap-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-300 dark:border-amber-800 rounded-xl px-6 py-4 shadow-md w-full max-w-md">
+              <span className="flex-shrink-0 mt-0.5">
+                <AlertTriangle className="h-6 w-6 text-amber-600" />
+              </span>
+              <div className="flex-1">
+                <p className="text-amber-800 dark:text-amber-200 font-semibold text-base mb-1">
+                  {callError.title}
+                </p>
+                <p className="text-xs text-amber-700 dark:text-amber-200/80">{callError.detail}</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-amber-300 dark:border-amber-700 text-amber-800 dark:text-amber-200 hover:bg-amber-100 dark:hover:bg-amber-900/30"
+                    onClick={() => {
+                      setCallError(null);
+                      if (typeof onRemount === 'function') onRemount();
+                    }}
+                  >
+                    <RefreshCw className="h-4 w-4 mr-1.5" /> Start the call again
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-amber-800 dark:text-amber-200 hover:bg-amber-100 dark:hover:bg-amber-900/30"
+                    onClick={() => {
+                      setCallError(null);
+                      setShowAgentCreation(false);
+                      setShowVoiceAgentCreation(false);
+                      setShowBookingForm(true);
+                    }}
+                  >
+                    <CalendarClock className="h-4 w-4 mr-1.5" /> Book a session instead
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {audioWarning && !micPermissionError && (
+          <div className="mb-4 w-full flex justify-center">
+            <div className="bg-muted/60 border border-border rounded-xl px-5 py-3 w-full max-w-md">
+              <div className="flex items-start gap-3">
+                <MicOff className="h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
+                <p className="text-xs text-muted-foreground flex-1">{audioWarning}</p>
+                <Button variant="ghost" size="sm" className="h-6 px-2 text-xs" onClick={() => setAudioWarning(null)}>
+                  Dismiss
+                </Button>
+              </div>
+              {micDevices.length > 1 && (
+                <div className="mt-3 pl-8">
+                  <label className="text-[11px] uppercase tracking-wide text-muted-foreground/80">
+                    Try a different microphone
+                  </label>
+                  <select
+                    className="mt-1 w-full rounded bg-background border border-border p-2 text-xs"
+                    defaultValue=""
+                    onChange={(e) => e.target.value && switchMicrophone(e.target.value)}
+                  >
+                    <option value="" disabled>Select an input device…</option>
+                    {micDevices.map((device, index) => (
+                      <option key={device.deviceId} value={device.deviceId}>
+                        {device.label || `Microphone ${index + 1}`}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {networkWarning && (
+          <div className="mb-4 w-full flex justify-center">
+            <p className="text-xs text-muted-foreground">
+              Your connection looks weak — Ayla may break up.
+            </p>
+          </div>
+        )}
+
+        {isStalled && (
+          <div className="mb-4 w-full flex justify-center">
+            <p className="text-xs text-muted-foreground animate-pulse">Ayla is still thinking…</p>
           </div>
         )}
         <div className="flex flex-col lg:flex-row gap-6">
@@ -543,7 +909,7 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
                   <p className="text-sm text-muted-foreground mb-6 text-center">
                     Instantly deploy a custom AI agent for your business.
                   </p>
-                  {botId ? (
+                  {botId && botId !== "Error" ? (
                     <div className="flex flex-col items-center">
                       <div className="bg-green-100 dark:bg-green-900/20 rounded-full p-3 mb-3">
                         <svg className="h-8 w-8 text-green-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
@@ -597,7 +963,7 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
                   <p className="text-sm text-muted-foreground mb-6 text-center">
                     Instantly deploy a custom AI voice agent for your business.
                   </p>
-                  {voiceAgentId ? (
+                  {voiceAgentId && voiceAgentId !== "Error" ? (
                     <div className="flex flex-col items-center">
                       <div className="bg-green-100 dark:bg-green-900/20 rounded-full p-3 mb-3">
                         <svg className="h-8 w-8 text-green-600" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
