@@ -141,6 +141,10 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
   const lastLoudAtRef = useRef(0);
   const heardUserRef = useRef(false);
   const endedReasonRef = useRef<string | null>(null);
+  // Bumping this re-runs the call effect, which is how the silent retry works.
+  const [attempt, setAttempt] = useState(0);
+  const autoRetriedRef = useRef(false);
+  const spokeRef = useRef(false);
 
   // The parent passes onClose as an inline arrow, so it is a different function
   // on every render. Reading it — and user — through refs keeps the call effect
@@ -443,10 +447,15 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
             // it, so feature-detect rather than assume the installed version.
             const client = vapiInstance as unknown as {
               startLocalAudioLevelObserver?: (interval?: number) => Promise<void>;
+              isLocalAudioLevelObserverRunning?: () => boolean;
             };
             const hasLevelObserver = typeof client.startLocalAudioLevelObserver === "function";
-            if (hasLevelObserver) {
-              void client.startLocalAudioLevelObserver!(200);
+            // 2.7 starts the observer itself when something is already
+            // listening for 'local-volume-level', and rejects a second start.
+            if (hasLevelObserver && !client.isLocalAudioLevelObserverRunning?.()) {
+              client.startLocalAudioLevelObserver!(200).catch((err) =>
+                console.warn("Could not start the local audio level observer", err),
+              );
             }
 
             silenceWatchRef.current = window.setInterval(() => {
@@ -504,6 +513,16 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
             if (vapiRef.current === vapiInstance) {
               vapiRef.current = null;
               const failure = describeEndedReason(endedReasonRef.current || undefined);
+              // A call that dies before a single word is exchanged is almost
+              // always the cold-start race, and a retry costs the visitor
+              // nothing to make. Do it for them, once, silently.
+              const diedBeforeSpeaking = !spokeRef.current;
+              if (failure && diedBeforeSpeaking && !autoRetriedRef.current) {
+                autoRetriedRef.current = true;
+                setCallStatus('connecting');
+                setAttempt((n) => n + 1);
+                return;
+              }
               // A clean hang-up closes the modal; anything else keeps it open so
               // the visitor gets an explanation and a way forward.
               if (failure) {
@@ -538,6 +557,7 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
                   isPartial: true
                 });
               } else if (message.transcriptType === 'final') {
+                spokeRef.current = true;
                 setTranscripts(prev => [...prev, { role: message.role, text: message.transcript }]);
                 setCurrentPartial(null);
               }
@@ -628,7 +648,7 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
         }
       };
     }
-  }, [isOpen]);
+  }, [isOpen, attempt]);
 
   const handleMuteToggle = () => {
     if (vapiRef.current) {
@@ -673,6 +693,9 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
       window.clearTimeout(connectTimerRef.current);
       window.clearInterval(silenceWatchRef.current);
       endedReasonRef.current = null;
+      autoRetriedRef.current = false;
+      spokeRef.current = false;
+      setAttempt(0);
       if (transcriptContainerRef.current) {
         transcriptContainerRef.current.scrollTop = 0;
       }

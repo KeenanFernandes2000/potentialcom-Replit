@@ -29,6 +29,7 @@ import veraAvatarCentered from "@assets/Vera Avatar Centered.png";
 import { Check, Search, Users, Calendar, MessageSquare } from "lucide-react";
 import { AutoSEO } from "@/components/SEO";
 import { AylaCallModal } from "@/components/AylaCallModal";
+import { warmVoiceCall } from "@/lib/warm-voice";
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
 import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
 import bankMuscatLogo from "@assets/Customer Logos/Bank mUscat logo.png";
@@ -135,6 +136,13 @@ export default function Ayla() {
   const { toast } = useToast();
   const [callModalKey, setCallModalKey] = useState(0);
   const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // Start fetching Daily's call-machine bundle now, while the visitor is still
+  // filling in the form. Cold, it takes ~9s, and Vapi ends the room before the
+  // client finishes joining — the zero-second calls in her history.
+  useEffect(() => {
+    warmVoiceCall();
+  }, []);
 
   useEffect(() => {
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
