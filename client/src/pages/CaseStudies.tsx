@@ -57,6 +57,7 @@ import unWomenLogo from "@assets/Customer Logos/UN Women logo.png";
 import unLogo from "@assets/Customer Logos/UN logo.png";
 import visaLogo from "@assets/Customer Logos/Visa logo.png";
 import wfzoLogo from "@assets/Customer Logos/WFZO logo.png";
+import federalYouthAuthorityLogo from "@assets/federal-youth-authority_1790683015902.png";
 
 const CASE_STUDY_PDF = "/assets/pdfs/potential-case-studies.pdf";
 
@@ -94,6 +95,7 @@ type CaseStudy = {
   useCase: string;
   title: string;
   logo?: string;
+  logos?: { src: string; alt: string }[];
   logoClassName?: string;
   intro: string;
   stats: Stat[];
@@ -110,6 +112,20 @@ const heroStats: Stat[] = [
 ];
 
 const caseStudies: CaseStudy[] = [
+  {
+    industry: "Government",
+    useCase: "Youth Development",
+    title: "Youth Leaders Path",
+    logos: [
+      { src: federalYouthAuthorityLogo, alt: "Federal Youth Authority logo" },
+    ],
+    intro: "Empowering Emirati youth to become the next leaders of the UAE.",
+    stats: [
+      { value: "1000+", label: "Youth Empowered" },
+      { value: "40+", label: "Attending 8-day in-person workshops" },
+      { value: "Hybrid", label: "Hybrid driven delivery" },
+    ],
+  },
   {
     industry: "Automotive",
     useCase: "Lead Generation",
@@ -508,6 +524,7 @@ const CaseStudies = () => {
   const [activeUseCase, setActiveUseCase] = useState("All");
 
   const priorityOrder = [
+    "Youth Leaders Path",
     "HSBC Tatawwar Youth Program",
     "Airbus Entaliq Program in KSA",
     "The Entrepreneurial Nation (TEN)",
@@ -729,11 +746,24 @@ const CaseStudies = () => {
                     </div>
 
                     <div className="h-28 flex items-center justify-center mb-6 rounded-xl bg-white border border-border p-4">
-                      <LogoOrFallback
-                        logo={cs.logo}
-                        title={cs.title}
-                        logoClassName={cs.logoClassName}
-                      />
+                      {cs.logos ? (
+                        <div className="flex w-full items-center justify-center gap-4">
+                          {cs.logos.map(({ src, alt }) => (
+                            <img
+                              key={src}
+                              src={src}
+                              alt={alt}
+                              className="min-w-0 max-h-20 max-w-[65%] flex-1 object-contain"
+                            />
+                          ))}
+                        </div>
+                      ) : (
+                        <LogoOrFallback
+                          logo={cs.logo}
+                          title={cs.title}
+                          logoClassName={cs.logoClassName}
+                        />
+                      )}
                     </div>
 
                     <h3 className="text-xl font-bold mb-3">{cs.title}</h3>
