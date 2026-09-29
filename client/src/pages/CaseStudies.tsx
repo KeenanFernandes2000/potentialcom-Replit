@@ -57,7 +57,7 @@ import unWomenLogo from "@assets/Customer Logos/UN Women logo.png";
 import unLogo from "@assets/Customer Logos/UN logo.png";
 import visaLogo from "@assets/Customer Logos/Visa logo.png";
 import wfzoLogo from "@assets/Customer Logos/WFZO logo.png";
-import federalYouthAuthorityLogo from "@assets/federal-youth-authority_1790683015902.png";
+import youthLeadersLogos from "@assets/Untitled_design_(57)_1790683583293.png";
 
 const CASE_STUDY_PDF = "/assets/pdfs/potential-case-studies.pdf";
 
@@ -95,7 +95,6 @@ type CaseStudy = {
   useCase: string;
   title: string;
   logo?: string;
-  logos?: { src: string; alt: string }[];
   logoClassName?: string;
   intro: string;
   stats: Stat[];
@@ -116,9 +115,8 @@ const caseStudies: CaseStudy[] = [
     industry: "Government",
     useCase: "Youth Development",
     title: "Youth Leaders Path",
-    logos: [
-      { src: federalYouthAuthorityLogo, alt: "Federal Youth Authority logo" },
-    ],
+    logo: youthLeadersLogos,
+    logoClassName: "max-h-20 max-w-full object-contain",
     intro: "Empowering Emirati youth to become the next leaders of the UAE.",
     stats: [
       { value: "1000+", label: "Youth Empowered" },
@@ -746,24 +744,11 @@ const CaseStudies = () => {
                     </div>
 
                     <div className="h-28 flex items-center justify-center mb-6 rounded-xl bg-white border border-border p-4">
-                      {cs.logos ? (
-                        <div className="flex w-full items-center justify-center gap-4">
-                          {cs.logos.map(({ src, alt }) => (
-                            <img
-                              key={src}
-                              src={src}
-                              alt={alt}
-                              className="min-w-0 max-h-20 max-w-[65%] flex-1 object-contain"
-                            />
-                          ))}
-                        </div>
-                      ) : (
-                        <LogoOrFallback
-                          logo={cs.logo}
-                          title={cs.title}
-                          logoClassName={cs.logoClassName}
-                        />
-                      )}
+                      <LogoOrFallback
+                        logo={cs.logo}
+                        title={cs.title}
+                        logoClassName={cs.logoClassName}
+                      />
                     </div>
 
                     <h3 className="text-xl font-bold mb-3">{cs.title}</h3>
