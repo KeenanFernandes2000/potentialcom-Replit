@@ -26,7 +26,7 @@ const FORM_NOTIFICATION_TO =
 const FORM_NOTIFICATION_FROM =
   process.env.FORM_NOTIFICATION_FROM ||
   process.env.SENDGRID_FROM_EMAIL ||
-  "no-reply@ai.potential.com";
+  "no-reply@potential.com";
 const AWS_REGION =
   process.env.AWS_REGION || process.env.AWS_DEFAULT_REGION || "us-east-1";
 const AWS_SES_CLIENT =
