@@ -442,7 +442,7 @@ const Home = () => {
                   <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border border-border">
                     <div className="aspect-video w-full">
                       <iframe
-                        src="https://www.youtube.com/embed/y3Bmn0XLfyk?si=wBq5XyLXq4Mymioa"
+                        src="https://www.youtube.com/embed/dk3BwyaAZfc"
                         title="YouTube video player"
                         className="w-full h-full"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
