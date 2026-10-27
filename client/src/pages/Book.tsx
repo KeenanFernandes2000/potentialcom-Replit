@@ -1,24 +1,9 @@
-import { useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { CalendarCheck, Clock, Video, Shield } from "lucide-react";
 
 export default function Book() {
-  useEffect(() => {
-    const existing = document.querySelector(
-      'script[src="https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js"]',
-    );
-    if (!existing) {
-      const script = document.createElement("script");
-      script.src =
-        "https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js";
-      script.type = "text/javascript";
-      script.async = true;
-      document.body.appendChild(script);
-    }
-  }, []);
-
   return (
     <div className="min-h-screen bg-background">
       <SEO
@@ -43,10 +28,13 @@ export default function Book() {
           </div>
 
           <div className="max-w-4xl mx-auto bg-card border border-border rounded-2xl shadow-lg overflow-hidden">
-            <div
-              className="meetings-iframe-container"
-              data-src="https://meetings-eu1.hubspot.com/rawzaba?embed=true"
-              style={{ minHeight: "660px" }}
+            <iframe
+              src="https://crm.potentiallead.com/book/rawzaba?embed=1"
+              title="Book a meeting with Potential.com"
+              loading="lazy"
+              referrerPolicy="no-referrer"
+              style={{ width: "100%", height: "850px", border: 0, borderRadius: "16px", display: "block" }}
+              allow="clipboard-write"
             />
           </div>
         </div>
