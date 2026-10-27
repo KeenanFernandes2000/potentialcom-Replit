@@ -33,7 +33,7 @@ export default function Book() {
               title="Book a meeting with Potential.com"
               loading="lazy"
               referrerPolicy="no-referrer"
-              style={{ width: "100%", height: "850px", border: 0, borderRadius: "16px", display: "block" }}
+              className="block w-full h-[740px] md:h-[600px] rounded-2xl border-0"
               allow="clipboard-write"
             />
           </div>
