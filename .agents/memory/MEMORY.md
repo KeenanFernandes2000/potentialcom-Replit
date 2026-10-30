@@ -3,3 +3,4 @@
 - [Global visual direction](global-visual-direction.md) — public-facing platform visuals should feel internationally relevant and avoid UAE-specific cultural cues.
 - [Navigation and discovery boundaries](navigation-discovery-boundaries.md) — human consultation is the commercial path; Ayla is intentionally limited to homepage/footer entry points.
 - [AWS SES region](aws-ses-email.md) — SES email delivery depends on the configured region; domain verification can authorize sends even when exact addresses are not listed.
+- [CRM contact policy](crm-contact-policy.md) — signups enrich contacts; profile edits fill blanks, consent is separate, and AI capture must preserve the live Ayla flow.

@@ -1,6 +1,8 @@
 "use client";
 
 import * as React from "react";
+import { apiRequest } from "@/lib/queryClient";
+import { CrmHoneypot } from "./CrmHoneypot";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -121,6 +123,15 @@ export function AIVoiceAgentForm({
     setError(null);
 
     try {
+      await apiRequest("/api/lead", {
+        method: "POST",
+        body: JSON.stringify({
+          email: values.email, firstName: values.firstName, newsletter: false,
+          website: values.hasWebsite ? values.website : undefined,
+          message: `Requested an AI voice agent named ${values.proposedAgentName}.`,
+          fields: { action: "create-voice-agent", agentName: values.proposedAgentName },
+        }),
+      });
       // Prepare form data
       const formData = new FormData();
       formData.append("username", values.firstName);
@@ -245,6 +256,7 @@ export function AIVoiceAgentForm({
               onSubmit={form.handleSubmit(onSubmit)}
               className="space-y-4 gtm-voicebot-form"
             >
+              <CrmHoneypot campaign="website-ai-conversation" />
               <FormField
                 control={form.control}
                 name="firstName"

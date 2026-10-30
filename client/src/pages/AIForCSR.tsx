@@ -3,6 +3,8 @@ import Footer from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import { CrmHoneypot } from "@/components/CrmHoneypot";
+import { fetchWithCrm } from "@/lib/crm-submission";
 import {
   Brain,
   Layers,
@@ -110,7 +112,7 @@ const AIForCSR = () => {
     setIsSubmitting(true);
     
     try {
-      const response = await fetch("/api/csr-infographic/submit", {
+      const response = await fetchWithCrm("/api/csr-infographic/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -401,6 +403,7 @@ const AIForCSR = () => {
                       infographic.
                     </p>
                     <form onSubmit={handleFormSubmit} className="space-y-4">
+                      <CrmHoneypot campaign="website-csr-infographic" />
                       <input
                         type="text"
                         placeholder="Full Name"
@@ -710,13 +713,14 @@ const AIForCSR = () => {
             </div>
             <div className="flex-1 bg-white overflow-hidden">
               <iframe
-                src="https://meetings-eu1.hubspot.com/rawzaba?embed=true"
+                src="https://crm.potentiallead.com/book/rawzaba?embed=1"
                 width="100%"
                 height="100%"
                 frameBorder="0"
                 style={{ border: 0, minHeight: '100%' }}
                 title="Book a consultation"
-                allow="microphone; camera"
+                referrerPolicy="no-referrer"
+                allow="clipboard-write"
               />
             </div>
           </div>

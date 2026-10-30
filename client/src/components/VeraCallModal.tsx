@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { MeetingScheduler } from "./MeetingScheduler";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Mic, MicOff, PhoneOff, ChevronDown, ChevronUp, Check, Copy } from "lucide-react";
@@ -100,34 +101,7 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
     };
   }, []);
 
-  // Load HubSpot meetings script when booking form is shown
-  useEffect(() => {
-    if (showBookingForm) {
-      // Check if script is already loaded
-      const existingScript = document.getElementById('hubspot-meetings-script');
-      if (!existingScript) {
-        const script = document.createElement('script');
-        script.id = 'hubspot-meetings-script';
-        script.type = 'text/javascript';
-        script.src = 'https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js';
-        script.async = true;
-        document.head.appendChild(script);
-
-        // Listen for HubSpot meeting events
-        script.onload = () => {
-          // Set up event listener for meeting bookings
-          window.addEventListener('message', handleHubSpotMessage, false);
-        };
-      } else {
-        // Script already loaded, just set up listener
-        window.addEventListener('message', handleHubSpotMessage, false);
-      }
-    }
-
-    return () => {
-      window.removeEventListener('message', handleHubSpotMessage, false);
-    };
-  }, [showBookingForm]);
+  // CRM booking confirmation is displayed inside its own iframe.
 
   // Handle messages from HubSpot iframe
   const handleHubSpotMessage = (event: MessageEvent) => {
@@ -695,16 +669,7 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
                         )}
                       </div>
                     ) : (
-                      <div 
-                        className="meetings-iframe-container rounded-lg overflow-hidden" 
-                        data-src="https://meetings-eu1.hubspot.com/rawzaba?embed=true"
-                        style={{ 
-                          minHeight: '400px',
-                          height: '60vh',
-                          maxHeight: '600px',
-                          width: '100%'
-                        }}
-                      ></div>
+                      <MeetingScheduler className="block w-full h-[60vh] min-h-[400px] max-h-[600px] rounded-lg border-0" />
                     )}
                     <Button 
                       onClick={() => setShowBookingForm(false)} 

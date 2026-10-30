@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { CrmHoneypot } from "@/components/CrmHoneypot";
+import { fetchWithCrm } from "@/lib/crm-submission";
+import { NEWSLETTER_CONSENT } from "@shared/crm";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
@@ -6,6 +9,7 @@ import { FileText, Download } from "lucide-react";
 
 const Whitepaper = () => {
   const [email, setEmail] = useState("");
+  const [newsletter, setNewsletter] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
@@ -25,25 +29,22 @@ const Whitepaper = () => {
     
     try {
       // Track the download with the backend
-      await fetch('/api/resources/track-download', {
+      const response = await fetchWithCrm('/api/resources/track-download', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           email,
-          resourceName: 'Amplified Intelligence Whitepaper'
+          resourceName: 'Amplified Intelligence Whitepaper',
+          newsletter,
         }),
       });
       
-      // Subscribe to newsletter if user is not already subscribed
-      await fetch('/api/newsletter/subscribe', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      });
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({}));
+        throw new Error(error.message || "We couldn't save your request. Please try again.");
+      }
       
       toast({
         title: "Success!",
@@ -87,7 +88,7 @@ const Whitepaper = () => {
       console.error("Error tracking download:", error);
       toast({
         title: "Error",
-        description: "There was a problem processing your request. Please try again.",
+        description: error instanceof Error ? error.message : "Please try again shortly.",
         variant: "destructive",
       });
     } finally {
@@ -130,6 +131,7 @@ const Whitepaper = () => {
             </p>
             
             <form onSubmit={handleSubmit} className="space-y-6">
+              <CrmHoneypot campaign="website-whitepaper" />
               <div>
                 <label htmlFor="email" className="block text-sm font-medium mb-2">
                   Email Address
@@ -145,6 +147,10 @@ const Whitepaper = () => {
                 />
               </div>
               
+              <label className="flex items-start gap-2 text-sm">
+                <input type="checkbox" checked={newsletter} onChange={e => setNewsletter(e.target.checked)} className="mt-1 accent-primary" />
+                {NEWSLETTER_CONSENT}
+              </label>
               {!isSubmitting ? (
                 <Button 
                   type="submit" 

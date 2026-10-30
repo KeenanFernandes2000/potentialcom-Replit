@@ -19,6 +19,8 @@ import {
   csrInfographicLeadSchema,
 } from "@shared/schema";
 import { proxyWordPressRequest } from "./wp-proxy";
+import { installCrmRoutes } from "./crm-routes";
+import { installVapiCrmRoutes } from "./vapi-crm";
 
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
 const FORM_NOTIFICATION_TO =
@@ -171,6 +173,8 @@ const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  installCrmRoutes(app);
+  installVapiCrmRoutes(app);
   // Serve BIMI logo SVG at lowercase path
   app.get("/assets/brand/bimi-logo.svg", (req, res) => {
     const filePath = path.resolve(
@@ -506,6 +510,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const validatedData = resourceDownloadSchema.parse(req.body);
 
       const download = await storage.trackResourceDownload(validatedData);
+      if (req.body.newsletter === true) {
+        await storage.addNewsletterSubscriber({ email: validatedData.email });
+      }
 
       res.status(201).json({
         message: "Download tracked successfully",

@@ -1,6 +1,16 @@
-import { pgTable, text, serial, timestamp, varchar, boolean } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, timestamp, varchar, boolean, integer, jsonb } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
+
+// Replay completed website submissions without repeating database writes/emails.
+// Contains sanitized responses only; never passwords, keys or tokens.
+export const crmSubmissions = pgTable("crm_submissions", {
+  id: text("id").primaryKey(),
+  fingerprint: text("fingerprint").notNull(),
+  status: integer("status").notNull(),
+  response: jsonb("response").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
 
 // User authentication and profile table
 export const users = pgTable("users", {

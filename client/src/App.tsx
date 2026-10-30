@@ -7,6 +7,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { initializeUTMTracking } from "@/lib/utm-utils";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { useEffect } from "react";
+import { useLocation } from "wouter";
+import { captureCrmAttribution } from "@/lib/crm-submission";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import Offerings from "@/pages/Offerings";
@@ -73,6 +75,8 @@ function Router() {
 }
 
 function App() {
+  const [location] = useLocation();
+  useEffect(() => { captureCrmAttribution(); }, [location]);
   // Initialize UTM tracking on app load
   useEffect(() => {
     initializeUTMTracking();

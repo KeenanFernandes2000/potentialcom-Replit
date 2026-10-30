@@ -1,9 +1,15 @@
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
+import { fetchWithCrm } from "./crm-submission";
 
 async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
     const text = (await res.text()) || res.statusText;
-    throw new Error(`${res.status}: ${text}`);
+    let message = text;
+    try {
+      const body = JSON.parse(text);
+      message = body.message || body.error?.message || "Please try again shortly.";
+    } catch {}
+    throw new Error(message);
   }
 }
 
@@ -11,7 +17,7 @@ export async function apiRequest(
   url: string,
   options: RequestInit = {}
 ): Promise<any> {
-  const res = await fetch(url, {
+  const res = await fetchWithCrm(url, {
     ...options,
     headers: {
       'Content-Type': 'application/json',

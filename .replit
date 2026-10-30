@@ -56,3 +56,4 @@ args = "npm list"
 
 [userenv.shared]
 AWS_REGION = "eu-west-1"
+VAPI_CRM_TOOL_ID = "f22a9456-1986-422c-ab0c-7990fedd1ade"

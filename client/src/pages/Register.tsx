@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { CrmHoneypot } from "@/components/CrmHoneypot";
+import { NEWSLETTER_CONSENT } from "@shared/crm";
 import { useLocation } from "wouter";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -38,7 +40,7 @@ const registerSchema = z
       .string()
       .min(6, { message: "Password must be at least 6 characters" }),
     confirmPassword: z.string(),
-    isSubscribedToNewsletter: z.boolean().default(true),
+    isSubscribedToNewsletter: z.boolean().default(false),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
@@ -61,7 +63,7 @@ export default function Register() {
       email: "",
       password: "",
       confirmPassword: "",
-      isSubscribedToNewsletter: true,
+      isSubscribedToNewsletter: false,
     },
   });
 
@@ -110,6 +112,7 @@ export default function Register() {
                   onSubmit={form.handleSubmit(onSubmit)}
                   className="space-y-6"
                 >
+                  <CrmHoneypot campaign="website-account-signup" />
                   <FormField
                     control={form.control}
                     name="email"
@@ -209,8 +212,7 @@ export default function Register() {
                         </FormControl>
                         <div className="space-y-1 leading-none">
                           <FormLabel>
-                            Subscribe to our newsletter and receive updates on
-                            new resources and AI tools
+                            {NEWSLETTER_CONSENT}
                           </FormLabel>
                         </div>
                       </FormItem>

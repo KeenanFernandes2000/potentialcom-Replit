@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { CrmHoneypot } from "@/components/CrmHoneypot";
+import { fetchWithCrm } from "@/lib/crm-submission";
+import { NEWSLETTER_CONSENT } from "@shared/crm";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -74,14 +77,14 @@ export default function BecomePartner() {
       phoneNumber: "",
       companyWebsite: "",
       partnerReason: "",
-      isSubscribedToNewsletter: true,
+      isSubscribedToNewsletter: false,
     },
   });
 
   const onSubmit = async (values: PartnerFormValues) => {
     setIsSubmitting(true);
     try {
-      const response = await fetch("/api/partners/apply", {
+      const response = await fetchWithCrm("/api/partners/apply", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -170,6 +173,7 @@ export default function BecomePartner() {
                   onSubmit={form.handleSubmit(onSubmit)}
                   className="space-y-6"
                 >
+                  <CrmHoneypot campaign="website-partner" />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <FormField
                       control={form.control}
@@ -346,7 +350,7 @@ export default function BecomePartner() {
                           />
                         </FormControl>
                         <div className="space-y-1 leading-none">
-                          <FormLabel>Subscribe to newsletter</FormLabel>
+                          <FormLabel>{NEWSLETTER_CONSENT}</FormLabel>
                           <FormDescription>
                             Receive updates about our partner program, new
                             features, and events.

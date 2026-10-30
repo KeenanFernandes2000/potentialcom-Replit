@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { MeetingScheduler } from "./MeetingScheduler";
 
 interface ConsultationBookingModalProps {
   isOpen: boolean;
@@ -74,15 +75,7 @@ export function ConsultationBookingModal({
           </button>
         </div>
         <div className="flex-1 bg-white overflow-hidden">
-          <iframe
-            src="https://meetings-eu1.hubspot.com/rawzaba?embed=true"
-            width="100%"
-            height="100%"
-            frameBorder="0"
-            style={{ border: 0, minHeight: "100%" }}
-            title="Book a strategy demo"
-            allow="microphone; camera"
-          />
+          <MeetingScheduler className="block w-full h-full border-0" />
         </div>
       </div>
     </div>

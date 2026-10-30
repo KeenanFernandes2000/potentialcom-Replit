@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { CrmHoneypot } from "@/components/CrmHoneypot";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Header from "@/components/Header";
@@ -231,7 +232,7 @@ export default function Ayla() {
       console.error("Form submission error:", error);
       toast({
         title: "Something went wrong",
-        description: "Please try again or contact support.",
+        description: error instanceof Error ? error.message : "Please try again shortly.",
         variant: "destructive",
       });
     } finally {
@@ -324,6 +325,7 @@ export default function Ayla() {
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="space-y-6"
                   >
+                    <CrmHoneypot campaign="website-ayla" />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <FormField
                         control={form.control}

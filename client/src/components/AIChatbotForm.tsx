@@ -1,6 +1,8 @@
 "use client";
 
 import * as React from "react";
+import { apiRequest } from "@/lib/queryClient";
+import { CrmHoneypot } from "./CrmHoneypot";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -118,6 +120,15 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
     setError(null);
 
     try {
+      await apiRequest("/api/lead", {
+        method: "POST",
+        body: JSON.stringify({
+          email: values.email, firstName: values.firstName, newsletter: false,
+          website: values.hasWebsite ? values.website : undefined,
+          message: `Requested an AI chatbot named ${values.proposedAgentName}.`,
+          fields: { action: "create-chatbot", agentName: values.proposedAgentName },
+        }),
+      });
       // Prepare form data
       const formData = new FormData();
       formData.append("username", values.firstName);
@@ -241,6 +252,7 @@ export function AIChatbotForm({ trigger, className }: AIChatbotFormProps) {
               onSubmit={form.handleSubmit(onSubmit)}
               className="space-y-4 gtm-chatbot-form"
             >
+              <CrmHoneypot campaign="website-ai-conversation" />
               <FormField
                 control={form.control}
                 name="firstName"

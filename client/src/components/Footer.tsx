@@ -8,6 +8,9 @@ import {
   Youtube,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { CrmHoneypot } from "@/components/CrmHoneypot";
+import { fetchWithCrm } from "@/lib/crm-submission";
+import { NEWSLETTER_CONSENT } from "@shared/crm";
 import { ThemeToggle } from "./ThemeToggle";
 import { FooterLogo } from "./FooterLogo";
 import { useToast } from "@/hooks/use-toast";
@@ -179,12 +182,15 @@ const Footer = ({
                 }
 
                 try {
-                  const response = await fetch("/api/newsletter/subscribe", {
+                  const response = await fetchWithCrm("/api/newsletter/subscribe", {
                     method: "POST",
                     headers: {
                       "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ email: emailInput.value }),
+                    body: JSON.stringify({
+                      email: emailInput.value,
+                      newsletter: (form.elements.namedItem("newsletter") as HTMLInputElement).checked,
+                    }),
                   });
 
                   if (response.ok) {
@@ -209,13 +215,18 @@ const Footer = ({
                   });
                 }
               }}
-              className="flex gap-2"
+              className="flex flex-wrap gap-2"
             >
+              <CrmHoneypot campaign="website-newsletter" />
+              <label className="flex w-full items-start gap-2 text-sm">
+                <input type="checkbox" name="newsletter" required className="mt-1 accent-primary" />
+                {NEWSLETTER_CONSENT}
+              </label>
               <input
                 type="email"
                 name="email"
                 placeholder="Your email"
-                className="bg-secondary-foreground/10 border border-secondary-foreground/20 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-primary"
+                className="bg-secondary-foreground/10 border border-secondary-foreground/20 rounded-md px-3 py-2 min-w-0 flex-1 focus:outline-none focus:ring-2 focus:ring-primary"
               />
               <Button
                 type="submit"

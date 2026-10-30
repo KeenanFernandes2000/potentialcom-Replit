@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { CrmHoneypot } from "@/components/CrmHoneypot";
 import { useLocation } from "wouter";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -214,6 +215,7 @@ export default function Profile() {
                           onSubmit={form.handleSubmit(onSubmit)}
                           className="space-y-6"
                         >
+                          <CrmHoneypot campaign="website-profile-update" />
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <FormField
                               control={form.control}

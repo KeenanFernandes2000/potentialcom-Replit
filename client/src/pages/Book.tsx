@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import { MeetingScheduler } from "@/components/MeetingScheduler";
 import Footer from "@/components/Footer";
 import { SEO } from "@/components/SEO";
 import { CalendarCheck, Clock, Video, Shield } from "lucide-react";
@@ -28,14 +29,7 @@ export default function Book() {
           </div>
 
           <div className="max-w-4xl mx-auto bg-card border border-border rounded-2xl shadow-lg overflow-hidden">
-            <iframe
-              src="https://crm.potentiallead.com/book/rawzaba?embed=1"
-              title="Book a meeting with Potential.com"
-              loading="lazy"
-              referrerPolicy="no-referrer"
-              className="block w-full h-[740px] md:h-[600px] rounded-2xl border-0"
-              allow="clipboard-write"
-            />
+            <MeetingScheduler />
           </div>
         </div>
       </section>
