@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Mic, MicOff, PhoneOff, ChevronDown, ChevronUp, Check, Copy, AlertTriangle, RefreshCw, CalendarClock } from "lucide-react";
+import { Mic, MicOff, PhoneOff, ChevronDown, ChevronUp, Check, Copy, AlertTriangle, RefreshCw, CalendarClock, Volume2 } from "lucide-react";
 import AylaAvatarCentered from "@assets/Ayla Avatar Centered.png";
 import Vapi from '@vapi-ai/web';
 import type { AssistantOverrides } from "@vapi-ai/web/dist/api";
@@ -25,6 +25,16 @@ const NO_USER_AUDIO_MS = 10000;
  * arrive and needs a longer fuse to avoid crying wolf at someone who is thinking.
  */
 const NO_USER_TRANSCRIPT_MS = 25000;
+/**
+ * `error` events the SDK (v3) raises for problems the call survives: noise
+ * cancellation or the mic level observer failing to set up. Treating them as a
+ * dropped call would tear down the modal while the call itself carried on.
+ */
+const NON_FATAL_ERROR_TYPES = new Set([
+  'audio-processing-setup-error',
+  'audio-processor-recovery-error',
+  'audio-observer-setup-error',
+]);
 
 /** Scoped token for Ayla's assistant; see lib/vapi-token.ts. Null if the endpoint failed. */
 async function resolveVapiCredential(): Promise<string | null> {
@@ -141,6 +151,12 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
   const [isStalled, setIsStalled] = useState(false);
   const [micDevices, setMicDevices] = useState<MediaDeviceInfo[]>([]);
   const [networkWarning, setNetworkWarning] = useState(false);
+  // The browser refused to autoplay Ayla's voice; a tap is needed to unblock it.
+  const [audioBlocked, setAudioBlocked] = useState(false);
+  /** Our own player for Ayla's voice, built inside the tap that unblocked audio. */
+  const unlockedPlayerRef = useRef<HTMLAudioElement | null>(null);
+  /** The SDK's mic level observer failed, so fall back to the transcript fuse. */
+  const levelObserverFailedRef = useRef(false);
   const connectTimerRef = useRef<number | undefined>(undefined);
   const silenceWatchRef = useRef<number | undefined>(undefined);
   const lastLoudAtRef = useRef(0);
@@ -183,6 +199,48 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
       console.error("Could not switch microphone", err);
       setAudioWarning("We couldn't switch to that microphone. Try another one, or book a session instead.");
     }
+  };
+  const releaseUnlockedPlayer = () => {
+    unlockedPlayerRef.current?.remove();
+    unlockedPlayerRef.current = null;
+    setAudioBlocked(false);
+  };
+
+  /**
+   * The visitor's tap is the user gesture autoplay policy wants, but only for
+   * play() called synchronously inside it — so build and play Ayla's audio here
+   * rather than restarting the call, whose play() would land seconds later,
+   * outside the gesture. The data-participant-id attribute is the selector the
+   * SDK uses to remove a player when Ayla leaves, so ours is cleaned up the same
+   * way; 'playable' is the app message the SDK would have sent had its own
+   * play() succeeded.
+   */
+  const handleEnableAudio = () => {
+    const call = vapiRef.current?.getDailyCallObject();
+    const speaker = call
+      ? Object.values(call.participants()).find((p) => !p.local && p.user_name === 'Vapi Speaker')
+      : undefined;
+    const track = speaker?.tracks?.audio?.persistentTrack;
+    if (!call || !speaker || !track) {
+      // Nothing to attach to: the call has moved on, so start it afresh.
+      releaseUnlockedPlayer();
+      if (typeof onRemount === 'function') onRemount();
+      return;
+    }
+    unlockedPlayerRef.current?.remove();
+    const player = document.createElement('audio');
+    player.dataset.participantId = speaker.session_id;
+    player.autoplay = true;
+    player.srcObject = new MediaStream([track]);
+    document.body.appendChild(player);
+    player.play().then(() => {
+      unlockedPlayerRef.current = player;
+      setAudioBlocked(false);
+      call.sendAppMessage('playable');
+    }).catch((err) => {
+      console.error('Audio is still blocked after a tap:', err);
+      player.remove();
+    });
   };
   const [showBookingForm, setShowBookingForm] = useState(false);
   const [bookingInfo, setBookingInfo] = useState<{
@@ -349,6 +407,8 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
       setCallStatus('connecting');
       setCallError(null);
       setAudioWarning(null);
+      setAudioBlocked(false);
+      levelObserverFailedRef.current = false;
       endedReasonRef.current = null;
       // The modal can be dismissed while we are still awaiting permission or a
       // token; without this flag the call would connect to a closed modal and
@@ -415,8 +475,6 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
             }
           };
           
-          vapiInstance.start(ASSISTANT_ID, assistantOverrides);
-
           vapiInstance.on('call-start', () => {
             if (crmModel) {
               vapiInstance.send({
@@ -436,21 +494,15 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
             lastLoudAtRef.current = Date.now();
 
             // The local mic level is the direct way to catch a dead input
-            // device, but it only exists from @vapi-ai/web 2.7. Older versions
-            // throw on the call, which would take the rest of this handler with
-            // it, so feature-detect rather than assume the installed version.
+            // device. @vapi-ai/web 3 starts the observer itself because a
+            // 'local-volume-level' listener is registered, and deliberately
+            // waits for noise cancellation to settle first: starting it here
+            // as well races Krisp's track swap, which makes Daily stop the
+            // observer for the whole call. So only feature-detect it.
             const client = vapiInstance as unknown as {
               startLocalAudioLevelObserver?: (interval?: number) => Promise<void>;
-              isLocalAudioLevelObserverRunning?: () => boolean;
             };
             const hasLevelObserver = typeof client.startLocalAudioLevelObserver === "function";
-            // 2.7 starts the observer itself when something is already
-            // listening for 'local-volume-level', and rejects a second start.
-            if (hasLevelObserver && !client.isLocalAudioLevelObserverRunning?.()) {
-              client.startLocalAudioLevelObserver!(200).catch((err) =>
-                console.warn("Could not start the local audio level observer", err),
-              );
-            }
 
             silenceWatchRef.current = window.setInterval(() => {
               if (vapiRef.current !== vapiInstance) return;
@@ -461,8 +513,9 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
               // Without the observer, lastLoudAt only moves on a user
               // transcript — so once we have heard them, stop watching rather
               // than warning every visitor who pauses to think.
-              if (!hasLevelObserver && heardUserRef.current) return;
-              const limit = hasLevelObserver ? NO_USER_AUDIO_MS : NO_USER_TRANSCRIPT_MS;
+              const levelsArrive = hasLevelObserver && !levelObserverFailedRef.current;
+              if (!levelsArrive && heardUserRef.current) return;
+              const limit = levelsArrive ? NO_USER_AUDIO_MS : NO_USER_TRANSCRIPT_MS;
               if (Date.now() - lastLoudAtRef.current > limit) {
                 setAudioWarning(
                   "We can't hear anything from your microphone. It may be muted, turned down, or the wrong input device.",
@@ -480,17 +533,40 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
             }
           });
 
-          vapiInstance.on('call-start-failed', (event: any) => {
+          vapiInstance.on('local-audio-level-observer-error', (err) => {
+            console.warn('Local audio level observer failed; using the transcript fuse instead.', err);
+            levelObserverFailedRef.current = true;
+          });
+
+          // v3 reports a failed start here (then again on 'error' with
+          // type 'start-method-error' or 'microphone-preflight-*'); start()
+          // itself resolves to null rather than throwing.
+          vapiInstance.on('call-start-failed', (event) => {
             console.error('Vapi call-start-failed:', event);
             window.clearTimeout(connectTimerRef.current);
             if (vapiRef.current !== vapiInstance) return;
             vapiRef.current = null;
             setCallStatus('idle');
             setIsCallActive(false);
-            setCallError({
-              title: "Ayla couldn't connect.",
-              detail: `The call failed while ${event?.stage || 'connecting'}. Try again, or book a session with a consultant.`,
-            });
+            setCallError(
+              event?.stage === 'microphone-preflight'
+                ? {
+                    title: "We couldn't start the call.",
+                    detail: "Your microphone stopped responding as the call began. Check no other app is using it, then try again — or book a session with a consultant.",
+                  }
+                : {
+                    title: "We couldn't start the call.",
+                    detail: "Ayla is briefly unavailable. Try again, or book a session with a consultant and we'll pick it up from there.",
+                  },
+            );
+          });
+
+          // v3 hands over the <audio> element once Ayla's voice is playing,
+          // so any blocked-audio prompt (and our fallback player) is now moot.
+          vapiInstance.on('audio', () => {
+            unlockedPlayerRef.current?.remove();
+            unlockedPlayerRef.current = null;
+            setAudioBlocked(false);
           });
 
           vapiInstance.on('network-quality-change', (event: any) => {
@@ -502,6 +578,7 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
           vapiInstance.on('call-end', () => {
             window.clearTimeout(connectTimerRef.current);
             window.clearInterval(silenceWatchRef.current);
+            releaseUnlockedPlayer();
             setIsCallActive(false);
             setCallStatus('idle');
             if (vapiRef.current === vapiInstance) {
@@ -604,9 +681,27 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
           });
 
           vapiInstance.on('error', (error) => {
+            const type: string | undefined = error?.type;
+            // Autoplay policy refused Ayla's voice. The call itself is fine and
+            // recoverable with a tap, so prompt for one instead of ending it.
+            // The connection has demonstrably arrived (her track did), so the
+            // connect fuse no longer applies while we wait for the visitor.
+            if (type === 'audio-start-failed') {
+              console.warn('Assistant audio was blocked by the browser:', error);
+              if (vapiRef.current === vapiInstance) {
+                window.clearTimeout(connectTimerRef.current);
+                setAudioBlocked(true);
+              }
+              return;
+            }
+            if (type && NON_FATAL_ERROR_TYPES.has(type)) {
+              console.warn('Vapi reported a non-fatal error:', error);
+              return;
+            }
             console.error('Vapi call error:', error);
             window.clearTimeout(connectTimerRef.current);
             window.clearInterval(silenceWatchRef.current);
+            releaseUnlockedPlayer();
             setIsCallActive(false);
             setCallStatus('idle');
             if (vapiRef.current === vapiInstance) {
@@ -618,6 +713,13 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
                 },
               );
             }
+          });
+
+          // Listeners first: v3 can report a failed start before start()
+          // settles. It resolves to null on failure (already reported above),
+          // so the catch only guards against an unexpected rejection.
+          vapiInstance.start(ASSISTANT_ID, assistantOverrides).catch((err) => {
+            console.error('Vapi start() rejected:', err);
           });
         } catch (error) {
           console.error('Could not initialise the Vapi client:', error);
@@ -636,6 +738,7 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
         cancelled = true;
         window.clearTimeout(connectTimerRef.current);
         window.clearInterval(silenceWatchRef.current);
+        releaseUnlockedPlayer();
         if (vapiRef.current) {
           try { vapiRef.current.stop(); } catch { /* already stopped */ }
           vapiRef.current = null;
@@ -683,6 +786,7 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
       setAudioWarning(null);
       setIsStalled(false);
       setNetworkWarning(false);
+      releaseUnlockedPlayer();
       setMicDevices([]);
       window.clearTimeout(connectTimerRef.current);
       window.clearInterval(silenceWatchRef.current);
@@ -957,6 +1061,22 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
                   </select>
                 </div>
               )}
+            </div>
+          </div>
+        )}
+
+        {audioBlocked && (
+          <div className="mb-4 w-full flex justify-center">
+            <div className="flex items-start gap-3 bg-muted/60 border border-border rounded-xl px-5 py-3 w-full max-w-md">
+              <Volume2 className="h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <p className="text-xs text-muted-foreground">
+                  Your browser blocked Ayla's voice. Tap to enable audio and she'll start talking.
+                </p>
+                <Button variant="outline" size="sm" className="mt-2" onClick={handleEnableAudio}>
+                  Tap to enable audio
+                </Button>
+              </div>
             </div>
           </div>
         )}
