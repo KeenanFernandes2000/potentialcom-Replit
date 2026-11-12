@@ -10,6 +10,7 @@ import { crmAttribution } from "@/lib/crm-submission";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { CrmHoneypot } from "./CrmHoneypot";
+import { getVapiCallToken } from "@/lib/vapi-token";
 
 const ASSISTANT_ID =
   import.meta.env.VITE_AYLA_BOT_ID || "32d7022b-8c96-4498-bd94-60dfd4171e4f";
@@ -25,28 +26,14 @@ const NO_USER_AUDIO_MS = 10000;
  */
 const NO_USER_TRANSCRIPT_MS = 25000;
 
-/**
- * Prefer a server-signed, origin- and assistant-scoped JWT over the public key.
- * The public key is a fallback only: without it a token outage would take the
- * whole call flow down, and the key is no more exposed than it already was.
- */
-async function resolveVapiCredential(): Promise<{ credential: string; scoped: boolean }> {
-  const publicKey = import.meta.env.VITE_VAPI_KEY;
+/** Scoped token for Ayla's assistant; see lib/vapi-token.ts. Null if the endpoint failed. */
+async function resolveVapiCredential(): Promise<string | null> {
   try {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/vapi/token`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ assistantId: ASSISTANT_ID }),
-    });
-    if (res.ok) {
-      const { token } = await res.json();
-      if (token) return { credential: token, scoped: true };
-    }
-    console.warn(`Vapi token endpoint returned ${res.status}; falling back to the public key.`);
+    return await getVapiCallToken(ASSISTANT_ID);
   } catch (err) {
-    console.warn("Vapi token endpoint unreachable; falling back to the public key.", err);
+    console.error('Vapi token unavailable; not starting the call.', err);
+    return null;
   }
-  return { credential: publicKey, scoped: false };
 }
 
 /**
@@ -376,10 +363,9 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
           return;
         }
 
-        const { credential, scoped } = await resolveVapiCredential();
+        const credential = await resolveVapiCredential();
         if (cancelled) return;
         if (!credential) {
-          console.error('No Vapi credential available: the token endpoint failed and VITE_VAPI_KEY is not set.');
           setCallStatus('idle');
           setCallError({
             title: "We couldn't start the call.",
@@ -387,10 +373,6 @@ export function AylaCallModal({ isOpen, onClose, user, onRemount }: AylaCallModa
           });
           return;
         }
-        if (!scoped) {
-          console.warn('Ayla is running on the unscoped public key for this call.');
-        }
-
         try {
           const vapiInstance = new Vapi(credential);
           vapiRef.current = vapiInstance;

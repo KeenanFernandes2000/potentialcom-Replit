@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Mic, MicOff, PhoneOff, ChevronDown, ChevronUp } from "lucide-react";
 import Vapi from '@vapi-ai/web';
+import { getVapiCallToken, VOICE_UNAVAILABLE_MESSAGE } from "@/lib/vapi-token";
 
 interface QuickCallModalProps {
   isOpen: boolean;
@@ -24,6 +25,12 @@ export function QuickCallModal({ isOpen, onClose, assistantId }: QuickCallModalP
   const [transcripts, setTranscripts] = useState<Transcript[]>([]);
   const [currentPartial, setCurrentPartial] = useState<Transcript | null>(null);
   const vapiRef = useRef<Vapi | null>(null);
+  // The start is async (microphone check, then the call token). These guard
+  // against a re-run starting a second call while one is still starting, and
+  // against starting a call after the modal was closed.
+  const startingRef = useRef(false);
+  const isOpenRef = useRef(isOpen);
+  isOpenRef.current = isOpen;
   const transcriptContainerRef = useRef<HTMLDivElement>(null);
   const [callStatus, setCallStatus] = useState<'idle' | 'connecting' | 'connected'>('idle');
   const [micPermissionError, setMicPermissionError] = useState<string | null>(null);
@@ -63,24 +70,39 @@ export function QuickCallModal({ isOpen, onClose, assistantId }: QuickCallModalP
   };
 
   useEffect(() => {
-    if (isOpen && !vapiRef.current) {
+    if (isOpen && !vapiRef.current && !startingRef.current) {
+      startingRef.current = true;
       setCallStatus('connecting');
-      const apiKey = import.meta.env.VITE_VAPI_KEY;
-      if (!apiKey) {
-        console.error('Voice API key is not set. Please check your .env file.');
-        return;
-      }
-
       // Check microphone permission before initializing the call
-      checkMicrophonePermission().then(hasPermission => {
+      checkMicrophonePermission().then(async hasPermission => {
         if (!hasPermission) {
+          startingRef.current = false;
+          setCallStatus('idle');
+          return;
+        }
+
+        let token: string;
+        try {
+          token = await getVapiCallToken(assistantId);
+        } catch (err) {
+          console.error('Vapi token unavailable; not starting the call.', err);
+          startingRef.current = false;
+          setCallStatus('idle');
+          setMicPermissionError(VOICE_UNAVAILABLE_MESSAGE);
+          return;
+        }
+
+        if (!isOpenRef.current) {
+          // Closed while the token was on its way: don't start a call nobody sees.
+          startingRef.current = false;
           setCallStatus('idle');
           return;
         }
 
         try {
-          const vapiInstance = new Vapi(apiKey);
+          const vapiInstance = new Vapi(token);
           vapiRef.current = vapiInstance;
+          startingRef.current = false;
 
           vapiInstance.start(assistantId);
 
@@ -140,6 +162,7 @@ export function QuickCallModal({ isOpen, onClose, assistantId }: QuickCallModalP
           });
 
         } catch (error) {
+          startingRef.current = false;
           console.error('Error initializing Vapi:', error);
           setCallStatus('idle');
         }

@@ -5,6 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Mic, MicOff, PhoneOff, ChevronDown, ChevronUp, Check, Copy } from "lucide-react";
 import veraAvatarCentered from "@assets/Vera Avatar Centered.png";
 import Vapi from '@vapi-ai/web';
+import { getVapiCallToken, VOICE_UNAVAILABLE_MESSAGE } from "@/lib/vapi-token";
+
+/** Vera, Potential.com's AI consultant (web). Its vapiassistants record lists potential.com as an allowed origin. */
+const VERA_ASSISTANT_ID = '42531902-20ad-46c7-a611-3e0ccf721aa1';
 
 interface VeraCallModalProps {
   isOpen: boolean;
@@ -36,6 +40,12 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
   const [transcripts, setTranscripts] = useState<Transcript[]>([]);
   const [currentPartial, setCurrentPartial] = useState<Transcript | null>(null);
   const vapiRef = useRef<Vapi | null>(null);
+  // The start is async (microphone check, then the call token). These guard
+  // against a re-run starting a second call while one is still starting, and
+  // against starting a call after the modal was closed.
+  const startingRef = useRef(false);
+  const isOpenRef = useRef(isOpen);
+  isOpenRef.current = isOpen;
   const transcriptContainerRef = useRef<HTMLDivElement>(null);
   const [callStatus, setCallStatus] = useState<'idle' | 'connecting' | 'connected'>('idle');
   const [showAgentCreation, setShowAgentCreation] = useState(false);
@@ -52,6 +62,7 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
   const [waitingMessageIndex, setWaitingMessageIndex] = useState(0);
   const [isWaiting, setIsWaiting] = useState(false);
   const [micPermissionError, setMicPermissionError] = useState<string | null>(null);
+  const [callError, setCallError] = useState<string | null>(null);
   const [showBookingForm, setShowBookingForm] = useState(false);
   const [bookingInfo, setBookingInfo] = useState<{
     meetingTime?: string;
@@ -195,24 +206,40 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
   };
 
   useEffect(() => {
-    if (isOpen && !vapiRef.current) {
+    if (isOpen && !vapiRef.current && !startingRef.current) {
+      startingRef.current = true;
+      setCallError(null);
       setCallStatus('connecting');
-      const apiKey = import.meta.env.VITE_VAPI_KEY;
-      if (!apiKey) {
-        console.error('Voice API key is not set. Please check your .env file.');
-        return;
-      }
-
       // Check microphone permission before initializing the call
-      checkMicrophonePermission().then(hasPermission => {
+      checkMicrophonePermission().then(async hasPermission => {
         if (!hasPermission) {
+          startingRef.current = false;
+          setCallStatus('idle');
+          return;
+        }
+
+        let token: string;
+        try {
+          token = await getVapiCallToken(VERA_ASSISTANT_ID);
+        } catch (err) {
+          console.error('Vapi token unavailable; not starting the call.', err);
+          startingRef.current = false;
+          setCallStatus('idle');
+          setCallError(VOICE_UNAVAILABLE_MESSAGE);
+          return;
+        }
+
+        if (!isOpenRef.current) {
+          // Closed while the token was on its way: don't start a call nobody sees.
+          startingRef.current = false;
           setCallStatus('idle');
           return;
         }
 
         try {
-          const vapiInstance = new Vapi(apiKey);
+          const vapiInstance = new Vapi(token);
           vapiRef.current = vapiInstance;
+          startingRef.current = false;
 
           const assistantOverrides = {
             variableValues: {
@@ -226,7 +253,7 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
             }
           };
           
-          vapiInstance.start('42531902-20ad-46c7-a611-3e0ccf721aa1', assistantOverrides);
+          vapiInstance.start(VERA_ASSISTANT_ID, assistantOverrides);
 
           vapiInstance.on('call-start', () => {
             setIsCallActive(true);
@@ -316,6 +343,7 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
             }
           };
         } catch (error) {
+          startingRef.current = false;
           setCallStatus('idle');
           onClose();
         }
@@ -477,6 +505,13 @@ export function VeraCallModal({ isOpen, onClose, user, onRemount }: VeraCallModa
         className={`${(showAgentCreation || showVoiceAgentCreation || showBookingForm) ? 'sm:max-w-6xl' : 'sm:max-w-3xl'} max-h-[90vh] overflow-y-auto`}
         onInteractOutside={e => e.preventDefault()}
       >
+        {callError && !micPermissionError && (
+          <div className="mb-6 w-full flex flex-col items-center" role="alert">
+            <div className="bg-red-50 dark:bg-red-900/20 border border-red-300 dark:border-red-800 rounded-xl px-6 py-4 shadow-md w-full max-w-md">
+              <p className="text-red-700 dark:text-red-300 font-semibold text-base">{callError}</p>
+            </div>
+          </div>
+        )}
         {micPermissionError && (
           <div className="mb-6 w-full flex flex-col items-center">
             <div className="flex items-center gap-3 bg-red-50 dark:bg-red-900/20 border border-red-300 dark:border-red-800 rounded-xl px-6 py-4 shadow-md w-full max-w-md">
