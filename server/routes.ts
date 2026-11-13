@@ -6,6 +6,7 @@ import { getAgent, POTENTIAL_API_BASE } from "./agents";
 import sgMail from "@sendgrid/mail";
 import { SendEmailCommand, SESClient } from "@aws-sdk/client-ses";
 import { storage } from "./storage";
+import { joinPhone } from "./phone";
 import {
   registerUserSchema,
   loginUserSchema,
@@ -568,7 +569,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         `First Name: ${validatedData.firstName}`,
         `Last Name: ${validatedData.lastName}`,
         `Email: ${validatedData.email}`,
-        `Phone Number: ${validatedData.countryCode} ${validatedData.phoneNumber}`,
+        `Phone Number: ${joinPhone(validatedData.countryCode, validatedData.phoneNumber) ?? ""}`,
         `Company Name: ${validatedData.companyName}`,
         `Company Website: ${validatedData.companyWebsite || "N/A"}`,
       ]);
@@ -599,7 +600,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         `First Name: ${validatedData.firstName}`,
         `Last Name: ${validatedData.lastName}`,
         `Email: ${validatedData.email}`,
-        `Phone Number: ${validatedData.countryCode} ${validatedData.phoneNumber}`,
+        `Phone Number: ${joinPhone(validatedData.countryCode, validatedData.phoneNumber) ?? ""}`,
         `Company Name: ${validatedData.companyName}`,
         `Company Website: ${validatedData.companyWebsite || "N/A"}`,
         `Role: ${validatedData.role}`,
@@ -631,7 +632,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         `First Name: ${validatedData.firstName}`,
         `Last Name: ${validatedData.lastName}`,
         `Email: ${validatedData.email}`,
-        `Phone Number: ${validatedData.countryCode || "N/A"} ${validatedData.phoneNumber || "N/A"}`,
+        `Phone Number: ${joinPhone(validatedData.countryCode, validatedData.phoneNumber) ?? "N/A"}`,
         `Company Name: ${validatedData.companyName}`,
         `Company Website: ${validatedData.companyWebsite || "N/A"}`,
         `Role: ${validatedData.role || "N/A"}`,

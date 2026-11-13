@@ -11,6 +11,7 @@ import {
 import { pool } from "./db";
 import { storage } from "./storage";
 import { CrmIntakeError, crmMetadataSchema, deliverCrmLead, leadFingerprint, type CrmLead } from "./crm-intake";
+import { joinPhone } from "./phone";
 
 const aiLeadSchema = z.object({
   email: z.string().email(),
@@ -55,7 +56,7 @@ export function buildCrmLead(url: string, raw: Record<string, unknown>, data: Re
     if (data[key]) fields[key] = data[key];
   }
   if (url === "/api/lead" && data.fields) Object.assign(fields, data.fields);
-  const phone = data.phone || (data.phoneNumber ? [data.countryCode, data.phoneNumber].filter(Boolean).join(" ") : undefined);
+  const phone = data.phone || joinPhone(data.countryCode, data.phoneNumber);
   return {
     ...meta,
     email,
