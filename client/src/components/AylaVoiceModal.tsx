@@ -7,7 +7,7 @@ import { MeetingScheduler } from "./MeetingScheduler";
 import { CodeEntryPanel } from "./ayla/CodeEntryPanel";
 import { ChatbotDemoPanel, VoiceAgentDemoPanel } from "./ayla/DemoAgentPanels";
 import { voiceApi } from "@/lib/aylaVoice/api";
-import { startVoiceCall, type CallFailure, type CallStatus, type PeerLike, type StreamLike, type VoiceCall } from "@/lib/aylaVoice/call";
+import { startVoiceCall, withEndTracking, type CallFailure, type CallStatus, type PeerLike, type StreamLike, type VoiceCall } from "@/lib/aylaVoice/call";
 import type { VoiceForm } from "@/lib/aylaVoice/form";
 import { createSilenceWatch, micErrorMessage, rms, shouldAutoRetry } from "@/lib/aylaVoice/mic";
 import { INITIAL_VIEW, TRANSCRIPT_NOTICE, applyEvent, closePanel, endMessage, type CallView, type CodeResult, type ServerEvent } from "@/lib/aylaVoice/protocol";
@@ -66,6 +66,8 @@ export function AylaVoiceModal({ isOpen, onClose, onRemount, form, getIntake, re
   const stopWatchRef = useRef<(() => void) | null>(null);
   const heardRef = useRef(false);
   const retriedRef = useRef(false);
+  /** The last /end this modal sent: the silent retry's /session waits for it (the server waits only for a call already ending). */
+  const lastEndRef = useRef<Promise<void> | null>(null);
   const mutedRef = useRef(false);
   // Read through refs so the call effect is keyed on isOpen and attempt only (as in the Vapi modal).
   const onCloseRef = useRef(onClose);
@@ -150,10 +152,19 @@ export function AylaVoiceModal({ isOpen, onClose, onRemount, form, getIntake, re
       setStatus("ended");
       setCard(failureCard(f));
     };
-    const api = voiceApi(apiBase, {
-      fetch: window.fetch.bind(window),
-      sendBeacon: navigator.sendBeacon ? navigator.sendBeacon.bind(navigator) : undefined,
-    });
+    const api = withEndTracking(
+      voiceApi(apiBase, {
+        fetch: window.fetch.bind(window),
+        sendBeacon: navigator.sendBeacon ? navigator.sendBeacon.bind(navigator) : undefined,
+      }),
+      (sent) => {
+        lastEndRef.current = sent;
+      },
+    );
+    // This attempt is the one silent retry: same intake, same conversation, after the failed call's /end;
+    // never a fresh intake (one intake starts at most two calls, potential-ai f1cbfb7).
+    const silentRetry = retriedRef.current;
+    const waitFor = silentRetry ? lastEndRef.current : null;
     void startVoiceCall(
       {
         getUserMedia: (c) => navigator.mediaDevices.getUserMedia(c as MediaStreamConstraints) as unknown as Promise<StreamLike>,
@@ -161,7 +172,8 @@ export function AylaVoiceModal({ isOpen, onClose, onRemount, form, getIntake, re
         api,
         setTimeout: (fn, ms) => window.setTimeout(fn, ms),
         clearTimeout: (id) => window.clearTimeout(id as number),
-        renewIntake: () => intakeRef.current.renewIntake(),
+        ...(silentRetry ? {} : { renewIntake: () => intakeRef.current.renewIntake() }),
+        ...(waitFor ? { waitFor } : {}),
       },
       intakeRef.current.getIntake(),
       {
