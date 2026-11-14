@@ -21,6 +21,7 @@ import {
 } from "@shared/schema";
 import { proxyWordPressRequest } from "./wp-proxy";
 import { installCrmRoutes } from "./crm-routes";
+import { installAylaVoiceConsultation } from "./ayla-voice-consultation";
 import { installVapiCrmRoutes } from "./vapi-crm";
 
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
@@ -175,6 +176,12 @@ const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
 
 export async function registerRoutes(app: Express): Promise<Server> {
   installCrmRoutes(app);
+  // /ayla on Ayla's brain (14 Nov, Q2): the site's own row and team email only; Ayla's server saves the CRM contact.
+  installAylaVoiceConsultation(app, {
+    save: (v) => storage.submitAylaConsultation(v),
+    notify: (lines) => sendFormNotificationEmail("New Submission: Ayla Booking Form (voice button)", lines),
+    now: Date.now,
+  });
   installVapiCrmRoutes(app);
   // Serve BIMI logo SVG at lowercase path
   app.get("/assets/brand/bimi-logo.svg", (req, res) => {
