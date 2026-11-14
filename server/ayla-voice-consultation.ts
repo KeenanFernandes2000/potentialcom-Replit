@@ -3,7 +3,7 @@ import type { Express } from "express";
 import { z } from "zod";
 import { aylaConsultationSchema, type AylaConsultationInput } from "@shared/schema";
 import { joinPhone } from "@shared/phone";
-import { clientIp } from "./client-ip";
+import { clientIp, ipLimitKey } from "./client-ip";
 
 // The /ayla form when the call runs on Ayla's brain (Mamoon, 14 Nov, Q2):
 // Ayla's server (agents.potential.com) saves the visitor in the CRM as a Voice
@@ -79,7 +79,7 @@ export function createAylaVoiceConsultationHandler(d: AylaVoiceConsultationDeps)
     if (body && typeof body.hp === "string" && body.hp.trim()) return { status: 201, body: { message: "Submission received." } };
     const parsed = formSchema.safeParse(body);
     if (!parsed.success) return { status: 400, body: { message: "Please check your form details and try again." } };
-    if (!allow(parsed.data.email.toLowerCase(), ip)) return { status: 429, body: { message: "Too many submissions. Please try again shortly." } };
+    if (!allow(parsed.data.email.toLowerCase(), ipLimitKey(ip))) return { status: 429, body: { message: "Too many submissions. Please try again shortly." } };
     const v = parsed.data;
     try {
       await d.save(v);

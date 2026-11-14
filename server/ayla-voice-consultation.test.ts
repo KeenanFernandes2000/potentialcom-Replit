@@ -97,6 +97,12 @@ describe("the /ayla brain-mode consultation record (Q2: the site's own row and t
     t.tick(LOCAL_LIMIT.ipWindowMs);
     expect((await t.handle({ ...FORM, email: "again@example.com" }, ip)).status).toBe(201);
   });
+  it("an IPv6 visitor is one bucket per /56 (as Ayla's brain counts), however the address rotates inside it", async () => {
+    const t = setup();
+    for (let i = 0; i < LOCAL_LIMIT.perIp; i++) expect((await t.handle({ ...FORM, email: `v${i}@example.com` }, `2001:db8:aa:bb0${i}::${i + 1}`)).status).toBe(201);
+    expect((await t.handle({ ...FORM, email: "v9@example.com" }, "2001:db8:aa:bbff::99")).status).toBe(429);
+    expect((await t.handle({ ...FORM, email: "w@example.com" }, "2001:db8:aa:cc00::1")).status).toBe(201);
+  });
   it("a refused request (bad form or over the limit) does not use up the IP's allowance", async () => {
     const t = setup();
     const ip = "198.51.100.9";
