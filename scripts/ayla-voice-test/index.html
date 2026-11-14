@@ -1,0 +1,48 @@
+<!-- scripts/ayla-voice-test/index.html: private test page for Ayla's voice button (dev only, never deployed). -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Ayla voice test</title>
+    <style>
+      body { font-family: system-ui; max-width: 900px; margin: 2rem auto; }
+      label { display: block; margin: 0.3rem 0; }
+      input { width: 18rem; }
+      pre { background: #f4f4f4; padding: 0.8rem; white-space: pre-wrap; max-height: 16rem; overflow: auto; }
+      iframe { width: 100%; height: 520px; border: 1px solid #ccc; }
+      .row { display: flex; gap: 2rem; }
+    </style>
+  </head>
+  <body>
+    <h1>Ayla voice test</h1>
+    <div class="row">
+      <div>
+        <label>API <input id="api" value="https://agents.potential.com" /></label>
+        <label>First name <input id="firstName" value="Mamoon" /></label>
+        <label>Last name <input id="lastName" value="Test" /></label>
+        <label>Work email <input id="email" value="" placeholder="your email (for the code test)" /></label>
+        <label>Organisation <input id="organisation" value="Potential Test Org" /></label>
+        <label>Role <input id="role" value="Head of L&amp;D" /></label>
+        <label>Country code <input id="countryCode" value="+971" /></label>
+        <label>Phone <input id="phoneNumber" value="" /></label>
+        <label>Website <input id="website" value="https://" /></label>
+        <button id="start">Start</button> <button id="mute">Mute</button> <button id="end">End</button>
+        <audio id="audio" controls autoplay></audio>
+      </div>
+      <div>
+        <p>Panel: <b id="panel">none</b> · code: <b id="code-status">idle</b> · ended: <b id="ended"></b></p>
+        <div id="code-box" hidden>
+          <input id="code" placeholder="6 digits" maxlength="6" /> <button id="send-code">Check code</button>
+        </div>
+        <div id="demo-box" hidden><p>Demo panel open. Send its notices:</p><div id="notices"></div></div>
+        <button id="close-panel">Close panel</button>
+        <h3>Captions</h3>
+        <pre id="captions"></pre>
+      </div>
+    </div>
+    <iframe id="booking" hidden title="Booking"></iframe>
+    <h3>Log</h3>
+    <pre id="log"></pre>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
