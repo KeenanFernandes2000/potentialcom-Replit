@@ -57,14 +57,18 @@ export function clientIp(
     .map((s) => s.trim())
     .filter(Boolean);
   const chain = [...forwarded, remote];
+  // Anything that is not a real address (a port suffix, junk a visitor wrote)
+  // is the sentinel: otherwise it would be a per-IP bucket renamable at will.
+  const valid = (s: string): string => (isIP(s.split("%")[0]!) ? s : UNKNOWN_IP);
   if (hops !== undefined) {
     const at = chain.length - 1 - hops;
-    return at >= 0 ? chain[at]! : UNKNOWN_IP;
+    return at >= 0 ? valid(chain[at]!) : UNKNOWN_IP;
   }
   for (let i = chain.length - 1; i > 0; i--) {
+    if (!isIP(chain[i]!.split("%")[0]!)) return UNKNOWN_IP;
     if (!isPrivateAddress(chain[i]!)) return chain[i]!;
   }
-  return chain[0]!;
+  return valid(chain[0]!);
 }
 
 /** The 8 groups of an IPv6 address (zone id dropped), or null. */

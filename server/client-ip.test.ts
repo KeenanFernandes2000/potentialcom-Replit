@@ -42,6 +42,13 @@ describe("clientIp (the visitor's address, as the proxy saw it)", () => {
     expect(clientIp(req("169.254.8.1"), 1)).toBe(UNKNOWN_IP);
     expect(UNKNOWN_IP).toBe("unknown");
   });
+  it("an entry that is not a valid address is the sentinel, never a bucket a visitor can rename at will", () => {
+    expect(clientIp(req("169.254.8.1", "1.2.3.4:5678"))).toBe(UNKNOWN_IP);
+    expect(clientIp(req("169.254.8.1", "junk-123"))).toBe(UNKNOWN_IP);
+    expect(clientIp(req("169.254.8.1", "junk, 10.0.0.2"))).toBe(UNKNOWN_IP);
+    expect(clientIp(req("169.254.8.1", "6.6.6.6, not-an-ip"), 1)).toBe(UNKNOWN_IP);
+    expect(clientIp(req("169.254.8.1", "6.6.6.6, 203.0.113.9"))).toBe("203.0.113.9");
+  });
 });
 
 describe("ipLimitKey (the per-IP limit's bucket, as Ayla's brain keys it: express-rate-limit ipKeyGenerator, IPv6 by /56)", () => {
