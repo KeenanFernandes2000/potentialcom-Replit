@@ -44,8 +44,10 @@
   <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
   <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
 
-  <!-- Chatbot Embed -->
+  <!-- Chatbot Embed: Ayla's chat runs on agents.potential.com (one brain with her phone line).
+       Rollback = remove the data-api attribute (the widget then talks to api.potential.com again). -->
   <script charset="utf-8" type="text/javascript" src="https://ai.potential.com/static/embed/chat.js"
+    data-api="https://agents.potential.com"
     crossorigin="anonymous" onerror="console.warn('Chatbot script failed to load')"></script>
   <script>
     try {
