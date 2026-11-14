@@ -17,3 +17,6 @@ Do not rebuild, simplify, replace, or otherwise alter the Ayla form, its fields,
 **Why:** The immediate voice conversation is an intentional and required part of the conversion experience, not a standard lead form that can be safely replaced.
 
 **How to apply:** For Ayla page work, isolate and preserve the complete form-to-call path. Do not add a second form, booking widget, qualification score, or competing conversion flow. Call and submission logic belongs in `client/src/lib/aylaVoice/` with bun tests (`bun test client/src/lib/aylaVoice`).
+
+### Reading `distinct_by_position` (added 14 Nov)
+The ip-chain line now ends with `distinct_by_position=a,b,c,…`: for each X-Forwarded-For position counted from the right, how many different values the last 50 forms had (addresses are never logged). It also logs at the 5th, 20th and 50th form, not only hourly. The platform's own hops show 1 (or a small number); the visitor's position shows roughly one value per visitor. First Replit sample (14 Nov): 4 public entries behind a loopback proxy, so the rightmost entry is not the visitor. Set `TRUST_PROXY_HOPS` to the number of positions to the right of the visitor's (with the loopback socket counted as one hop, so hops = position index + 1 when positions are counted from 0 at the right), then switch `AYLA_SITE_IP_LIMIT` to `enforce`.
