@@ -136,7 +136,7 @@ export function AylaVoiceModal({ isOpen, onClose, onRemount, form, getIntake, re
       stopWatchRef.current?.();
       const msg = endMessage(e.reason);
       if (!msg) return void onCloseRef.current();
-      if (e.reason === "error" && shouldAutoRetry({ failed: true, heardAnything: heardRef.current, alreadyRetried: retriedRef.current })) return retry();
+      if (shouldAutoRetry({ cause: { kind: "ended", reason: e.reason }, heardAnything: heardRef.current, alreadyRetried: retriedRef.current })) return retry();
       setCard(msg);
     };
     const onFailure = (f: CallFailure) => {
@@ -147,8 +147,9 @@ export function AylaVoiceModal({ isOpen, onClose, onRemount, form, getIntake, re
         setMicError(micErrorMessage(f.name));
         return;
       }
-      // A call that fails before anyone spoke is retried once, silently (the cold-start lesson).
-      if (shouldAutoRetry({ failed: true, heardAnything: heardRef.current, alreadyRetried: retriedRef.current })) return retry();
+      // A connection that fails before anyone spoke is retried once, silently (the cold-start lesson);
+      // a server refusal of /session (4xx, busy) never is.
+      if (shouldAutoRetry({ cause: f, heardAnything: heardRef.current, alreadyRetried: retriedRef.current })) return retry();
       setStatus("ended");
       setCard(failureCard(f));
     };

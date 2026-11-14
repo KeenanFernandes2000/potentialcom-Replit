@@ -31,10 +31,27 @@ describe("the level watch", () => {
 });
 
 describe("shouldAutoRetry", () => {
+  const fresh = { heardAnything: false, alreadyRetried: false };
   it("once, silently, only for a call that failed before anyone spoke", () => {
-    expect(shouldAutoRetry({ failed: true, heardAnything: false, alreadyRetried: false })).toBe(true);
-    expect(shouldAutoRetry({ failed: true, heardAnything: true, alreadyRetried: false })).toBe(false);
-    expect(shouldAutoRetry({ failed: true, heardAnything: false, alreadyRetried: true })).toBe(false);
-    expect(shouldAutoRetry({ failed: false, heardAnything: false, alreadyRetried: false })).toBe(false);
+    expect(shouldAutoRetry({ cause: { kind: "connect" }, ...fresh })).toBe(true);
+    expect(shouldAutoRetry({ cause: { kind: "connect" }, heardAnything: true, alreadyRetried: false })).toBe(false);
+    expect(shouldAutoRetry({ cause: { kind: "connect" }, heardAnything: false, alreadyRetried: true })).toBe(false);
+  });
+  it("retries a connection failure: WebRTC never connected or dropped, the network failed, or the server ended the call with an error", () => {
+    expect(shouldAutoRetry({ cause: { kind: "connect" }, ...fresh })).toBe(true);
+    expect(shouldAutoRetry({ cause: { kind: "dropped" }, ...fresh })).toBe(true);
+    expect(shouldAutoRetry({ cause: { kind: "start", error: "network" }, ...fresh })).toBe(true);
+    expect(shouldAutoRetry({ cause: { kind: "ended", reason: "error" }, ...fresh })).toBe(true);
+  });
+  it("never retries a server refusal of /session (4xx or busy): a second post only burns the visitor's IP allowance", () => {
+    for (const error of ["rate_limited", "bad_request", "busy", "intake_not_found", "intake_used", "unavailable"] as const) {
+      expect(shouldAutoRetry({ cause: { kind: "start", error }, ...fresh })).toBe(false);
+    }
+  });
+  it("never retries a microphone problem or a call that ended normally", () => {
+    expect(shouldAutoRetry({ cause: { kind: "mic", name: "NotAllowedError" }, ...fresh })).toBe(false);
+    for (const reason of ["caller_hung_up", "time_limit", "ayla_ended", "silence"] as const) {
+      expect(shouldAutoRetry({ cause: { kind: "ended", reason }, ...fresh })).toBe(false);
+    }
   });
 });
