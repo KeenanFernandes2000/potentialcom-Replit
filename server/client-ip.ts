@@ -9,7 +9,13 @@ import type { IncomingMessage } from "node:http";
 // own proxies (private, loopback and link-local addresses), and take the first
 // address they didn't add. Anything further left was written by the visitor and
 // is never used. TRUST_PROXY_HOPS fixes the number of trusted hops instead,
-// for a chain with a public load balancer in it.
+// for a chain with a public load balancer in it. When TRUST_PROXY_HOPS is
+// longer than the chain that arrived, the answer is UNKNOWN_IP, never the
+// leftmost entry (which the visitor wrote); callers must not use UNKNOWN_IP as
+// one shared per-IP bucket.
+
+/** The fixed answer when the visitor's address cannot be known. */
+export const UNKNOWN_IP = "unknown";
 
 const PRIVATE_V4 = [/^10\./, /^127\./, /^169\.254\./, /^192\.168\./, /^172\.(1[6-9]|2\d|3[01])\./];
 
@@ -33,14 +39,17 @@ export function clientIp(
   req: { headers: IncomingMessage["headers"]; socket: { remoteAddress?: string } },
   hops: number | undefined = envHops(),
 ): string {
-  const remote = req.socket.remoteAddress ?? "unknown";
+  const remote = req.socket.remoteAddress ?? UNKNOWN_IP;
   const header = req.headers["x-forwarded-for"];
   const forwarded = (Array.isArray(header) ? header.join(",") : header ?? "")
     .split(",")
     .map((s) => s.trim())
     .filter(Boolean);
   const chain = [...forwarded, remote];
-  if (hops !== undefined) return chain[Math.max(0, chain.length - 1 - hops)] ?? remote;
+  if (hops !== undefined) {
+    const at = chain.length - 1 - hops;
+    return at >= 0 ? chain[at]! : UNKNOWN_IP;
+  }
   for (let i = chain.length - 1; i > 0; i--) {
     if (!isPrivateAddress(chain[i]!)) return chain[i]!;
   }

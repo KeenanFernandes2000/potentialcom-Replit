@@ -1,6 +1,6 @@
 // server/client-ip.test.ts
 import { describe, expect, it } from "vitest";
-import { clientIp, isPrivateAddress } from "./client-ip";
+import { UNKNOWN_IP, clientIp, isPrivateAddress } from "./client-ip";
 
 const req = (remote: string | undefined, xff?: string | string[]) => ({
   headers: xff === undefined ? {} : { "x-forwarded-for": xff },
@@ -35,6 +35,11 @@ describe("clientIp (the visitor's address, as the proxy saw it)", () => {
   });
   it("trusts exactly TRUST_PROXY_HOPS proxies when set (e.g. a public load balancer in the chain)", () => {
     expect(clientIp(req("169.254.8.1", "6.6.6.6, 203.0.113.9, 34.110.1.1"), 2)).toBe("203.0.113.9");
-    expect(clientIp(req("169.254.8.1", "203.0.113.9"), 5)).toBe("203.0.113.9");
+    expect(clientIp(req("169.254.8.1", "203.0.113.9"), 1)).toBe("203.0.113.9");
+  });
+  it("TRUST_PROXY_HOPS longer than the real chain gives the fixed sentinel, never the leftmost (visitor-written) entry", () => {
+    expect(clientIp(req("169.254.8.1", "6.6.6.6, 203.0.113.9"), 5)).toBe(UNKNOWN_IP);
+    expect(clientIp(req("169.254.8.1"), 1)).toBe(UNKNOWN_IP);
+    expect(UNKNOWN_IP).toBe("unknown");
   });
 });
