@@ -3,7 +3,7 @@ import type { Express } from "express";
 import { z } from "zod";
 import { aylaConsultationSchema, type AylaConsultationInput } from "@shared/schema";
 import { joinPhone } from "@shared/phone";
-import { clientIp, ipLimitKey } from "./client-ip";
+import { UNKNOWN_IP, clientIp, ipLimitKey } from "./client-ip";
 
 // The /ayla form when the call runs on Ayla's brain (Mamoon, 14 Nov, Q2):
 // Ayla's server (agents.potential.com) saves the visitor in the CRM as a Voice
@@ -29,11 +29,30 @@ export const LOCAL_LIMIT = Object.freeze({
   ipWindowMs: 60 * 60_000,
 });
 
+/**
+ * AYLA_SITE_IP_LIMIT: what the per-IP limit does. "observe" (the default)
+ * counts but never refuses, and logs a line each time it would have: until
+ * the platform's X-Forwarded-For chain is known (the ip-chain line) and
+ * TRUST_PROXY_HOPS is set to match, every visitor may share one address, and
+ * enforcing would turn 3 per IP per hour into 3 per hour for the whole site.
+ * "enforce" refuses; "off" skips it. The global and per-email limits always
+ * refuse, whatever this says.
+ */
+export type IpLimitMode = "off" | "observe" | "enforce";
+export function ipLimitModeFromEnv(v: string | undefined): IpLimitMode {
+  const m = (v ?? "").trim().toLowerCase();
+  return m === "off" || m === "enforce" ? m : "observe";
+}
+
 export interface AylaVoiceConsultationDeps {
   save(v: AylaConsultationInput): Promise<unknown>;
   /** The team email's lines (routes.ts sendFormNotificationEmail; it never throws). */
   notify(lines: string[]): Promise<void>;
   now(): number;
+  /** AYLA_SITE_IP_LIMIT; observe when not given. */
+  ipLimit?: IpLimitMode;
+  /** One-line operational logs (never visitor data); console.log when not given. */
+  log?: (line: string) => void;
 }
 export type HandlerResult = { status: number; body: { message: string } };
 
@@ -50,18 +69,30 @@ export function createAylaVoiceConsultationHandler(d: AylaVoiceConsultationDeps)
   let all: number[] = [];
   const byEmail = new Map<string, number[]>();
   const byIp = new Map<string, number[]>();
+  const ipMode = d.ipLimit ?? "observe";
+  const log = d.log ?? ((line: string) => console.log(line));
   const allow = (email: string, ip: string): boolean => {
     const now = d.now();
     const within = (ms: number) => (ts: number[]) => ts.filter((t) => now - t <= ms);
     all = within(LOCAL_LIMIT.windowMs)(all);
     const mine = within(LOCAL_LIMIT.windowMs)(byEmail.get(email) ?? []);
-    const fromIp = within(LOCAL_LIMIT.ipWindowMs)(byIp.get(ip) ?? []);
-    if (all.length >= LOCAL_LIMIT.global || mine.length >= LOCAL_LIMIT.perEmail || fromIp.length >= LOCAL_LIMIT.perIp) return false;
+    if (all.length >= LOCAL_LIMIT.global || mine.length >= LOCAL_LIMIT.perEmail) return false;
+    // An unknown address is not one shared bucket: it is simply not limited per IP.
+    const perIp = ipMode !== "off" && ip !== UNKNOWN_IP;
+    const fromIp = perIp ? within(LOCAL_LIMIT.ipWindowMs)(byIp.get(ip) ?? []) : [];
+    const overIp = perIp && fromIp.length >= LOCAL_LIMIT.perIp;
+    if (overIp) {
+      if (ipMode === "enforce") return false;
+      log(`[ayla-voice] ip-limit observe: would have refused (per-IP ${LOCAL_LIMIT.perIp} per hour reached); kept it (AYLA_SITE_IP_LIMIT=observe)`);
+    }
     all.push(now);
     mine.push(now);
-    fromIp.push(now);
     byEmail.set(email, mine);
-    byIp.set(ip, fromIp);
+    // A request enforce would have refused is not counted, so observe logs what enforce would do.
+    if (perIp && !overIp) {
+      fromIp.push(now);
+      byIp.set(ip, fromIp);
+    }
     // Keep the maps small: forget emails and IPs that went quiet.
     const forget = (m: Map<string, number[]>, ms: number) =>
       m.forEach((v, k) => {
@@ -110,7 +141,9 @@ export function createAylaVoiceConsultationHandler(d: AylaVoiceConsultationDeps)
 }
 
 export function installAylaVoiceConsultation(app: Express, d: AylaVoiceConsultationDeps): void {
-  const handle = createAylaVoiceConsultationHandler(d);
+  const ipLimit = d.ipLimit ?? ipLimitModeFromEnv(process.env.AYLA_SITE_IP_LIMIT);
+  console.log(`[ayla-voice] ip-limit mode: ${ipLimit} (AYLA_SITE_IP_LIMIT)`);
+  const handle = createAylaVoiceConsultationHandler({ ...d, ipLimit });
   app.post(AYLA_VOICE_CONSULTATION_PATH, async (req, res) => {
     const r = await handle(req.body, clientIp(req));
     res.status(r.status).json(r.body);
