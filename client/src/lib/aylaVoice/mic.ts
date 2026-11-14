@@ -48,17 +48,18 @@ export type RetryCause = CallFailure | { kind: "ended"; reason: EndReason };
 
 /**
  * Retried once, silently, only when the connection failed (WebRTC never
- * connected or dropped, /session never reached the server, or the server ended
- * the call with an error) and nobody had spoken yet. Never after the server
- * refused /session (4xx, busy, or an "unavailable" answer): the server
- * already counted that request against the visitor's IP, and asking again
- * at once would only use up more of it.
+ * connected or dropped, /session never reached the server, the server ended
+ * the call with an error, or /session answered 502 because Ayla's server
+ * couldn't create the call with OpenAI, the transient cold-start case) and
+ * nobody had spoken yet. Never after the server refused /session (4xx, busy,
+ * or any other 5xx): the server already counted that request against the
+ * visitor's IP, and asking again at once would only use up more of it.
  */
 export function shouldAutoRetry(i: { cause: RetryCause; heardAnything: boolean; alreadyRetried: boolean }): boolean {
   if (i.heardAnything || i.alreadyRetried) return false;
   const c = i.cause;
   if (c.kind === "connect" || c.kind === "dropped") return true;
-  if (c.kind === "start") return c.error === "network";
+  if (c.kind === "start") return c.error === "network" || c.error === "upstream";
   if (c.kind === "ended") return c.reason === "error";
   return false;
 }

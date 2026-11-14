@@ -43,6 +43,10 @@ describe("shouldAutoRetry", () => {
     expect(shouldAutoRetry({ cause: { kind: "start", error: "network" }, ...fresh })).toBe(true);
     expect(shouldAutoRetry({ cause: { kind: "ended", reason: "error" }, ...fresh })).toBe(true);
   });
+  it("retries a 502 from /session once (the brain's OpenAI call-create failing transiently: the cold start)", () => {
+    expect(shouldAutoRetry({ cause: { kind: "start", error: "upstream" }, ...fresh })).toBe(true);
+    expect(shouldAutoRetry({ cause: { kind: "start", error: "upstream" }, heardAnything: false, alreadyRetried: true })).toBe(false);
+  });
   it("never retries a server refusal of /session (4xx or busy): a second post only burns the visitor's IP allowance", () => {
     for (const error of ["rate_limited", "bad_request", "busy", "intake_not_found", "intake_used", "unavailable"] as const) {
       expect(shouldAutoRetry({ cause: { kind: "start", error }, ...fresh })).toBe(false);

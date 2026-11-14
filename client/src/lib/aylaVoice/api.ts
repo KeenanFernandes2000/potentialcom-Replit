@@ -11,7 +11,8 @@ import { createEventParser } from "./sse";
 /** "unavailable" and "network" mean no lead was created: the page falls back to the CRM intake and Vapi. */
 export type IntakeError = "bad_request" | "origin" | "rate_limited" | "unavailable" | "network";
 export type IntakeResult = { ok: true; intake: string } | { ok: false; error: IntakeError };
-export type StartError = "bad_request" | "rate_limited" | "busy" | "unavailable" | "network" | "intake_not_found" | "intake_used";
+/** "upstream" is a 502: Ayla's server couldn't create the call with OpenAI (transient, the cold start). */
+export type StartError = "bad_request" | "rate_limited" | "busy" | "unavailable" | "upstream" | "network" | "intake_not_found" | "intake_used";
 export type StartResult = { ok: true; answer: string; token: string; maxSeconds: number } | { ok: false; error: StartError };
 
 export interface VoiceApi {
@@ -84,6 +85,7 @@ export function voiceApi(base: string, d: ApiDeps): VoiceApi {
       if (r.status === 429) return { ok: false, error: "rate_limited" };
       if (r.status === 404) return { ok: false, error: "intake_not_found" };
       if (r.status === 409) return { ok: false, error: "intake_used" };
+      if (r.status === 502) return { ok: false, error: "upstream" };
       if (r.status === 503) {
         const j = await r.json().catch(() => null);
         return { ok: false, error: j?.error === "busy" ? "busy" : "unavailable" };

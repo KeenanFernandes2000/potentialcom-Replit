@@ -47,7 +47,8 @@ describe("voiceApi", () => {
     for (const c of ok.calls) expect(c.url).not.toContain(INTAKE);
     const cases: Array<[Response, string]> = [
       [json(429, { error: "rate_limited" }), "rate_limited"], [json(503, { error: "busy" }), "busy"], [json(503, { error: "unavailable" }), "unavailable"],
-      [json(502, { error: "unavailable" }), "unavailable"], [json(400, { error: "bad_request" }), "bad_request"],
+      [json(502, { error: "unavailable" }), "upstream"], [json(500, {}), "unavailable"], [json(504, {}), "unavailable"],
+      [json(400, { error: "bad_request" }), "bad_request"],
       [json(404, { error: "intake_not_found" }), "intake_not_found"], [json(409, { error: "intake_used" }), "intake_used"],
     ];
     for (const [res, error] of cases) expect(await voiceApi(BASE, { fetch: fakeFetch(() => res).f }).start({ sdp: "v=0", intake: INTAKE })).toEqual({ ok: false, error });
