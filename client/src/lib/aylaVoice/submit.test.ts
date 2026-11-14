@@ -53,8 +53,8 @@ describe("submitAylaForm", () => {
     expect(await submitAylaForm(V, t.d)).toEqual({ kind: "ignored" });
     expect(t.calls).toEqual([["local", { ...SITE_BODY, hp: "http://spam.example" }]]);
   });
-  it("Ayla's server unavailable, unreachable or refusing the origin: no lead was created, so today's path runs (CRM intake, Vapi)", async () => {
-    for (const error of ["unavailable", "network", "origin"] as const) {
+  it("Ayla's server answers 503 (busy or unavailable) or cannot be reached: no lead was created, so today's path runs (CRM intake, Vapi)", async () => {
+    for (const error of ["unavailable", "network"] as const) {
       const t = setup({ intake: { ok: false, error } });
       expect(await submitAylaForm(V, t.d)).toEqual({ kind: "vapi" });
       expect(t.kinds()).toEqual(["intake", "crm"]);
@@ -64,13 +64,23 @@ describe("submitAylaForm", () => {
     const t = setup({ intake: { ok: false, error: "unavailable" }, crmFails: true });
     await expect(submitAylaForm(V, t.d)).rejects.toThrow("Please try again shortly.");
   });
-  it("rate limited or refused as invalid: an error to show, no call, nothing else sent", async () => {
-    const r = setup({ intake: { ok: false, error: "rate_limited" } });
-    await expect(submitAylaForm(V, r.d)).rejects.toThrow(SubmitError);
-    await expect(submitAylaForm(V, setup({ intake: { ok: false, error: "rate_limited" } }).d)).rejects.toThrow(/Too many calls/);
-    expect(r.kinds()).toEqual(["intake"]);
-    const b = setup({ intake: { ok: false, error: "bad_request" } });
-    await expect(submitAylaForm(V, b.d)).rejects.toThrow(/check your details/);
-    expect(b.kinds()).toEqual(["intake"]);
+  it("429 from the intake: the site keeps its own record and team email (the lead is not lost), the visitor is told Ayla is busy, no Vapi", async () => {
+    const t = setup({ intake: { ok: false, error: "rate_limited" } });
+    const err = await submitAylaForm(V, t.d).catch((e) => e);
+    expect(err).toBeInstanceOf(SubmitError);
+    expect(err.message).toBe("Ayla is busy right now. Please try again shortly.");
+    expect(t.calls).toEqual([["intake", VOICE_FORM], ["local", { ...SITE_BODY, crmNotSaved: true }]]);
+    expect(t.kinds()).not.toContain("crm");
+  });
+  it("403 and 400 are not a fallback either (the spec names only 503 and the network): the site keeps its record, the visitor gets an error", async () => {
+    for (const [error, message] of [["origin", /couldn't start the call/], ["bad_request", /check your details/]] as const) {
+      const t = setup({ intake: { ok: false, error } });
+      await expect(submitAylaForm(V, t.d)).rejects.toThrow(message);
+      expect(t.kinds()).toEqual(["intake", "local"]);
+    }
+  });
+  it("the site's record failing on a refusal still shows the refusal", async () => {
+    const t = setup({ intake: { ok: false, error: "rate_limited" }, localFails: true });
+    await expect(submitAylaForm(V, t.d)).rejects.toThrow(/busy/);
   });
 });

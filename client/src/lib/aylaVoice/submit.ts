@@ -10,8 +10,10 @@ import { voiceFormFrom, websiteValue, type AylaFormValues, type VoiceForm } from
 //    the CRM Voice upsert in the call's own conversation. The site keeps its
 //    own row and team email through /api/ayla/voice-consultation, which never
 //    reaches the CRM intake: one CRM contact, not two.
-//  - Ayla's server unavailable or unreachable (or refusing our origin): it
-//    created no lead, so today's path runs and the call is Vapi's.
+//  - Ayla's server answered 503 or could not be reached: it created no lead,
+//    so today's path runs and the call is Vapi's (the spec names only these).
+//  - Any other refusal (429 above all, also 403, 400): no call and no Vapi, but
+//    the site keeps its own record and team email so the lead is not lost.
 //  - The honeypot is the site's job on the brain path (the intake has none):
 //    a filled one sends nothing to Ayla's server and starts no call.
 
@@ -49,10 +51,13 @@ export async function submitAylaForm(values: AylaFormValues, d: SubmitDeps): Pro
     void d.saveLocal(body).catch(() => {});
     return { kind: "brain", form, intake: r.intake };
   }
-  if (r.error === "unavailable" || r.error === "network" || r.error === "origin") {
+  if (r.error === "unavailable" || r.error === "network") {
     await d.saveWithCrm(body);
     return { kind: "vapi" };
   }
-  if (r.error === "rate_limited") throw new SubmitError("Too many calls from your network right now. Please try again later, or book a session with a consultant.");
-  throw new SubmitError("We couldn't start the call. Please check your details and try again.");
+  // Not in the CRM: the team email says so (server/ayla-voice-consultation.ts).
+  await d.saveLocal({ ...body, crmNotSaved: true }).catch(() => {});
+  if (r.error === "rate_limited") throw new SubmitError("Ayla is busy right now. Please try again shortly.");
+  if (r.error === "bad_request") throw new SubmitError("We couldn't start the call. Please check your details and try again.");
+  throw new SubmitError("We couldn't start the call. Please try again shortly.");
 }

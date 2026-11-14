@@ -36,6 +36,16 @@ describe("the /ayla brain-mode consultation record (Q2: the site's own row and t
     expect(t.mails[0]).toContain("Email: mona@example.com");
     expect(t.mails[0]!.join("\n")).toMatch(/voice button/i);
   });
+  it("a form Ayla's server refused (429) is flagged in the team email: it is not in the CRM, so someone follows up by hand", async () => {
+    const t = setup();
+    expect((await t.handle({ ...FORM, crmNotSaved: true })).status).toBe(201);
+    expect(t.saved).toEqual([{ ...FORM }]);
+    expect(t.mails[0]).toContain("CRM: NOT saved (Ayla's server was busy); please follow up by hand");
+    expect(t.mails[0]!.join("\n")).not.toMatch(/saves the CRM contact/);
+    const u = setup();
+    await u.handle(FORM);
+    expect(u.mails[0]!.join("\n")).not.toMatch(/NOT saved/);
+  });
   it("no phone and no website are fine (stored as empty strings, as the schema does)", async () => {
     const t = setup();
     const { countryCode: _c, phoneNumber: _p, companyWebsite: _w, ...short } = FORM;

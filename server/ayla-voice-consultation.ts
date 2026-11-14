@@ -71,9 +71,14 @@ export function createAylaVoiceConsultationHandler(d: AylaVoiceConsultationDeps)
       console.error("[ayla-voice-consultation] save failed");
       return { status: 503, body: { message: "We couldn't save your submission right now. Please try again shortly." } };
     }
+    // The page sets crmNotSaved when Ayla's server refused the form (busy): no CRM contact, no call.
+    const crmNotSaved = body?.crmNotSaved === true;
     await d.notify([
-      "New submission received from the Ayla form on potential.com/ayla (voice button on Ayla's brain; Ayla's server saves the CRM contact, channel Voice).",
+      crmNotSaved
+        ? "New submission from the Ayla form on potential.com/ayla. Ayla's server was busy, so there was no call and the contact is not in the CRM."
+        : "New submission received from the Ayla form on potential.com/ayla (voice button on Ayla's brain; Ayla's server saves the CRM contact, channel Voice).",
       "Source: Ayla voice button",
+      ...(crmNotSaved ? ["CRM: NOT saved (Ayla's server was busy); please follow up by hand"] : []),
       "",
       `First Name: ${v.firstName}`,
       `Last Name: ${v.lastName}`,
