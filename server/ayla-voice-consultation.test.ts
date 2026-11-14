@@ -9,7 +9,7 @@ function setup(o: { saveFails?: boolean } = {}) {
   const saved: unknown[] = [];
   const mails: string[][] = [];
   let now = 1_000_000;
-  const handle = createAylaVoiceConsultationHandler({
+  const handler = createAylaVoiceConsultationHandler({
     save: async (v) => {
       if (o.saveFails) throw new Error("db down");
       saved.push(v);
@@ -19,6 +19,9 @@ function setup(o: { saveFails?: boolean } = {}) {
     },
     now: () => now,
   });
+  // Each test call comes from its own visitor unless it names one: the per-IP limit has its own test.
+  let n = 0;
+  const handle = (raw: unknown, ip = `203.0.113.${++n}`) => handler(raw, ip);
   return { handle, saved, mails, tick: (ms: number) => (now += ms) };
 }
 
@@ -64,7 +67,7 @@ describe("the /ayla brain-mode consultation record (Q2: the site's own row and t
     expect(await t.handle("x")).toMatchObject({ status: 400 });
     expect(t.saved).toEqual([]);
   });
-  it("limits each email to LOCAL_LIMIT.perEmail and everyone to LOCAL_LIMIT.global per window (no proxy guesswork about IPs)", async () => {
+  it("limits each email to LOCAL_LIMIT.perEmail and everyone to LOCAL_LIMIT.global per window", async () => {
     const t = setup();
     for (let i = 0; i < LOCAL_LIMIT.perEmail; i++) expect((await t.handle(FORM)).status).toBe(201);
     expect((await t.handle({ ...FORM, email: "MONA@example.com" })).status).toBe(429);
@@ -75,6 +78,30 @@ describe("the /ayla brain-mode consultation record (Q2: the site's own row and t
     for (let i = 0; i < LOCAL_LIMIT.global; i++) expect((await u.handle({ ...FORM, email: `v${i}@example.com` })).status).toBe(201);
     expect((await u.handle({ ...FORM, email: "late@example.com" })).status).toBe(429);
     expect(u.saved).toHaveLength(LOCAL_LIMIT.global);
+  });
+  it("the global brake is 15 per 10 minutes and each IP gets 3 per hour", () => {
+    expect(LOCAL_LIMIT).toMatchObject({ global: 15, windowMs: 10 * 60_000, perIp: 3, ipWindowMs: 60 * 60_000 });
+  });
+  it("limits each IP to LOCAL_LIMIT.perIp per hour, however often the email changes, without touching other visitors", async () => {
+    const t = setup();
+    const ip = "198.51.100.7";
+    for (let i = 0; i < LOCAL_LIMIT.perIp; i++) expect((await t.handle({ ...FORM, email: `s${i}@example.com` }, ip)).status).toBe(201);
+    expect((await t.handle({ ...FORM, email: "fresh@example.com" }, ip)).status).toBe(429);
+    expect(t.saved).toHaveLength(LOCAL_LIMIT.perIp);
+    expect(t.mails).toHaveLength(LOCAL_LIMIT.perIp);
+    // Another visitor is unaffected.
+    expect((await t.handle({ ...FORM, email: "real@example.com" }, "198.51.100.8")).status).toBe(201);
+    // Past the 10-minute window the IP is still held; past the hour it is free again.
+    t.tick(LOCAL_LIMIT.windowMs + 1);
+    expect((await t.handle({ ...FORM, email: "again@example.com" }, ip)).status).toBe(429);
+    t.tick(LOCAL_LIMIT.ipWindowMs);
+    expect((await t.handle({ ...FORM, email: "again@example.com" }, ip)).status).toBe(201);
+  });
+  it("a refused request (bad form or over the limit) does not use up the IP's allowance", async () => {
+    const t = setup();
+    const ip = "198.51.100.9";
+    expect((await t.handle({ ...FORM, email: "nope" }, ip)).status).toBe(400);
+    for (let i = 0; i < LOCAL_LIMIT.perIp; i++) expect((await t.handle({ ...FORM, email: `k${i}@example.com` }, ip)).status).toBe(201);
   });
   it("a database failure is a 503 and sends no email", async () => {
     const t = setup({ saveFails: true });
