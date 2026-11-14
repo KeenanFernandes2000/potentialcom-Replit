@@ -3,7 +3,8 @@ import type { Express } from "express";
 import { z } from "zod";
 import { aylaConsultationSchema, type AylaConsultationInput } from "@shared/schema";
 import { joinPhone } from "@shared/phone";
-import { UNKNOWN_IP, clientIp, ipLimitKey } from "./client-ip";
+import { UNKNOWN_IP, clientIp, ipLimitKey, trustProxyHops } from "./client-ip";
+import { createIpChainDiagnostic } from "./ip-chain-diagnostic";
 
 // The /ayla form when the call runs on Ayla's brain (Mamoon, 14 Nov, Q2):
 // Ayla's server (agents.potential.com) saves the visitor in the CRM as a Voice
@@ -144,7 +145,10 @@ export function installAylaVoiceConsultation(app: Express, d: AylaVoiceConsultat
   const ipLimit = d.ipLimit ?? ipLimitModeFromEnv(process.env.AYLA_SITE_IP_LIMIT);
   console.log(`[ayla-voice] ip-limit mode: ${ipLimit} (AYLA_SITE_IP_LIMIT)`);
   const handle = createAylaVoiceConsultationHandler({ ...d, ipLimit });
+  // The shape of the platform's X-Forwarded-For chain (no addresses), to set TRUST_PROXY_HOPS by.
+  const chain = createIpChainDiagnostic({ now: d.now, log: (l) => console.log(l), hops: trustProxyHops });
   app.post(AYLA_VOICE_CONSULTATION_PATH, async (req, res) => {
+    chain.observe(req);
     const r = await handle(req.body, clientIp(req));
     res.status(r.status).json(r.body);
   });

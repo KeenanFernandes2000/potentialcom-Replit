@@ -1,6 +1,6 @@
 // server/client-ip.test.ts
 import { describe, expect, it } from "vitest";
-import { UNKNOWN_IP, clientIp, ipLimitKey, isPrivateAddress } from "./client-ip";
+import { UNKNOWN_IP, classifyAddress, clientIp, ipLimitKey, isPrivateAddress } from "./client-ip";
 
 const req = (remote: string | undefined, xff?: string | string[]) => ({
   headers: xff === undefined ? {} : { "x-forwarded-for": xff },
@@ -58,5 +58,15 @@ describe("ipLimitKey (the per-IP limit's bucket, as Ayla's brain keys it: expres
     expect(ipLimitKey("::ffff:203.0.113.9")).toBe("203.0.113.9");
     expect(ipLimitKey(UNKNOWN_IP)).toBe(UNKNOWN_IP);
     expect(ipLimitKey("not-an-address")).toBe("not-an-address");
+  });
+});
+
+describe("classifyAddress (for the ip-chain diagnostic; never logs the address itself)", () => {
+  it("names loopback, link-local, private and public, and calls anything else invalid", () => {
+    expect(["127.0.0.1", "::1", "::ffff:127.0.0.1"].map(classifyAddress)).toEqual(["loopback", "loopback", "loopback"]);
+    expect(["169.254.8.1", "fe80::1"].map(classifyAddress)).toEqual(["link-local", "link-local"]);
+    expect(["10.1.2.3", "172.18.0.3", "192.168.1.1", "fd12::1", "::ffff:10.0.0.2"].map(classifyAddress)).toEqual(Array(5).fill("private"));
+    expect(["34.111.179.208", "2001:db8::1", "::ffff:1.2.3.4"].map(classifyAddress)).toEqual(["public", "public", "public"]);
+    expect(["unknown", "", "1.2.3", "hello"].map(classifyAddress)).toEqual(Array(4).fill("invalid"));
   });
 });

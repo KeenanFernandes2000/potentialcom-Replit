@@ -1,6 +1,6 @@
 // server/client-ip.ts
 import type { IncomingMessage } from "node:http";
-import { isIPv6 } from "node:net";
+import { isIP, isIPv6 } from "node:net";
 
 // The visitor's address, for per-visitor limits. The site sets no Express
 // `trust proxy` (that would also change req.protocol and req.secure for every
@@ -18,17 +18,27 @@ import { isIPv6 } from "node:net";
 /** The fixed answer when the visitor's address cannot be known. */
 export const UNKNOWN_IP = "unknown";
 
-const PRIVATE_V4 = [/^10\./, /^127\./, /^169\.254\./, /^192\.168\./, /^172\.(1[6-9]|2\d|3[01])\./];
+export type AddressClass = "loopback" | "link-local" | "private" | "public" | "invalid";
+
+/** What kind of address this is (IPv4-mapped IPv6 as its IPv4); "invalid" when it is not an address. */
+export function classifyAddress(raw: string): AddressClass {
+  const ip = raw.trim().toLowerCase().split("%")[0]!;
+  if (!isIP(ip)) return "invalid";
+  const v4 = ip.replace(/^::ffff:(?=\d+\.)/, "");
+  if (/^127\./.test(v4) || ip === "::1") return "loopback";
+  if (/^169\.254\./.test(v4) || /^fe[89ab][0-9a-f]?:/.test(ip)) return "link-local";
+  if (/^(10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)/.test(v4) || /^f[cd][0-9a-f]{0,2}:/.test(ip)) return "private";
+  return "public";
+}
 
 /** Loopback, link-local or private (RFC 1918 / IPv6 ULA) address. */
 export function isPrivateAddress(raw: string): boolean {
-  const ip = raw.trim().toLowerCase().replace(/^::ffff:/, "");
-  if (PRIVATE_V4.some((re) => re.test(ip))) return true;
-  if (ip === "::1") return true;
-  return /^f[cd][0-9a-f]{0,2}:/.test(ip) || /^fe[89ab][0-9a-f]?:/.test(ip);
+  const c = classifyAddress(raw);
+  return c === "loopback" || c === "link-local" || c === "private";
 }
 
-function envHops(): number | undefined {
+/** TRUST_PROXY_HOPS, when it is a whole number of 0 or more. */
+export function trustProxyHops(): number | undefined {
   const v = process.env.TRUST_PROXY_HOPS;
   if (!v) return undefined;
   const n = Number(v);
@@ -38,7 +48,7 @@ function envHops(): number | undefined {
 /** The client address of a request; `hops` mirrors TRUST_PROXY_HOPS. */
 export function clientIp(
   req: { headers: IncomingMessage["headers"]; socket: { remoteAddress?: string } },
-  hops: number | undefined = envHops(),
+  hops: number | undefined = trustProxyHops(),
 ): string {
   const remote = req.socket.remoteAddress ?? UNKNOWN_IP;
   const header = req.headers["x-forwarded-for"];
