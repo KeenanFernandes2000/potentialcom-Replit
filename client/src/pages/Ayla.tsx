@@ -33,7 +33,7 @@ import { AylaCallModal } from "@/components/AylaCallModal";
 import { AylaVoiceModal } from "@/components/AylaVoiceModal";
 import { joinPhone } from "@shared/phone";
 import { voiceApi } from "@/lib/aylaVoice/api";
-import { chooseEngine, engineFlag, engineOverride, type Engine } from "@/lib/aylaVoice/engine";
+import { engineChoice, type Engine } from "@/lib/aylaVoice/engine";
 import { phoneProblem, websiteProblem, websiteValue, type VoiceForm } from "@/lib/aylaVoice/form";
 import { submitAylaForm } from "@/lib/aylaVoice/submit";
 
@@ -142,8 +142,16 @@ export default function Ayla() {
   const [showCallModal, setShowCallModal] = useState(false);
   const { toast } = useToast();
   const [callModalKey, setCallModalKey] = useState(0);
-  // Which engine runs the call: the build flag, a tester's ?ayla_voice=, and the server's status (Vapi otherwise).
+  // Which engine runs the call: the brain while Ayla's server says it is available, Vapi otherwise;
+  // ?ayla_voice=vapi forces Vapi (lib/aylaVoice/engine.ts). Asked once, when the visitor starts the form.
   const [engine, setEngine] = useState<Engine>("vapi");
+  const chooseEngineRef = useRef<(() => Promise<Engine>) | null>(null);
+  const pickEngine = () => {
+    chooseEngineRef.current ??= engineChoice(window.location.search, () =>
+      voiceApi(VOICE_API, { fetch: window.fetch.bind(window) }).status(),
+    );
+    return chooseEngineRef.current();
+  };
   const [voiceForm, setVoiceForm] = useState<VoiceForm | null>(null);
   // The intake from Ayla's server (Q2): a secret like the call token, kept in memory only.
   const intakeRef = useRef<string>("");
@@ -154,16 +162,6 @@ export default function Ayla() {
     intakeRef.current = r.intake;
     return r.intake;
   };
-  useEffect(() => {
-    const wanted = engineOverride(window.location.search) ?? engineFlag(import.meta.env.VITE_AYLA_VOICE_ENGINE);
-    let live = true;
-    void chooseEngine(wanted, () => voiceApi(VOICE_API, { fetch: window.fetch.bind(window) }).status()).then((e) => {
-      if (live) setEngine(e);
-    });
-    return () => {
-      live = false;
-    };
-  }, []);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   // Start fetching Daily's call-machine bundle now, while the visitor is still
@@ -229,8 +227,11 @@ export default function Ayla() {
     try {
       // Vapi: today's path (CRM intake). Brain (Q2): the form goes to Ayla's server, which saves the CRM contact;
       // the site keeps its own record outside the CRM. Ayla's server down: today's path (lib/aylaVoice/submit.ts).
+      // Usually already answered (asked on the form's first focus); at most STATUS_TIMEOUT_MS otherwise.
+      const chosen = await pickEngine();
+      setEngine(chosen);
       const outcome = await submitAylaForm(values, {
-        engine,
+        engine: chosen,
         hp: document.querySelector<HTMLInputElement>('input[data-crm-form="website-ayla"]')?.value ?? "",
         intake: (f) => voiceApi(VOICE_API, { fetch: window.fetch.bind(window) }).intake({ form: f, page: window.location.pathname }),
         saveWithCrm: async (body) => {
@@ -373,6 +374,7 @@ export default function Ayla() {
               <div className="bg-card rounded-xl shadow-lg p-8 border">
                 <Form {...form}>
                   <form
+                    onFocus={() => void pickEngine()}
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="space-y-6"
                   >

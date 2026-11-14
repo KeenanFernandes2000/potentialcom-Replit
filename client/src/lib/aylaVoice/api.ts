@@ -1,6 +1,7 @@
 // client/src/lib/aylaVoice/api.ts
 import type { VoiceForm } from "./form";
 import type { CodeResult, Notice, ServerEvent } from "./protocol";
+import { STATUS_TIMEOUT_MS } from "./engine";
 import { createEventParser } from "./sse";
 
 // The voice button's endpoints on agents.potential.com (plan B' Task 19, and
@@ -42,7 +43,7 @@ export function voiceApi(base: string, d: ApiDeps): VoiceApi {
   return {
     async status() {
       try {
-        const r = await d.fetch(url("status"), { signal: AbortSignal.timeout(d.statusTimeoutMs ?? 2000) });
+        const r = await d.fetch(url("status"), { signal: AbortSignal.timeout(d.statusTimeoutMs ?? STATUS_TIMEOUT_MS) });
         if (!r.ok) return false;
         return (await r.json())?.available === true;
       } catch {
