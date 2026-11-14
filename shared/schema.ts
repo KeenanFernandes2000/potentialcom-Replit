@@ -142,16 +142,22 @@ export const veraConsultationSchema = createInsertSchema(veraConsultations).pick
   companyWebsite: true,
 });
 
-export const aylaConsultationSchema = createInsertSchema(aylaConsultations).pick({
-  firstName: true,
-  lastName: true,
-  email: true,
-  phoneNumber: true,
-  countryCode: true,
-  companyName: true,
-  companyWebsite: true,
-  role: true,
-});
+export const aylaConsultationSchema = createInsertSchema(aylaConsultations)
+  .pick({
+    firstName: true,
+    lastName: true,
+    email: true,
+    phoneNumber: true,
+    countryCode: true,
+    companyName: true,
+    companyWebsite: true,
+    role: true,
+  })
+  .extend({
+    // The /ayla form (14 Nov): phone optional. The columns stay NOT NULL, so "no phone" is stored as "".
+    phoneNumber: z.string().max(20).default(""),
+    countryCode: z.string().max(10).default(""),
+  });
 
 export const inquireConsultationSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
