@@ -2,7 +2,7 @@
 import { describe, expect, it } from "vitest";
 import type { StartResult, VoiceApi } from "./api";
 import {
-  CONNECT_TIMEOUT_MS, startVoiceCall, type CallDeps, type CallFailure, type CallHandlers, type PeerLike, type SenderLike, type StreamLike, type TrackLike,
+  CONNECT_TIMEOUT_MS, END_WAIT_MS, startVoiceCall, withEndTracking, type CallDeps, type CallFailure, type CallHandlers, type PeerLike, type SenderLike, type StreamLike, type TrackLike,
 } from "./call";
 import type { ServerEvent } from "./protocol";
 
@@ -51,7 +51,7 @@ class FakePeer implements PeerLike {
   }
 }
 
-function setup(o: { mic?: "denied"; start?: StartResult | StartResult[]; renew?: string | null } = {}) {
+function setup(o: { mic?: "denied"; start?: StartResult | StartResult[]; renew?: string | null; silentRetry?: boolean; waitFor?: Promise<unknown> } = {}) {
   const order: string[] = [];
   const peers: FakePeer[] = [];
   const timers: Array<{ fn: () => void; ms: number; cancelled: boolean }> = [];
@@ -89,7 +89,8 @@ function setup(o: { mic?: "denied"; start?: StartResult | StartResult[]; renew?:
     api,
     setTimeout: (fn, ms) => { timers.push({ fn, ms, cancelled: false }); return timers.length - 1; },
     clearTimeout: (id) => { timers[id as number]!.cancelled = true; },
-    renewIntake: async () => { calls.push(["renew", null]); return o.renew === undefined ? FRESH : o.renew; },
+    ...(o.silentRetry ? {} : { renewIntake: async () => { calls.push(["renew", null]); return o.renew === undefined ? FRESH : o.renew; } }),
+    ...(o.waitFor ? { waitFor: o.waitFor } : {}),
   };
   const handlers: CallHandlers = {
     onStatus: (s) => status.push(s),
@@ -217,5 +218,61 @@ describe("startVoiceCall", () => {
     call.setMuted(true);
     expect(await call.switchMicrophone("dev-2")).toBe(true);
     expect(t.peers[0]!.senders[0]!.track!.enabled).toBe(false);
+  });
+});
+
+describe("the final contract (potential-ai f1cbfb7): ending and the one silent retry", () => {
+  it("WebRTC 'disconnected' (about 7 s late after a hang-up) ends nothing; the server's ended event ends at once; a later 'failed' is ignored", async () => {
+    const t = setup();
+    await startVoiceCall(t.deps, INTAKE, t.handlers);
+    const p = t.peers[0]!;
+    p.connect();
+    p.connectionState = "disconnected";
+    p.onconnectionstatechange?.();
+    expect(t.status.at(-1)).toBe("connected");
+    expect(p.closed).toBe(false);
+    expect(t.failures).toEqual([]);
+    t.push({ type: "ended", reason: "ayla_ended" });
+    expect(t.status.at(-1)).toBe("ended");
+    expect(p.closed).toBe(true);
+    p.connectionState = "failed";
+    p.onconnectionstatechange?.();
+    expect(t.failures).toEqual([]);
+    expect(t.calls.filter(([k]) => k === "end")).toEqual([]);
+  });
+  it("the silent retry reuses the intake and never mints a new conversation: its 409 is final", async () => {
+    const t = setup({ silentRetry: true, start: [{ ok: false, error: "intake_used" }] });
+    expect(await startVoiceCall(t.deps, INTAKE, t.handlers)).toBeNull();
+    expect(t.calls.filter(([k]) => k === "start" || k === "renew")).toEqual([["start", { sdp: OFFER, intake: INTAKE }]]);
+    expect(t.failures).toEqual([{ kind: "start", error: "intake_used" }]);
+  });
+  it("the retry's /session waits for the failed call's /end (the server only waits for a call already ending)", async () => {
+    let sent!: () => void;
+    const t = setup({ silentRetry: true, waitFor: new Promise<void>((r) => (sent = r)) });
+    const started = startVoiceCall(t.deps, INTAKE, t.handlers);
+    await new Promise((r) => setTimeout(r, 5));
+    expect(kinds(t.calls)).not.toContain("start");
+    sent();
+    expect(await started).not.toBeNull();
+    expect(kinds(t.calls)).toContain("start");
+  });
+  it("a /end that never answers holds the retry END_WAIT_MS at most", async () => {
+    const t = setup({ silentRetry: true, waitFor: new Promise<void>(() => {}) });
+    const started = startVoiceCall(t.deps, INTAKE, t.handlers);
+    await new Promise((r) => setTimeout(r, 5));
+    const cap = t.timers.find((x) => x.ms === END_WAIT_MS)!;
+    expect(cap).toBeDefined();
+    cap.fn();
+    expect(await started).not.toBeNull();
+  });
+  it("withEndTracking hands the page every /end the call runner sends", async () => {
+    const t = setup();
+    const seen: Array<Promise<void>> = [];
+    t.deps.api = withEndTracking(t.deps.api, (p) => seen.push(p));
+    await startVoiceCall(t.deps, INTAKE, t.handlers);
+    t.timers[0]!.fn();
+    expect(seen).toHaveLength(1);
+    await seen[0];
+    expect(t.calls.filter(([k]) => k === "end")).toEqual([["end", TOKEN]]);
   });
 });

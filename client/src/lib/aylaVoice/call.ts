@@ -34,8 +34,17 @@ export interface CallDeps {
   api: VoiceApi;
   setTimeout(fn: () => void, ms: number): unknown;
   clearTimeout(id: unknown): void;
-  /** Posts the form to /voice/intake again (the intake expired, or its call already took place); null when that failed. */
-  renewIntake(): Promise<string | null>;
+  /**
+   * Posts the form to /voice/intake again (the intake expired, or its call already took place); null when that failed.
+   * Left out for the page's silent retry: one intake starts at most two calls, sharing one conversation, so the
+   * retry's 409 is final and never becomes a new conversation (potential-ai f1cbfb7).
+   */
+  renewIntake?(): Promise<string | null>;
+  /**
+   * The failed call's /end, for a retry: the server waits for a call that is already ending, so the retry's
+   * /session goes only once that /end has answered (at most END_WAIT_MS).
+   */
+  waitFor?: Promise<unknown>;
 }
 export type CallStatus = "mic" | "connecting" | "connected" | "ended";
 export type CallFailure = { kind: "mic"; name: string } | { kind: "start"; error: StartError } | { kind: "connect" } | { kind: "dropped" };
@@ -58,6 +67,20 @@ export interface VoiceCall {
 
 /** Media must connect within this after the answer, or the call is given up (the server gives up at 15 s too). */
 export const CONNECT_TIMEOUT_MS = 15_000;
+/** The longest a retry waits for the failed call's /end before its /session (the server waits up to 10 s itself). */
+export const END_WAIT_MS = 3_000;
+
+/** The same API, telling the page about each /end it sends (so a retry can wait for it). */
+export function withEndTracking(api: VoiceApi, onEnd: (sent: Promise<void>) => void): VoiceApi {
+  return {
+    ...api,
+    end(token) {
+      const sent = api.end(token);
+      onEnd(sent);
+      return sent;
+    },
+  };
+}
 export const MIC_CONSTRAINTS = Object.freeze({ echoCancellation: true, noiseSuppression: true, autoGainControl: true });
 
 export async function startVoiceCall(d: CallDeps, intake: string, h: CallHandlers): Promise<VoiceCall | null> {
@@ -132,9 +155,14 @@ export async function startVoiceCall(d: CallDeps, intake: string, h: CallHandler
     const offer = await pc.createOffer();
     await pc.setLocalDescription(offer);
     const sdp = offer.sdp ?? "";
+    if (d.waitFor) {
+      let cap: unknown = null;
+      await Promise.race([d.waitFor.catch(() => {}), new Promise<void>((done) => (cap = d.setTimeout(done, END_WAIT_MS)))]);
+      d.clearTimeout(cap);
+    }
     let r = await d.api.start({ sdp, intake });
     // 404 intake_not_found / 409 intake_used: one fresh intake, then the same offer again (no session was created).
-    if (!r.ok && (r.error === "intake_not_found" || r.error === "intake_used")) {
+    if (!r.ok && (r.error === "intake_not_found" || r.error === "intake_used") && d.renewIntake) {
       const fresh = await d.renewIntake();
       if (fresh) r = await d.api.start({ sdp, intake: fresh });
     }
