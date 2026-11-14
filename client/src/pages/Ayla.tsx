@@ -30,6 +30,14 @@ import veraAvatarCentered from "@assets/Vera Avatar Centered.png";
 import { Check, Search, Users, Calendar, MessageSquare } from "lucide-react";
 import { AutoSEO } from "@/components/SEO";
 import { AylaCallModal } from "@/components/AylaCallModal";
+import { AylaVoiceModal } from "@/components/AylaVoiceModal";
+import { joinPhone } from "@shared/phone";
+import { voiceApi } from "@/lib/aylaVoice/api";
+import { chooseEngine, engineFlag, engineOverride, type Engine } from "@/lib/aylaVoice/engine";
+import { phoneProblem, voiceFormFrom, websiteProblem, websiteValue, type VoiceForm } from "@/lib/aylaVoice/form";
+
+/** Ayla's brain for the voice button (plan B'); the default is the production host. */
+const VOICE_API = import.meta.env.VITE_AYLA_VOICE_API || "https://agents.potential.com";
 import { warmVoiceCall } from "@/lib/warm-voice";
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
 import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
@@ -91,30 +99,25 @@ const clientLogos = [
 
 import _9 from "@assets/9.png";
 
-const formSchema = z.object({
-  firstName: z.string().min(1, "First name is required"),
-  lastName: z.string().min(1, "Last name is required"),
-  email: z.string().email("Please enter a valid email address"),
-  phoneNumber: z.string().min(1, "Phone number is required"),
-  countryCode: z.string().min(1, "Please select a country code"),
-  companyName: z.string().min(1, "Company name is required"),
-  companyWebsite: z
-    .string()
-    .refine((val) => {
-      if (!val || val.trim() === "" || val.trim() === "https://") {
-        return false;
-      }
-      try {
-        new URL(val);
-        return true;
-      } catch {
-        return false;
-      }
-    }, "Please enter a valid website URL")
-    .optional()
-    .or(z.literal("")),
-  role: z.string().min(1, "Role is required"),
-});
+// The short form (14 Nov, Mamoon): names, work email, organisation and role; phone and website optional. A phone
+// typed without + or 00 needs its country code (lib/aylaVoice/form.ts holds the rules, tested with bun).
+const formSchema = z
+  .object({
+    firstName: z.string().trim().min(1, "First name is required").max(100),
+    lastName: z.string().trim().min(1, "Last name is required").max(100),
+    email: z.string().trim().email("Please enter a valid work email"),
+    phoneNumber: z.string().max(20),
+    countryCode: z.string().max(10),
+    companyName: z.string().trim().min(1, "Organisation is required").max(255),
+    companyWebsite: z.string().max(255),
+    role: z.string().trim().min(1, "Role is required").max(100),
+  })
+  .superRefine((v, ctx) => {
+    const phone = phoneProblem(v.countryCode, v.phoneNumber);
+    if (phone) ctx.addIssue({ code: z.ZodIssueCode.custom, path: [phone.field], message: phone.message });
+    const site = websiteProblem(v.companyWebsite);
+    if (site) ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["companyWebsite"], message: site });
+  });
 
 type FormData = z.infer<typeof formSchema>;
 
@@ -136,6 +139,19 @@ export default function Ayla() {
   const [showCallModal, setShowCallModal] = useState(false);
   const { toast } = useToast();
   const [callModalKey, setCallModalKey] = useState(0);
+  // Which engine runs the call: the build flag, a tester's ?ayla_voice=, and the server's status (Vapi otherwise).
+  const [engine, setEngine] = useState<Engine>("vapi");
+  const [voiceForm, setVoiceForm] = useState<VoiceForm | null>(null);
+  useEffect(() => {
+    const wanted = engineOverride(window.location.search) ?? engineFlag(import.meta.env.VITE_AYLA_VOICE_ENGINE);
+    let live = true;
+    void chooseEngine(wanted, () => voiceApi(VOICE_API, { fetch: window.fetch.bind(window) }).status()).then((e) => {
+      if (live) setEngine(e);
+    });
+    return () => {
+      live = false;
+    };
+  }, []);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   // Start fetching Daily's call-machine bundle now, while the visitor is still
@@ -205,7 +221,8 @@ export default function Ayla() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values),
+        // The website box's lone "https://" is no website.
+        body: JSON.stringify({ ...values, companyWebsite: websiteValue(values.companyWebsite) }),
       });
 
       toast({
@@ -215,16 +232,18 @@ export default function Ayla() {
       });
 
       // Capture user info BEFORE resetting the form
+      // The country code stays with the phone (it was dropped before 14 Nov).
       setCallUser({
         firstName: values.firstName,
         lastName: values.lastName,
         email: values.email,
-        phoneNumber: values.phoneNumber,
+        phoneNumber: joinPhone(values.countryCode, values.phoneNumber) ?? "",
         companyName: values.companyName,
-        website: values.companyWebsite || "",
-        companyWebsite: values.companyWebsite || "",
+        website: websiteValue(values.companyWebsite),
+        companyWebsite: websiteValue(values.companyWebsite),
         role: values.role,
       });
+      setVoiceForm(voiceFormFrom(values));
 
       setShowCallModal(true);
       form.reset();
@@ -367,7 +386,7 @@ export default function Ayla() {
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Email Address</FormLabel>
+                          <FormLabel>Work Email</FormLabel>
                           <FormControl>
                             <Input
                               type="email"
@@ -418,7 +437,7 @@ export default function Ayla() {
                           name="phoneNumber"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Phone Number</FormLabel>
+                              <FormLabel>Phone (optional)</FormLabel>
                               <FormControl>
                                 <Input
                                   placeholder="Enter your phone number"
@@ -437,10 +456,10 @@ export default function Ayla() {
                       name="companyName"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Company Name</FormLabel>
+                          <FormLabel>Organisation</FormLabel>
                           <FormControl>
                             <Input
-                              placeholder="Enter your company name"
+                              placeholder="Enter your organisation"
                               {...field}
                             />
                           </FormControl>
@@ -454,7 +473,7 @@ export default function Ayla() {
                       name="companyWebsite"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Company Website</FormLabel>
+                          <FormLabel>Website (optional)</FormLabel>
                           <FormControl>
                             <Input
                               placeholder="https://yourcompany.com"
@@ -690,13 +709,24 @@ export default function Ayla() {
         </section>
       </main>
       <Footer />
-      <AylaCallModal
-        key={callModalKey}
-        isOpen={showCallModal}
-        onClose={() => setShowCallModal(false)}
-        user={callUser}
-        onRemount={() => setCallModalKey((k) => k + 1)}
-      />
+      {engine === "brain" && voiceForm ? (
+        <AylaVoiceModal
+          key={callModalKey}
+          isOpen={showCallModal}
+          onClose={() => setShowCallModal(false)}
+          form={voiceForm}
+          apiBase={VOICE_API}
+          onRemount={() => setCallModalKey((k) => k + 1)}
+        />
+      ) : (
+        <AylaCallModal
+          key={callModalKey}
+          isOpen={showCallModal}
+          onClose={() => setShowCallModal(false)}
+          user={callUser}
+          onRemount={() => setCallModalKey((k) => k + 1)}
+        />
+      )}
     </div>
   );
 }
