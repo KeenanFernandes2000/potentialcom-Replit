@@ -8,7 +8,8 @@ import type { ServerEvent } from "./protocol";
 
 const TOKEN = "t".repeat(43);
 const OFFER = "v=0\r\nm=audio 9 UDP/TLS/RTP/SAVPF 111\r\n";
-const FORM = { firstName: "Mona", lastName: "Haddad", email: "mona@example.com", organisation: "Acme", role: "CEO", phone: "+971 544043860" };
+const INTAKE = "i".repeat(43);
+const FRESH = "f".repeat(43);
 
 class FakeTrack implements TrackLike {
   kind = "audio";
@@ -50,7 +51,7 @@ class FakePeer implements PeerLike {
   }
 }
 
-function setup(o: { mic?: "denied"; start?: StartResult } = {}) {
+function setup(o: { mic?: "denied"; start?: StartResult | StartResult[]; renew?: string | null } = {}) {
   const order: string[] = [];
   const peers: FakePeer[] = [];
   const timers: Array<{ fn: () => void; ms: number; cancelled: boolean }> = [];
@@ -63,7 +64,13 @@ function setup(o: { mic?: "denied"; start?: StartResult } = {}) {
   const mic = new FakeStream([new FakeTrack("mic1")]);
   const api: VoiceApi = {
     status: async () => true,
-    start: async (i) => { order.push("start"); calls.push(["start", i]); return o.start ?? { ok: true, answer: "v=0\r\nANSWER", token: TOKEN, maxSeconds: 600 }; },
+    intake: async () => ({ ok: true, intake: FRESH }),
+    start: async (i) => {
+      order.push("start");
+      calls.push(["start", i]);
+      const ok: StartResult = { ok: true, answer: "v=0\r\nANSWER", token: TOKEN, maxSeconds: 600 };
+      return (Array.isArray(o.start) ? o.start.shift() : o.start) ?? ok;
+    },
     ready: async (t) => { calls.push(["ready", t]); return true; },
     events: (t, fn) => { calls.push(["events", t]); push = fn; return new Promise<void>(() => {}); },
     code: async (t, c) => { calls.push(["code", [t, c]]); return "verified"; },
@@ -82,7 +89,7 @@ function setup(o: { mic?: "denied"; start?: StartResult } = {}) {
     api,
     setTimeout: (fn, ms) => { timers.push({ fn, ms, cancelled: false }); return timers.length - 1; },
     clearTimeout: (id) => { timers[id as number]!.cancelled = true; },
-    page: "/ayla",
+    renewIntake: async () => { calls.push(["renew", null]); return o.renew === undefined ? FRESH : o.renew; },
   };
   const handlers: CallHandlers = {
     onStatus: (s) => status.push(s),
@@ -98,20 +105,20 @@ const kinds = (calls: Array<[string, unknown]>) => calls.map(([k]) => k);
 describe("startVoiceCall", () => {
   it("asks for the microphone first; a refusal creates no peer and no call", async () => {
     const t = setup({ mic: "denied" });
-    expect(await startVoiceCall(t.deps, FORM, t.handlers)).toBeNull();
+    expect(await startVoiceCall(t.deps, INTAKE, t.handlers)).toBeNull();
     expect(t.failures).toEqual([{ kind: "mic", name: "NotAllowedError" }]);
     expect(t.order).toEqual(["getUserMedia"]);
   });
-  it("then an audio-only offer (no data channel) with the form; the answer applied; ready and events once media is connected", async () => {
+  it("then an audio-only offer (no data channel) with the intake; the answer applied; ready and events once media is connected", async () => {
     const t = setup();
-    const call = await startVoiceCall(t.deps, FORM, t.handlers);
+    const call = await startVoiceCall(t.deps, INTAKE, t.handlers);
     expect(call).not.toBeNull();
     expect(t.order).toEqual(["getUserMedia", "createPeer", "start"]);
     expect(t.calls[0]).toEqual(["getUserMedia", { audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } }]);
     const p = t.peers[0]!;
     expect(p.added.map((x) => x.id)).toEqual(["mic1"]);
     expect(p.dataChannels).toBe(0);
-    expect(t.calls.find(([k]) => k === "start")![1]).toEqual({ sdp: OFFER, form: FORM, page: "/ayla" });
+    expect(t.calls.find(([k]) => k === "start")![1]).toEqual({ sdp: OFFER, intake: INTAKE });
     expect(p.remote).toBe("v=0\r\nANSWER");
     expect(t.status).toEqual(["mic", "connecting"]);
     expect(kinds(t.calls)).not.toContain("ready");
@@ -124,7 +131,7 @@ describe("startVoiceCall", () => {
   });
   it("no media within 15 s: the server is told, everything stops, the failure is connect", async () => {
     const t = setup();
-    await startVoiceCall(t.deps, FORM, t.handlers);
+    await startVoiceCall(t.deps, INTAKE, t.handlers);
     t.timers[0]!.fn();
     expect(t.failures).toEqual([{ kind: "connect" }]);
     expect(t.calls.filter(([k]) => k === "end")).toEqual([["end", TOKEN]]);
@@ -133,14 +140,32 @@ describe("startVoiceCall", () => {
   });
   it("the server refuses the start: failure start with its reason, the microphone released", async () => {
     const t = setup({ start: { ok: false, error: "busy" } });
-    expect(await startVoiceCall(t.deps, FORM, t.handlers)).toBeNull();
+    expect(await startVoiceCall(t.deps, INTAKE, t.handlers)).toBeNull();
     expect(t.failures).toEqual([{ kind: "start", error: "busy" }]);
     expect(t.mic.tracks[0]!.stopped).toBe(true);
     expect(t.peers[0]!.closed).toBe(true);
   });
+  it("an unknown or used intake (Q2: 404, 409) is renewed once with the form, then the call starts on the new one", async () => {
+    for (const error of ["intake_not_found", "intake_used"] as const) {
+      const t = setup({ start: [{ ok: false, error }] });
+      expect(await startVoiceCall(t.deps, INTAKE, t.handlers)).not.toBeNull();
+      expect(t.calls.filter(([k]) => k === "start" || k === "renew")).toEqual([["start", { sdp: OFFER, intake: INTAKE }], ["renew", null], ["start", { sdp: OFFER, intake: FRESH }]]);
+      expect(t.failures).toEqual([]);
+    }
+  });
+  it("no new intake, or the new one refused too: failure start, the microphone released", async () => {
+    const t = setup({ start: [{ ok: false, error: "intake_not_found" }], renew: null });
+    expect(await startVoiceCall(t.deps, INTAKE, t.handlers)).toBeNull();
+    expect(t.failures).toEqual([{ kind: "start", error: "intake_not_found" }]);
+    expect(t.mic.tracks[0]!.stopped).toBe(true);
+    const u = setup({ start: [{ ok: false, error: "intake_used" }, { ok: false, error: "intake_used" }] });
+    expect(await startVoiceCall(u.deps, INTAKE, u.handlers)).toBeNull();
+    expect(u.calls.filter(([k]) => k === "renew")).toHaveLength(1);
+    expect(u.failures).toEqual([{ kind: "start", error: "intake_used" }]);
+  });
   it("the server's ended event stops everything", async () => {
     const t = setup();
-    await startVoiceCall(t.deps, FORM, t.handlers);
+    await startVoiceCall(t.deps, INTAKE, t.handlers);
     t.peers[0]!.connect();
     t.push({ type: "ended", reason: "ayla_ended" });
     expect(t.status.at(-1)).toBe("ended");
@@ -149,7 +174,7 @@ describe("startVoiceCall", () => {
   });
   it("a connection that fails after connecting is a drop; the server is told", async () => {
     const t = setup();
-    await startVoiceCall(t.deps, FORM, t.handlers);
+    await startVoiceCall(t.deps, INTAKE, t.handlers);
     const p = t.peers[0]!;
     p.connect();
     p.connectionState = "failed";
@@ -159,21 +184,21 @@ describe("startVoiceCall", () => {
   });
   it("end() posts /end and stops (once); a page hide sends the beacon", async () => {
     const t = setup();
-    const call = (await startVoiceCall(t.deps, FORM, t.handlers))!;
+    const call = (await startVoiceCall(t.deps, INTAKE, t.handlers))!;
     t.peers[0]!.connect();
     await call.end();
     await call.end();
     expect(t.calls.filter(([k]) => k === "end")).toEqual([["end", TOKEN]]);
     expect(t.status.at(-1)).toBe("ended");
     const u = setup();
-    const other = (await startVoiceCall(u.deps, FORM, u.handlers))!;
+    const other = (await startVoiceCall(u.deps, INTAKE, u.handlers))!;
     other.endOnPageHide();
     expect(u.calls.filter(([k]) => k === "beacon")).toEqual([["beacon", TOKEN]]);
     expect(u.peers[0]!.closed).toBe(true);
   });
   it("mute, switching the microphone, the typed code and notices", async () => {
     const t = setup();
-    const call = (await startVoiceCall(t.deps, FORM, t.handlers))!;
+    const call = (await startVoiceCall(t.deps, INTAKE, t.handlers))!;
     t.peers[0]!.connect();
     call.setMuted(true);
     expect(t.mic.tracks[0]!.enabled).toBe(false);
@@ -187,7 +212,7 @@ describe("startVoiceCall", () => {
   });
   it("a muted call stays muted on the new microphone (deviation from the plan)", async () => {
     const t = setup();
-    const call = (await startVoiceCall(t.deps, FORM, t.handlers))!;
+    const call = (await startVoiceCall(t.deps, INTAKE, t.handlers))!;
     t.peers[0]!.connect();
     call.setMuted(true);
     expect(await call.switchMicrophone("dev-2")).toBe(true);

@@ -22,7 +22,12 @@ interface Props {
   onClose: () => void;
   /** Remounts the modal (a fresh attempt after a microphone problem). */
   onRemount: () => void;
+  /** The form as Ayla's server received it (the demo panels use it). */
   form: VoiceForm;
+  /** The current intake from /voice/intake (the page owns it, so a remount keeps it). */
+  getIntake: () => string;
+  /** Posts the form to /voice/intake again; the new intake, or null. */
+  renewIntake: () => Promise<string | null>;
   /** VITE_AYLA_VOICE_API. */
   apiBase: string;
 }
@@ -34,6 +39,8 @@ const START_CARDS: Record<string, Card> = {
   bad_request: { title: "We couldn't start the call.", detail: "Please check your details and try again, or book a session with a consultant." },
   unavailable: { title: "We couldn't start the call.", detail: "Ayla is briefly unavailable. Book a session with a consultant and we'll pick it up from there." },
   network: { title: "We couldn't reach Ayla.", detail: "That is usually the network or a firewall. Try again, or book a session with a consultant." },
+  intake_not_found: { title: "We couldn't start the call.", detail: "Please send the form again, or book a session with a consultant." },
+  intake_used: { title: "We couldn't start the call.", detail: "Please send the form again, or book a session with a consultant." },
 };
 function failureCard(f: Exclude<CallFailure, { kind: "mic" }>): Card {
   if (f.kind === "start") return START_CARDS[f.error] ?? START_CARDS.unavailable!;
@@ -41,7 +48,7 @@ function failureCard(f: Exclude<CallFailure, { kind: "mic" }>): Card {
   return { title: "The connection dropped.", detail: "This is usually the network. Start the call again, or book a session instead." };
 }
 
-export function AylaVoiceModal({ isOpen, onClose, onRemount, form, apiBase }: Props) {
+export function AylaVoiceModal({ isOpen, onClose, onRemount, form, getIntake, renewIntake, apiBase }: Props) {
   const [status, setStatus] = useState<CallStatus | "idle">("idle");
   const [view, setView] = useState<CallView>(INITIAL_VIEW);
   const [micError, setMicError] = useState<string | null>(null);
@@ -62,9 +69,9 @@ export function AylaVoiceModal({ isOpen, onClose, onRemount, form, apiBase }: Pr
   const mutedRef = useRef(false);
   // Read through refs so the call effect is keyed on isOpen and attempt only (as in the Vapi modal).
   const onCloseRef = useRef(onClose);
-  const formRef = useRef(form);
+  const intakeRef = useRef({ getIntake, renewIntake });
   onCloseRef.current = onClose;
-  formRef.current = form;
+  intakeRef.current = { getIntake, renewIntake };
 
   /** The microphone's level, every 500 ms: 10 s under the noise floor shows the warning and the device list. */
   const watchMicrophone = () => {
@@ -154,9 +161,9 @@ export function AylaVoiceModal({ isOpen, onClose, onRemount, form, apiBase }: Pr
         api,
         setTimeout: (fn, ms) => window.setTimeout(fn, ms),
         clearTimeout: (id) => window.clearTimeout(id as number),
-        page: window.location.pathname,
+        renewIntake: () => intakeRef.current.renewIntake(),
       },
-      formRef.current,
+      intakeRef.current.getIntake(),
       {
         onStatus: (s) => {
           if (cancelled) return;

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { CrmHoneypot } from "@/components/CrmHoneypot";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -34,10 +34,13 @@ import { AylaVoiceModal } from "@/components/AylaVoiceModal";
 import { joinPhone } from "@shared/phone";
 import { voiceApi } from "@/lib/aylaVoice/api";
 import { chooseEngine, engineFlag, engineOverride, type Engine } from "@/lib/aylaVoice/engine";
-import { phoneProblem, voiceFormFrom, websiteProblem, websiteValue, type VoiceForm } from "@/lib/aylaVoice/form";
+import { phoneProblem, websiteProblem, websiteValue, type VoiceForm } from "@/lib/aylaVoice/form";
+import { submitAylaForm } from "@/lib/aylaVoice/submit";
 
 /** Ayla's brain for the voice button (plan B'); the default is the production host. */
 const VOICE_API = import.meta.env.VITE_AYLA_VOICE_API || "https://agents.potential.com";
+/** The site's own record of a brain-path form, outside the CRM intake (server/ayla-voice-consultation.ts). */
+const VOICE_CONSULTATION_PATH = "/api/ayla/voice-consultation";
 import { warmVoiceCall } from "@/lib/warm-voice";
 import adgmLogo from "@assets/Customer Logos/ADGM logo.png";
 import airbusLogo from "@assets/Customer Logos/Airbus Logo.png";
@@ -142,6 +145,15 @@ export default function Ayla() {
   // Which engine runs the call: the build flag, a tester's ?ayla_voice=, and the server's status (Vapi otherwise).
   const [engine, setEngine] = useState<Engine>("vapi");
   const [voiceForm, setVoiceForm] = useState<VoiceForm | null>(null);
+  // The intake from Ayla's server (Q2): a secret like the call token, kept in memory only.
+  const intakeRef = useRef<string>("");
+  const renewIntake = async (): Promise<string | null> => {
+    if (!voiceForm) return null;
+    const r = await voiceApi(VOICE_API, { fetch: window.fetch.bind(window) }).intake({ form: voiceForm, page: window.location.pathname });
+    if (!r.ok) return null;
+    intakeRef.current = r.intake;
+    return r.intake;
+  };
   useEffect(() => {
     const wanted = engineOverride(window.location.search) ?? engineFlag(import.meta.env.VITE_AYLA_VOICE_ENGINE);
     let live = true;
@@ -215,15 +227,36 @@ export default function Ayla() {
   const onSubmit = async (values: FormData) => {
     setIsSubmitting(true);
     try {
-      // Submit to database
-      await apiRequest("/api/ayla/consultation", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      // Vapi: today's path (CRM intake). Brain (Q2): the form goes to Ayla's server, which saves the CRM contact;
+      // the site keeps its own record outside the CRM. Ayla's server down: today's path (lib/aylaVoice/submit.ts).
+      const outcome = await submitAylaForm(values, {
+        engine,
+        hp: document.querySelector<HTMLInputElement>('input[data-crm-form="website-ayla"]')?.value ?? "",
+        intake: (f) => voiceApi(VOICE_API, { fetch: window.fetch.bind(window) }).intake({ form: f, page: window.location.pathname }),
+        saveWithCrm: async (body) => {
+          await apiRequest("/api/ayla/consultation", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(body),
+          });
         },
-        // The website box's lone "https://" is no website.
-        body: JSON.stringify({ ...values, companyWebsite: websiteValue(values.companyWebsite) }),
+        saveLocal: async (body) => {
+          await apiRequest(VOICE_CONSULTATION_PATH, { method: "POST", body: JSON.stringify(body) });
+        },
       });
+      if (outcome.kind === "ignored") {
+        form.reset();
+        return;
+      }
+      if (outcome.kind === "brain") {
+        intakeRef.current = outcome.intake;
+        setVoiceForm(outcome.form);
+      } else {
+        // The fallback ran today's path: this visit's call is Vapi's.
+        setEngine("vapi");
+      }
 
       toast({
         title: "Welcome to Ayla!",
@@ -243,7 +276,6 @@ export default function Ayla() {
         companyWebsite: websiteValue(values.companyWebsite),
         role: values.role,
       });
-      setVoiceForm(voiceFormFrom(values));
 
       setShowCallModal(true);
       form.reset();
@@ -715,6 +747,8 @@ export default function Ayla() {
           isOpen={showCallModal}
           onClose={() => setShowCallModal(false)}
           form={voiceForm}
+          getIntake={() => intakeRef.current}
+          renewIntake={renewIntake}
           apiBase={VOICE_API}
           onRemount={() => setCallModalKey((k) => k + 1)}
         />

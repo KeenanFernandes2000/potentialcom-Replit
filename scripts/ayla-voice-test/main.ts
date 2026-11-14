@@ -33,6 +33,11 @@ $("start").onclick = async () => {
     firstName: val("firstName"), lastName: val("lastName"), email: val("email"), countryCode: val("countryCode"), phoneNumber: val("phoneNumber"),
     companyName: val("organisation"), companyWebsite: val("website"), role: val("role"),
   });
+  // Q2: the form goes to Ayla's server first (the CRM Voice upsert); the call starts on the intake it returns.
+  const page = "/ayla";
+  const first = await api.intake({ form, page });
+  log(`intake: ${first.ok ? "ok" : first.error}`);
+  if (!first.ok) return;
   view = INITIAL_VIEW;
   render();
   call = await startVoiceCall(
@@ -42,9 +47,13 @@ $("start").onclick = async () => {
       api,
       setTimeout: (fn, ms) => window.setTimeout(fn, ms),
       clearTimeout: (id) => window.clearTimeout(id as number),
-      page: "/ayla",
+      renewIntake: async () => {
+        const r = await api.intake({ form, page });
+        log(`intake renewed: ${r.ok ? "ok" : r.error}`);
+        return r.ok ? r.intake : null;
+      },
     },
-    form,
+    first.intake,
     {
       onStatus: (s) => log(`status: ${s}`),
       onMicStream: () => log("microphone granted"),

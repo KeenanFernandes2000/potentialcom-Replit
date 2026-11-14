@@ -3,16 +3,22 @@ import type { VoiceForm } from "./form";
 import type { CodeResult, Notice, ServerEvent } from "./protocol";
 import { createEventParser } from "./sse";
 
-// The voice button's endpoints on agents.potential.com (plan B' Task 19). The
-// call token goes only in POST bodies. Errors never throw out of here except
-// from events() (the caller decides whether a lost stream matters).
+// The voice button's endpoints on agents.potential.com (plan B' Task 19, and
+// the spec's "Form intake" contract, Q2). The intake and the call token go
+// only in POST bodies. Errors never throw out of here except from events()
+// (the caller decides whether a lost stream matters).
 
-export type StartError = "bad_request" | "rate_limited" | "busy" | "unavailable" | "network";
+/** "unavailable" and "network" mean no lead was created: the page falls back to the CRM intake and Vapi. */
+export type IntakeError = "bad_request" | "origin" | "rate_limited" | "unavailable" | "network";
+export type IntakeResult = { ok: true; intake: string } | { ok: false; error: IntakeError };
+export type StartError = "bad_request" | "rate_limited" | "busy" | "unavailable" | "network" | "intake_not_found" | "intake_used";
 export type StartResult = { ok: true; answer: string; token: string; maxSeconds: number } | { ok: false; error: StartError };
 
 export interface VoiceApi {
   status(): Promise<boolean>;
-  start(i: { sdp: string; form: VoiceForm; page: string }): Promise<StartResult>;
+  /** The form to Ayla's server, which makes the CRM Voice upsert before the call (Q2). */
+  intake(i: { form: VoiceForm; page: string }): Promise<IntakeResult>;
+  start(i: { sdp: string; intake: string }): Promise<StartResult>;
   ready(token: string): Promise<boolean>;
   events(token: string, onEvent: (e: ServerEvent) => void, signal: AbortSignal): Promise<void>;
   code(token: string, code: string): Promise<CodeResult>;
@@ -42,6 +48,22 @@ export function voiceApi(base: string, d: ApiDeps): VoiceApi {
         return false;
       }
     },
+    async intake(i) {
+      let r: Response;
+      try {
+        r = await post("intake", i);
+      } catch {
+        return { ok: false, error: "network" };
+      }
+      if (r.status === 201) {
+        const j = await r.json().catch(() => null);
+        return typeof j?.intake === "string" && j.intake ? { ok: true, intake: j.intake } : { ok: false, error: "unavailable" };
+      }
+      if (r.status === 400 || r.status === 413) return { ok: false, error: "bad_request" };
+      if (r.status === 403) return { ok: false, error: "origin" };
+      if (r.status === 429) return { ok: false, error: "rate_limited" };
+      return { ok: false, error: "unavailable" };
+    },
     async start(i) {
       let r: Response;
       try {
@@ -60,6 +82,8 @@ export function voiceApi(base: string, d: ApiDeps): VoiceApi {
       }
       if (r.status === 400 || r.status === 413) return { ok: false, error: "bad_request" };
       if (r.status === 429) return { ok: false, error: "rate_limited" };
+      if (r.status === 404) return { ok: false, error: "intake_not_found" };
+      if (r.status === 409) return { ok: false, error: "intake_used" };
       if (r.status === 503) {
         const j = await r.json().catch(() => null);
         return { ok: false, error: j?.error === "busy" ? "busy" : "unavailable" };

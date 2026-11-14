@@ -6,6 +6,7 @@ import type { ServerEvent } from "./protocol";
 const BASE = "https://agents.potential.com/";
 const TOKEN = "t".repeat(43);
 const FORM = { firstName: "Mona", lastName: "Haddad", email: "mona@example.com", organisation: "Acme", role: "CEO" };
+const INTAKE = "i".repeat(43);
 
 function fakeFetch(answer: (url: string, init: RequestInit) => Response | Promise<Response>) {
   const calls: Array<{ url: string; init: RequestInit }> = [];
@@ -23,18 +24,34 @@ describe("voiceApi", () => {
     expect(await voiceApi(BASE, { fetch: fakeFetch(() => json(200, { available: false })).f }).status()).toBe(false);
     expect(await voiceApi(BASE, { fetch: fakeFetch(() => { throw new TypeError("offline"); }).f }).status()).toBe(false);
   });
-  it("start: posts the offer, the form and the page as JSON; maps the server's answers", async () => {
+  it("intake (Q2): posts the form and the page; the intake comes back; each failure has its name", async () => {
+    const ok = fakeFetch(() => json(201, { intake: INTAKE, expiresInSeconds: 900 }));
+    expect(await voiceApi(BASE, { fetch: ok.f }).intake({ form: FORM, page: "/ayla" })).toEqual({ ok: true, intake: INTAKE });
+    expect(ok.calls[0]!.url).toBe("https://agents.potential.com/api/ayla/voice/intake");
+    expect(ok.calls[0]!.init.method).toBe("POST");
+    expect(JSON.parse(String(ok.calls[0]!.init.body))).toEqual({ form: FORM, page: "/ayla" });
+    const cases: Array<[Response, string]> = [
+      [json(400, { error: "bad_request" }), "bad_request"], [json(403, { error: "origin" }), "origin"], [json(413, { error: "too_large" }), "bad_request"],
+      [json(429, { error: "rate_limited" }), "rate_limited"], [json(503, { error: "busy" }), "unavailable"], [json(503, { error: "unavailable" }), "unavailable"],
+      [json(201, { nope: true }), "unavailable"], [json(500, {}), "unavailable"],
+    ];
+    for (const [res, error] of cases) expect(await voiceApi(BASE, { fetch: fakeFetch(() => res).f }).intake({ form: FORM, page: "/ayla" })).toEqual({ ok: false, error });
+    expect(await voiceApi(BASE, { fetch: fakeFetch(() => { throw new TypeError("x"); }).f }).intake({ form: FORM, page: "/ayla" })).toEqual({ ok: false, error: "network" });
+  });
+  it("start: posts the offer and the intake (no form: Q2) as JSON; maps the server's answers", async () => {
     const ok = fakeFetch(() => json(201, { answer: "v=0\r\nA", token: TOKEN, maxSeconds: 600 }));
-    expect(await voiceApi(BASE, { fetch: ok.f }).start({ sdp: "v=0", form: FORM, page: "/ayla" })).toEqual({ ok: true, answer: "v=0\r\nA", token: TOKEN, maxSeconds: 600 });
+    expect(await voiceApi(BASE, { fetch: ok.f }).start({ sdp: "v=0", intake: INTAKE })).toEqual({ ok: true, answer: "v=0\r\nA", token: TOKEN, maxSeconds: 600 });
     expect(ok.calls[0]!.url).toBe("https://agents.potential.com/api/ayla/voice/session");
     expect(ok.calls[0]!.init.method).toBe("POST");
-    expect(JSON.parse(String(ok.calls[0]!.init.body))).toEqual({ sdp: "v=0", form: FORM, page: "/ayla" });
+    expect(JSON.parse(String(ok.calls[0]!.init.body))).toEqual({ sdp: "v=0", intake: INTAKE });
+    for (const c of ok.calls) expect(c.url).not.toContain(INTAKE);
     const cases: Array<[Response, string]> = [
       [json(429, { error: "rate_limited" }), "rate_limited"], [json(503, { error: "busy" }), "busy"], [json(503, { error: "unavailable" }), "unavailable"],
       [json(502, { error: "unavailable" }), "unavailable"], [json(400, { error: "bad_request" }), "bad_request"],
+      [json(404, { error: "intake_not_found" }), "intake_not_found"], [json(409, { error: "intake_used" }), "intake_used"],
     ];
-    for (const [res, error] of cases) expect(await voiceApi(BASE, { fetch: fakeFetch(() => res).f }).start({ sdp: "v=0", form: FORM, page: "/ayla" })).toEqual({ ok: false, error });
-    expect(await voiceApi(BASE, { fetch: fakeFetch(() => { throw new TypeError("x"); }).f }).start({ sdp: "v=0", form: FORM, page: "/" })).toEqual({ ok: false, error: "network" });
+    for (const [res, error] of cases) expect(await voiceApi(BASE, { fetch: fakeFetch(() => res).f }).start({ sdp: "v=0", intake: INTAKE })).toEqual({ ok: false, error });
+    expect(await voiceApi(BASE, { fetch: fakeFetch(() => { throw new TypeError("x"); }).f }).start({ sdp: "v=0", intake: INTAKE })).toEqual({ ok: false, error: "network" });
   });
   it("events: reads the stream until it ends", async () => {
     const body = 'data: {"type":"state","panel":"code","code":"idle","bookingUrl":null}\n\n: ping\n\ndata: {"type":"ended","reason":"ayla_ended"}\n\n';

@@ -1,14 +1,14 @@
 // client/src/lib/aylaVoice/call.ts
 import type { StartError, VoiceApi } from "./api";
-import type { VoiceForm } from "./form";
 import type { CodeResult, Notice, ServerEvent } from "./protocol";
 
 // One voice button call in the browser. The order matters (memory note
 // voice-mic-never-joined.md): the microphone is granted FIRST, so a call is
 // never created for a visitor who has not answered the permission prompt.
 // Then an audio-only RTCPeerConnection with NO data channel (spec D1: only the
-// server talks to the OpenAI session), the SDP offer and the form to our
-// server, the answer applied, and once media is connected (connectionState
+// server talks to the OpenAI session), the SDP offer and the intake (the form
+// already went to /voice/intake: spec "Form intake", Q2) to our server, the
+// answer applied, and once media is connected (connectionState
 // "connected" and the remote track) /ready (Ayla greets) and the event stream.
 // The browser APIs are injected (CallDeps) so bun can test this without a
 // browser; the page passes the real ones.
@@ -34,8 +34,8 @@ export interface CallDeps {
   api: VoiceApi;
   setTimeout(fn: () => void, ms: number): unknown;
   clearTimeout(id: unknown): void;
-  /** location.pathname. */
-  page: string;
+  /** Posts the form to /voice/intake again (the intake expired, or its call already took place); null when that failed. */
+  renewIntake(): Promise<string | null>;
 }
 export type CallStatus = "mic" | "connecting" | "connected" | "ended";
 export type CallFailure = { kind: "mic"; name: string } | { kind: "start"; error: StartError } | { kind: "connect" } | { kind: "dropped" };
@@ -60,7 +60,7 @@ export interface VoiceCall {
 export const CONNECT_TIMEOUT_MS = 15_000;
 export const MIC_CONSTRAINTS = Object.freeze({ echoCancellation: true, noiseSuppression: true, autoGainControl: true });
 
-export async function startVoiceCall(d: CallDeps, form: VoiceForm, h: CallHandlers): Promise<VoiceCall | null> {
+export async function startVoiceCall(d: CallDeps, intake: string, h: CallHandlers): Promise<VoiceCall | null> {
   h.onStatus("mic");
   let mic: StreamLike;
   try {
@@ -131,7 +131,13 @@ export async function startVoiceCall(d: CallDeps, form: VoiceForm, h: CallHandle
     for (const t of mic.getAudioTracks()) pc.addTrack(t, mic);
     const offer = await pc.createOffer();
     await pc.setLocalDescription(offer);
-    const r = await d.api.start({ sdp: offer.sdp ?? "", form, page: d.page });
+    const sdp = offer.sdp ?? "";
+    let r = await d.api.start({ sdp, intake });
+    // 404 intake_not_found / 409 intake_used: one fresh intake, then the same offer again (no session was created).
+    if (!r.ok && (r.error === "intake_not_found" || r.error === "intake_used")) {
+      const fresh = await d.renewIntake();
+      if (fresh) r = await d.api.start({ sdp, intake: fresh });
+    }
     if (!r.ok) {
       stopAll();
       h.onFailure({ kind: "start", error: r.error });
