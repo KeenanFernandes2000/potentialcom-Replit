@@ -1,6 +1,6 @@
 // client/src/lib/aylaVoice/protocol.test.ts
 import { describe, expect, it } from "vitest";
-import { INITIAL_VIEW, NOTICES, applyEvent, closePanel, endMessage, parseServerEvent, safeBookingUrl } from "./protocol";
+import { INITIAL_VIEW, NOTICES, TRANSCRIPT_NOTICE, applyEvent, closePanel, endMessage, parseServerEvent, safeBookingUrl } from "./protocol";
 
 const REF = `voice_abcdefghijklmnopqrstuv.1765706400.${"a".repeat(43)}`;
 const URL_OK = `https://crm.potentiallead.com/book/rawzaba?embed=1&ref=${REF}`;
@@ -60,5 +60,11 @@ describe("endMessage and notices", () => {
       "chatbot_creating", "chatbot_ready", "chatbot_ready_no_scrape", "chatbot_failed", "chatbot_limited",
       "voice_agent_creating", "voice_agent_ready", "voice_agent_ready_no_scrape", "voice_agent_failed", "voice_agent_limited",
     ]);
+  });
+});
+
+describe("the call-start notice (Mamoon, 14 Nov)", () => {
+  it("is the approved wording, word for word", () => {
+    expect(TRANSCRIPT_NOTICE).toBe("This conversation is transcribed so our team can follow up.");
   });
 });

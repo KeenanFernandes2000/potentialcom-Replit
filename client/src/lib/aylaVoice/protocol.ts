@@ -91,3 +91,6 @@ export function endMessage(reason: EndReason): { title: string; detail: string }
   if (reason === "silence") return { title: "The call ended after a long silence.", detail: "Start again when you're ready, or book a session with a consultant." };
   return { title: "The call ended unexpectedly.", detail: "Sorry — that one is on us. Try again, or book a session with a consultant." };
 }
+
+/** Shown on screen while the call is live (Mamoon, 14 Nov); the server's disclosure says the same words. */
+export const TRANSCRIPT_NOTICE = "This conversation is transcribed so our team can follow up.";
